@@ -1,0 +1,19 @@
+service: bee-to-bee-api
+
+provider:
+  name: aws
+  stage: dev
+  runtime: python3.8
+  region: eu-west-1
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http:
+          path: /
+          method: get
