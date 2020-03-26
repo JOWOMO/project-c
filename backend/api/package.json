@@ -1,0 +1,17 @@
+{
+  "name": "@beetobee/api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npx serverless deploy --stage dev",
+    "remove": "npx serverless remove --stage dev"
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "serverless": "*",
+    "serverless-python-requirements": "^5.1.0",
+    "serverless-wsgi": "^1.7.4"
+  }
+}
