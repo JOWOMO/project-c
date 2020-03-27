@@ -1,19 +1,105 @@
 service: bee-to-bee-api
 
+plugins:
+  - serverless-wsgi
+  - serverless-python-requirements
+
 provider:
   name: aws
   stage: dev
-  runtime: python3.8
+  runtime: python3.7
   region: eu-west-1
 
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  memorySize: 128
+  timeout: 20
+
+  apiGateway:
+    minimumCompressionSize: 1024
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  
+  wsgi:
+    app: src/app.app
+    packRequirements: false
+
+  pythonRequirements:
+    dockerizePip: non-linux
 
 functions:
-  hello:
-    handler: src/handler.hello
+  graphql:
+    handler: wsgi_handler.handler
     events:
       - http:
-          path: /
-          method: get
+          method: ANY
+          path: /graphql
+          cors: true
+
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+
+      - http:
+          method: ANY
+          path: /graphql/{proxy+}
+          cors: true
+
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+
+resources:
+  Resources:
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        MfaConfiguration: OFF
+        AdminCreateUserConfig:
+          UnusedAccountValidityDays: 7
+          AllowAdminCreateUserOnly: false
+          
+        UserPoolName: ${self:service}-${self:custom.stage}-pool
+        UsernameAttributes:
+          - email
+
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: False
+            RequireNumbers: True
+            RequireSymbols: False
+            RequireUppercase: True
+
+    CognitoUserPoolDomain:
+      Type: AWS::Cognito::UserPoolDomain
+      Properties:
+        Domain: ${self:service}-${self:custom.stage}-pool-client  
+        UserPoolId:
+          Ref: CognitoUserPool
+
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: ${self:service}-${self:custom.stage}-pool-client
+        GenerateSecret: False
+        UserPoolId:
+          Ref: CognitoUserPool
+        
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      DependsOn:
+        - ApiGatewayRestApi
+      Properties:
+        AuthorizerResultTtlInSeconds: 300
+        IdentitySource: method.request.header.Authorization
+        Name: ${self:service}-${self:custom.stage}-authorizer
+        RestApiId:
+          Ref: ApiGatewayRestApi
+
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - Fn::GetAtt:
+              - CognitoUserPool
+              - Arn
