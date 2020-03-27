@@ -4,8 +4,9 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "npx serverless deploy --stage dev",
-    "remove": "npx serverless remove --stage dev"
+    "deploy": "serverless deploy --stage dev",
+    "remove": "serverless remove --stage dev",
+    "dev": "source env/bin/activate && PYTHONDONTWRITEBYTECODE=1 serverless wsgi serve"
   },
   "author": "",
   "license": "",
