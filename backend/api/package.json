@@ -11,7 +11,6 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "forever": "^2.0.0",
     "serverless": "*",
     "serverless-python-requirements": "^5.1.0",
     "serverless-wsgi": "^1.7.4"

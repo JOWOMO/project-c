@@ -7,4 +7,5 @@ def me(root, info):
     return {
         "id": principal.get_id(),
         "email": principal.get_email(),
+        "name": "Markus C"
     }
