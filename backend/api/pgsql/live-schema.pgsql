@@ -53,7 +53,7 @@ TABLESPACE pg_default;
 ALTER TABLE live.company
     OWNER to btb;
 
-CREATE TABLE live.company_user
+CREATE TABLE IF NOT EXISTS live.company_user
 (
     company_id integer NOT NULL,
     user_id text COLLATE pg_catalog."default" NOT NULL,
