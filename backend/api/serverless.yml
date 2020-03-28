@@ -16,15 +16,20 @@ provider:
   apiGateway:
     minimumCompressionSize: 1024
 
+package:
+  include:
+    - "btb/**"
+  exclude:
+    - "**"
+
 custom:
   stage: ${opt:stage, self:provider.stage}
   
   wsgi:
-    app: btb/wsgi.app
+    app: btb.wsgi.app
     packRequirements: false
 
   pythonRequirements:
-    usePoetry: true
     dockerizePip: non-linux
 
 functions:
