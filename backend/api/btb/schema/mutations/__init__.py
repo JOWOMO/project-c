@@ -1,2 +1,1 @@
-
 from .updatecompany import UpdateCompany
