@@ -1,9 +1,9 @@
-name: API
+name: RDS
 
 on:
   push:
-    paths:  
-      - backend/api/**
+    paths:
+      - backend/rds/**
     branches: [ master ]
 #  pull_request:
 #    branches: [ master ]
@@ -15,11 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-        
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
@@ -28,17 +23,13 @@ jobs:
     - name: Install dependencies
       run: |
         npm install
-      working-directory: backend/api
-  
-    - name: Install poetry
-      run: |
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+      working-directory: backend/rds
   
     - name: Deploy to stage
       run: |
-        source $HOME/.poetry/env
-        npx serverless deploy --stage dev
-      working-directory: backend/api
+        npx serverless deploy --stage prod
+      working-directory: backend/rds
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}

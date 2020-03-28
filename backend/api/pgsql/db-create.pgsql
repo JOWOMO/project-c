@@ -1,11 +1,12 @@
-CREATE ROLE lambda_b2b WITH CREATEDB PASSWORD 'pass' -- change Pass
+CREATE ROLE lambda_b2b;
+GRANT lambda_b2b to postgres;
 
-CREATE DATABASE btb
-    WITH 
-    OWNER = lambda_b2b
+-- drop database dev;
+CREATE DATABASE dev
+    WITH OWNER = lambda_b2b
     ENCODING = 'UTF8'
     LC_COLLATE = 'en_US.UTF-8'
     LC_CTYPE = 'en_US.UTF-8'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
+    CONNECTION LIMIT = -1
+;
 

@@ -2,16 +2,24 @@ SET ROLE 'lambda_b2b';
 
 CREATE SCHEMA IF NOT EXISTS btb
     AUTHORIZATION lambda_b2b;
+    
+CREATE SEQUENCE IF NOT EXISTS btb.customer_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
 
 CREATE TABLE IF NOT EXISTS btb.customer
 (
-    id text NOT NULL,
+    id integer NOT NULL DEFAULT nextval('btb.customer_id_seq'::regclass),
+    external_id text not null,
     email text NOT NULL,
+
     name text,
     CONSTRAINT user_pkey PRIMARY KEY (id),
     CONSTRAINT email UNIQUE (email)
-)
-;
+);
 
 CREATE SEQUENCE IF NOT EXISTS btb.company_id_seq
     INCREMENT 1
@@ -42,20 +50,19 @@ CREATE TABLE IF NOT EXISTS btb.company
     latitude numeric,
     
     CONSTRAINT company_pkey PRIMARY KEY (id)
-)
-;
+);
 
 CREATE TABLE IF NOT EXISTS btb.company_user
 (
+    user_id integer NOT NULL,
     company_id integer NOT NULL,
-    user_id text NOT NULL,
+
     CONSTRAINT company_user_pkey PRIMARY KEY (company_id, user_id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id),
     CONSTRAINT user_id FOREIGN KEY (user_id)
-        REFERENCES customer (id) 
-)
-;
+        REFERENCES btb.customer (id) 
+);
 
 CREATE SEQUENCE IF NOT EXISTS btb.team_demand_id_seq
     INCREMENT 1
@@ -77,8 +84,7 @@ CREATE TABLE IF NOT EXISTS btb.team_demand
     CONSTRAINT team_demand_pkey PRIMARY KEY (id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id)
-)
-;
+);
 
 CREATE SEQUENCE IF NOT EXISTS btb.team_supply_id_seq
     INCREMENT 1
@@ -100,5 +106,4 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
     CONSTRAINT team_supply_pkey PRIMARY KEY (id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id)
-)
-;
+);
