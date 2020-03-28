@@ -24,6 +24,7 @@ custom:
     packRequirements: false
 
   pythonRequirements:
+    usePoetry: true
     dockerizePip: non-linux
 
 functions:
