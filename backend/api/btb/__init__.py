@@ -17,7 +17,7 @@ def create_app():
 
     @app.route("/")
     def index():
-        return "Helo"
+        return "Server is running<br><a href='/graphql'>Server</a>"
 
     app.add_url_rule("/graphql", view_func=graphql_view(app.debug))
 
