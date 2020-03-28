@@ -20,7 +20,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   
   wsgi:
-    app: src/app.app
+    app: btb/wsgi.app
     packRequirements: false
 
   pythonRequirements:
