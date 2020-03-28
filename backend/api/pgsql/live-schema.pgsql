@@ -53,7 +53,27 @@ TABLESPACE pg_default;
 ALTER TABLE live.company
     OWNER to btb;
 
+CREATE TABLE IF NOT EXISTS live.company_user
+(
+    company_id integer NOT NULL,
+    user_id text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT company_user_pkey PRIMARY KEY (company_id, user_id),
+    CONSTRAINT company_id FOREIGN KEY (company_id)
+        REFERENCES dev.company (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES dev."user" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
 
+ALTER TABLE live.company_user
+    OWNER to btb;
 
     CREATE SEQUENCE IF NOT EXISTS live.team_demand_id_seq
     INCREMENT 1
