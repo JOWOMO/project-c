@@ -28,10 +28,10 @@ jobs:
         npm install
       working-directory: backend/api
   
-    - name: Install dependencies
+    - name: Deploy to stage
       run: |
         npx serverless deploy --stage dev
       working-directory: backend/api
       env:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
