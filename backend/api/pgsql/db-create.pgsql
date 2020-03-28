@@ -6,3 +6,4 @@ CREATE DATABASE btb
     LC_CTYPE = 'de_DE.UTF-8'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
+
