@@ -10,7 +10,7 @@ provider:
   runtime: python3.7
   region: eu-west-1   # eu-central-1
 
-  memorySize: 128
+  memorySize: 256
   timeout: 20
 
   apiGateway:
@@ -35,6 +35,15 @@ custom:
 functions:
   graphql:
     handler: wsgi_handler.handler
+    vpc:
+      securityGroupIds:
+        - Fn::ImportValue: DatabaseSecurityGroupId
+
+      subnetIds:
+        - Fn::ImportValue: DatabaseSubnetAId
+        - Fn::ImportValue: DatabaseSubnetBId
+        - Fn::ImportValue: DatabaseSubnetCId
+        
     events:
       - http:
           method: ANY
