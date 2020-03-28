@@ -30,7 +30,7 @@ def load_principal_from_serverless():
         current_app.logger.debug(
             "no serverless.authorizer, falling back to debug principal"
         )
-        g.principal = Principal("offline", "test@nowhere.de")
+        g.principal = Principal("DebugUserId", "test@example.com")
 
     else:
         current_app.logger.error("failed to set auth principal")
