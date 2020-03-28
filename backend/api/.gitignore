@@ -18,6 +18,10 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+*.pyc
+__pycache__
+
 
 # Serverless directories
 .serverless
+database.sqlite3

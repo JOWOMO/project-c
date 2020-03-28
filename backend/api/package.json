@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "serverless deploy --stage dev",
     "remove": "serverless remove --stage dev",
-    "dev": "source env/bin/activate && PYTHONDONTWRITEBYTECODE=1 serverless wsgi serve"
+    "dev": "FLASK_ENV=development FLASK_APP=btb poetry run flask run"
   },
   "author": "",
   "license": "",

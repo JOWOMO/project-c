@@ -1,5 +1,4 @@
 from graphene import ID, Int, String, ObjectType, List, Float, NonNull
-from db import db_session, Company as DB_Company
 
 class Demand(ObjectType):
     id = ID(required=True)
