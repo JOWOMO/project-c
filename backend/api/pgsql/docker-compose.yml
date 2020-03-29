@@ -1,12 +1,17 @@
 postgres:
   restart: always
-  image: postgres
+  image: kartoza/postgis 
   ports:
     - "127.0.0.1:5432:5432"
+  
   environment:
-    POSTGRES_PASSWORD: postgres
-    POSTGRES_DB: dev
+    POSTGRES_USER: postgres
+    POSTGRES_PASS: postgres
+    POSTGRES_DBNAME: dev
+  
   volumes:
     - ./db-create.pgsql:/docker-entrypoint-initdb.d/1-db.sql
     - ./schema.pgsql:/docker-entrypoint-initdb.d/2-schema.sql
-    - ./test-data.pgsql:/docker-entrypoint-initdb.d/3-data.sql
+    - ./postalcodes.pgsql:/docker-entrypoint-initdb.d/3-postalcodes.sql
+    - ./real-data.pgsql:/docker-entrypoint-initdb.d/4-real.sql
+    - ./test-data.pgsql:/docker-entrypoint-initdb.d/5-test.sql

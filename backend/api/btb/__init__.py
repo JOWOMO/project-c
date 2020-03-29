@@ -2,8 +2,9 @@ from flask import Flask, request, g, current_app, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from btb.auth import load_principal_from_serverless
 from btb.graphql import graphql_view
-from btb.models import db, get_table
+from btb.models import db
 from os import environ
+from btb.datasources import instanciate_datasources
 
 def create_app():
     app = Flask(__name__)
@@ -14,6 +15,7 @@ def create_app():
     db.init_app(app)
 
     app.before_request(load_principal_from_serverless)
+    app.before_request(instanciate_datasources)
 
     @app.route("/")
     def index():

@@ -1,5 +1,7 @@
 from graphene import ID, String, ObjectType, List, Field, Float, Int, NonNull
-from btb.schema.resolvers import demands_by_company, supply_by_company, company_by_id
+from btb.schema.resolvers import demands_by_company, supplies_by_company, company_by_id
+from .skills import Skill
+from flask import g
 
 class Company(ObjectType):
     id = ID(required=True)
@@ -14,26 +16,38 @@ class Company(ObjectType):
 
     # lazy 
     demands = List(lambda: Demand, resolver=demands_by_company)
-    supplies = List(lambda: Supply, resolver=supply_by_company)
+    supplies = List(lambda: Supply, resolver=supplies_by_company)
 
 class Demand(ObjectType):
     id = ID(required=True)
     name = String(required=True)
     description = String(required=False)
+    
+    skills = List(NonNull(Skill), required=False)
 
-    tags = List(NonNull(String), required=False)
-
-    amount = Int(required=True)
-    max_salary = Float(required=False)
+    quantity = Int(required=True)
+    max_hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True, resolver=company_by_id)
+
+    def resolve_skills(root, info):
+        if root.skills is None:
+            return []
+
+        return g.skill_loader.load_many(root.skills)
 
 class Supply(ObjectType):
     id = ID(required=True)
     name = String(required=True)
     description = String(required=False)
 
-    tags = List(NonNull(String), required=False)
+    skills = List(NonNull(Skill), required=False)
 
-    amount = Int(required=True)
-    max_salary = Float(required=False)
+    quantity = Int(required=True)
+    hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True)
+
+    def resolve_skills(root, info):
+        if root.skills is None:
+            return []
+
+        return g.skill_loader.load_many(root.skills)

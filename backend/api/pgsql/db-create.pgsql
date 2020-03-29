@@ -3,6 +3,7 @@ GRANT ALL PRIVILEGES ON DATABASE dev TO lambda_b2b;
 
 GRANT lambda_b2b to postgres;
 
+CREATE EXTENSION if not exists postgis; 
 -- drop database dev;
 -- CREATE DATABASE dev
 --     WITH OWNER = lambda_b2b
