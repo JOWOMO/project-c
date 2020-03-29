@@ -1,7 +1,6 @@
 import graphene
 from btb.schema.types import Company
 from btb.models import db, get_table
-from btb.schema.resolvers import company_by_id
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app
@@ -54,4 +53,4 @@ on conflict do nothing
             """)
 
             conn.execute(sql, user=g.principal.get_id(), company=companyid)
-            return company_by_id({"company_id": companyid})
+            return g.company_loader.load(companyid)

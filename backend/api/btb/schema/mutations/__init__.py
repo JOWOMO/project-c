@@ -1,2 +1,4 @@
 from .updatecompany import UpdateCompany
-#from .updateteam import UpdateTeam, RemoveTeam
+from .updatedemand import UpdateDemand, RemoveDemand
+from .updatesupply import UpdateSupply, RemoveSupply
+

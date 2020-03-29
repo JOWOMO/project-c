@@ -2,7 +2,22 @@ SET ROLE 'lambda_b2b';
 
 CREATE SCHEMA IF NOT EXISTS btb
     AUTHORIZATION lambda_b2b;
-    
+
+CREATE SEQUENCE IF NOT EXISTS btb.skill_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+CREATE TABLE IF NOT EXISTS btb.skill
+(
+    id integer NOT NULL DEFAULT nextval('btb.skill_id_seq'::regclass),
+    text text NOT NULL,
+    CONSTRAINT skill_pkey PRIMARY KEY (id),
+    CONSTRAINT text UNIQUE (text)
+);
+
 CREATE SEQUENCE IF NOT EXISTS btb.customer_id_seq
     INCREMENT 1
     START 1
@@ -80,7 +95,7 @@ CREATE TABLE IF NOT EXISTS btb.team_demand
     description_int text,
     description_ext text,
     quantity integer NOT NULL,
-    tags text[] NULL,
+    skills integer[] NULL,
     max_hourly_wages numeric,
     CONSTRAINT team_demand_pkey PRIMARY KEY (id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
@@ -102,8 +117,8 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
     description_int text,
     description_ext text,
     quantity integer NOT NULL,
-    tags text[] NULL,
-    hourly_wages numeric NOT NULL,
+    skills integer[] NULL,
+    hourly_wages numeric,
     CONSTRAINT team_supply_pkey PRIMARY KEY (id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id)

@@ -1,6 +1,17 @@
 insert into btb.customer
     values (1, 'DebugUserId', 'email@email.com', 'name');
 
+insert into btb.skill (text)
+    values 
+        ('Deutsch'),
+        ('Vollzeit'),
+        ('PKW Führerschein'),
+        ('Staplerführerschein'),
+        ('Kann viel stehen'),
+        ('Ersthelfer'),
+        ('Security')
+;
+    
 insert into btb.company
     (
         id,
@@ -27,12 +38,33 @@ insert into btb.team_demand
         company_id,
         name,
         quantity,
-        tags
+        skills,
+        max_hourly_wages
     )
     values (
         1,
         1,
         'Team',
         1,
-        ARRAY['t1', 't2', 't3']
+        ARRAY[1,2,3],
+        3000
+    );
+
+
+insert into btb.team_supply
+    (
+        id,
+        company_id,
+        name,
+        quantity,
+        skills,
+        hourly_wages
+    )
+    values (
+        1,
+        1,
+        'Team',
+        1,
+        ARRAY[1,2,3],
+        3000
     );

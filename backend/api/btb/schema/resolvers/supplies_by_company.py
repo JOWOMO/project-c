@@ -3,10 +3,10 @@ from flask import g
 from btb.models import db, get_table
 from sqlalchemy import text
 
-
-def demands_by_company(root, info):
+def supplies_by_company(root, info):
     with db.engine.begin() as conn:
         result = conn.execute(
-            text("select * from btb.team_demand where company_id = :id"), id=root["id"]
+            text("select * from btb.team_supply where company_id = :id"), id=root["id"]
         )
+        
         return result.fetchall()

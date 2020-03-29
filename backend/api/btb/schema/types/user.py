@@ -1,6 +1,6 @@
 from graphene import ID, String, ObjectType, List
 from .company import Company
-from btb.schema.resolvers import company_by_principal
+from btb.schema.resolvers import companies_by_principal
 
 class User(ObjectType):
     id = ID(required=True)
@@ -9,4 +9,4 @@ class User(ObjectType):
     email = String(required=True)
     name = String(required=False)
     
-    companies = List(Company, resolver=company_by_principal)
+    companies = List(Company, resolver=companies_by_principal)
