@@ -14,8 +14,7 @@
 1. npm install
 2. poetry install
 3. cd pgsql, docker-compose up
-4. `export SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@localhost/dev`
-5. npm run dev
+4. npm run dev
 
 ## Deploy Environment
 
