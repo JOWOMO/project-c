@@ -1,0 +1,164 @@
+{
+  "users": [
+    
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Reformhaus Müller",
+      "profile_name": "Erik Müller",
+      "workers": 5,
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt in expedita reprehenderit soluta officiis reiciendis vel sequi facilis quia quae voluptates corporis nam aliquid facere unde, veniam minus! Repudiandae, impedit!",
+      "job_posts": [
+        {
+          "id": 1,
+          "employment": "Teilzeit (20h / Woche)",
+          "salery": "10 - 12 €",
+          "physical_work": "Ja (Lagerarbeit)",
+          "driving_license": "Nein (optional)",
+          "car_bike": "Nein (optional)"
+        }
+      ],
+      "street": "Neue Straße 1",
+      "plz": "60123 Köln",
+      "web": "www.reformhaus.de",
+      "email": "info@reformhaus.de",
+      "tel": "+49 172 12345678",
+      "img": "/images/profile.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Aldi Süd",
+      "profile_name": "John Doe",
+      "workers": 20,
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt in expedita reprehenderit soluta officiis reiciendis vel sequi facilis quia quae voluptates corporis nam aliquid facere unde, veniam minus! Repudiandae, impedit!",
+      "job_posts": [
+        {
+          "id": 1,
+          "employment": "Teilzeit (20h / Woche)",
+          "salery": "10 - 12 €",
+          "physical_work": "Ja (Lagerarbeit)",
+          "driving_license": "Nein (optional)",
+          "car_bike": "Nein (optional)"
+        }
+      ],
+      "street": "Neue Straße 2",
+      "plz": "60123 Köln",
+      "web": "www.aldi.de",
+      "email": "info@aldi.de",
+      "tel": "+49 172 12345678"
+    },
+    {
+      "id": 3,
+      "name": "andere Firma",
+      "profile_name": "Mia Mustermann",
+      "workers": 2,
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt in expedita reprehenderit soluta officiis reiciendis vel sequi facilis quia quae voluptates corporis nam aliquid facere unde, veniam minus! Repudiandae, impedit!",
+      "job_posts": [
+        {
+          "id": 1,
+          "employment": "Vollzeit (40h / Woche)",
+          "salery": "13 - 15 €",
+          "physical_work": "Ja (Lagerarbeit)",
+          "driving_license": "Ja",
+          "car_bike": "Nein (optional)"
+        },
+        {
+          "id": 2,
+          "employment": "Teilzeit (20h / Woche)",
+          "salery": "9 - 12 €",
+          "physical_work": "Nein",
+          "driving_license": "Nein",
+          "car_bike": "Ja"
+        }
+      ],
+      "street": "Neue Straße 5",
+      "plz": "60123 Köln",
+      "web": "www.firma.de",
+      "email": "info@firma.de",
+      "tel": "+49 172 12345678"
+    }
+  ],
+  "matches": [
+    {
+      "name": "Aldi Süd",
+      "workers": 5,
+      "img": "/images/profile.jpg",
+      "distance": 5,
+      "requirements": [
+        "mit Kundenkontakt",
+        "körperliche Arbeit"
+      ],
+      "matching": 100,
+      "link": "/comanies/1"
+    },
+    {
+      "name": "Dick & Doof Pizza",
+      "workers": 2,
+      "img": "/images/profile.jpg",
+      "distance": 7,
+      "requirements": [
+        "mit Kundenkontakt"
+      ],
+      "matching": 60,
+      "link": "/comanies/3"
+    },
+    {
+      "name": "Navabase",
+      "workers": 2,
+      "img": "/images/profile.jpg",
+      "distance": 1,
+      "requirements": [
+        "mit Kundenkontakt"
+      ],
+      "matching": 100,
+      "link": "/comanies/4"
+    },
+    {
+      "name": "Schutzmasken billiger",
+      "workers": 1000,
+      "img": "/images/profile.jpg",
+      "distance": 14,
+      "requirements": [
+        "Überstunden"
+      ],
+      "matching": 17,
+      "link": "/comanies/5"
+    },
+    {
+      "name": "corona.io",
+      "workers": 1000,
+      "img": "/images/profile.jpg",
+      "distance": 14,
+      "requirements": [
+        "Überstunden"
+      ],
+      "matching": 70,
+      "link": "/comanies/5"
+    },
+    {
+      "name": "Bibliothek Müller",
+      "workers": 1000,
+      "img": "/images/profile.jpg",
+      "distance": 14,
+      "requirements": [
+        "lesen"
+      ],
+      "matching": 5,
+      "link": "/comanies/6"
+    }
+  ],
+  "tags": [
+    {"skill": "Auto fahren"},
+    {"skill": "Teilzeit"},
+    {"skill": "Vollzeit"},
+    {"skill": "Körperliche Arbeit"},
+    {"skill": "Securitytätigkeit"},
+    {"skill": "handwerklich begabt"}
+  ],
+  "resources": [
+    {"resource": "Auto"},
+    {"resource": "Fahrrad"},
+    {"resource": "Ausrüstung"}
+  ]
+}
