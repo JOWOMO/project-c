@@ -9,4 +9,5 @@ postgres:
   volumes:
     - ./db-create.pgsql:/docker-entrypoint-initdb.d/1-db.sql
     - ./schema.pgsql:/docker-entrypoint-initdb.d/2-schema.sql
-    - ./test-data.pgsql:/docker-entrypoint-initdb.d/3-data.sql
+    - ./postalcodes.pgsql:/docker-entrypoint-initdb.d/3-postalcodes.sql
+    - ./test-data.pgsql:/docker-entrypoint-initdb.d/4-data.sql

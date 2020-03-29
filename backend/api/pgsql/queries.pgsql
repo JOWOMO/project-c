@@ -28,4 +28,7 @@ where
 group by s.company_id
 ;
 
-
+explain
+select * from btb.postal_codes
+where postalcode = '22393'
+;

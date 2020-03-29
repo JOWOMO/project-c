@@ -126,3 +126,23 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
 
 CREATE INDEX IF NOT EXISTS idx_team_supply_skills on
     btb.team_supply using gin(skills);
+
+
+CREATE TABLE IF NOT EXISTS btb.postal_codes
+(
+    countrycode char(2),
+    postalcode varchar(20),
+    placename varchar(180),
+    name1 varchar(100),
+    code1 varchar(20),
+    name2 varchar(100),
+    code2 varchar(20),
+    name3 varchar(100),
+    code3 varchar(20),
+    latitude real,
+    longitude real,
+    accuracy smallint
+);
+
+CREATE INDEX IF NOT EXISTS idx_postal_codes_postalcode on
+    btb.postal_codes(postalcode);
