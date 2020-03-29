@@ -25,7 +25,7 @@ export default {
   middleware: "authenticated",
   methods: {
     getUser() {
-      const user = this.$axios.get("localhost:5000/users/1");
+      const user = this.$axios.get(`${process.env.db}/users/1`);
       this.img = user.profile_img;
       this.name = user.firstName;
     }

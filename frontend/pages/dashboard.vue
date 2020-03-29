@@ -87,7 +87,7 @@ export default {
   
   asyncData({ params, app }) {
     // console.log("asycData");
-    return app.$axios.get(`http://localhost:5000/matches`)
+    return app.$axios.get(`${process.env.db}/matches`)
       .then((response)=>{
         // console.log("reponse match: ",response);
         const bestmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(0,3);

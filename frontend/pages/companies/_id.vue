@@ -87,8 +87,8 @@ export default {
     CompanyCard
   },
   async asyncData({ params, app }) {
-    const { data } = await app.$axios.get(`http://localhost:5000/companies/${params.id}`);
-    const matches = await app.$axios.get(`http://localhost:5000/matches`);
+    const { data } = await app.$axios.get(`${process.env.db}/companies/${params.id}`);
+    const matches = await app.$axios.get(`${process.env.db}/matches`);
     return {
       name: data.name,
       profile_name: data.profile_name,

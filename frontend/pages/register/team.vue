@@ -60,7 +60,7 @@ export default {
   methods: {
     get_tags: async function() {
       await this.$axios
-        .$get("http://localhost:5000/tags")
+        .$get(`${process.env.db}/tags`)
         .then(response => {
           console.log("response db: ", response);
           this.skills = response;
@@ -71,7 +71,7 @@ export default {
     },
     get_resources: async function() {
       await this.$axios
-        .$get("http://localhost:5000/resources")
+        .$get(`${process.env.db}/resources`)
         .then(response => {
           console.log("response db: ", response);
           this.resources = response;
