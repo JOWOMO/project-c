@@ -8,7 +8,7 @@ def companies_by_principal(root, info):
     sql = text("""
 select * 
 from 
-btb.company c, btb.company_user cu
+btb.company c, btb.company_customer cu
 where   
     c.id = cu.company_id 
 and cu.customer_id = :id

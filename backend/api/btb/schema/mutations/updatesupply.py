@@ -17,7 +17,7 @@ class SupplyInput(graphene.InputObjectType):
 
     quantity = graphene.Int(required=True)
     skills = graphene.List(graphene.Int)
-    hourly_wages = graphene.Float()
+    hourly_salary = graphene.Float()
 
 
 class UpdateSupply(graphene.Mutation):
@@ -32,8 +32,8 @@ class UpdateSupply(graphene.Mutation):
 
         with db.engine.begin() as conn:
             sql = text("""
-insert into btb.team_supply (id, company_id, name, description_int, description_ext, quantity, skills, hourly_wages)
-values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :name, :description_int, :description_ext, :quantity, :skills, :hourly_wages)
+insert into btb.team_supply (id, company_id, name, description_int, description_ext, quantity, skills, hourly_salary)
+values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :name, :description_int, :description_ext, :quantity, :skills, :hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 
@@ -42,7 +42,7 @@ do update set
     description_ext = excluded.description_ext, 
     quantity = excluded.quantity, 
     skills = excluded.skills,
-    hourly_wages = excluded.hourly_wages
+    hourly_salary = excluded.hourly_salary
 returning id
             """)
             data = conn.execute(sql, **supply.__dict__)

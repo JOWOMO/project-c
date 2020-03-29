@@ -22,14 +22,17 @@ class Demand(ObjectType):
     id = ID(required=True)
     name = String(required=True)
     description = String(required=False)
-
+    
     skills = List(NonNull(Skill), required=False)
 
     quantity = Int(required=True)
-    max_salary = Float(required=False)
+    max_hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True, resolver=company_by_id)
 
     def resolve_skills(root, info):
+        if root.skills is None:
+            return []
+
         return g.skill_loader.load_many(root.skills)
 
 class Supply(ObjectType):
@@ -40,8 +43,11 @@ class Supply(ObjectType):
     skills = List(NonNull(Skill), required=False)
 
     quantity = Int(required=True)
-    max_salary = Float(required=False)
+    hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True)
 
     def resolve_skills(root, info):
+        if root.skills is None:
+            return []
+
         return g.skill_loader.load_many(root.skills)

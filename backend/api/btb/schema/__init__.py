@@ -1,7 +1,31 @@
 from graphene import ObjectType, Field, Schema, ID, List, NonNull, Argument
-from btb.schema.types import User, Demand, Supply, Company, Skill, Match, MatchQueryInput
-from btb.schema.resolvers import me as resolveme, demand_by_id, supply_by_id, company_by_id, skills as skills_resolver, companies_by_principal, match
-from btb.schema.mutations import UpdateCompany, UpdateDemand, RemoveDemand, UpdateSupply, RemoveSupply
+from btb.schema.types import (
+    User,
+    Demand,
+    Supply,
+    Company,
+    Skill,
+    MatchResult,
+    MatchQueryInput,
+    CursorInput
+)
+from btb.schema.resolvers import (
+    me as resolveme,
+    demand_by_id,
+    supply_by_id,
+    company_by_id,
+    skills as skills_resolver,
+    companies_by_principal,
+    match,
+)
+from btb.schema.mutations import (
+    UpdateCompany,
+    UpdateDemand,
+    RemoveDemand,
+    UpdateSupply,
+    RemoveSupply,
+)
+
 
 class Query(ObjectType):
     me = Field(NonNull(User), resolver=resolveme)
@@ -14,7 +38,8 @@ class Query(ObjectType):
 
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
 
-    match = List(Match, query=Argument(MatchQueryInput), required=True, resolver=match)
+    match = Field(MatchResult, cursor=Argument(CursorInput), query=Argument(MatchQueryInput, required=True), required=True, resolver=match)
+
 
 class Mutation(ObjectType):
     update_company = UpdateCompany.Field()

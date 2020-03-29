@@ -17,7 +17,7 @@ class DemandInput(graphene.InputObjectType):
 
     quantity = graphene.Int(required=True)
     skills = graphene.List(graphene.Int)
-    max_hourly_wages = graphene.Float()
+    max_hourly_salary = graphene.Float()
 
 
 class UpdateDemand(graphene.Mutation):
@@ -32,8 +32,8 @@ class UpdateDemand(graphene.Mutation):
 
         with db.engine.begin() as conn:
             sql = text("""
-insert into btb.team_demand (id, company_id, name, description_int, description_ext, quantity, skills, max_hourly_wages)
-values (coalesce(:id, nextval('btb.team_demand_id_seq')), :company_id, :name, :description_int, :description_ext, :quantity, :skills, :max_hourly_wages)
+insert into btb.team_demand (id, company_id, name, description_int, description_ext, quantity, skills, max_hourly_salary)
+values (coalesce(:id, nextval('btb.team_demand_id_seq')), :company_id, :name, :description_int, :description_ext, :quantity, :skills, :max_hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 
@@ -42,7 +42,7 @@ do update set
     description_ext = excluded.description_ext, 
     quantity = excluded.quantity, 
     skills = excluded.skills,
-    max_hourly_wages = excluded.max_hourly_wages
+    max_hourly_salary = excluded.max_hourly_salary
 returning id
             """)
             data = conn.execute(sql, **demand.__dict__)

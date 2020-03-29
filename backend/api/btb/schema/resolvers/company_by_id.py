@@ -8,6 +8,7 @@ from flask import current_app, g
 
 class CompanyLoader(DataLoader):
     def batch_load_fn(self, keys):
+        # current_app.logger.debug('CompanyLoader', keys)
 
         with db.engine.begin() as conn:
             sql = text('select * from btb.company where id = any(:keys)')

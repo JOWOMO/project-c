@@ -3,6 +3,21 @@ SET ROLE 'lambda_b2b';
 CREATE SCHEMA IF NOT EXISTS btb
     AUTHORIZATION lambda_b2b;
 
+CREATE SEQUENCE IF NOT EXISTS btb.skillgroup_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+CREATE TABLE IF NOT EXISTS btb.skillgroup
+(
+    id integer NOT NULL DEFAULT nextval('btb.skillgroup_id_seq'::regclass),
+    name text NOT NULL,
+    CONSTRAINT skillgroup_pkey PRIMARY KEY (id),
+    CONSTRAINT skillgroup_name UNIQUE (name)
+);
+
 CREATE SEQUENCE IF NOT EXISTS btb.skill_id_seq
     INCREMENT 1
     START 1
@@ -13,9 +28,14 @@ CREATE SEQUENCE IF NOT EXISTS btb.skill_id_seq
 CREATE TABLE IF NOT EXISTS btb.skill
 (
     id integer NOT NULL DEFAULT nextval('btb.skill_id_seq'::regclass),
-    text text NOT NULL,
+    skillgroup_id integer NOT NULL,
+    name text NOT NULL,
+    
     CONSTRAINT skill_pkey PRIMARY KEY (id),
-    CONSTRAINT text UNIQUE (text)
+    CONSTRAINT skill_text UNIQUE (name),
+
+    CONSTRAINT skillgroup_skillgroup_id FOREIGN KEY (skillgroup_id)
+        REFERENCES btb.skillgroup (id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS btb.customer_id_seq
@@ -96,7 +116,8 @@ CREATE TABLE IF NOT EXISTS btb.team_demand
     description_ext text,
     quantity integer NOT NULL,
     skills integer[] NULL,
-    max_hourly_wages numeric,
+    max_hourly_salary numeric,
+    
     CONSTRAINT team_demand_pkey PRIMARY KEY (id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id)
@@ -118,7 +139,8 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
     description_ext text,
     quantity integer NOT NULL,
     skills integer[] NULL,
-    hourly_wages numeric,
+    hourly_salary numeric,
+    
     CONSTRAINT team_supply_pkey PRIMARY KEY (id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id)
@@ -141,8 +163,13 @@ CREATE TABLE IF NOT EXISTS btb.postal_codes
     code3 varchar(20),
     latitude real,
     longitude real,
-    accuracy smallint
+    accuracy smallint,
+    point geography  
 );
 
 CREATE INDEX IF NOT EXISTS idx_postal_codes_postalcode on
     btb.postal_codes(postalcode);
+
+CREATE INDEX IF NOT EXISTS idx_postal_codes_pos on
+    btb.postal_codes using gist(pos)
+;

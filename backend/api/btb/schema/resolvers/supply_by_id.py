@@ -8,6 +8,7 @@ from flask import current_app, g
 
 class SupplyLoader(DataLoader):
     def batch_load_fn(self, keys):
+        # current_app.logger.debug('SupplyLoader', keys)
 
         with db.engine.begin() as conn:
             sql = text('select * from btb.team_supply where id = any(:keys)')

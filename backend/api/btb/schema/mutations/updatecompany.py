@@ -45,7 +45,7 @@ returning id
             companyid = next(data).id
 
             sql = text("""
-insert into btb.company_user(customer_id, company_id)
+insert into btb.company_customer(customer_id, company_id)
     select id, :company
     from btb.customer
     where external_id = :user
