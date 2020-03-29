@@ -28,7 +28,7 @@ insert into btb.company
         'Böblingen'
     );
     
-insert into btb.company_user
+insert into btb.company_customer
     values (1, 1);
 
 

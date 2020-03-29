@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS btb.customer
     external_id text NOT NULL,
     email text NOT NULL,
     name text NOT NULL,
-    CONSTRAINT user_pkey PRIMARY KEY (id),
+    CONSTRAINT customer_pkey PRIMARY KEY (id),
     CONSTRAINT email UNIQUE (email)
 );
 
@@ -68,15 +68,15 @@ CREATE TABLE IF NOT EXISTS btb.company
     CONSTRAINT company_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS btb.company_user
+CREATE TABLE IF NOT EXISTS btb.company_customer
 (
-    user_id integer NOT NULL,
+    customer_id integer NOT NULL,
     company_id integer NOT NULL,
 
-    CONSTRAINT company_user_pkey PRIMARY KEY (company_id, user_id),
+    CONSTRAINT company_customer_pkey PRIMARY KEY (company_id, customer_id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id),
-    CONSTRAINT user_id FOREIGN KEY (user_id)
+    CONSTRAINT customer_id FOREIGN KEY (customer_id)
         REFERENCES btb.customer (id) 
 );
 
@@ -123,3 +123,6 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id)
 );
+
+CREATE INDEX IF NOT EXISTS idx_team_supply_skills on
+    btb.team_supply using gin(skills);

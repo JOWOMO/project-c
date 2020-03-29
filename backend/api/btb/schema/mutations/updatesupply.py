@@ -2,7 +2,7 @@
 
 import graphene
 from btb.schema.types import Supply
-from btb.models import db, get_table
+from btb.models import db
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app

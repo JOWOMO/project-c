@@ -2,7 +2,7 @@ from flask import Flask, request, g, current_app, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from btb.auth import load_principal_from_serverless
 from btb.graphql import graphql_view
-from btb.models import db, get_table
+from btb.models import db
 from os import environ
 from btb.datasources import instanciate_datasources
 

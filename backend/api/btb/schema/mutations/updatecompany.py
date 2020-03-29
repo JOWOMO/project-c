@@ -1,6 +1,6 @@
 import graphene
 from btb.schema.types import Company
-from btb.models import db, get_table
+from btb.models import db
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app
@@ -45,7 +45,7 @@ returning id
             companyid = next(data).id
 
             sql = text("""
-insert into btb.company_user(user_id, company_id)
+insert into btb.company_user(customer_id, company_id)
     select id, :company
     from btb.customer
     where external_id = :user

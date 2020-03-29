@@ -9,3 +9,5 @@ from .supply_by_id import supply_by_id, SupplyLoader
 
 from .supplies_by_company import supplies_by_company
 from .demands_by_company import demands_by_company
+
+from .match import match

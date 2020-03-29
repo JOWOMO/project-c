@@ -1,6 +1,6 @@
 from graphene import ID, String, ObjectType
 from flask import g
-from btb.models import db, get_table
+from btb.models import db
 from sqlalchemy import text
 
 

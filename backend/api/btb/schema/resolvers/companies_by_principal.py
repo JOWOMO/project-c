@@ -11,7 +11,7 @@ from
 btb.company c, btb.company_user cu
 where   
     c.id = cu.company_id 
-and cu.user_id = :id
+and cu.customer_id = :id
 """)
 
     # we're coming from me, principal is already resolved

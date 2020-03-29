@@ -1,11 +1,11 @@
-from graphene import ObjectType, Field, Schema, ID, List, NonNull
-from btb.schema.types import User, Demand, Supply, Company, Skill
-from btb.schema.resolvers import me as resolveme, demand_by_id, supply_by_id, company_by_id, skills as skills_resolver, companies_by_principal
+from graphene import ObjectType, Field, Schema, ID, List, NonNull, Argument
+from btb.schema.types import User, Demand, Supply, Company, Skill, Match, MatchQueryInput
+from btb.schema.resolvers import me as resolveme, demand_by_id, supply_by_id, company_by_id, skills as skills_resolver, companies_by_principal, match
 from btb.schema.mutations import UpdateCompany, UpdateDemand, RemoveDemand, UpdateSupply, RemoveSupply
 
 class Query(ObjectType):
     me = Field(NonNull(User), resolver=resolveme)
-    
+
     companies = List(NonNull(Company), resolver=companies_by_principal)
 
     demand = Field(Demand, id=ID(required=True), resolver=demand_by_id)
@@ -13,6 +13,8 @@ class Query(ObjectType):
     company = Field(Company, id=ID(required=True), resolver=company_by_id)
 
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
+
+    match = List(Match, query=Argument(MatchQueryInput), required=True, resolver=match)
 
 class Mutation(ObjectType):
     update_company = UpdateCompany.Field()
