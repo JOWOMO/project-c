@@ -2,13 +2,13 @@ from flask import Flask, request, g, current_app, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from btb.auth import load_principal_from_serverless
 from btb.graphql import graphql_view
-from btb.models import db, setup_dev_data, get_table
-
+from btb.models import db, get_table
+from os import environ
 
 def create_app():
     app = Flask(__name__)
-
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///memory"
+    
+    app.config["SQLALCHEMY_DATABASE_URI"] = environ["SQLALCHEMY_DATABASE_URI"]
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)

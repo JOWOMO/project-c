@@ -13,10 +13,9 @@ CREATE SEQUENCE IF NOT EXISTS btb.customer_id_seq
 CREATE TABLE IF NOT EXISTS btb.customer
 (
     id integer NOT NULL DEFAULT nextval('btb.customer_id_seq'::regclass),
-    external_id text not null,
+    external_id text NOT NULL,
     email text NOT NULL,
-
-    name text,
+    name text NOT NULL,
     CONSTRAINT user_pkey PRIMARY KEY (id),
     CONSTRAINT email UNIQUE (email)
 );
@@ -32,14 +31,16 @@ CREATE TABLE IF NOT EXISTS btb.company
 (
     id integer NOT NULL DEFAULT nextval('btb.company_id_seq'::regclass),
     
-    name_int text NOT NULL,
-    name_ext text,
+    comments_int text,
+    comments_ext text,
 
+    name text not null,
     logo_url text,
-    line_one text,
-    line_two text,
-    line_three text,
-    postalcode text,
+    
+    address_line1 text,
+    address_line2 text,
+    address_line3 text,
+    postal_code text,
     city text,
 
     state text,
@@ -75,12 +76,12 @@ CREATE TABLE IF NOT EXISTS btb.team_demand
 (
     id integer NOT NULL DEFAULT nextval('btb.team_demand_id_seq'::regclass),
     company_id integer NOT NULL,
-    title text NOT NULL,
+    name text NOT NULL,
     description_int text,
     description_ext text,
     quantity integer NOT NULL,
     tags text[] NULL,
-    max_hourly_wages numeric NOT NULL,
+    max_hourly_wages numeric,
     CONSTRAINT team_demand_pkey PRIMARY KEY (id),
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id)
@@ -97,7 +98,7 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
 (
     id integer NOT NULL DEFAULT nextval('btb.team_supply_id_seq'::regclass),
     company_id integer NOT NULL,
-    title text NOT NULL,
+    name text NOT NULL,
     description_int text,
     description_ext text,
     quantity integer NOT NULL,

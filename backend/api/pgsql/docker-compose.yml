@@ -1,0 +1,12 @@
+postgres:
+  restart: always
+  image: postgres
+  ports:
+    - "5432:5432"
+  environment:
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_DB: dev
+  volumes:
+    - ./db-create.pgsql:/docker-entrypoint-initdb.d/1-db.sql
+    - ./schema.pgsql:/docker-entrypoint-initdb.d/2-schema.sql
+    - ./test-data.pgsql:/docker-entrypoint-initdb.d/3-data.sql

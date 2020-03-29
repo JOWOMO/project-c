@@ -1,4 +1,2 @@
-from .company import Company
+from .company import Company, Demand, Supply
 from .user import User
-from .team import Team
-from .demand import Demand

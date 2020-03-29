@@ -1,14 +1,20 @@
 from graphene import ID, String, ObjectType
-
+from flask import g
+from btb.models import db, get_table
+from sqlalchemy.sql import select
 
 def company_by_principal(root, info):
-    return {}
 
+    with db.engine.begin() as conn:
+        company = get_table("company")
+        company_user = get_table("company_user")
 
-#    context: Context = info.context
-#    principal = context.get_principal()
+        j = company.join(
+            company_user, 
+            company.c.id == company_user.c.user_id and company_user.c.user_id == g.user.get_id()    
+        )
 
-#    result = context.db().query(DB_Company).filter(DB_Company.ownerid.is_(principal.get_id()))
-#    print (result)
+        sel = select([company]).select_from(j)
+        result = conn.execute(sel)
 
-#    return result
+        return result.fetchall()

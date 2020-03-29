@@ -11,6 +11,7 @@ flask-sqlalchemy = "^2.4.1"
 Flask-GraphQL = "^2.0.1"
 graphene-sqlalchemy = "^2.2.2"
 graphene = "^2.1.8"
+psycopg2-binary = "^2.8.4"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"

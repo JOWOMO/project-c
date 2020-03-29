@@ -7,5 +7,5 @@ db = SQLAlchemy()
 
 
 def get_table(name):
-    return Table(name, db.metadata, autoload=True, autoload_with=db.engine)
+    return Table(name, db.metadata, schema="btb", autoload=True, autoload_with=db.engine)
 

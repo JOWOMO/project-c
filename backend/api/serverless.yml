@@ -1,8 +1,8 @@
 service: bee-to-bee-api
 
 plugins:
-  - serverless-wsgi
   - serverless-python-requirements
+  - serverless-wsgi
 
 provider:
   name: aws
@@ -35,6 +35,9 @@ custom:
 functions:
   graphql:
     handler: wsgi_handler.handler
+    environment:
+      SQLALCHEMY_DATABASE_URI: postgresql://postgres:postgres@localhost/dev
+
     vpc:
       securityGroupIds:
         - Fn::ImportValue: DatabaseSecurityGroupId
