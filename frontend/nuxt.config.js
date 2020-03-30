@@ -20,10 +20,10 @@ export default {
   */
   loading: { color: '#292FBE' },
   /*
-  ** Global CSS
+  ** Global SCSS
   */
   css: [
-    '@/assets/global.css'
+    { src: '@/assets/global.scss',   lang: "scss" }
   ],
   /*
   ** Plugins to load before mounting the App

@@ -18,6 +18,7 @@
           <span v-if="!$v.email.email">Email is invalid</span>
         </div>
       </div>
+      <span>{{ error }}</span>
 
       <div class="form-group">
         <button class="btn btn-secondary" @click.prevent="$router.push('/')">Zurück</button>
@@ -36,22 +37,35 @@ export default {
   data() {
     return {
       email: "",
-      submitted: false
+      submitted: false,
+      error:''
     };
   },
   validations: {
-    user: {
+
       email: { required, email }
-    }
+    
   },
   methods: {
     async reset_password() {
+       this.submitted = true;
+
+        // stop here if form is invalid
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+            return;
+        }
       const username = this.email;
       console.log("reset password");
 
       await Auth.forgotPassword(username)
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
+        .then((data) => {
+          // redirect to new-password
+          this.$router.push("new-password")
+        })
+        .catch(err => {
+          this.error = err.message
+        });
     }
   }
 };

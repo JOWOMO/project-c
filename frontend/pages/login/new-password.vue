@@ -65,7 +65,7 @@
                 <span v-else-if="!$v.user.confirmpwd.sameAsPassword">Passwords must match</span>
                 </div>
             </div>
-            
+            <span>{{ error }}</span>
             <div class="form-group">
                 <button 
                 class="btn btn-secondary" 
@@ -81,6 +81,7 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import { Auth } from 'aws-amplify'
 
 export default {
+  layout:'register',
     data() {
     return {
       user: {
@@ -89,7 +90,8 @@ export default {
         pwd: "",
         confirmpwd: ""
       },
-      submitted: false
+      submitted: false,
+      error:''
     };
   },
   validations: {
@@ -97,10 +99,17 @@ export default {
       email: { required, email },
       pwd: { required, minLength: minLength(6) },
       confirmpwd: { required, sameAsPassword: sameAs("pwd") },
-    }
+    },
   },
   methods: {
     async new_pwd() {
+       this.submitted = true;
+
+        // stop here if form is invalid
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+            return;
+        }
         const username = this.user.email,
               code = this.user.code,
               new_password = this.user.pwd;
@@ -108,8 +117,13 @@ export default {
         console.log(this.user.email)
 
         await Auth.forgotPasswordSubmit(username, code, new_password)
-            .then(data => this.$router.push('/login'))
-            .catch(err => console.log(err));
+            .then(data => {
+              this.$router.push('/login')
+              }
+              )
+            .catch(err => {
+               this.error = err
+            });
     }
   }
 }

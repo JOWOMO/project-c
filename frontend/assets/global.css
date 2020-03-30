@@ -10,20 +10,93 @@ html, body {
   font-family: 'Montserrat', sans-serif;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+h1 {
+  font-size: 36px;
+  color: #000;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  text-align: center;
+  font-weight: normal;
+}
+
+h2 {
+  font-size: 24px;
+  color: #000;
+}
+
+h3 {
+  font-size: 20px;
+  color: #000;
+}
+
+button {
+  border-radius: 40px;
+  width: 100px;
+  height: 40px;
+  background: #00000006;
+  font-size: 16px;
+  margin: 30px;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+button:hover {
+  background: #00000016;
+}
+
+input {
+  background-color: #00000006;
+  border-radius: 10px;
+  border: 2px solid #00000060;
+  width: 500px;
+  height: 40px;
+  position: relative;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  margin: 30px;
+  padding-left: 10px;
+  color: #000;
+}
+
+input:active {
+  background: #00000016;
+  border-color: #25A6DA;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   margin: 0;
 }
 
-h1 {
-  font-size: 36px;
-  color: #000;
-  position: relative;
-  left: 50%;
-  -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
+a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  -webkit-transition: all .75s ease;
+  transition: all .75s ease;
+}
+
+a:hover {
+  color: #25A6DA;
+}
+
+.profile_img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 50px;
+}
+
+.primary {
+  background-color: #25A6DA;
+  color: #fff;
 }
 /*# sourceMappingURL=global.css.map */

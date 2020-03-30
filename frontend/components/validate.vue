@@ -39,7 +39,7 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-secondary" @click.prevent="$router.push('/register/user')">Zurück</button>
+        <button class="btn btn-secondary" @click.prevent="$store.commit('set_validation_state',false)">Zurück</button>
         <button class="btn btn-primary">Weiter</button>
       </div>
     </form>

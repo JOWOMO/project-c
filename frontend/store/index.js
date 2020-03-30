@@ -19,7 +19,8 @@ export const state = () => ({
     ],
     resources:[
 
-    ]
+    ],
+    validation_state:false
 })
 
 export const mutations = {
@@ -67,10 +68,12 @@ export const mutations = {
             console.log("tag: ", this.state.resources[i]);
             if(this.state.resources[i].resource == payload)
             {
-                console.log("Tag löschen", payload); 
                 delete this.state.resources[i];
             }
         }
+    },
+    set_validation_state(state,payload){
+        this.state.validation_state = payload
     }
 }
 

@@ -3,22 +3,28 @@
     <div class="b2b-login-wrapper">
       <div class="b2b-login-scale">
         <div class="b2b-login-left-bg"></div>
-        <h2>
+        <h1>
           Ich
           <span>biete</span>
           <br />Mitarbeiter
-        </h2>
-        <button @click="user_register" id="biete" class="hover-button">Kostenlos Anmelden</button>
+        </h1>
+        <button @click="user_register" id="biete" class="hover-button">
+          Kostenlos Anmelden
+          <img src="/icons/arrow-left.svg">
+        </button>
       </div>
 
       <div class="b2b-login-scale">
         <div class="b2b-login-right-bg"></div>
-        <h2>
+        <h1>
           Ich
           <span>suche</span>
           <br />Mitarbeiter
-        </h2>
-        <button v-on:click="company_register" id="suche" class="hover-button">Kostenlos Anmelden</button>
+        </h1>
+        <button v-on:click="company_register" id="suche" class="hover-button">
+          Kostenlos Anmelden
+          <img src="/icons/arrow-left.svg">
+        </button>
       </div>
     </div>
   </div>
@@ -59,17 +65,13 @@ export default {
 };
 </script>
 
-<style lang="scss",>
-nav {
-  position: absolute;
-  background: #fff;
-  z-index: 3;
-}
+<style lang="scss">
+// @import '~assets/global.scss'
 
 .b2b-login-wrapper {
   display: flex;
   flex-direction: row;
-  position: absolute;
+  // position: absolute;
 
   .b2b-login-scale {
     overflow: hidden;
@@ -93,6 +95,16 @@ nav {
 
       &:hover {
         transform: scale(1.2);
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #00000040;
+        }
       }
     }
 
@@ -105,17 +117,24 @@ nav {
 
       &:hover {
         transform: scale(1.2);
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #00000040;
+        }
       }
     }
 
-    h2 {
-      font-weight: normal;
-      font-size: 40px;
+    h1 {
       z-index: 2;
-      position: relative;
-      bottom: 300px;
+      position: absolute;
+      top: 100px;
       color: #fff;
-      margin-left: 50px;
 
       span {
         font-weight: bold;
@@ -125,16 +144,16 @@ nav {
     button {
       margin: 20px 20px 20px 50px;
       padding: 10px;
-      width: 350px;
+      width: 60%;
       border-radius: 40px;
-      color: deepskyblue;
+      color: $primary;
       font-size: 20px;
       background-color: #fff;
       border: none;
       outline: none;
       z-index: 3;
-      position: relative;
-      bottom: 250px;
+      position: absolute;
+      top: 150px;
 
       i {
         margin-left: 10px;

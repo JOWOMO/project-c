@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!validate" class="container">
+    <div v-if="!$store.state.validation_state" class="container">
       <h1>Wir wollen dich besser kennen lernen</h1>
       <form method="POST" @submit.prevent="add_user">
         <div class="form-group">
@@ -138,7 +138,7 @@ export default {
       },
       submitted: false,
       error: "",
-      validate: false
+     
     };
   },
   validations: {
@@ -172,7 +172,7 @@ export default {
         .then(user => {
           console.log("user: ", user);
 
-          this.validate = true;
+          this.$store.commit("set_validation_state",true)
         })
         .catch(err => {
           // user exists

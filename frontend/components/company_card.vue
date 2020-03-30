@@ -16,7 +16,7 @@
       <span>{{ requirement }}</span>
     </p>
 
-    <nuxt-link :to="link" class="green">
+    <nuxt-link :to="link" class="green">  
       <span>{{ matching }}% mit deiner Suche</span>
       <img src="/icons/arrow-left.svg" />
     </nuxt-link>
