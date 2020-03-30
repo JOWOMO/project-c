@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     get_tags: async function() {
+      console.log("env: ",process.env.db)
       await this.$axios
         .$get(`${process.env.db}/tags`)
         .then(response => {
@@ -71,7 +72,7 @@ export default {
     },
     get_resources: async function() {
       await this.$axios
-        .$get(`${process.env.db}/resources`)
+        .$get(process.env.db + '/resources')
         .then(response => {
           console.log("response db: ", response);
           this.resources = response;

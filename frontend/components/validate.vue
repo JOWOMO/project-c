@@ -52,6 +52,7 @@ import { Auth } from 'aws-amplify'
 import { required, email, numeric } from "vuelidate/lib/validators"
 
 export default {
+  name:'validate',
   head() {
     return {
       title: "Verify Email",

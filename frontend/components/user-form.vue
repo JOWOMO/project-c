@@ -1,121 +1,131 @@
 <template>
-  <div class="container">
-    <h1>Wir wollen dich besser kennen lernen</h1>
-    <form method="POST" @submit.prevent="add_user">
-      <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input
-          type="text"
-          v-model="user.firstName"
-          id="firstName"
-          name="firstName"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.firstName.$error }"
-        />
-        <div
-          v-if="submitted && !$v.user.firstName.required"
-          class="invalid-feedback"
-        >First Name is required</div>
-      </div>
-      <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input
-          type="text"
-          v-model="user.lastName"
-          id="lastName"
-          name="lastName"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.lastName.$error }"
-        />
-        <div
-          v-if="submitted && !$v.user.lastName.required"
-          class="invalid-feedback"
-        >Last Name is required</div>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          v-model="user.email"
-          id="email"
-          name="email"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.email.$error }"
-        />
-        <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
-          <span v-if="!$v.user.email.required">Email is required</span>
-          <span v-if="!$v.user.email.email">Email is invalid</span>
+  <div>
+    <div v-if="!validate" class="container">
+      <h1>Wir wollen dich besser kennen lernen</h1>
+      <form method="POST" @submit.prevent="add_user">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            v-model="user.firstName"
+            id="firstName"
+            name="firstName"
+            class="form-control"
+            :class="{ 'is-invalid': submitted && $v.user.firstName.$error }"
+          />
+          <div
+            v-if="submitted && !$v.user.firstName.required"
+            class="invalid-feedback"
+          >First Name is required</div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          v-model="user.pwd"
-          id="password"
-          name="password"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.pwd.$error }"
-        />
-        <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback">
-          <span v-if="!$v.user.pwd.required">Password is required</span>
-          <span v-if="!$v.user.pwd.minLength">Password must be at least 6 characters</span>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            v-model="user.lastName"
+            id="lastName"
+            name="lastName"
+            class="form-control"
+            :class="{ 'is-invalid': submitted && $v.user.lastName.$error }"
+          />
+          <div
+            v-if="submitted && !$v.user.lastName.required"
+            class="invalid-feedback"
+          >Last Name is required</div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          v-model="user.confirmpwd"
-          id="confirmPassword"
-          name="confirmPassword"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.confirmpwd.$error }"
-        />
-        <div v-if="submitted && $v.user.confirmpwd.$error" class="invalid-feedback">
-          <span v-if="!$v.user.confirmpwd.required">Confirm Password is required</span>
-          <span v-else-if="!$v.user.confirmpwd.sameAsPassword">Passwords must match</span>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            v-model="user.email"
+            id="email"
+            name="email"
+            class="form-control"
+            :class="{ 'is-invalid': submitted && $v.user.email.$error }"
+          />
+          <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
+            <span v-if="!$v.user.email.required">Email is required</span>
+            <span v-if="!$v.user.email.email">Email is invalid</span>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">AGB</label>
-        <!-- <Checkmark/> -->
-        <input
-          type="checkbox"
-          v-model="user.agb"
-          id="checkbox"
-          name="checkbox"
-          value="true"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
-        />
-      </div>
-      <div v-if="!$v.user.agb.$invalid" class="invalid-feedback">
-        <span>
-          Ich akzeptiere die
-          <nuxt-link to="/impressum">AGB</nuxt-link>
-        </span>
-      </div>
-      <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
-        <span v-if="!$v.user.agb.required">
-          Bitte die
-          <nuxt-link to="/info/impressum">AGB</nuxt-link>akzeptieren
-        </span>
-      </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            v-model="user.pwd"
+            id="password"
+            name="password"
+            class="form-control"
+            :class="{ 'is-invalid': submitted && $v.user.pwd.$error }"
+          />
+          <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback">
+            <span v-if="!$v.user.pwd.required">Password is required</span>
+            <span v-if="!$v.user.pwd.minLength">Password must be at least 6 characters</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            v-model="user.confirmpwd"
+            id="confirmPassword"
+            name="confirmPassword"
+            class="form-control"
+            :class="{ 'is-invalid': submitted && $v.user.confirmpwd.$error }"
+          />
+          <div v-if="submitted && $v.user.confirmpwd.$error" class="invalid-feedback">
+            <span v-if="!$v.user.confirmpwd.required">Confirm Password is required</span>
+            <span v-else-if="!$v.user.confirmpwd.sameAsPassword">Passwords must match</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">AGB</label>
+          <!-- <Checkmark/> -->
+          <input
+            type="checkbox"
+            v-model="user.agb"
+            id="checkbox"
+            name="checkbox"
+            value="true"
+            class="form-control"
+            :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
+          />
+        </div>
 
-      <div class="form-group">
-        <button class="btn btn-secondary" @click.prevent="$router.push('/')">Zurück</button>
-        <button class="btn btn-primary">Weiter</button>
-      </div>
-    </form>
+        <div v-if="!$v.user.agb.$invalid" class="invalid-feedback">
+          <span>
+            Ich akzeptiere die
+            <nuxt-link to="/impressum">AGB</nuxt-link>
+          </span>
+        </div>
+        <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
+          <span v-if="!$v.user.agb.required">
+            Bitte die
+            <nuxt-link to="/info/impressum">AGB</nuxt-link>akzeptieren
+          </span>
+        </div>
+
+        <span id="error">{{ error }}</span>
+        <div class="form-group">
+          <button class="btn btn-secondary" @click.prevent="$router.push('/')">Zurück</button>
+          <button class="btn btn-primary">Weiter</button>
+        </div>
+      </form>
+    </div>
+    <div v-else>
+      <validate />
+    </div>
   </div>
 </template>
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-
+import validate from "@/components/validate.vue";
 export default {
   name: "profile",
+  components: {
+    validate
+  },
   data() {
     return {
       user: {
@@ -126,7 +136,9 @@ export default {
         confirmpwd: "",
         agb: false
       },
-      submitted: false
+      submitted: false,
+      error: "",
+      validate: false
     };
   },
   validations: {
@@ -141,16 +153,32 @@ export default {
   },
   methods: {
     async add_user() {
-      
+      this.submitted = true;
+
+      // stop here if form is invalid
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
       // this.$store.dispatch('add_user', this.user)
       // this.$store.commit("register_user_state", this.user);
-      
-       this.$store.dispatch("auth/register", {
-              email: this.user.email,
-              password: this.user.pwd
-            });
-      this.$store.dispatch("register_user_state",this.user)
-      this.$router.push("/register/validate");
+      this.$store.commit("register_user_state", this.user);
+      console.log("add user ");
+      this.$store
+        .dispatch("auth/register", {
+          email: this.user.email,
+          password: this.user.pwd
+        })
+        .then(user => {
+          console.log("user: ", user);
+
+          this.validate = true;
+        })
+        .catch(err => {
+          // user exists
+          this.error = err.message;
+          console.log("err: ", err);
+        });
     }
   },
   middelware: "authenticated",

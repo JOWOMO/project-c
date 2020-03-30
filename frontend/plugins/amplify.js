@@ -17,9 +17,15 @@ Amplify.configure({
 
 Vue.use(AmplifyPlugin, AmplifyModules)
 
+// Make Amplify available in store and Vue instances
+export default (_, inject) => {
+  inject('Amplify', AmplifyModules)
+}
+
+
 //register components individually for further use
 // Do not import in .vue files
-Vue.component('sign-in', components.SignIn)
+// Vue.component('sign-in', components.SignIn)
 
 
 
