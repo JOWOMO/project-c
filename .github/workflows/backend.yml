@@ -2,9 +2,6 @@ name: API
 
 on:
   push:
-    paths-ignore: 
-      - '**'
-    
     paths:  
       - 'backend/api/**'
       
