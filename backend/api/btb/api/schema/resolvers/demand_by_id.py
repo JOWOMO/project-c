@@ -8,7 +8,7 @@ from flask import current_app, g
 
 class DemandLoader(DataLoader):
     def batch_load_fn(self, keys):
-        # current_app.logger.debug('DemandLoader', keys)
+        current_app.logger.debug("load %s", keys)
 
         with db.engine.begin() as conn:
             sql = text('select * from btb.team_demand where id = any(:keys)')

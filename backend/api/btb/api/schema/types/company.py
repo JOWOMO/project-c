@@ -44,7 +44,7 @@ class Supply(ObjectType):
 
     quantity = Int(required=True)
     hourly_salary = Float(required=False)
-    company = Field(lambda: Company, required=True)
+    company = Field(lambda: Company, required=True, resolver=company_by_id)
 
     def resolve_skills(root, info):
         if root.skills is None:

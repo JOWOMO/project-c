@@ -8,7 +8,7 @@ from flask import current_app, g
 
 class CompanyLoader(DataLoader):
     def batch_load_fn(self, keys):
-        # current_app.logger.debug('CompanyLoader', keys)
+        current_app.logger.debug("load %s", keys)
 
         with db.engine.begin() as conn:
             sql = text('select * from btb.company where id = any(:keys)')
@@ -22,6 +22,6 @@ class CompanyLoader(DataLoader):
 
 def company_by_id(root, info, id=None):
     id = root["company_id"] if id is None else id
-    current_app.logger.debug('company_by_id', id)
+    current_app.logger.debug("load %s", id)
     
     return g.company_loader.load(id)

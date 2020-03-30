@@ -7,7 +7,7 @@ from promise.dataloader import DataLoader
 
 class SkillLoader(DataLoader):
     def batch_load_fn(self, keys):
-        # current_app.logger.debug('SkillLoader', keys)
+        current_app.logger.debug("load %s", keys)
 
         with db.engine.begin() as conn:
             sql = text("""
@@ -44,5 +44,4 @@ where
     s.skillgroup_id = g.id
 """)
         result = conn.execute(sql)
-        
         return result.fetchall()

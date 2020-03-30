@@ -5,7 +5,8 @@ from btb.api.schema.types import (
     Supply,
     Company,
     Skill,
-    MatchResult,
+    MatchDemandResult,
+    MatchSupplyResult,
     MatchQueryInput,
     CursorInput
 )
@@ -16,7 +17,8 @@ from btb.api.schema.resolvers import (
     company_by_id,
     skills as skills_resolver,
     companies_by_principal,
-    match,
+    match_supplies,
+    match_demand,
 )
 from btb.api.schema.mutations import (
     UpdateCompany,
@@ -24,6 +26,7 @@ from btb.api.schema.mutations import (
     RemoveDemand,
     UpdateSupply,
     RemoveSupply,
+    UpdateUser,
 )
 
 
@@ -38,10 +41,25 @@ class Query(ObjectType):
 
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
 
-    match = Field(MatchResult, cursor=Argument(CursorInput), query=Argument(MatchQueryInput, required=True), required=True, resolver=match)
+    match_supplies = Field(
+        MatchSupplyResult, 
+        cursor=Argument(CursorInput), 
+        query=Argument(MatchQueryInput, required=True), 
+        required=True, 
+        resolver=match_supplies,
+    )
+
+    match_demand = Field(
+        MatchDemandResult, 
+        cursor=Argument(CursorInput), 
+        query=Argument(MatchQueryInput, required=True), 
+        required=True, 
+        resolver=match_demand,
+    )
 
 
 class Mutation(ObjectType):
+    update_user = UpdateUser.Field()
     update_company = UpdateCompany.Field()
 
     update_demand = UpdateDemand.Field()
