@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "serverless deploy --stage dev",
     "remove": "serverless remove --stage dev",
-    "dev": "SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@localhost/dev FLASK_ENV=development FLASK_APP=btb poetry run flask run"
+    "dev": "SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@localhost/dev FLASK_ENV=development FLASK_APP=btb.api poetry run flask run",
+    "db-update": "SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@localhost/dev poetry run python3 -m btb.update"
   },
   "author": "",
   "license": "",

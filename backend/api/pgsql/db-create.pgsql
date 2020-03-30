@@ -1,15 +1,32 @@
-CREATE ROLE lambda_b2b;
-GRANT ALL PRIVILEGES ON DATABASE dev TO lambda_b2b;
 
-GRANT lambda_b2b to postgres;
+-- create database dev;
 
-CREATE EXTENSION if not exists postgis; 
--- drop database dev;
--- CREATE DATABASE dev
---     WITH OWNER = lambda_b2b
---     ENCODING = 'utf8'
---     LC_COLLATE = 'en_US.utf8'
---     LC_CTYPE = 'en_US.utf8'
---     CONNECTION LIMIT = -1
--- ;
+CREATE EXTENSION if not exists postgis;
 
+CREATE ROLE lambda_b2b_dev;
+
+GRANT ALL PRIVILEGES ON DATABASE dev TO lambda_b2b_dev;
+REVOKE ALL PRIVILEGES ON database dev FROM public;
+
+GRANT lambda_b2b_dev to postgres;
+
+-- create database test;
+-- CREATE EXTENSION if not exists postgis;
+
+-- CREATE ROLE lambda_b2b_test;
+
+-- GRANT ALL PRIVILEGES ON DATABASE test TO lambda_b2b_test;
+-- REVOKE ALL PRIVILEGES ON database test FROM public;
+
+-- GRANT lambda_b2b_test to postgres;
+
+
+-- create database prod;
+-- CREATE EXTENSION if not exists postgis;
+
+-- CREATE ROLE lambda_b2b_prod;
+
+-- GRANT ALL PRIVILEGES ON DATABASE dev TO lambda_b2b_prod;
+-- REVOKE ALL PRIVILEGES ON database dev FROM public;
+
+-- GRANT lambda_b2b_prod to postgres;

@@ -16,9 +16,23 @@ provider:
   apiGateway:
     minimumCompressionSize: 1024
 
+  environment:
+    SQLALCHEMY_DATABASE_URI: ${ssm:/btb/${self:custom.stage}/dburl~true}
+
+  vpc:
+    securityGroupIds:
+      - Fn::ImportValue: DatabaseSecurityGroupId
+
+    subnetIds:
+      - Fn::ImportValue: DatabaseSubnetAId
+      - Fn::ImportValue: DatabaseSubnetBId
+      - Fn::ImportValue: DatabaseSubnetCId
+
 package:
   include:
-    - "btb/**"
+    - btb/**
+    - pgsql/**
+
   exclude:
     - "**"
 
@@ -26,27 +40,19 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   
   wsgi:
-    app: btb.wsgi.app
+    app: btb.api.wsgi.app
     packRequirements: false
 
   pythonRequirements:
     dockerizePip: non-linux
 
 functions:
+  dbupdate:
+    handler: btb.update.handler
+
   graphql:
     handler: wsgi_handler.handler
-    environment:
-      SQLALCHEMY_DATABASE_URI: postgresql://postgres:postgres@localhost/dev
 
-    vpc:
-      securityGroupIds:
-        - Fn::ImportValue: DatabaseSecurityGroupId
-
-      subnetIds:
-        - Fn::ImportValue: DatabaseSubnetAId
-        - Fn::ImportValue: DatabaseSubnetBId
-        - Fn::ImportValue: DatabaseSubnetCId
-        
     events:
       - http:
           method: ANY

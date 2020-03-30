@@ -1,7 +1,6 @@
-SET ROLE 'lambda_b2b';
+SET ROLE 'lambda_b2b_dev';
 
-CREATE SCHEMA IF NOT EXISTS btb
-    AUTHORIZATION lambda_b2b;
+CREATE SCHEMA IF NOT EXISTS btb;
 
 CREATE SEQUENCE IF NOT EXISTS btb.skillgroup_id_seq
     INCREMENT 1
@@ -52,7 +51,8 @@ CREATE TABLE IF NOT EXISTS btb.customer
     email text NOT NULL,
     name text NOT NULL,
     CONSTRAINT customer_pkey PRIMARY KEY (id),
-    CONSTRAINT email UNIQUE (email)
+    CONSTRAINT customer_email UNIQUE (email),
+    CONSTRAINT customer_external_id UNIQUE (external_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS btb.company_id_seq
@@ -171,5 +171,5 @@ CREATE INDEX IF NOT EXISTS idx_postal_codes_postalcode on
     btb.postal_codes(postalcode);
 
 CREATE INDEX IF NOT EXISTS idx_postal_codes_pos on
-    btb.postal_codes using gist(pos)
+    btb.postal_codes using gist(point)
 ;

@@ -13,7 +13,7 @@ custom:
   CIDR: '10.0'
 
   Username: postgres
-  Password: ${env:RDS_PASSWORD}
+  Password: ${ssm:/btb/prod/db-root-password~true}
 
   # this is hardcoded here. We don't create databases this way
   DBName: dev
@@ -134,15 +134,16 @@ resources:
     DatabaseSecurityGroupIngress:
       Type: AWS::EC2::SecurityGroupIngress
       Properties:
+        CidrIp: ${self:custom.CIDR}.0.0/16
         GroupId:
             Fn::GetAtt:
                 - DatabaseSecurityGroup
                 - GroupId
-        IpProtocol: -1
-        FromPort: -1
-        ToPort: -1
-        SourceSecurityGroupId:
-          Ref: DatabaseSecurityGroup
+        IpProtocol: tcp
+        FromPort: 5432
+        ToPort: 5432
+        # SourceSecurityGroupId:
+        #   Ref: DatabaseSecurityGroup
 
     DBInstance:
       Type: AWS::RDS::DBInstance
