@@ -2,6 +2,7 @@
 -- create database dev;
 
 CREATE EXTENSION if not exists postgis;
+CREATE EXTENSION if not exists intarray;
 
 CREATE ROLE lambda_b2b_dev;
 

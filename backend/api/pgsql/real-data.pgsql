@@ -21,7 +21,10 @@ insert into btb.skill (skillgroup_id, id, name)
         (4, 402, 'Nachtschicht')
 on conflict do nothing;
 
-update btb.postal_codes
-    set point = ST_SetSRID(ST_MakePoint(longitude, latitude),4326)::geography
+insert into btb.centered_postalcodes
+select postalcode, st_centroid(st_union(ST_SetSRID(ST_MakePoint(longitude, latitude),4326))) as centoid
+from 
+    btb.postalcodes 
+group by 
+    postalcode
 ;
-

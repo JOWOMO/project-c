@@ -7,7 +7,7 @@ from promise.dataloader import DataLoader
 
 class MeLoader(DataLoader):
     def batch_load_fn(self, keys):
-        # current_app.logger.debug('MeLoader', keys)
+        current_app.logger.debug("load %s", keys)
 
         with db.engine.begin() as conn:
             sql = text("select * from btb.customer where external_id = any(:keys)")
