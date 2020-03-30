@@ -31,6 +31,9 @@ export const getters = {
 }
 
 export const actions = {
+  async session({ commit }){
+    return await Auth.currentSession()
+  },
   async load({ commit }) {
     try {
       const user = await Auth.currentAuthenticatedUser()
@@ -46,7 +49,12 @@ export const actions = {
       username: email,
       password,
       attributes: { email },
+    }).then((user)=>{
+      
+    }).catch((err)=>{
+
     })
+  
     console.log(user)
     return user
   },

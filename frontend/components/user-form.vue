@@ -141,19 +141,16 @@ export default {
   },
   methods: {
     async add_user() {
-      this.submitted = true;
-
-      // stop here if form is invalid
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        return;
-      }
+      
       // this.$store.dispatch('add_user', this.user)
-      this.$store.commit("register_user_state", this.user);
-      console.log("saving user to store");
-      console.log(this.user.email);
-
-      this.$router.push("/register/company");
+      // this.$store.commit("register_user_state", this.user);
+      
+       this.$store.dispatch("auth/register", {
+              email: this.user.email,
+              password: this.user.pwd
+            });
+      this.$store.dispatch("register_user_state",this.user)
+      this.$router.push("/register/validate");
     }
   },
   middelware: "authenticated",

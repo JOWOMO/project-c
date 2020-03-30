@@ -40,7 +40,7 @@ export default {
       ]
     };
   },
-
+  layout:'register',
   middelware:'authenticated',
   methods: {
     user_register: function() {
@@ -56,20 +56,10 @@ export default {
       this.$store.dispatch("auth/load");
     }
   }
-  // asyncData({ store }) {
-  //   console.log("Entering async Data")
-  //   if(process.server) {
-  //     console.log('on server')
-  //   } else {
-  //     console.log('on client')
-  //     store.dispatch('auth/load')
-  //     console.log(store.dispatch('auth/load'))
-  //   }
-  //}
 };
 </script>
 
-<style lang="scss">
+<style lang="scss",>
 nav {
   position: absolute;
   background: #fff;

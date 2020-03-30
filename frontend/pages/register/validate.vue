@@ -2,6 +2,10 @@
 <template>
   <div class="container">
     <h1>Bestätige deine Email adresse</h1>
+    <p>Wir haben dir eine Email geschickt. Bitte fügen Sie den verifizierungs Code hier ein</p>
+    <p class="error" v-if="error != ''">{{ error }}</p>
+
+    <button @click="confirm">Weiter</button>
     <form method="POST" @submit.prevent="confirm">
       <div class="form-group">
         <label for="email">Email</label>
@@ -39,11 +43,14 @@
         <button class="btn btn-primary">Weiter</button>
       </div>
     </form>
+    <button @click="showUser" class="debug">clg user</button>
   </div>
 </template>
 
 <script>
-import { required, email, numeric } from "vuelidate/lib/validators";
+import { Auth } from 'aws-amplify'
+import { required, email, numeric } from "vuelidate/lib/validators"
+
 export default {
   head() {
     return {
@@ -60,7 +67,8 @@ export default {
         email: "",
         code: null
       },
-      submitted: false
+      submitted: false,
+      error: ''
     };
   },
 
@@ -70,9 +78,9 @@ export default {
       code: { required }
     }
   },
+  layout:'register',  
   methods: {
-    confirm() {
-      console.log("clicked");
+   async confirm() {
       this.submitted = true;
 
       // stop here if form is invalid
@@ -80,12 +88,24 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      console.log("valided");
-      this.$store.dispatch("auth/confirm", {
-        email: this.user.email,
-        code: this.user.code
-      });
-      this.$router.push("/register/welcome");
+      console.log(this.user.code)
+      this.$store.dispatch('auth/confirm',{email:this.user.email,code:this.user.code}).then((user)=>{
+        console.log("registered user",user)
+       //  this.$router.push("/register/company")
+       this.$store.dispatch('auth/session').then((user)=>
+       {
+         console.log("user loaded inside validate: ",user);
+       }).catch((err)=>{
+         console.log("error while loading user inside validate: ",err)
+       })
+      }).catch((err)=>{
+        this.error = "verifizierungs Code und Email Adresse stimmen nicht überein"
+        console.log("email is not validated: ",err)
+      })
+    },
+    showUser() {
+      const user = Auth.userSession()
+      console.log(user)
     }
   },
   created() {
@@ -101,6 +121,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.debug {
+  z-index: 99;
+}
+
 .container {
   overflow-x: hidden;
   height: 100vh;
