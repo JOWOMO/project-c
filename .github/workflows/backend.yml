@@ -70,7 +70,7 @@ jobs:
     - name: Run database upde
       uses: ItsKarma/aws-cli@v1.70.0
       with:
-        args: lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload '{}' response.json
+        args: lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload {} response.json
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
