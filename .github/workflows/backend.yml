@@ -44,11 +44,12 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    - name: Run database update
-      uses: KhannaAbhinav/trigger-aws-lambda-action@v1
+    - name: Run database upde
+      uses: ItsKarma/aws-cli@v1.70.0
       with:
-        accessKeyId: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        secretAccessKey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        region: eu-west-1
-        functionName: bee-to-bee-api-dev-dbupdate
-        payload: '{}'
+        args: lambda invoke --function-name bee-to-bee-api-dev-dbupdate --invocation-type RequestResponse --payload '{}'
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: "eu-west-1"
+
