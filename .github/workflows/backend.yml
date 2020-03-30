@@ -34,11 +34,21 @@ jobs:
     - name: Install poetry
       run: |
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-  
+    
+    - name: Set env to staging
+      if: endsWith(github.ref, '/develop')
+      run: |
+        echo "::set-env name=STAGE::dev"
+        
+    - name: Set env to production
+      if: endsWith(github.ref, '/master')
+      run: |
+        echo "::set-env name=STAGE::prod"
+        
     - name: Deploy to stage
       run: |
         source $HOME/.poetry/env
-        npx serverless deploy --stage dev
+        npx serverless deploy --stage $STAGE
       working-directory: backend/api
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -47,7 +57,7 @@ jobs:
     - name: Run database upde
       uses: ItsKarma/aws-cli@v1.70.0
       with:
-        args: lambda invoke --function-name bee-to-bee-api-dev-dbupdate --invocation-type RequestResponse --payload '{}'
+        args: lambda invoke --function-name bee-to-bee-api-$STAGE-dbupdate --invocation-type RequestResponse --payload '{}' response.json
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
