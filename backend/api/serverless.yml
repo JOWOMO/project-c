@@ -18,6 +18,7 @@ provider:
 
   environment:
     SQLALCHEMY_DATABASE_URI: ${ssm:/btb/${self:custom.stage}/dburl~true}
+    STAGE: ${self:custom.stage}
 
   vpc:
     securityGroupIds:

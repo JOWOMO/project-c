@@ -26,7 +26,7 @@ GRANT lambda_b2b_dev to postgres;
 
 -- CREATE ROLE lambda_b2b_prod;
 
--- GRANT ALL PRIVILEGES ON DATABASE dev TO lambda_b2b_prod;
--- REVOKE ALL PRIVILEGES ON database dev FROM public;
+-- GRANT ALL PRIVILEGES ON DATABASE prod TO lambda_b2b_prod;
+-- REVOKE ALL PRIVILEGES ON database prod FROM public;
 
 -- GRANT lambda_b2b_prod to postgres;
