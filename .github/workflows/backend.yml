@@ -2,11 +2,14 @@ name: API
 
 on:
   push:
+    paths-ignore: 
+      - '**'
+    
     paths:  
-      - backend/api/**
-    branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
+      - 'backend/api/**'
+      
+    branches: 
+      - 'master'
 
 jobs:
   build:
@@ -50,3 +53,4 @@ jobs:
         secretAccessKey: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         region: eu-west-1
         functionName: bee-to-bee-api-dev-dbupdate
+        payload: '{}'
