@@ -1,7 +1,6 @@
-SET ROLE 'lambda_b2b';
+SET ROLE 'lambda_b2b_dev';
 
-CREATE SCHEMA IF NOT EXISTS btb
-    AUTHORIZATION lambda_b2b;
+CREATE SCHEMA IF NOT EXISTS btb;
 
 CREATE SEQUENCE IF NOT EXISTS btb.skillgroup_id_seq
     INCREMENT 1
@@ -52,7 +51,8 @@ CREATE TABLE IF NOT EXISTS btb.customer
     email text NOT NULL,
     name text NOT NULL,
     CONSTRAINT customer_pkey PRIMARY KEY (id),
-    CONSTRAINT email UNIQUE (email)
+    CONSTRAINT customer_email UNIQUE (email),
+    CONSTRAINT customer_external_id UNIQUE (external_id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS btb.company_id_seq
@@ -149,8 +149,7 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
 CREATE INDEX IF NOT EXISTS idx_team_supply_skills on
     btb.team_supply using gin(skills);
 
-
-CREATE TABLE IF NOT EXISTS btb.postal_codes
+CREATE TABLE IF NOT EXISTS btb.postalcodes
 (
     countrycode char(2),
     postalcode varchar(20),
@@ -163,13 +162,104 @@ CREATE TABLE IF NOT EXISTS btb.postal_codes
     code3 varchar(20),
     latitude real,
     longitude real,
-    accuracy smallint,
+    accuracy smallint
+);
+
+CREATE INDEX IF NOT EXISTS idx_postalcodes_postalcode on
+    btb.postalcodes(postalcode);
+
+CREATE TABLE IF NOT EXISTS btb.centered_postalcodes
+(
+    postalcode varchar(20),
     point geography  
 );
 
-CREATE INDEX IF NOT EXISTS idx_postal_codes_postalcode on
-    btb.postal_codes(postalcode);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_centered_postalcodes_postalcode on
+    btb.centered_postalcodes(postalcode);
 
-CREATE INDEX IF NOT EXISTS idx_postal_codes_pos on
-    btb.postal_codes using gist(pos)
+CREATE INDEX IF NOT EXISTS idx_centered_postalcodes_point on
+    btb.centered_postalcodes using gist(point)
+;
+
+drop view if exists btb.match_team_supply;
+create or replace view btb.match_team_supply as
+select 
+    u.external_id, 
+    
+    co.id as company_id, 
+    co.name as company_name,
+    
+    s.id record_id, 
+    s.skills, 
+    s.quantity, 
+    s.hourly_salary, 
+    
+    p.point
+from 
+    btb.team_supply s, 
+    btb.company co,
+
+    btb.company_customer cu,
+    btb.customer u,
+
+    btb.centered_postalcodes p
+where 
+    -- company for supplyp
+        s.company_id = co.id
+    and cu.company_id = s.company_id
+    
+    -- user condition
+    and cu.customer_id = u.id
+
+    -- postalcode
+    and co.postal_code = p.postalcode
+;
+
+drop view if exists btb.match_team_demand;
+create or replace view btb.match_team_demand as
+select 
+    u.external_id, 
+    
+    co.id as company_id, 
+    co.name as company_name, 
+    
+    s.id record_id, 
+    s.skills, 
+    s.quantity, 
+    s.max_hourly_salary as hourly_salary, 
+    
+    p.point
+from 
+    btb.team_demand s, 
+    btb.company co,
+
+    btb.company_customer cu,
+    btb.customer u,
+
+    btb.centered_postalcodes p
+where 
+    -- company for supplyp
+        s.company_id = co.id
+    and cu.company_id = s.company_id
+    
+    -- user condition
+    and cu.customer_id = u.id
+
+    -- postalcode
+    and co.postal_code = p.postalcode
+;
+
+
+drop function if exists btb.get_postalcode_position(text);
+CREATE FUNCTION btb.get_postalcode_position(text) RETURNS geography
+    AS '
+select point
+from 
+    btb.centered_postalcodes     
+where
+    postalcode = $1
+'
+    LANGUAGE SQL
+    IMMUTABLE
+    RETURNS NULL ON NULL INPUT
 ;
