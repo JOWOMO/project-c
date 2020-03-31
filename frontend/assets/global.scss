@@ -301,15 +301,15 @@ a {
 @media only screen and (max-width: 786px) {
   .form-group {
     label {
-      width: 90%;
+      width: 90% !important;
     }
 
     input {
-      width: 90%;
+      width: 90% !important;
     }
 
     .error {
-      width: 90%;
+      width: 90% !important;
     }
   }
 }
