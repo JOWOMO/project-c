@@ -1,6 +1,4 @@
 // Global
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,500&display=swap');
-
 $primary: #25A6DA;
 $secondary: #DA2566;
 $background: #F8FDFF;
@@ -10,7 +8,7 @@ $warning: #EDBA38;
 $error: #EE0000;
 
 $uiComponent: #00000006;
-$uiComponentHighlighted: #00000016;
+$uiComponentHighlighted: #00000010;
 $border: #00000060;
 
 $h1FontSize: 36px;
@@ -19,102 +17,190 @@ $h3FontSize: 20px;
 
 $buttonFormText: 16px;
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
 }
 
 html, body {
-    font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  background: $background;
 }
 
 h1 {
-    font-size: $h1FontSize;
-    color: #000;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-    text-align: center;
-    font-weight: normal;
+  font-size: $h1FontSize;
+  color: #000;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+  font-weight: normal;
 }
 
 h2 {
-    font-size: $h2FontSize;
-    color: #000;
+  font-size: $h2FontSize;
+  color: #000;
 }
 
 h3 {
-    font-size: $h3FontSize;
-    color: #000;
+  font-size: $h3FontSize;
+  color: #000;
 }
 
+// TODO: Add hover
 button {
-    border-radius: 40px;
-    width: 100px;
-    height: 40px;
-    background: $uiComponent;
-    font-size: $buttonFormText;
-    margin: 30px;
-    transition: all 1s ease;
+  border-radius: 40px;
+  width: 100px;
+  height: 40px;
+  background: $uiComponent;
+  font-size: $buttonFormText;
+  margin: 30px 0;
+  transition: all .5s ease;
+  border: none;
+  outline: none;
 
-    &:hover {
-        background: $uiComponentHighlighted;
-    }
+  &:hover {
+      background: $uiComponentHighlighted;
+  }
+
+  .icon {
+    width: 24px;
+    height: auto;
+    margin-left: 10px;
+  }
 }
 
-input {
+.icon {
+  width: 24px;
+  height: auto;
+}
+
+.form-group {
+  position: relative;
+
+  label {
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: normal;
+    font-size: 15px;
+    display: inline-block;
+    text-align: left;
+    width: 500px;
+    padding-left: 12px;
+    transition: all .5s ease;
+  }
+
+  input {
     background-color: $uiComponent;
     border-radius: 10px;
     border: 2px solid $border;
     width: 500px;
-    height: 40px;
+    height: 50px;
     position: relative;
     left: 50%;
-    transform: translate(-50%, 0);
-    margin: 30px;
+    transform: translate(-50%, -50%);
+    margin: 30px 0;
     padding-left: 10px;
     color: #000;
+    outline: none;
+    font-size: 14px;
+    display: inline-block;
 
-    &:active {
+    &:focus {
         background: $uiComponentHighlighted;
         border-color: $primary;
+        padding: 10px 0 0 14px;
     }
 
-    &[type=number]::-webkit-inner-spin-button, 
-    &[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        margin: 0; 
+    &:valid {
+      padding: 10px 0 0 14px;
     }
+
+    &:valid + label {
+      top: 14%;
+      font-size: 9px !important;
+      color: #000;
+      font-weight: normal;
+    }
+
+    &:focus + label {
+      top: 14%;
+      font-size: 9px !important;
+      color: $primary;
+      font-weight: bold;
+    }
+
+    &[type=number]::-webkit-inner-spin-button,
+    &[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+  }
+
+  .error {
+    color: $error;
+    width: 500px;
+    position: relative;
+    left: 50%;
+    top: -35px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.invalid-login {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $error;
 }
 
 a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    transition: all .75s ease;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  transition: all .3s ease;
 
-    &:hover {
-        color: $primary;
-    }
+  &:hover {
+    color: $primary;
+  }
 }
 
 .profile_img {
-    object-fit: cover;
-    border-radius: 50%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .container {
-    padding: 50px;
+  padding: 50px;
 }
 
 .primary {
-    background-color: $primary;
-    color: #fff;
+  background-color: $primary;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($primary, 10%);
+  }
 }
 
 @media only screen and (max-width: 786px) {
+  .form-group {
+    label {
+      width: 90%;
+    }
 
+    input {
+      width: 90%;
+    }
+
+    .error {
+      width: 90%;
+    }
+  }
 }

@@ -31,7 +31,7 @@ export default {
     const user = await this.$store.dispatch('auth/load')
     console.log(this.$store.state.auth.isAuthenticated)
     if(!this.$store.state.auth.isAuthenticated){
-      this.$router.push("/login") 
+      this.$router.push("/login")
     }else{
       this.state = true;
     }
@@ -40,29 +40,7 @@ export default {
     onload(){
       console.log("loggin in")
       this.$store.dispatch('auth/load')
-    },
-  
-  },
+    }
+  }
 }
 </script>
-
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-</style>

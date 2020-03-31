@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <h1>Willkommen zurück</h1>
-    <form method="POST" @submit.prevent="login">
+    <form method="POST" @submit.prevent="login" novalidate>
+      <span id="invalid-login" v-if="false_auth">Email oder Passwort inkorrekt</span>
       <div class="form-group">
-        <label for="email">Email</label>
         <input
           type="email"
           v-model="user.email"
@@ -11,14 +11,15 @@
           name="email"
           class="form-control"
           :class="{ 'is-invalid': submitted && $v.user.email.$error }"
+          required
         />
-        <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
+        <label for="email">Email</label>
+        <div v-if="submitted && $v.user.email.$error" class="invalid-feedback error">
           <span v-if="!$v.user.email.required">Email wird benötigt</span>
           <span v-if="!$v.user.email.email">Keine gültige Email</span>
         </div>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
         <input
           type="password"
           v-model="user.pwd"
@@ -26,20 +27,21 @@
           name="password"
           class="form-control"
           :class="{ 'is-invalid': submitted && $v.user.pwd.$error }"
+          required
         />
-        <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback">
+        <label for="password">Password</label>
+        <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback error">
           <span v-if="!$v.user.pwd.required">Passwort wird benötigt</span>
           <span v-if="!$v.user.pwd.minLength">Passwort muss wenigstens 6 Zeichen lang sein</span>
         </div>
       </div>
 
-      <span id="invalid_login" v-if="false_auth">Email oder Passwort inkorrekt</span>
+      <div class="link-wrapper">
+        <nuxt-link to="/login/password-reset" class="link">Password vergessen?</nuxt-link>
+      </div>
 
-      <nuxt-link to="/login/password-reset" class="link">Password vergessen?</nuxt-link>
-
-      <div class="form-group">
-        <button class="btn btn-secondary" @click.prevent="$router.push('/')">Zurück</button>
-        <button class="btn btn-primary">Login</button>
+      <div class="form-group buttonWrapper">
+        <button class="primary">Login</button>
       </div>
     </form>
   </div>
@@ -51,7 +53,6 @@ const Cookie = process.client ? require('js-cookie') : undefined
 
 export default {
   layout: 'register',
-  components: {},
   head() {
     return {
       title: "Login",
@@ -79,7 +80,7 @@ export default {
     }
   },
   created(){
-    
+
   },
   methods: {
     async login() {
@@ -124,121 +125,67 @@ export default {
   overflow-x: hidden;
   height: 100vh;
   position: relative;
+
   #invalid_login {
     position: relative;
     right: 50px;
   }
+
   h1 {
-    position: relative;
-    text-align: center;
-    left: -65px;
-    top: 70px;
+    font-weight: bold;
   }
 
   form {
-    text-align: center;
-    display: block;
-    box-sizing: border-box;
-    position: relative;
-    top: 10vh;
     overflow: hidden;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    .link {
-      color: deepskyblue;
+    .link-wrapper {
+      width: 500px;
+      display: inline-block;
       position: relative;
-      left: 50px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .link {
+        position: relative;
+        top: -20px;
+        font-weight: normal;
+      }
     }
 
-    .form-group {
-      margin: 20px;
+    .buttonWrapper {
+      text-align: center;
+      margin-top: 40px;
 
-      label {
-        font-weight: bold;
-        font-size: 18px;
-        display: block;
+      button {
+        margin: 10px 30px;
       }
 
-      input {
-        width: 400px;
-        height: 40px;
-        border: 1px solid grey;
-        border-radius: 5px;
-        background-color: #00000007;
-        padding-left: 10px;
-        font-size: 14px;
-        outline: none;
-        margin-top: 10px;
-      }
-
-      .btn {
-        width: 130px;
-        height: 40px;
-        border-radius: 20px;
-        outline: none;
-        border: none;
-        font-size: 16px;
-        margin: 30px 30px 0 30px;
-      }
-
-      .btn-secondary {
-        color: grey;
-        position: relative;
-        bottom: 30px;
-        right: 60px;
-        width: 80px;
-      }
-
-      .btn-primary {
-        background: deepskyblue;
-        color: #fff;
-        position: relative;
-        bottom: 30px;
-        right: -70px;
+      .primary {
+        width: 150px;
       }
     }
   }
 }
 
-@media only screen and (max-width: 1115px) {
-  h1 {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-  }
-
+@media only screen and (min-height: 1300px) {
   form {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-
-    input {
-      width: 80vw !important;
-      left: 10vw;
-    }
-
-    .btn-secondary {
-      position: static !important;
-    }
-
-    .btn-primary {
-      position: static !important;
-    }
+    top: 350px !important;
   }
 }
 
-@media only screen and (max-width: 350px) {
-  h1 {
-    font-size: 20px;
+@media screen and (max-width: 786px) {
+  .link-wrapper {
+    width: 90% !important;
   }
-  #invalid_login {
-    left: 0;
-  }
+}
 
+@media only screen and (max-width: 500px) {
   form {
-    .link {
-      right: 0 !important;
-    }
+    top: 350px !important;
   }
 }
 </style>
