@@ -88,8 +88,10 @@ resources:
       Properties:
         MfaConfiguration: OFF
         AdminCreateUserConfig:
-          UnusedAccountValidityDays: 7
           AllowAdminCreateUserOnly: false
+
+        AutoVerifiedAttributes:
+          - email
           
         UserPoolName: ${self:service}-${self:custom.stage}-pool
         UsernameAttributes:
@@ -102,6 +104,7 @@ resources:
             RequireNumbers: True
             RequireSymbols: False
             RequireUppercase: True
+            TemporaryPasswordValidityDays: 1
 
     CognitoIdentityPool:
       Type: AWS::Cognito::IdentityPool
