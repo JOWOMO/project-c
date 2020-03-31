@@ -141,7 +141,7 @@ order by {}
                 nextCursor["has_next_page"] = True
                 nextCursor["offset"] = self.params["offset"] + self.page_size
 
-            elif params["offset"] > 0:
+            elif self.params["offset"] > 0:
                 nextCursor["offset"] = self.params["offset"] + len(data)
 
             if data is None or len(data) == 0:
