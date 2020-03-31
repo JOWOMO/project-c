@@ -2,7 +2,6 @@
   "name": "bee2bee_frontend",
   "version": "1.0.0",
   "description": "The web frontend for the bee2bee platform",
-  "author": "“[Johann",
   "private": true,
   "scripts": {
     "deploy": "serverless deploy && serverless client deploy --no-confirm",

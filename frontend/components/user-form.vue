@@ -263,7 +263,7 @@ export default {
       display: flex;
       flex-direction: row-reverse;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
 
       label {
         position: static;
@@ -285,6 +285,16 @@ export default {
       margin-top: 60px;
       text-align: center;
     }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  label {
+    margin: 0 !important;
+  }
+
+  input[type='checkbox'] {
+    margin-left: 15px !important;
   }
 }
 </style>
