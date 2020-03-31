@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div v-if="!$store.state.validation_state" class="container">
-      <h1>Wir wollen dich besser kennen lernen</h1>
-      <form method="POST" @submit.prevent="add_user">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
+    <div v-if="!$store.state.validation_state" class="form-container">
+      <form method="POST" @submit.prevent="add_user" novalidate>
+        <div class="form-group half-width">
           <input
             type="text"
             v-model="user.firstName"
@@ -12,14 +10,16 @@
             name="firstName"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.firstName.$error }"
+            required
           />
+          <label for="firstName">First Name</label>
           <div
             v-if="submitted && !$v.user.firstName.required"
             class="invalid-feedback"
           >First Name is required</div>
         </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
+
+        <div class="form-group half-width">
           <input
             type="text"
             v-model="user.lastName"
@@ -27,29 +27,33 @@
             name="lastName"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.lastName.$error }"
+            required
           />
+          <label for="lastName">Last Name</label>
           <div
             v-if="submitted && !$v.user.lastName.required"
             class="invalid-feedback"
           >Last Name is required</div>
         </div>
+
         <div class="form-group">
-          <label for="email">Email</label>
           <input
-            type="email"
+            type="text"
             v-model="user.email"
             id="email"
             name="email"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.email.$error }"
+            required
           />
+          <label for="email">Email</label>
           <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
             <span v-if="!$v.user.email.required">Email is required</span>
             <span v-if="!$v.user.email.email">Email is invalid</span>
           </div>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
+
+        <div class="form-group half-width">
           <input
             type="password"
             v-model="user.pwd"
@@ -57,14 +61,16 @@
             name="password"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.pwd.$error }"
+            required
           />
+          <label for="password">Password</label>
           <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback">
             <span v-if="!$v.user.pwd.required">Password is required</span>
             <span v-if="!$v.user.pwd.minLength">Password must be at least 6 characters</span>
           </div>
         </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
+
+        <div class="form-group half-width">
           <input
             type="password"
             v-model="user.confirmpwd"
@@ -72,15 +78,17 @@
             name="confirmPassword"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.confirmpwd.$error }"
+            required
           />
+          <label for="confirmPassword">Confirm Password</label>
           <div v-if="submitted && $v.user.confirmpwd.$error" class="invalid-feedback">
             <span v-if="!$v.user.confirmpwd.required">Confirm Password is required</span>
             <span v-else-if="!$v.user.confirmpwd.sameAsPassword">Passwords must match</span>
           </div>
         </div>
+
         <div class="form-group">
-          <label for="confirmPassword">AGB</label>
-          <!-- <Checkmark/> -->
+
           <input
             type="checkbox"
             v-model="user.agb"
@@ -89,15 +97,18 @@
             value="true"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
-          />
+          >
+
+          <label class="margin" for="checkbox">Bitte Akzeptiere unsere <nuxt-link to="/agb">AGB</nuxt-link> um fortzufahren
+          </label>
         </div>
 
-        <div v-if="!$v.user.agb.$invalid" class="invalid-feedback">
+        <!-- <div v-if="!$v.user.agb.$invalid" class="invalid-feedback">
           <span>
             Ich akzeptiere die
             <nuxt-link to="/impressum">AGB</nuxt-link>
           </span>
-        </div>
+        </div> -->
         <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
           <span v-if="!$v.user.agb.required">
             Bitte die
@@ -106,11 +117,12 @@
         </div>
 
         <span id="error">{{ error }}</span>
-        <div class="form-group">
-          <button class="btn btn-secondary" @click.prevent="$router.push('/')">Zurück</button>
-          <button class="btn btn-primary">Weiter</button>
+        <div class="form-group buttons">
+          <button @click.prevent="$router.push('/')">Zurück</button>
+          <button class="primary">Weiter</button>
         </div>
       </form>
+
     </div>
     <div v-else>
       <validate />
@@ -138,7 +150,7 @@ export default {
       },
       submitted: false,
       error: "",
-     
+
     };
   },
   validations: {
@@ -194,104 +206,41 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.container {
-  overflow-x: hidden;
-  height: 100vh;
-
-  h1 {
-    position: relative;
-    left: 500px; // min 400px
-    top: 70px;
-  }
-
+<style lang="scss" scoped>
+.form-container {
   form {
     position: relative;
-    left: 500px; // min 400px
-    top: 120px;
-    overflow: hidden;
+    top: 0;
+    left: 0;
+    transform: none;
 
-    .form-group {
-      margin: 20px;
+    .half-width {
+      width: 250px;
+      display: inline-block;
+      position: relative;
+      left: calc(100% / 2);
+      transform: translate(-100%, 0);
 
       label {
-        font-weight: bold;
-        font-size: 18px;
-        display: block;
+        width: 250px;
       }
 
       input {
-        width: 400px;
-        height: 40px;
-        border: 1px solid grey;
-        border-radius: 5px;
-        background-color: #00000007;
-        padding-left: 10px;
-        font-size: 14px;
-        outline: none;
-        margin-top: 10px;
-      }
-
-      .btn {
-        width: 130px;
-        height: 40px;
-        border-radius: 20px;
-        outline: none;
-        border: none;
-        font-size: 16px;
-        margin: 30px 30px 0 30px;
-      }
-
-      .btn-secondary {
-        color: grey;
-        position: relative;
-        bottom: 30px;
-        left: 0;
-        width: 80px;
-      }
-
-      .btn-primary {
-        background: deepskyblue;
-        color: #fff;
-        position: relative;
-        bottom: 30px;
-        right: -200px;
+        width: 250px;
       }
     }
-  }
-}
 
-@media only screen and (max-width: 1115px) {
-  h1 {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-  }
-
-  form {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-
-    input {
-      width: 80vw !important;
-      left: 10vw;
+    .margin {
+      margin-left: 10px;
     }
 
-    .btn-secondary {
-      position: static !important;
+    .buttons {
+      position: relative;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+      width: auto;
     }
-
-    .btn-primary {
-      position: static !important;
-    }
-  }
-}
-
-@media only screen and (max-width: 350px) {
-  h1 {
-    font-size: 20px;
   }
 }
 </style>

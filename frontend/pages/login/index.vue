@@ -2,10 +2,10 @@
   <div class="container">
     <h1>Willkommen zurück</h1>
     <form method="POST" @submit.prevent="login" novalidate>
-      <span id="invalid-login" v-if="false_auth">Email oder Passwort inkorrekt</span>
+      <span class="invalid-login" v-if="false_auth">Email oder Passwort inkorrekt</span>
       <div class="form-group">
         <input
-          type="email"
+          type="text"
           v-model="user.email"
           id="email"
           name="email"

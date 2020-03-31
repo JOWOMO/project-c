@@ -77,87 +77,96 @@ button {
   height: auto;
 }
 
-.form-group {
+form {
+  overflow: hidden;
   position: relative;
-
-  label {
-    position: absolute;
-    top: 28%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: normal;
-    font-size: 15px;
-    display: inline-block;
-    text-align: left;
-    width: 500px;
-    padding-left: 12px;
-    transition: all .5s ease;
-  }
-
-  input {
-    background-color: $uiComponent;
-    border-radius: 10px;
-    border: 2px solid $border;
-    width: 500px;
-    height: 50px;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 30px 0;
-    padding-left: 10px;
-    color: #000;
-    outline: none;
-    font-size: 14px;
-    display: inline-block;
-
-    &:focus {
-        background: $uiComponentHighlighted;
-        border-color: $primary;
-        padding: 10px 0 0 14px;
-    }
-
-    &:valid {
-      padding: 10px 0 0 14px;
-    }
-
-    &:valid + label {
-      top: 14%;
-      font-size: 9px !important;
-      color: #000;
-      font-weight: normal;
-    }
-
-    &:focus + label {
-      top: 14%;
-      font-size: 9px !important;
-      color: $primary;
-      font-weight: bold;
-    }
-
-    &[type=number]::-webkit-inner-spin-button,
-    &[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      margin: 0;
-    }
-  }
-
-  .error {
-    color: $error;
-    width: 500px;
-    position: relative;
-    left: 50%;
-    top: -35px;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.invalid-login {
-  position: relative;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: $error;
+
+  .form-group {
+    position: relative;
+
+    label {
+      position: absolute;
+      top: 28%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: normal;
+      font-size: 15px;
+      display: inline-block;
+      text-align: left;
+      width: 500px;
+      padding-left: 12px;
+      transition: all .5s ease;
+    }
+
+    input {
+      background-color: $uiComponent;
+      border-radius: 10px;
+      border: 2px solid $border;
+      width: 500px;
+      height: 50px;
+      position: relative;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 30px 0;
+      padding-left: 10px;
+      color: #000;
+      outline: none;
+      font-size: 14px;
+      display: inline-block;
+
+      &:focus {
+          background: $uiComponentHighlighted;
+          border-color: $primary;
+          padding: 10px 0 0 14px;
+      }
+
+      &:valid {
+        padding: 10px 0 0 14px;
+      }
+
+      &:valid + label {
+        top: 14%;
+        font-size: 9px !important;
+        color: #000;
+        font-weight: normal;
+      }
+
+      &:focus + label {
+        top: 14%;
+        font-size: 9px !important;
+        color: $primary;
+        font-weight: bold;
+      }
+
+      &[type=number]::-webkit-inner-spin-button,
+      &[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+      }
+    }
+
+    .error {
+      color: $error;
+      width: 500px;
+      position: relative;
+      left: 50%;
+      top: -35px;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .invalid-login {
+    color: $error;
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+  }
 }
 
 a {
@@ -174,6 +183,8 @@ a {
 .profile_img {
   object-fit: cover;
   border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
 
 .container {

@@ -1,27 +1,23 @@
 <template>
   <aside class="b2b-register-sidebar">
-    <span>logo</span>
-    <h3>In nur drei Schritten geeignete Personalpartner finden</h3>
+    <img src="/images/logo.svg">
 
     <div class="b2b-sidebar-element-wrapper">
-      <div class="b2b-sidebar-element" v-bind:class="{active:this.$store.state.positions.profile}">
-        <div class="b2b-circle">
-          <span>1</span>
-        </div>
+      <div class="b2b-sidebar-element"> <!-- v-bind:class="{active:this.$store.state.positions.profile}" -->
+        <img v-if="active" src="/icons/arrow-left.svg">
+        <img v-elese src="/icons/checkmark.svg">
         <p>Deine Profildaten</p>
       </div>
 
-      <div class="b2b-sidebar-element" v-bind:class="{active:this.$store.state.positions.company}">
-        <div class="b2b-circle">
-          <span>2</span>
-        </div>
+      <div class="b2b-sidebar-element">
+        <img v-if="active" src="/icons/arrow-left.svg">
+        <img v-elese src="/icons/checkmark.svg">
         <p>Zum Unternehmen</p>
       </div>
 
-      <div class="b2b-sidebar-element" v-bind:class="{active:this.$store.state.positions.team}">
-        <div class="b2b-circle">
-          <span>3</span>
-        </div>
+      <div class="b2b-sidebar-element">
+        <img v-if="active" src="/icons/arrow-left.svg">
+        <img v-elese src="/icons/checkmark.svg">
         <p>Mein Team</p>
       </div>
     </div>
@@ -48,73 +44,28 @@ export default {
 aside {
   width: 400px;
   height: 100vh;
-  background: deepskyblue;
+  background: #fff;
   padding: 20px;
   position: fixed;
   left: 0;
   top: 0;
 
-  span {
-    width: 100%;
-    display: inline-block;
-    text-align: center;
-    font-size: 14px;
-    color: #fff;
-  }
+  .b2b-sidebar-element-wrapper {
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
 
-  h3 {
-    color: #fff;
-    margin: 40px 0 60px 0;
-    font-size: 24px;
-    font-weight: normal;
-  }
+    .b2b-sidebar-element {
+      display: flex;
+      flex-direction: row;
+      margin: 20px 0;
 
-  .b2b-sidebar-element {
-    display: flex;
-    flex-direction: row;
-    margin: 20px 0 20px 0;
-
-    .b2b-circle {
-      border-radius: 50%;
-      border: 2px solid #fff;
-      width: 50px;
-      height: 50px;
-      display: inline-block;
-      margin: 15px;
-
-      span {
-        color: #fff;
+      p {
+        margin-left: 20px;
+        color: #000;
         font-size: 18px;
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        margin: 0;
-        padding: 0;
+        font-weight: normal;
       }
-    }
-
-    p {
-      margin-left: 20px;
-      color: #fff;
-      font-size: 20px;
-      line-height: 80px;
-      font-weight: normal;
-    }
-  }
-
-  .active {
-    .b2b-circle {
-      background: #fff;
-
-      span {
-        color: deepskyblue;
-        font-weight: bold;
-      }
-    }
-
-    p {
-      font-weight: bold;
     }
   }
 }

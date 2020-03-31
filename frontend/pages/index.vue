@@ -50,14 +50,14 @@ export default {
       ]
     };
   },
-  layout:'register',
+  layout:'no-auth',
   middelware:'authenticated',
   methods: {
     user_register: function() {
-      this.$router.push("/register/user");
+      this.$router.push("/register/offer/user");
     },
     company_register: function() {
-      this.$router.push("/register/company");
+      this.$router.push("/register/search/company");
     }
   },
   computed: {
@@ -72,85 +72,89 @@ export default {
 <style lang="scss">
 @import '~assets/global.scss';
 
-.b2b-login-wrapper {
-  display: flex;
-  flex-direction: row;
+.container {
+  padding: 0;
 
-  .b2b-login-scale {
-    overflow: hidden;
-    position: fixed;
-    width: 50vw;
-    height: 100vh;
+  .b2b-login-wrapper {
+    display: flex;
+    flex-direction: row;
 
-    &:nth-of-type(even) {
-      right: 0;
-    }
+    .b2b-login-scale {
+      overflow: hidden;
+      position: fixed;
+      width: 50vw;
+      height: 100vh;
 
-    &:nth-of-type(odd) {
-      left: 0;
-    }
-
-    &:hover .b2b-login-left-bg, &:hover .b2b-login-right-bg {
-      transform: scale(1.2);
-
-        &::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: #00000040;
-        }
-    }
-
-    .b2b-login-left-bg {
-      background: url(/images/1.jpg) no-repeat center center;
-      background-size: cover;
-      transition: all 1s ease;
-      height: 100%;
-    }
-
-    .b2b-login-right-bg {
-      background: url(/images/2.jpg) no-repeat center center;
-      background-position: center;
-      background-size: cover;
-      transition: all 1s ease;
-      height: 100%;
-    }
-
-    h1 {
-      z-index: 2;
-      position: absolute;
-      top: 100px;
-      color: #fff;
-
-      span {
-        font-weight: bold;
+      &:nth-of-type(even) {
+        right: 0;
       }
-    }
 
-    button {
-      padding: 10px;
-      width: 300px;
-      border-radius: 40px;
-      color: $primary;
-      font-size: 20px;
-      background-color: #fff;
-      z-index: 3;
-      position: absolute;
-      top: 200px;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+      &:nth-of-type(odd) {
+        left: 0;
+      }
 
-    button:hover {
-      background-color: deepskyblue;
-      color: white !important;
+      &:hover .b2b-login-left-bg, &:hover .b2b-login-right-bg {
+        transform: scale(1.2);
 
-      svg {
-        path {
-          fill: #fff;
+          &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #00000040;
+          }
+      }
+
+      .b2b-login-left-bg {
+        background: url(/images/1.jpg) no-repeat center center;
+        background-size: cover;
+        transition: all 1s ease;
+        height: 100%;
+      }
+
+      .b2b-login-right-bg {
+        background: url(/images/2.jpg) no-repeat center center;
+        background-position: center;
+        background-size: cover;
+        transition: all 1s ease;
+        height: 100%;
+      }
+
+      h1 {
+        z-index: 2;
+        position: absolute;
+        top: 100px;
+        color: #fff;
+
+        span {
+          font-weight: bold;
+        }
+      }
+
+      button {
+        padding: 10px;
+        width: 300px;
+        border-radius: 40px;
+        color: $primary;
+        font-size: 20px;
+        background-color: #fff;
+        z-index: 3;
+        position: absolute;
+        top: 200px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      button:hover {
+        background-color: deepskyblue;
+        color: white !important;
+
+        svg {
+          path {
+            fill: #fff;
+          }
         }
       }
     }
@@ -159,8 +163,6 @@ export default {
 
 @media only screen and (max-width: 768px) {
   .container {
-    padding: 0;
-
     .b2b-login-wrapper {
       flex-direction: column !important;
       width: 100vw !important;
@@ -203,4 +205,5 @@ export default {
     padding: 0 !important;
   }
 }
+
 </style>
