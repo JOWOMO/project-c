@@ -16,18 +16,16 @@ insert into btb.company
 select
     id, 
     'Company ' || id,  
-    'Line 1',
+    'Street ' || id,
     (
         SELECT postalcode
         FROM
-            btb.postal_codes OFFSET floor(random() * (
-                SELECT COUNT(*) FROM btb.postal_codes)
-            )
+            btb.postalcodes OFFSET id
         LIMIT 1
     ),
-    'Böblingen'
+    'City ' || id
 from 
-    generate_series(1,100) id
+    generate_series(1,100000) id
 ;
 
 insert into btb.company_customer (company_id, customer_id)
@@ -43,7 +41,7 @@ select
     id,
     2
 from 
-    generate_series(3, 50) id
+    generate_series(3, 50000) id
 ;
 
 insert into btb.company_customer (company_id, customer_id)
@@ -51,7 +49,7 @@ select
     id,
     3
 from 
-    generate_series(51, 100) id
+    generate_series(50001, 100000) id
 ;
 
 insert into btb.team_demand
@@ -63,23 +61,24 @@ insert into btb.team_demand
     max_hourly_salary
 )
 select
-    id,
-    'Demand Team ' || id,
+    company_id,
+    'Demand Team ' || company_id,
     3,
     (
         select array_agg(id)
         from 
         (
             SELECT id
-            FROM
-                btb.skill OFFSET floor(random() * (
+            FROM btb.skill 
+            where company_id = company_id
+            OFFSET floor(random() * (
                     SELECT COUNT(*) FROM btb.skill)
                 )
-            LIMIT 3
+            LIMIT floor(random() * 5)
         ) sk
     ),
-    3000
-from generate_series(1, 100) id
+    floor(random() * 10000)
+from generate_series(1, 100000) company_id
 ;
 
 insert into btb.team_supply
@@ -91,22 +90,21 @@ insert into btb.team_supply
     hourly_salary
 )
 select
-    id,
-    'Supply Team ' || id,
+    company_id,
+    'Supply Team ' || company_id,
     3,
     (
         select array_agg(id)
         from 
         (
             SELECT id
-            FROM
-                btb.skill OFFSET floor(random() * (
-                    SELECT COUNT(*) FROM btb.skill)
-                )
-            LIMIT 3
+            FROM btb.skill 
+            where company_id = company_id
+            OFFSET floor(random() * (SELECT COUNT(*) FROM btb.skill))
+            LIMIT floor(random() * 5)
         ) sk
     ),
-    3000
+    floor(random() * 10000)
 from 
-    generate_series(1, 100) id
+    generate_series(1, 100000) company_id
 ;

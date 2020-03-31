@@ -1,0 +1,80 @@
+name: App
+
+on:
+  pull_request:
+    paths:  
+      - '.github/workflows/frontend.yml'
+      - 'frontend/**'
+        
+    branches: 
+      - '*'
+        
+  push:
+    paths:  
+      - '.github/workflows/frontend.yml'
+      - 'frontend/**'
+      
+    branches: 
+      - 'develop'
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Install dependencies
+      run: |
+        npm install
+      working-directory: frontend
+
+    - name: Set env default
+      run: |
+        echo "::set-env name=STAGE::dev"
+
+    - name: Set env to test
+      if: endsWith(github.ref, '/develop')
+      run: |
+        echo "::set-env name=STAGE::test"
+        
+    - name: Set env to production
+      if: endsWith(github.ref, '/master')
+      run: |
+        echo "::set-env name=STAGE::prod"
+  
+    - uses: chrislennon/action-aws-cli@v1.1
+
+    - name: Export aws config
+      run:
+        aws cloudformation describe-stacks --stack-name bee-to-bee-api-${{ env.STAGE }} --query "Stacks[0].Outputs" > aws.json
+      working-directory: frontend
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: "eu-west-1"
+
+    - name: Generate 
+      run: |
+        npx nuxt generate --spa 
+      working-directory: frontend
+
+    - uses: actions/upload-artifact@v1
+      with:
+        name: app
+        path: frontend/dist
+
+    - name: Deploy 
+      run: |
+        npx serverless deploy
+        npx serverless client deploy --no-confirm
+      working-directory: frontend
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

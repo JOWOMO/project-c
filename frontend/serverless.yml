@@ -1,0 +1,27 @@
+service: bee-to-bee-client
+
+plugins:
+  - serverless-finch
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-1
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+
+  client:
+    bucketName: ${self:service}-${self:custom.stage}
+    distributionFolder: dist 
+    indexDocument: index.html
+    errorDocument: index.html
+
+resources:
+  Resources:
+    ClientBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-${self:custom.stage}
+        AccessControl: PublicRead
+  
