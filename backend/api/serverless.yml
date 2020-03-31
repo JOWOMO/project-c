@@ -129,6 +129,12 @@ resources:
       Properties:
         ClientName: ${self:service}-${self:custom.stage}-pool-client
         GenerateSecret: False
+        
+        CallbackURLs:
+          - http://localhost:3000
+        LogoutURLs:
+          - http://localhost:3000
+
         AllowedOAuthFlows: 
           - implicit
         AllowedOAuthScopes: 
