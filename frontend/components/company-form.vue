@@ -18,7 +18,7 @@
         >Firmennamen wird benötigt.</div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group three-quaters-width">
         <input
           type="text"
           v-model="user.company_addr"
@@ -35,7 +35,7 @@
         >Die Addresse wird benötigt</div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group one-quater-width">
         <input
           type="number"
           v-model="user.company_postCode"
@@ -146,6 +146,18 @@ export default {
       label, input {
         width: 250px;
       }
+    }
+
+    .three-quaters-width, .one-quater-width {
+      display: inline-block;
+    }
+
+    .three-quaters-width {
+      width: 375px !important;
+    }
+
+    .one-quater-width {
+      width: 125px !important;
     }
 
     .buttons {
