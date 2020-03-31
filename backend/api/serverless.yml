@@ -97,6 +97,20 @@ resources:
             RequireSymbols: False
             RequireUppercase: True
 
+    CognitoIdentityPool:
+      Type: AWS::Cognito::IdentityPool
+      Properties:
+        IdentityPoolName: ${self:service}-${self:custom.stage}-identity-pool
+        AllowUnauthenticatedIdentities: true
+
+        CognitoIdentityProviders:
+          - ClientId:
+              Ref: CognitoUserPoolClient
+            ProviderName:
+              Fn::GetAtt:
+                - CognitoUserPool
+                - ProviderName
+
     CognitoUserPoolDomain:
       Type: AWS::Cognito::UserPoolDomain
       Properties:
@@ -128,3 +142,28 @@ resources:
           - Fn::GetAtt:
               - CognitoUserPool
               - Arn
+
+  Outputs:
+    UserPoolOutput:
+      Value:
+        Ref: CognitoUserPool
+      Export:
+        Name: CognitoUserPool-${self:custom.stage}
+
+    CognitoUserPoolClientOutput:
+      Value:
+        Ref: CognitoUserPoolClient
+      Export:
+        Name: CognitoUserPoolClient-${self:custom.stage}
+
+    IdentityPoolOutput:
+      Value:
+        Ref: CognitoIdentityPool
+      Export:
+        Name: CognitoIdentityPool-${self:custom.stage}
+
+    ApiGatewayRestApiOutput:
+      Value:
+        Ref: ApiGatewayRestApi
+      Export:
+        Name: ApiGatewayRestApiId-${self:custom.stage}
