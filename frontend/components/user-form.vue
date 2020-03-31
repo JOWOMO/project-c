@@ -87,7 +87,8 @@
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group agb">
+          <label class="margin" for="checkbox">Bitte Akzeptiere unsere <nuxt-link to="/agb">AGB</nuxt-link> um fortzufahren</label>
 
           <input
             type="checkbox"
@@ -95,12 +96,9 @@
             id="checkbox"
             name="checkbox"
             value="true"
-            class="form-control"
+            class="form-control checkbox"
             :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
           >
-
-          <label class="margin" for="checkbox">Bitte Akzeptiere unsere <nuxt-link to="/agb">AGB</nuxt-link> um fortzufahren
-          </label>
         </div>
 
         <!-- <div v-if="!$v.user.agb.$invalid" class="invalid-feedback">
@@ -221,17 +219,17 @@ export default {
       left: calc(100% / 2);
       transform: translate(-100%, 0);
 
-      label {
-        width: 250px;
-      }
-
-      input {
+      label, input {
         width: 250px;
       }
     }
 
+    .checkbox {
+      transform: translate(-250px, -16px);
+    }
+
     .margin {
-      margin-left: 10px;
+      margin-left: 15px;
     }
 
     .buttons {
@@ -240,6 +238,24 @@ export default {
       transform: translate(-50%, -50%);
       display: inline-block;
       width: auto;
+    }
+  }
+}
+
+@media only screen and (max-width: 786px) {
+  form {
+    input, label {
+      width: 80% !important;
+    }
+
+    .half-width {
+      width: 100vw !important;
+      position: relative;
+      left: 100% !important;
+
+      input, label {
+        width: 80vw;
+      }
     }
   }
 }

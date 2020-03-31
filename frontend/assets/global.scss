@@ -77,6 +77,104 @@ button {
   height: auto;
 }
 
+@supports(-webkit-appearance: none) or (-moz-appearance: none) {
+  input[type='checkbox'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 21px !important;
+    outline: none;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border: 1px solid var(--bc, lighten($primary, 10)); // var(--border)
+    background: var(--b, #fff) !important;
+    transition: background .3s, border-color .3s, box-shadow .2s;
+
+    &:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      position: absolute;
+      transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
+    }
+
+    &:checked {
+      --b: $primary;
+      --bc: $primary;
+      --d-o: .3s;
+      --d-t: .6s;
+      --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+    }
+
+    &:hover {
+      &:not(:checked) {
+        &:not(:disabled) {
+          --bc: lighten($primary, 10);
+        }
+      }
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 $primary;
+    }
+
+    &:not(.switch) {
+      width: 21px;
+
+      &:after {
+        opacity: var(--o, 0);
+      }
+
+      &:checked {
+        --o: 1;
+      }
+    }
+  }
+
+  input[type='checkbox'] {
+    &:not(.switch) {
+      border-radius: 7px;
+
+      &:after {
+        width: 5px;
+        height: 9px;
+        border: 2px solid $primary;
+        border-top: 0;
+        border-left: 0;
+        left: 7px;
+        top: 4px;
+        transform: rotate(var(--r, 20deg));
+      }
+
+      &:checked {
+        --r: 43deg;
+      }
+    }
+
+    &.switch {
+      width: 38px;
+      border-radius: 11px;
+
+      &:after {
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        background: var(--ab, #fff);
+        transform: translateX(var(--x, 0));
+      }
+
+      &:checked {
+        --ab: #fff;
+        --x: 17px;
+      }
+    }
+  }
+}
+
 form {
   overflow: hidden;
   position: relative;
@@ -102,7 +200,7 @@ form {
     }
 
     input {
-      background-color: $uiComponent;
+      background: $uiComponent;
       border-radius: 10px;
       border: 2px solid $border;
       width: 500px;

@@ -1,6 +1,6 @@
 <template>
   <aside class="b2b-register-sidebar">
-    <img src="/images/logo.svg">
+    <nuxt-link to="/"><img src="/images/logo.svg"></nuxt-link>
 
     <div class="b2b-sidebar-element-wrapper">
       <div class="b2b-sidebar-element"> <!-- v-bind:class="{active:this.$store.state.positions.profile}" -->

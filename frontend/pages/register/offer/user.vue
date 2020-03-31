@@ -23,7 +23,6 @@ export default {
       ]
     };
   },
-
   layout: "register",
   components: {
     sidebarLogin,
@@ -55,6 +54,29 @@ p {
   position: absolute;
   right: 0;
   top: 250px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    padding: 20px 0;
+
+    .sidebar {
+      display: none;
+      z-index: 0;
+    }
+
+    h1, p {
+      width: 100vw;
+      text-align: center;
+      left: 0;
+      transform: none;
+    }
+
+    .profile-form {
+      width: 100vw;
+      left: 0;
+    }
+  }
 }
 </style>
 
