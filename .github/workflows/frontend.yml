@@ -52,11 +52,7 @@ jobs:
     - name: Export aws config
       uses: ItsKarma/aws-cli@v1.70.0
       with:
-        args: >-
-          cloudformation describe-stacks 
-          --stack-name bee-to-bee-api-${{ env.STAGE }} 
-          --query "Stacks[0].Outputs" 
-          > frontend/aws.json
+        args: cloudformation describe-stacks --stack-name bee-to-bee-api-${{ env.STAGE }} --query "Stacks[0].Outputs" > frontend/aws.json
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
