@@ -1,10 +1,10 @@
-name: API
+name: App
 
 on:
   pull_request:
     paths:  
       - '.github/workflows/frontend.yml'
-      - 'frontend/api/**'
+      - 'frontend/**'
         
     branches: 
       - '*'
@@ -12,7 +12,7 @@ on:
   push:
     paths:  
       - '.github/workflows/frontend.yml'
-      - 'frontend/api/**'
+      - 'frontend/**'
       
     branches: 
       - 'develop'
