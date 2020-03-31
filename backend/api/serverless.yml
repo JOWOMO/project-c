@@ -8,7 +8,13 @@ provider:
   name: aws
   stage: dev
   runtime: python3.7
+  
   region: eu-west-1   # eu-central-1
+  deploymentBucket:
+    name: bee-to-bee-deployment
+    blockPublicAccess: true
+    maxPreviousDeploymentArtifacts: 5 
+    serverSideEncryption: AES256
 
   memorySize: 256
   timeout: 20
@@ -123,6 +129,13 @@ resources:
       Properties:
         ClientName: ${self:service}-${self:custom.stage}-pool-client
         GenerateSecret: False
+        AllowedOAuthFlows: 
+          - implicit
+        AllowedOAuthScopes: 
+          - email
+          - openid
+        SupportedIdentityProviders: 
+          - COGNITO
         UserPoolId:
           Ref: CognitoUserPool
         

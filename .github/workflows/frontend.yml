@@ -73,7 +73,7 @@ jobs:
     - name: Deploy 
       run: |
         npx serverless deploy
-        npx serverless client deploy --no-confirm
+        npx serverless client deploy --no-confirm --no-policy-change
       working-directory: frontend
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

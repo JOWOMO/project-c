@@ -11,6 +11,9 @@ $ npm install
 # serve with hot reload at localhost:3000
 $ npm run dev
 
+# use local api server
+$ npm run dev-local
+
 # start json server at localhost:5000
 $ npm run json-server
 

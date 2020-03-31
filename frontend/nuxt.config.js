@@ -12,6 +12,13 @@ function findAWSExport(setting) {
   if (!node) throw `Setting ${setting} is not known`;
 
   console.log(setting, ':', node.OutputValue)
+
+  // can be overriden for local development
+  if (setting === 'ApiGatewayRestApiId') {
+    return process.env.API_URL || 
+      `https://${setting}.execute-api.eu-west-1.amazonaws.com/dev/graphql`;
+  }
+
   return node.OutputValue;
 }
 
@@ -64,8 +71,6 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
     // Doc: https://github.com/microcipcip/cookie-universal/tree/master/packages/cookie-universal-nuxt
     'cookie-universal-nuxt',
     // Doc: https://github.com/nuxt-community/apollo-module
@@ -73,7 +78,7 @@ export default {
   ],
 
   env: {
-    region: 'eu-west-1',
+    region: process.env.DEFAULT_AWS_REGION || 'eu-west-1',
     userPoolId: findAWSExport('CognitoUserPool'),
     identityPoolId: findAWSExport('CognitoIdentityPool'),
     userPoolWebClientId: findAWSExport('CognitoUserPoolClient'),
