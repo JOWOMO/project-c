@@ -1,9 +1,7 @@
 <template>
-  <div class="container">
-    <h1>Erzähl uns mehr über dein Unternehmen</h1>
-    <form @submit.prevent="add_company">
-      <div class="form-group">
-        <label for="Firmennamen">Firmennamen (optional)</label>
+  <div class="form-container">
+    <form @submit.prevent="add_company" novalidate>
+      <div class="form-group half-width">
         <input
           type="text"
           v-model="user.company_name"
@@ -11,14 +9,16 @@
           name="company_name"
           class="form-control"
           :class="{ 'is-invalid': submitted && $v.user.company_name.$error }"
+          required
         />
+         <label for="Firmennamen">Firmennamen (optional)</label>
         <div
           v-if="submitted && !$v.user.company_name.required"
           class="invalid-feedback"
         >Firmennamen wird benötigt.</div>
       </div>
-      <div class="form-group">
-        <label for="addresse">Adresse</label>
+
+      <div class="form-group three-quaters-width">
         <input
           type="text"
           v-model="user.company_addr"
@@ -26,14 +26,16 @@
           name="company_addr"
           class="form-control"
           :class="{ 'is-invalid': submitted && $v.user.company_addr.$error }"
+          required
         />
+        <label for="addresse">Adresse</label>
         <div
           v-if="submitted && !$v.user.company_addr.required"
           class="invalid-feedback"
         >Die Addresse wird benötigt</div>
       </div>
-      <div class="form-group">
-        <label for="company_postCode">Postleihzahl</label>
+
+      <div class="form-group one-quater-width">
         <input
           type="number"
           v-model="user.company_postCode"
@@ -41,13 +43,15 @@
           name="company_postCode"
           class="form-control"
           :class="{ 'is-invalid': submitted && $v.user.company_postCode.$error }"
+          required
         />
+        <label for="company_postCode">Postleihzahl</label>
         <div v-if="submitted && $v.user.company_postCode.$error" class="invalid-feedback">
           <span v-if="!$v.user.company_postCode.required">Postleihzahl wird benötigt</span>
         </div>
       </div>
+
       <div class="form-group">
-        <label for="password">Anzahl Mitarbeiter</label>
         <input
           type="number"
           v-model="user.employees"
@@ -55,14 +59,17 @@
           name="employees"
           class="form-control"
           :class="{ 'is-invalid': submitted && $v.user.employees.$error }"
+          required
         />
+        <label for="password">Anzahl Mitarbeiter</label>
         <div v-if="submitted && $v.user.employees.$error" class="invalid-feedback">
           <span v-if="!$v.user.employees.minValue">Ein Mitarbeiter wird mindesten benötigt</span>
         </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-secondary" @click.prevent="$router.push('/register/user')">Zurück</button>
-        <button class="btn btn-primary">Weiter</button>
+
+      <div class="form-group buttons">
+        <button @click.prevent="$router.push('/register/user')">Zurück</button>
+        <button class="primary">Weiter</button>
       </div>
     </form>
   </div>
@@ -122,103 +129,44 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
-  overflow-x: hidden;
-  height: 100vh;
-
-  h1 {
-    position: relative;
-    left: 500px; // min 400px
-    top: 70px;
-  }
-
+.form-container {
   form {
     position: relative;
-    left: 500px; // min 400px
-    top: 120px;
-    overflow: hidden;
+    top: 0;
+    left: 0;
+    transform: none;
 
-    .form-group {
-      margin: 20px;
+    .half-width {
+      width: 250px;
+      display: inline-block;
+      position: relative;
+      left: calc(100% / 2);
+      transform: translate(-100%, 0);
 
-      label {
-        font-weight: bold;
-        font-size: 18px;
-        display: block;
-      }
-
-      input {
-        width: 400px;
-        height: 40px;
-        border: 1px solid grey;
-        border-radius: 5px;
-        background-color: #00000007;
-        padding-left: 10px;
-        font-size: 14px;
-        outline: none;
-        margin-top: 10px;
-      }
-
-      .btn {
-        width: 130px;
-        height: 40px;
-        border-radius: 20px;
-        outline: none;
-        border: none;
-        font-size: 16px;
-        margin: 30px 30px 0 30px;
-      }
-
-      .btn-secondary {
-        color: grey;
-        position: relative;
-        bottom: 30px;
-        left: 0;
-        width: 80px;
-      }
-
-      .btn-primary {
-        background: deepskyblue;
-        color: #fff;
-        position: relative;
-        bottom: 30px;
-        right: -200px;
+      label, input {
+        width: 250px;
       }
     }
-  }
-}
 
-@media only screen and (max-width: 1115px) {
-  h1 {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-  }
-
-  form {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-
-    input {
-      width: 80vw !important;
-      left: 10vw;
+    .three-quaters-width, .one-quater-width {
+      display: inline-block;
     }
 
-    .btn-secondary {
-      position: static !important;
+    .three-quaters-width {
+      width: 375px !important;
     }
 
-    .btn-primary {
-      position: static !important;
+    .one-quater-width {
+      width: 125px !important;
     }
-  }
-}
 
-@media only screen and (max-width: 350px) {
-  h1 {
-    font-size: 20px;
+    .buttons {
+      position: relative;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+      width: auto;
+    }
   }
 }
 </style>

@@ -257,6 +257,44 @@ export default {
         width: 80vw;
       }
     }
+
+    .agb {
+      text-align: left;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+      align-items: center;
+
+      label {
+        position: static;
+        transform: none;
+        width: auto !important;
+        height: auto !important;
+      }
+
+      input[type='checkbox'] {
+        width: 21px !important;
+        transform: none !important;
+        position: static !important;
+        margin: 0;
+      }
+    }
+
+    .buttons{
+      display: static;
+      margin-top: 60px;
+      text-align: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  label {
+    margin: 0 !important;
+  }
+
+  input[type='checkbox'] {
+    margin-left: 15px !important;
   }
 }
 </style>
