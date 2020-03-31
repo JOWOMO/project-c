@@ -1,27 +1,167 @@
-service: bee-to-bee-client
-
 plugins:
-  - serverless-finch
+  - serverless-python-requirements
+  - serverless-wsgi
 
 provider:
   name: aws
-  runtime: nodejs12.x
-  region: eu-west-1
+  stage: dev
+  runtime: python3.7
+  region: eu-west-1   # eu-central-1
+
+  memorySize: 256
+  timeout: 20
+
+  apiGateway:
+    minimumCompressionSize: 1024
+
+  environment:
+    SQLALCHEMY_DATABASE_URI: ${ssm:/btb/${self:custom.stage}/dburl~true}
+    STAGE: ${self:custom.stage}
+
+  vpc:
+    securityGroupIds:
+      - Fn::ImportValue: DatabaseSecurityGroupId
+
+    subnetIds:
+      - Fn::ImportValue: DatabaseSubnetAId
+      - Fn::ImportValue: DatabaseSubnetBId
+      - Fn::ImportValue: DatabaseSubnetCId
+
+package:
+  include:
+    - btb/
+    - pgsql/
+
+  exclude:
+    - "**"
 
 custom:
   stage: ${opt:stage, self:provider.stage}
 
-  client:
-    bucketName: ${self:service}-${self:custom.stage}
-    distributionFolder: dist 
-    indexDocument: index.html
-    errorDocument: index.html
+  wsgi:
+    app: btb.api.wsgi.app
+    packRequirements: false
+
+  pythonRequirements:
+    dockerizePip: non-linux
+
+functions:
+  dbupdate:
+    handler: btb.update.handler
+
+  graphql:
+    handler: wsgi_handler.handler
+
+    events:
+      - http:
+          method: ANY
+          path: /graphql
+          cors: true
+
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
+
+      - http:
+          method: ANY
+          path: /graphql/{proxy+}
+          cors: true
+
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
 
 resources:
   Resources:
-    ClientBucket:
-      Type: AWS::S3::Bucket
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
       Properties:
-        BucketName: ${self:service}-${self:custom.stage}
-        AccessControl: PublicRead
-  
+        MfaConfiguration: OFF
+        AdminCreateUserConfig:
+          UnusedAccountValidityDays: 7
+          AllowAdminCreateUserOnly: false
+
+        UserPoolName: ${self:service}-${self:custom.stage}-pool
+        UsernameAttributes:
+          - email
+
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: False
+            RequireNumbers: True
+            RequireSymbols: False
+            RequireUppercase: True
+
+    CognitoIdentityPool:
+      Type: AWS::Cognito::IdentityPool
+      Properties:
+        IdentityPoolName: ${self:service}-${self:custom.stage}-identity-pool
+        AllowUnauthenticatedIdentities: true
+
+        CognitoIdentityProviders:
+          - ClientId:
+              Ref: CognitoUserPoolClient
+            ProviderName:
+              Fn::GetAtt:
+                - CognitoUserPool
+                - ProviderName
+
+    CognitoUserPoolDomain:
+      Type: AWS::Cognito::UserPoolDomain
+      Properties:
+        Domain: ${self:service}-${self:custom.stage}-pool-client
+        UserPoolId:
+          Ref: CognitoUserPool
+
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: ${self:service}-${self:custom.stage}-pool-client
+        GenerateSecret: False
+        UserPoolId:
+          Ref: CognitoUserPool
+
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      DependsOn:
+        - ApiGatewayRestApi
+      Properties:
+        AuthorizerResultTtlInSeconds: 300
+        IdentitySource: method.request.header.Authorization
+        Name: ${self:service}-${self:custom.stage}-authorizer
+        RestApiId:
+          Ref: ApiGatewayRestApi
+
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - Fn::GetAtt:
+              - CognitoUserPool
+              - Arn
+
+  Outputs:
+    UserPoolOutput:
+      Value:
+        Ref: CognitoUserPool
+      Export:
+        Name: CognitoUserPool-${self:custom.stage}
+
+    CognitoUserPoolClientOutput:
+      Value:
+        Ref: CognitoUserPoolClient
+      Export:
+        Name: CognitoUserPoolClient-${self:custom.stage}
+
+    IdentityPoolOutput:
+      Value:
+        Ref: CognitoIdentityPool
+      Export:
+        Name: CognitoIdentityPool-${self:custom.stage}
+
+    ApiGatewayRestApiOutput:
+      Value:
+        Ref: ApiGatewayRestApi
+      Export:
+        Name: ApiGatewayRestApiId-${self:custom.stage}
