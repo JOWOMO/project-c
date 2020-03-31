@@ -1,4 +1,3 @@
-
 from graphene import ID, String, ObjectType
 from btb.api.models import db
 from sqlalchemy import text
@@ -9,6 +8,7 @@ from promise.dataloader import DataLoader
 from flask import current_app, g
 from .match import MatchQuery
 
+
 class DemandQuery(MatchQuery):
     def __init__(self, skills, location):
         super().__init__("btb.match_team_demand", skills, location)
@@ -17,12 +17,9 @@ class DemandQuery(MatchQuery):
         return self.map_default_result("demand", g.demand_loader, record)
 
 
-def match_demand(root, info, query, cursor = None):
-    match_query = DemandQuery(
-        query.skills,
-        query.postal_code,
-    )
-    
+def match_demand(root, info, query, cursor=None):
+    match_query = DemandQuery(query.skills, query.postal_code,)
+
     match_query.set_radius(query.radius)
 
     if cursor is not None:
@@ -35,4 +32,3 @@ def match_demand(root, info, query, cursor = None):
         match_query.match_quantity(query.min_quantity)
 
     return match_query.execute()
-

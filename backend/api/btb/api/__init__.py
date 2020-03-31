@@ -5,9 +5,10 @@ from btb.api.models import db
 from os import environ
 from btb.api.datasources import instanciate_datasources
 
+
 def create_app():
     app = Flask(__name__)
-    
+
     app.config["SQLALCHEMY_DATABASE_URI"] = environ["SQLALCHEMY_DATABASE_URI"]
     # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 

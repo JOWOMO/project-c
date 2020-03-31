@@ -1,7 +1,12 @@
 from graphene import ID, String, ObjectType, List, Field, Float, Int, NonNull
-from btb.api.schema.resolvers import demands_by_company, supplies_by_company, company_by_id
+from btb.api.schema.resolvers import (
+    demands_by_company,
+    supplies_by_company,
+    company_by_id,
+)
 from .skills import Skill
 from flask import g
+
 
 class Company(ObjectType):
     id = ID(required=True)
@@ -14,15 +19,16 @@ class Company(ObjectType):
     postal_code = String(required=True)
     city = String(required=True)
 
-    # lazy 
+    # lazy
     demands = List(lambda: Demand, resolver=demands_by_company)
     supplies = List(lambda: Supply, resolver=supplies_by_company)
+
 
 class Demand(ObjectType):
     id = ID(required=True)
     name = String(required=True)
     description = String(required=False)
-    
+
     skills = List(NonNull(Skill), required=False)
 
     quantity = Int(required=True)
@@ -34,6 +40,7 @@ class Demand(ObjectType):
             return []
 
         return g.skill_loader.load_many(root.skills)
+
 
 class Supply(ObjectType):
     id = ID(required=True)

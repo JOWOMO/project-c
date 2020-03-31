@@ -1,4 +1,3 @@
-
 from graphene import ID, String, ObjectType
 from btb.api.models import db
 from sqlalchemy import text
@@ -8,7 +7,8 @@ from promise.dataloader import DataLoader
 
 from flask import current_app, g
 
-class MatchQuery():
+
+class MatchQuery:
     def __init__(self, table, skills, location):
         self.table = table
 
@@ -35,14 +35,18 @@ class MatchQuery():
     def set_radius(self, radius):
         self.params["radius"] = (radius if radius is not None else self.radius) * 1000
 
-    def match_location(self, postal_code, radius = None):
-        self.select.append("st_distance(point, btb.get_postalcode_position(:postal_code)) as distance")
-        self.conditions.append("st_dwithin(point, btb.get_postalcode_position(:postal_code), :radius)")
+    def match_location(self, postal_code, radius=None):
+        self.select.append(
+            "st_distance(point, btb.get_postalcode_position(:postal_code)) as distance"
+        )
+        self.conditions.append(
+            "st_dwithin(point, btb.get_postalcode_position(:postal_code), :radius)"
+        )
         self.orders.append("point <-> btb.get_postalcode_position(:postal_code)")
 
         self.params["postal_code"] = postal_code
         self.params["radius"] = (radius if radius is not None else self.radius) * 1000
-    
+
     def match_skills(self, skills):
         self.select.append("array_length(skills & :skills, 1) as matchingskills")
         self.conditions.append("array_length(skills & :skills, 1) > 0")
@@ -50,13 +54,13 @@ class MatchQuery():
 
         self.params["skills"] = skills
 
-    def match_salary(self, salary = None):
+    def match_salary(self, salary=None):
         self.select.append(":max_salary - hourly_salary as diffsalary")
         self.orders.append("{} desc".format(len(self.orders) + 1))
 
         self.params["max_salary"] = salary if salary is not None else 0
 
-    def match_quantity(self, quantity = None):
+    def match_quantity(self, quantity=None):
         self.select.append(":min_quantity - quantity as diffquantity")
         self.params["min_quantity"] = quantity if quantity is not None else 0
 
@@ -80,7 +84,7 @@ class MatchQuery():
 
         if quantity > 0:
             optionscount += 1
-            
+
             if diffquantity >= 0:
                 matches += 1
 
@@ -90,7 +94,7 @@ class MatchQuery():
         return {
             "distance": round(record["distance"], 0),
             "percentage": self.calculate_percentage(record),
-            tag: loader.load(record["record_id"])
+            tag: loader.load(record["record_id"]),
         }
 
     def map_result(self, record):
@@ -119,7 +123,7 @@ order by {}
                         self.table,
                         " and ".join(conditions),
                         ",".join(orders),
-                        self.limit
+                        self.limit,
                     )
                 ),
                 **self.params
@@ -142,11 +146,11 @@ order by {}
 
             if data is None or len(data) == 0:
                 return {
-                    "page_info": { **nextCursor },
+                    "page_info": {**nextCursor},
                     "matches": [],
                 }
 
             return {
-                "page_info": { **nextCursor },
-                "matches":  map(lambda row: self.map_result(row), data)
+                "page_info": {**nextCursor},
+                "matches": map(lambda row: self.map_result(row), data),
             }

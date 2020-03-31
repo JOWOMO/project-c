@@ -1,3 +1,3 @@
-from btb import create_app
+from btb.api import create_app
 
 app = create_app()

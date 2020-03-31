@@ -5,6 +5,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app
 
+
 class UserInput(graphene.InputObjectType):
     name = graphene.String(required=True)
     email = graphene.String(required=True)
@@ -18,16 +19,15 @@ class UpdateUser(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, user):
-        current_app.logger.debug('UpdateUser', user)
+        current_app.logger.debug("UpdateUser", user)
 
         with db.engine.begin() as conn:
-            sql = text("""
+            sql = text(
+                """
 update btb.customer
 set name = :name, email = :email
 where external_id = :id
-            """)
+            """
+            )
 
-            conn.execute(sql, {
-                **user.__dict__,
-                "id": g.principal.get_id()
-            })
+            conn.execute(sql, {**user.__dict__, "id": g.principal.get_id()})

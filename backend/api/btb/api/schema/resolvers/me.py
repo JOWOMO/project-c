@@ -5,6 +5,7 @@ from sqlalchemy import text
 from promise import Promise
 from promise.dataloader import DataLoader
 
+
 class MeLoader(DataLoader):
     def batch_load_fn(self, keys):
         current_app.logger.debug("load %s", keys)

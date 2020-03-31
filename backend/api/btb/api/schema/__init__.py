@@ -8,7 +8,7 @@ from btb.api.schema.types import (
     MatchDemandResult,
     MatchSupplyResult,
     MatchQueryInput,
-    CursorInput
+    CursorInput,
 )
 from btb.api.schema.resolvers import (
     me as resolveme,
@@ -42,18 +42,18 @@ class Query(ObjectType):
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
 
     match_supplies = Field(
-        MatchSupplyResult, 
-        cursor=Argument(CursorInput), 
-        query=Argument(MatchQueryInput, required=True), 
-        required=True, 
+        MatchSupplyResult,
+        cursor=Argument(CursorInput),
+        query=Argument(MatchQueryInput, required=True),
+        required=True,
         resolver=match_supplies,
     )
 
     match_demand = Field(
-        MatchDemandResult, 
-        cursor=Argument(CursorInput), 
-        query=Argument(MatchQueryInput, required=True), 
-        required=True, 
+        MatchDemandResult,
+        cursor=Argument(CursorInput),
+        query=Argument(MatchQueryInput, required=True),
+        required=True,
         resolver=match_demand,
     )
 

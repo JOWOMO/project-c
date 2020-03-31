@@ -1,4 +1,4 @@
-from btb import create_app
+from btb.api import create_app
 
 
 if __name__ == "__main__":
