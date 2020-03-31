@@ -33,7 +33,7 @@ jobs:
     - name: Install dependencies
       run: |
         npm install
-      working-directory: frontend/api
+      working-directory: frontend
 
     - name: Set env default
       run: |
