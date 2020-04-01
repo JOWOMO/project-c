@@ -22,7 +22,7 @@
     "cookie-universal-nuxt": "^2.1.3",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
-    "c": "^2.0.0",
+    "nuxt": "^2.0.0",
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {
