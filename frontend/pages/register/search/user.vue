@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <sidebarLogin class="sidebar" />
-    <profile />
+    <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+    <profile route="/register/search/validate" />
   </div>
 </template>
 
@@ -21,7 +21,25 @@ export default {
       ]
     };
   },
+  data(){
+    return{
+       positions:{
+        profile:{
+          editing:true,
+          passed:false,
+        },
+        company:{
+          editing:false,
+          passed:false,
 
+        },
+        team:{
+          editing:false,
+          passed: false,
+        },
+       }
+    }
+  },
   layout: "register",
   components: {
     sidebarLogin,

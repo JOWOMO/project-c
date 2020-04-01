@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <Sidebar class="sidebar" />
+  <div class="container"> <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
     <Company />
   </div>
 </template>
@@ -23,6 +22,25 @@ export default {
   components: {
     Sidebar,
     Company
+  },
+   data(){
+    return {
+      positions:{
+        profile:{
+          editing:false,
+          passed:true,
+        },
+        company:{
+          editing:true,
+          passed:false,
+
+        },
+        team:{
+          editing:false,
+          passed: false,
+        },
+      }
+    }
   }
 };
 </script>

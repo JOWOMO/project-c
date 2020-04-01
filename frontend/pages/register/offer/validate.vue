@@ -47,7 +47,7 @@
     <button @click="showUser" class="debug">clg user</button>
   </div>
   <div v-else>
-    <login v-bin:route="route" />
+    <login route="/register/offer/company" />
 
   </div>
   
@@ -95,9 +95,7 @@ export default {
     }
   },
   layout:'register',  
-  props:{
-    route:String
-  },
+
   methods: {
    async confirm() {
       this.submitted = true;
@@ -115,10 +113,10 @@ export default {
        this.$store.dispatch('auth/login',{userdata:this.$store.state.register_state.user}).then((user)=>
        {
          console.log("user loaded inside validate: ",user);
-         this.$router.push(this.route)
+         this.$router.push('/register/offer/company')
        }).catch((err)=>{
          console.log("error user is empty maybe because of a refresh redirecting to login: ",err)
-this.login_flow = false;
+        this.login_flow = false;
          //this.$router.push("/login")
        })
       }).catch((err)=>{

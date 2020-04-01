@@ -20,7 +20,9 @@ export const state = () => ({
     resources:[
 
     ],
-    validation_state:false
+    validation_state:false,
+    // for default layout
+    route:''
 })
 
 export const mutations = {
@@ -74,6 +76,10 @@ export const mutations = {
     },
     set_validation_state(state,payload){
         this.state.validation_state = payload
+    },
+    // save route for redirect
+    save_route(state,payload){
+        this.state.route = payload
     }
 }
 

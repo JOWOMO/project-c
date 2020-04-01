@@ -31,6 +31,7 @@ export default {
     const user = await this.$store.dispatch('auth/load')
     console.log(this.$store.state.auth.isAuthenticated)
     if(!this.$store.state.auth.isAuthenticated){
+      this.$store.commit('save_route',this.$router.path)
       this.$router.push("/login")
     }else{
       this.state = true;

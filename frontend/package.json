@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "deploy": "serverless deploy && serverless client deploy --no-confirm --no-policy-change",
-    "dev": "nuxt dev --spa",
+    "dev": "nuxt dev",
     "dev-local": "API_URL=http://localhost:5000/graphql nuxt dev --spa",
     "build": "nuxt build",
     "start": "nuxt start",

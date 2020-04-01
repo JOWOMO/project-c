@@ -57,7 +57,7 @@ export default {
       this.$router.push("/register/offer/user");
     },
     company_register: function() {
-      this.$router.push("/register/search/company");
+      this.$router.push("/register/search/user");
     }
   },
   computed: {

@@ -122,9 +122,6 @@
       </form>
 
     </div>
-    <div v-else>
-      <validate />
-    </div>
   </div>
 </template>
 
@@ -135,6 +132,9 @@ export default {
   name: "profile",
   components: {
     validate
+  },
+    props:{
+    route:String
   },
   data() {
     return {
@@ -183,6 +183,7 @@ export default {
           console.log("user: ", user);
 
           this.$store.commit("set_validation_state",true)
+          this.$router.push(this.route)
         })
         .catch(err => {
           // user exists
@@ -191,6 +192,7 @@ export default {
         });
     }
   },
+
   middelware: "authenticated",
   created() {
     this.$store.commit("update_position", {

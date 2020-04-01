@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Sidebar class="sidebar" />
+   <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
     <h1>Mein Team</h1>
     <p>
       Diese Skills hat mein Team
@@ -54,6 +54,21 @@ export default {
       type: {
         skill: "skill",
         resource: "resource"
+      },
+         positions:{
+        profile:{
+          editing:false,
+          passed:true,
+        },
+        company:{
+          editing:false,
+          passed:true,
+
+        },
+        team:{
+          editing:true,
+          passed: false,
+        },
       }
     };
   },

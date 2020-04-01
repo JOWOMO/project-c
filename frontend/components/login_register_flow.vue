@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Willkommen zurück</h1>
+    <h1>Identität bestätigen</h1>
     <form method="POST" @submit.prevent="login" novalidate>
       <span class="invalid-login" v-if="false_auth">Email oder Passwort inkorrekt</span>
       <div class="form-group">
@@ -79,8 +79,8 @@ export default {
       pwd: { required, minLength: minLength(6) }
     }
   },
-  created(){
-
+  props:{
+      route:String
   },
   methods: {
     async login() {
@@ -96,9 +96,8 @@ export default {
         .then(user => {
           console.log(this.$store.state.user);
           console.log("User: ", user);
-          
-         this.$router.push(this.$store.state.route)
-        })
+          this.$router.push(this.route)
+        })  
         .catch(err => {
           this.false_auth = true;
           console.log("Email or Passwort incorrect", err);
