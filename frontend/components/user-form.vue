@@ -88,7 +88,10 @@
         </div>
 
         <div class="form-group agb">
-          <label class="margin" for="checkbox">Bitte Akzeptiere unsere <nuxt-link to="/agb">AGB</nuxt-link> um fortzufahren</label>
+          <label class="margin" for="checkbox">
+            Bitte Akzeptiere unsere
+            <nuxt-link to="/agb">AGB</nuxt-link>um fortzufahren
+          </label>
 
           <input
             type="checkbox"
@@ -98,7 +101,7 @@
             value="true"
             class="form-control checkbox"
             :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
-          >
+          />
         </div>
 
         <!-- <div v-if="!$v.user.agb.$invalid" class="invalid-feedback">
@@ -106,7 +109,7 @@
             Ich akzeptiere die
             <nuxt-link to="/impressum">AGB</nuxt-link>
           </span>
-        </div> -->
+        </div>-->
         <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
           <span v-if="!$v.user.agb.required">
             Bitte die
@@ -120,7 +123,6 @@
           <button class="primary">Weiter</button>
         </div>
       </form>
-
     </div>
   </div>
 </template>
@@ -128,17 +130,18 @@
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import validate from "@/components/validate.vue";
+import addUser from "@/apollo/mutations/add_user";
 
 export default {
   name: "profile",
   components: {
     validate
   },
-  
-  props:{
-    route:String
+
+  props: {
+    route: String
   },
-  
+
   data() {
     return {
       user: {
@@ -150,8 +153,7 @@ export default {
         agb: false
       },
       submitted: false,
-      error: "",
-
+      error: ""
     };
   },
 
@@ -179,30 +181,40 @@ export default {
       this.$store.commit("register_user_state", this.user);
 
       try {
-        const user = await this.$store.dispatch(
-          "auth/register", 
-          {
-            email: this.user.email,
-            password: this.user.pwd,
-          },
-        );
+        const user = await this.$store.dispatch("auth/register", {
+          email: this.user.email,
+          password: this.user.pwd
+        });
+        const client = this.$apollo.getClient();
 
+        this.$apollo
+          .mutate({
+            mutation: addUser,
+            variables: {
+              name: this.user.firstName,
+              email: this.user.email
+            }
+          })
+          .then(({ data }) => {
+            console.log(data);
+          });
         console.log("user: ", user);
 
-        this.$store.commit("set_validation_state",true);
+        this.$store.commit("set_validation_state", true);
         this.$router.push(this.route);
-      }
-      catch (err) {        
+      } catch (err) {
         console.log("err: ", err);
-        if (err.code === 'UsernameExistsException') {
-          this.error = 'Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?';
-        } else if (err.code === 'InvalidPasswordException') { 
-          this.error = 'Das Passwort entspricht nicht den Komplexitätsanforderungen. Bitte gib mindestns 6 Zeichen bestehend aus Groß- und Kleinbuchstaben ein.';
+        if (err.code === "UsernameExistsException") {
+          this.error =
+            "Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?";
+        } else if (err.code === "InvalidPasswordException") {
+          this.error =
+            "Das Passwort entspricht nicht den Komplexitätsanforderungen. Bitte gib mindestns 6 Zeichen bestehend aus Groß- und Kleinbuchstaben ein.";
         } else {
           this.error = err.message;
         }
       }
-    },
+    }
   },
 
   middelware: "authenticated",
@@ -233,7 +245,9 @@ export default {
     .form-group {
       grid-column: 1 / span 2;
 
-      input, label, .error {
+      input,
+      label,
+      .error {
         width: 100%;
       }
     }
@@ -252,7 +266,7 @@ export default {
       justify-content: flex-end;
       align-items: center;
 
-      input[type=checkbox] {
+      input[type="checkbox"] {
         width: 21px;
         // display: inline-block;
         position: static;

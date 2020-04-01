@@ -134,6 +134,7 @@ export default {
   },
   methods: {
     async add_company() {
+      
       this.submitted = true;
 
       // stop here if form is invalid

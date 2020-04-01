@@ -1,0 +1,7 @@
+query Categories {  
+    me{
+        id 
+        name
+        email
+    }
+}

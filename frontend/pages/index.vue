@@ -10,8 +10,18 @@
         </h1>
         <button @click="user_register" id="biete" class="hover-button">
           Kostenlos Anmelden
-          <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
-            <path d="M20.7071 8.70711C21.0976 8.31658 21.0976 7.68342 20.7071 7.2929L14.3431 0.928933C13.9526 0.538409 13.3195 0.538409 12.9289 0.928933C12.5384 1.31946 12.5384 1.95262 12.9289 2.34315L18.5858 8L12.9289 13.6569C12.5384 14.0474 12.5384 14.6805 12.9289 15.0711C13.3195 15.4616 13.9526 15.4616 14.3431 15.0711L20.7071 8.70711ZM-8.74228e-08 9L20 9L20 7L8.74228e-08 7L-8.74228e-08 9Z" fill="#25A6DA"/>
+          <svg
+            width="21"
+            height="16"
+            viewBox="0 0 21 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon"
+          >
+            <path
+              d="M20.7071 8.70711C21.0976 8.31658 21.0976 7.68342 20.7071 7.2929L14.3431 0.928933C13.9526 0.538409 13.3195 0.538409 12.9289 0.928933C12.5384 1.31946 12.5384 1.95262 12.9289 2.34315L18.5858 8L12.9289 13.6569C12.5384 14.0474 12.5384 14.6805 12.9289 15.0711C13.3195 15.4616 13.9526 15.4616 14.3431 15.0711L20.7071 8.70711ZM-8.74228e-08 9L20 9L20 7L8.74228e-08 7L-8.74228e-08 9Z"
+              fill="#25A6DA"
+            />
           </svg>
         </button>
       </div>
@@ -25,8 +35,18 @@
         </h1>
         <button v-on:click="company_register" id="suche" class="hover-button">
           Kostenlos Anmelden
-          <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon">
-            <path d="M20.7071 8.70711C21.0976 8.31658 21.0976 7.68342 20.7071 7.2929L14.3431 0.928933C13.9526 0.538409 13.3195 0.538409 12.9289 0.928933C12.5384 1.31946 12.5384 1.95262 12.9289 2.34315L18.5858 8L12.9289 13.6569C12.5384 14.0474 12.5384 14.6805 12.9289 15.0711C13.3195 15.4616 13.9526 15.4616 14.3431 15.0711L20.7071 8.70711ZM-8.74228e-08 9L20 9L20 7L8.74228e-08 7L-8.74228e-08 9Z" fill="#25A6DA"/>
+          <svg
+            width="21"
+            height="16"
+            viewBox="0 0 21 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon"
+          >
+            <path
+              d="M20.7071 8.70711C21.0976 8.31658 21.0976 7.68342 20.7071 7.2929L14.3431 0.928933C13.9526 0.538409 13.3195 0.538409 12.9289 0.928933C12.5384 1.31946 12.5384 1.95262 12.9289 2.34315L18.5858 8L12.9289 13.6569C12.5384 14.0474 12.5384 14.6805 12.9289 15.0711C13.3195 15.4616 13.9526 15.4616 14.3431 15.0711L20.7071 8.70711ZM-8.74228e-08 9L20 9L20 7L8.74228e-08 7L-8.74228e-08 9Z"
+              fill="#25A6DA"
+            />
           </svg>
         </button>
       </div>
@@ -35,6 +55,7 @@
 </template>
 
 <script>
+
 export default {
   head() {
     return {
@@ -50,15 +71,20 @@ export default {
       ]
     };
   },
-  layout:'no-auth',
-  middelware:'authenticated',
+  data() {
+    return {
+      user: ""
+    };
+  },
+  layout: "no-auth",
+  middelware: "authenticated",
   methods: {
     user_register: function() {
       this.$router.push("/register/offer/user");
     },
     company_register: function() {
       this.$router.push("/register/search/user");
-    }
+    },
   },
   computed: {
     onload: function() {
@@ -70,7 +96,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/global.scss';
+@import "~assets/global.scss";
 
 .container {
   padding: 0;
@@ -93,18 +119,19 @@ export default {
         left: 0;
       }
 
-      &:hover .b2b-login-left-bg, &:hover .b2b-login-right-bg {
+      &:hover .b2b-login-left-bg,
+      &:hover .b2b-login-right-bg {
         transform: scale(1.2);
 
-          &::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #00000040;
-          }
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #00000040;
+        }
       }
 
       .b2b-login-left-bg {
@@ -205,5 +232,4 @@ export default {
     padding: 0 !important;
   }
 }
-
 </style>

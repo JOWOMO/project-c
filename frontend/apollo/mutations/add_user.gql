@@ -1,0 +1,8 @@
+mutation userAdd($name:String!,$email:String!){
+  updateUser(
+      user: { 
+          name:  $name,
+          email: $email
+           }
+      )
+}
