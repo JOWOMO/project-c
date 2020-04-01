@@ -41,6 +41,7 @@ export default {
     };
   },
   layout: "default",
+  middleware:'authenticated',
   components: {
     sidebar,
     tag

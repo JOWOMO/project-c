@@ -22,7 +22,8 @@ export default {
       ]
     };
   },
- layout: "default",
+  layout: "default",
+  middleware:'authenticated',
   components: {
     sidebar,
     tag
