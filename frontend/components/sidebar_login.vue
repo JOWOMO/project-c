@@ -17,7 +17,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "sidebarLogin",
+  name: "sidebar",
   computed: {
     ...mapGetters(["get_sidebar_position"])
   },

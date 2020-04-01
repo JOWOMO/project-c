@@ -1,11 +1,12 @@
 <template>
-  <div class="container"> <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+  <div class="container"> 
+    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
     <Company />
   </div>
 </template>
 
 <script>
-import Sidebar from "@/components/sidebar_login.vue";
+import sidebar from "@/components/sidebar_login.vue";
 import Company from "@/components/company-form.vue";
 
 export default {
@@ -18,9 +19,9 @@ export default {
       ]
     };
   },
-  layout: "register",
+ layout: "default",
   components: {
-    Sidebar,
+    sidebar,
     Company
   },
    data(){

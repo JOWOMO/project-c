@@ -94,10 +94,16 @@ export default {
       const user = await this.$store
         .dispatch("auth/login", { userdata: this.user })
         .then(user => {
-          console.log(this.$store.state.user);
-          console.log("User: ", user);
-          
-         this.$router.push(this.$store.state.route)
+         
+          console.log("User: ", user);  
+          console.log("pushing: ",this.$store.state.route)
+          if(this.$store.state.route == "" && this.$store.state.route == undefined ){
+            // route is empty
+            // push to dashboard
+         this.$router.push('/dashboard')
+          }else{
+            this.$router.push(this.$store.state.route)
+          }
         })
         .catch(err => {
           this.false_auth = true;

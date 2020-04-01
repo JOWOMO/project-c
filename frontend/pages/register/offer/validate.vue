@@ -5,8 +5,6 @@
     <h1>Bestätige deine Email adresse</h1>
     <p>Wir haben dir eine Email geschickt. Bitte fügen Sie den verifizierungs Code hier ein</p>
     <p class="error" v-if="error != ''">{{ error }}</p>
-
-    <button @click="confirm">Weiter</button>
     <form method="POST" @submit.prevent="confirm">
       <div class="form-group">
         <label for="email">Email</label>
@@ -44,7 +42,6 @@
         <button class="btn btn-primary">Weiter</button>
       </div>
     </form>
-    <button @click="showUser" class="debug">clg user</button>
   </div>
   <div v-else>
     <login route="/register/offer/company" />
@@ -124,10 +121,6 @@ export default {
         console.log("email is not validated: ",err)
       })
     },
-    showUser() {
-      const user = Auth.userSession()
-      console.log(user)
-    }
   },
   created() {
     this.$store.commit("update_position", {
