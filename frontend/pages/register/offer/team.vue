@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Sidebar from "@/components/sidebar_login.vue";
+import sidebar from "@/components/sidebar_login.vue";
 import team from '@/components/team-form.vue'
 import tag from "@/components/tag/tag_skill.vue";
 
