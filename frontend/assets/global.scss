@@ -17,6 +17,8 @@ $h3FontSize: 20px;
 
 $buttonFormText: 16px;
 
+ $input-width: 500px;
+
 *,
 *:before,
 *:after {
@@ -25,7 +27,7 @@ $buttonFormText: 16px;
 }
 
 html, body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background: $background;
 }
 
@@ -56,7 +58,7 @@ button {
   height: 40px;
   background: $uiComponent;
   font-size: $buttonFormText;
-  margin: 30px 0;
+  margin: 10px 0;
   transition: all .5s ease;
   border: none;
   outline: none;
@@ -65,30 +67,94 @@ button {
       background: $uiComponentHighlighted;
   }
 
-  .icon {
-    width: 24px;
-    height: auto;
-    margin-left: 10px;
+  // .icon {
+  //   width: 24px;
+  //   height: auto;
+  //   margin-left: 10px;
+  // }
+}
+
+.form-group {
+  position: relative;
+
+  label {
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    font-weight: normal;
+    font-size: 15px;
+    display: inline-block;
+    text-align: left;
+    padding-left: 12px;
+    transition: all .5s ease;
+  }
+
+  input {
+    background: $uiComponent;
+    border-radius: 10px;
+    border: 2px solid $border;
+    width: $input-width;
+    height: 50px;
+    padding-left: 10px;
+    color: #000;
+    outline: none;
+    font-size: 14px;
+
+    &:focus {
+      background: $uiComponentHighlighted;
+      border-color: $primary;
+      padding: 10px 0 0 14px;
+    }
+
+    &:valid {
+      padding: 10px 0 0 14px;
+    }
+
+    &:valid + label {
+      top: 14%;
+      font-size: 9px;
+      color: #000;
+      font-weight: normal;
+    }
+
+    &:focus + label {
+      top: 14%;
+      font-size: 9px;
+      color: $primary;
+      font-weight: bold;
+    }
+
+    &[type=number]::-webkit-inner-spin-button,
+    &[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+  }
+
+  .error {
+    color: $error;
   }
 }
 
-.icon {
-  width: 24px;
-  height: auto;
+.invalid-login {
+  color: $error;
 }
 
 @supports(-webkit-appearance: none) or (-moz-appearance: none) {
   input[type='checkbox'] {
     -webkit-appearance: none;
     -moz-appearance: none;
-    height: 21px !important;
+    height: 21px;
+    width: 21px;
     outline: none;
     display: inline-block;
     position: relative;
     margin: 0;
     cursor: pointer;
     border: 1px solid var(--bc, lighten($primary, 10)); // var(--border)
-    background: var(--b, #fff) !important;
+    background: var(--b, #fff);
     transition: background .3s, border-color .3s, box-shadow .2s;
 
     &:after {
@@ -175,98 +241,6 @@ button {
   }
 }
 
-// form {
-//   overflow: hidden;
-//   position: relative;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-
-  .form-group {
-    position: relative;
-
-    label {
-      position: absolute;
-      top: 28%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-weight: normal;
-      font-size: 15px;
-      display: inline-block;
-      text-align: left;
-      width: 500px;
-      padding-left: 12px;
-      transition: all .5s ease;
-    }
-
-    input {
-      background: $uiComponent;
-      border-radius: 10px;
-      border: 2px solid $border;
-      width: 500px;
-      height: 50px;
-      position: relative;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      margin: 30px 0;
-      padding-left: 10px;
-      color: #000;
-      outline: none;
-      font-size: 14px;
-      display: inline-block;
-
-      &:focus {
-          background: $uiComponentHighlighted;
-          border-color: $primary;
-          padding: 10px 0 0 14px;
-      }
-
-      &:valid {
-        padding: 10px 0 0 14px;
-      }
-
-      &:valid + label {
-        top: 14%;
-        font-size: 9px !important;
-        color: #000;
-        font-weight: normal;
-      }
-
-      &:focus + label {
-        top: 14%;
-        font-size: 9px !important;
-        color: $primary;
-        font-weight: bold;
-      }
-
-      &[type=number]::-webkit-inner-spin-button,
-      &[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        margin: 0;
-      }
-    }
-
-    .error {
-      color: $error;
-      width: 500px;
-      position: relative;
-      left: 50%;
-      top: -35px;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  .invalid-login {
-    color: $error;
-    margin-bottom: 30px;
-    width: 100%;
-    text-align: center;
-    display: inline-block;
-  }
-// }
-
 a {
   text-decoration: none;
   color: #000;
@@ -285,9 +259,9 @@ a {
   height: 50px;
 }
 
-.container {
-  padding: 50px;
-}
+// .container {
+//   padding: 50px;
+// }
 
 .primary {
   background-color: $primary;
@@ -302,13 +276,10 @@ a {
   .selected {
     background: $uiComponent;
     border-radius: 8px;
-    margin: 8px 0 8px 0;
+    margin-bottom: 8px;
     color: #000;
     position: relative;
     border: 2px solid $border;
-
-    width: 150px;
-
     order: 0;
 
     &::after {
@@ -316,20 +287,17 @@ a {
       background: url(../static/icons/dropdown.svg);
       background-size: contain;
       background-repeat: no-repeat;
-
       position: absolute;
       height: 100%;
       width: 18px;
       right: 10px;
       top: 20px;
-
       transition: all .4s;
     }
   }
 
   .select-box {
     display: flex;
-    width: 400px;
     flex-direction: column;
 
     .options-container {
@@ -342,7 +310,6 @@ a {
       transition: all .5s;
       border-radius: 8px;
       overflow: hidden;
-
       order: 1;
 
       &.active {
@@ -353,6 +320,7 @@ a {
 
       &.active + .selected::after {
         transform: rotate(180deg);
+        transform-origin: center;
         top: -15px;
       }
     }
@@ -360,12 +328,12 @@ a {
 
     &::-webkit-scrollbar {
       width: 8px;
-      background: $uiComponentHighlighted;
+      background: #000;
       border-radius: 0 8px 8px 0;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: darken($uiComponentHighlighted, 10);
+      background: #fff;
       border-radius: 0 8px 8px 0;
     }
 
@@ -385,25 +353,35 @@ a {
     label {
       cursor: pointer;
       position: static;
-      color: #000 !important;
+      color: #000;
       transform: none;
-      // font-size: 20px !important;
+      font-size: 16px;
     }
   }
 }
 
-@media only screen and (max-width: 786px) {
-  .form-group {
-    label {
-      width: 90% !important;
-    }
+// @media only screen and (max-width: 786px) {
+//   .form-group {
+//     label {
+//       width: 90% !important;
+//     }
 
-    input {
-      width: 90% !important;
-    }
+//     input {
+//       width: 90% !important;
+//     }
 
-    .error {
-      width: 90% !important;
-    }
-  }
-}
+//     .error {
+//       width: 90% !important;
+//     }
+//   }
+
+//   .dropdown {
+//     .selected {
+//       width: 90% !important;
+//     }
+
+//     .select-box {
+//       width: 90% !important;
+//     }
+//   }
+// }

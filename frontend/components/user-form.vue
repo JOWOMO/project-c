@@ -19,7 +19,7 @@
           >First Name is required</div>
         </div>
 
-        <div class="form-group half-width">
+        <div class="form-group half-width right">
           <input
             type="text"
             v-model="user.lastName"
@@ -70,7 +70,7 @@
           </div>
         </div>
 
-        <div class="form-group half-width">
+        <div class="form-group half-width right">
           <input
             type="password"
             v-model="user.confirmpwd"
@@ -209,94 +209,63 @@ export default {
 <style lang="scss" scoped>
 .form-container {
   form {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    gap: 20px;
+    justify-content: center;
+    align-items: start;
+    max-width: 800px;
 
-    .half-width {
-      width: 250px;
-      display: inline-block;
-      position: relative;
-      left: calc(100% / 2);
-      transform: translate(-100%, 0);
+    .form-group {
+      grid-column: 1 / span 2;
 
-      label, input {
-        width: 250px;
+      input, label, .error {
+        width: 100%;
       }
     }
 
-    .checkbox {
-      transform: translate(-250px, -16px);
-    }
-
-    .margin {
-      margin-left: 15px;
-    }
-
-    .buttons {
-      position: relative;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: inline-block;
-      width: auto;
-    }
-  }
-}
-
-@media only screen and (max-width: 786px) {
-  form {
-    input, label {
-      width: 80% !important;
-    }
-
     .half-width {
-      width: 100vw !important;
-      position: relative;
-      left: 100% !important;
-
-      input, label {
-        width: 80vw;
-      }
+      grid-column: 1;
+    }
+    .right {
+      grid-column: 2;
     }
 
     .agb {
-      text-align: left;
+      grid-column: 1;
       display: flex;
       flex-direction: row-reverse;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
 
-      label {
+      input[type=checkbox] {
+        width: 21px;
+        // display: inline-block;
         position: static;
-        transform: none;
-        width: auto !important;
-        height: auto !important;
       }
 
-      input[type='checkbox'] {
-        width: 21px !important;
-        transform: none !important;
-        position: static !important;
-        margin: 0;
+      label {
+        width: auto;
+        position: static;
       }
-    }
-
-    .buttons{
-      display: static;
-      margin-top: 60px;
-      text-align: center;
     }
   }
 }
 
-@media only screen and (max-width: 450px) {
-  label {
-    margin: 0 !important;
-  }
+@media only screen and (max-width: 765px) {
+  form {
+    grid-template-columns: 1fr 0 !important;
+    column-gap: 0 !important;
 
-  input[type='checkbox'] {
-    margin-left: 15px !important;
+    .half-width {
+      width: 100% !important;
+      grid-column: 1 !important;
+    }
+
+    .buttons {
+      justify-self: center !important;
+    }
   }
 }
 </style>

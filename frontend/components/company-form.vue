@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
-    <form @submit.prevent="add_company" novalidate>
-      <div class="form-group half-width">
+    <form @submit.prevent="add_company" novalidate class="register-company">
+      <div class="form-group half-width" id="company-name">
         <input
           type="text"
           v-model="user.company_name"
@@ -18,8 +18,7 @@
         >Firmennamen wird benötigt.</div>
       </div>
 
-      <div class="form-group half-width dropdown">
-
+      <div class="form-group half-width dropdown" id="dropdown">
         <div class="select-box">
           <div
             class="options-container"
@@ -67,7 +66,7 @@
 
       </div>
 
-      <div class="form-group three-quaters-width">
+      <div class="form-group half-width" id="adress">
         <input
           type="text"
           v-model="user.company_addr"
@@ -84,7 +83,7 @@
         >Die Addresse wird benötigt</div>
       </div>
 
-      <div class="form-group one-quater-width">
+      <div class="form-group half-width" id="plz">
         <input
           type="number"
           v-model="user.company_postCode"
@@ -177,71 +176,46 @@ export default {
 .form-container {
   form {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     gap: 20px;
     justify-content: center;
     align-items: start;
+    max-width: 800px;
 
     .form-group {
-      grid-column: 1 / span 4;
-    }
-
-    .half-width:nth-of-type(odd) {
       grid-column: 1 / span 2;
-      justify-self: right;
 
       input, label, .error {
-        width: 250px;
-      }
-    }
-    .half-width:nth-of-type(even) {
-      grid-column: 3 / span 4;
-
-      // Dropdown
-    }
-
-    .three-quaters-width{
-      grid-column: 1 / span 3;
-      justify-self: center;
-
-      input, label, .error {
-        width: 375px;
+        width: 100%;
       }
     }
 
-    .one-quater-width {
-      grid-column: 4;
-      justify-self: center;
-
-      input, label, .error {
-        width: 125px;
+    .half-width {
+      &:nth-of-type(even) {
+        grid-column: 2;
+        width: 50%;
       }
-    }
-
-    .buttons {
-      justify-self: center;
+      &:nth-of-type(odd) {
+        grid-column: 1;
+        width: 100%;
+      }
     }
   }
 }
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 765px) {
   form {
-    width: 100%;
+    grid-template-columns: 1fr 0 !important;
+    column-gap: 0 !important;
 
-    .form-group {
-      width: 80vw;
+    .half-width {
+      width: 100% !important;
+      grid-column: 1 !important;
     }
 
     .buttons {
-      width: 60%;
-      justify-self: center;
-      text-align: center;
-
-      button {
-        margin: 10px 0;
-        width: 100%;
-      }
+      justify-self: center !important;
     }
   }
 }

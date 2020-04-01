@@ -52,48 +52,56 @@ export default {
 </script>
 
 <style scoped lang="scss">
-h1 {
-  position: relative;
-  text-align: left;
-  width: auto;
-  left: 450px;
-  top: 70px;
-  transform: none;
+.container {
+  display: grid;
+  grid-template-columns: 400px auto;
+  grid-template-rows: 1fr 1fr 10fr;
+  height: 100vh;
+  padding: 0;
+
+  .sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
+
+  h1 {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: left;
+    margin: 50px 0 0 10px;
+  }
+
+  p {
+    grid-column: 2;
+    grid-row: 2;
+    margin-left: 10px;
+  }
+
+  .profile-form {
+    grid-column: 2;
+    grid-row: 3;
+    margin-right: 10px;
+  }
 }
 
-p {
-  position: relative;
-  left: 450px;
-  top: 70px;
-  color: #00000080;
-}
-
-.profile-form {
-  width: calc(100% - 400px);
-  position: absolute;
-  right: 0;
-  top: 250px;
-}
-
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 950px) {
   .container {
-    padding: 20px 10px;
+    grid-template-columns: 0fr 1fr;
+    width: 100vw;
+    padding: 50px 20px;
+
+    p, h1 {
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
 
     .sidebar {
       display: none;
-      z-index: 0;
-    }
-
-    h1, p {
-      width: 100%;
-      text-align: center;
-      left: 0;
-      transform: none;
     }
 
     .profile-form {
       width: 100%;
-      left: 0;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-     <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+     <sidebarLogin :labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
     <h1>Dein Unternehmen</h1>
     <p>Erzähle uns mehr über dein Unternehmen</p>
     <Company class="company-form" />
@@ -50,21 +50,22 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  padding-top: 50px;
   display: grid;
-  grid-template-columns: 400px ;
+  grid-template-columns: 400px auto;
   grid-template-rows: 1fr 1fr 10fr;
+  height: 100vh;
+  padding: 0;
 
   .sidebar {
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 1 / span 3;
   }
 
   h1 {
     grid-column: 2;
     grid-row: 1;
     justify-self: left;
-    margin-left: 10px;
+    margin: 50px 0 0 10px;
   }
 
   p {
@@ -76,6 +77,7 @@ export default {
   .company-form {
     grid-column: 2;
     grid-row: 3;
+    margin-right: 10px;
   }
 }
 
