@@ -173,7 +173,6 @@ resources:
            Fn::Select:
             - 0
             - ${self:custom.publicurls}
-            - '.'
         Type: 'A'
 
   Outputs:
