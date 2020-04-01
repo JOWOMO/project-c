@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       user: {
-        email: "",
+        email: this.$store.state.register_state.user.email,
         code: null
       },
       submitted: false,
