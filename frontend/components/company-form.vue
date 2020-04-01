@@ -109,7 +109,7 @@
 
 <script>
 import { required, numeric, minValue } from "vuelidate/lib/validators";
-
+import addCompany from "@/apollo/mutations/add_company"
 export default {
   name: "company",
   data() {
@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     async add_company() {
-      
+
       this.submitted = true;
 
       // stop here if form is invalid
@@ -145,6 +145,21 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
+       const client = this.$apollo.getClient();
+
+        this.$apollo
+          .mutate({
+            mutation: addCompany,
+            variables: {
+              name: this.user.company_name,
+              addressLine1: this.user.company_addr,
+              postalCode: this.user.company_postCode,
+              city: "Buxtehude" // DOTO: from input for city
+            }
+          })
+          .then(({ data }) => {
+            console.log(data);
+          });
       this.$store.commit("register_company_state", this.user);
       this.$router.push("/register/team");
       // this.$store.dispatch("add_company", this.user); // TODO: save it after validate.vue
@@ -152,9 +167,9 @@ export default {
     // toggleClass() {
     //   this.$refs.optionsContainer.toggle("active")
     // },
-    // select() {
-    //   this.$refs.innerHTML = this.$refs.industrys
-    // }
+    select() {
+      this.$refs.innerHTML = this.$refs.industrys
+    }
   },
   created() {
     this.$store.commit("update_position", {
