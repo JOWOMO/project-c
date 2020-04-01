@@ -23,6 +23,7 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "nuxt": "^2.0.0",
+    "vue-textarea-autosize": "^1.1.1",
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {

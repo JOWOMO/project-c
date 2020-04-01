@@ -152,9 +152,9 @@ export default {
     // toggleClass() {
     //   this.$refs.optionsContainer.toggle("active")
     // },
-    select() {
-      this.$refs.innerHTML = this.$refs.industrys
-    }
+    // select() {
+    //   this.$refs.innerHTML = this.$refs.industrys
+    // }
   },
   created() {
     this.$store.commit("update_position", {
