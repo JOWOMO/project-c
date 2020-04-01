@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss" scoped>
 aside {
-  width: 400px;
+  width: 350px;
   height: 100vh;
   background: #fff;
   padding: 20px;

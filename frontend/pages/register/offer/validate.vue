@@ -1,4 +1,3 @@
-
 <template>
   <div class="container">
     <div v-if="login_flow">
@@ -50,9 +49,9 @@
     <login route="/register/offer/company" />
 
   </div>
-  
+
   </div>
-  
+
 
 </template>
 
@@ -94,7 +93,7 @@ export default {
       code: { required }
     }
   },
-  layout:'register',  
+  layout:'register',
 
   methods: {
    async confirm() {

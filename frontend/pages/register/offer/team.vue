@@ -1,33 +1,15 @@
 <template>
   <div class="container">
     <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
-    <h1>Mein Team</h1>
-    <p>
-      Diese Skills hat mein Team
-      <span>(min. eine Person)</span>
-    </p>
-    <span id="invalid_tags" v-if="valid_skills">Sie haben noch keine Skills ausgewählt.</span>
-    <div class="tag-wrapper">
-      <tag v-for="skill in skills" :key="skill.skill" :skill="skill.skill" :type="type.skill" />
-    </div>
-    <p>Ausserdem kann ich bereitstellen</p>
-    <div class="tag-wrapper">
-      <tag
-        v-for="resource in resources"
-        :key="resource.resource"
-        :skill="resource.resource"
-        :type="type.resource"
-      />
-    </div>
-    <div class="button_wrapper">
-      <button class="btn btn-secondary" @click.prevent="$router.push('/register/company')">Zurück</button>
-      <button class="btn btn-primary" @click.prevent="check_tags">registrieren</button>
-    </div>
+
+    <h1>Dein Unternehmen</h1>
+    <p>Erzähl uns mehr über dein Team</p>
   </div>
 </template>
 
 <script>
 import Sidebar from "@/components/sidebar_login.vue";
+import team from '@/components/team-form.vue'
 import tag from "@/components/tag/tag_skill.vue";
 
 export default {
@@ -71,7 +53,7 @@ export default {
         },
       }
     }
-    
+
   },
   methods: {
     get_tags: async function() {
