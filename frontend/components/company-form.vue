@@ -18,6 +18,51 @@
         >Firmennamen wird benötigt.</div>
       </div>
 
+      <div class="form-group half-width dropdown">
+
+        <div class="select-box">
+          <div class="options-container active" ref="optionsContainer">
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="Handwerker">
+              <label for="Handwerker">Handwerker</label>
+            </div>
+            <div class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Verkäufer">
+              <label for="Verkäufer">Verkäufer</label>
+            </div>
+            <div class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Lagerarbeiter">
+              <label for="Lagerarbeiter">Lagerarbeiter</label>
+            </div>
+            <div class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Spediteur">
+              <label for="Spediteur">Spediteur</label>
+            </div>
+            <div class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Landwirt">
+              <label for="Landwirt">Landwirt</label>
+            </div>
+            <div class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Krankenpfleger">
+              <label for="Krankenpfleger">Krankenpfleger</label>
+            </div>
+            <div class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Mechaniker">
+              <label for="Mechaniker">Mechaniker</label>
+            </div>
+            <div class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Andere">
+              <label for="Andere">Andere</label>
+            </div>
+          </div>
+
+          <div class="selected" ref="selected" @click="toggle">
+            Branche
+          </div>
+        </div>
+
+      </div>
+
       <div class="form-group three-quaters-width">
         <input
           type="text"
@@ -48,22 +93,6 @@
         <label for="company_postCode">Postleihzahl</label>
         <div v-if="submitted && $v.user.company_postCode.$error" class="invalid-feedback">
           <span v-if="!$v.user.company_postCode.required">Postleihzahl wird benötigt</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <input
-          type="number"
-          v-model="user.employees"
-          id="employees"
-          name="employees"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.employees.$error }"
-          required
-        />
-        <label for="password">Anzahl Mitarbeiter</label>
-        <div v-if="submitted && $v.user.employees.$error" class="invalid-feedback">
-          <span v-if="!$v.user.employees.minValue">Ein Mitarbeiter wird mindesten benötigt</span>
         </div>
       </div>
 
@@ -114,6 +143,12 @@ export default {
       this.$store.commit("register_company_state", this.user);
       this.$router.push("/register/team");
       // this.$store.dispatch("add_company", this.user); // TODO: save it after validate.vue
+    },
+    toggleClass() {
+      this.$refs.optionsContainer.toggle("active")
+    },
+    select() {
+      this.$refs.innerHTML = this.$refs.industrys
     }
   },
   created() {
@@ -124,6 +159,11 @@ export default {
         team: false
       }
     });
+  },
+  mounted() {
+    const selected = this.$refs.selected
+
+    const industrys = this.$refs.industrys
   }
 };
 </script>
@@ -131,41 +171,162 @@ export default {
 <style scoped lang="scss">
 .form-container {
   form {
-    position: relative;
-    top: 0;
-    left: 0;
-    transform: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
 
-    .half-width {
-      width: 250px;
-      display: inline-block;
-      position: relative;
-      left: calc(100% / 2);
-      transform: translate(-100%, 0);
+    .dropdown {
+      .selected {
+        background: #222;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        color: #fff;
+        position: relative;
 
-      label, input {
-        width: 250px;
+        order: 0;
+
+        &::after {
+          content: '';
+          background: url(../static/icons/dropdown.svg);
+          background-size: contain;
+          background-repeat: no-repeat;
+
+          position: absolute;
+          height: 100%;
+          width: 32px;
+          right: 10px;
+          top: 5px;
+
+          transition: all .4s;
+        }
+      }
+
+      .select-box {
+        display: flex;
+        width: 400px;
+        flex-direction: column;
+
+        .options-container {
+          background: #222;
+          color: #fff;
+          // max-height: 0;
+          width: 100%;
+          // opacity: 0;
+          transition: all .5s;
+          border-radius: 8px;
+          overflow: hidden;
+
+          order: 1;
+
+          &.active {
+            max-height: 250px;
+            opacity: 1;
+            overflow-y: scroll;
+          }
+
+          &.active + .selected::after {
+            transform: rotate(180deg);
+            top: -6px;
+          }
+        }
+
+
+        &::-webkit-scrollbar {
+          width: 8px;
+          background: #111;
+          border-radius: 0 8px 8px 0;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #333;
+          border-radius: 0 8px 8px 0;
+        }
+
+        .option, .selected {
+          padding: 12px 24px;
+          cursor: pointer;
+
+          &:hover {
+            background: #444;
+          }
+
+          .radio {
+            display: none;
+          }
+        }
+
+        label {
+          cursor: pointer;
+          position: static;
+          color: #fff;
+          transform: none;
+          font-size: 16px !important;
+        }
       }
     }
 
-    .three-quaters-width, .one-quater-width {
-      display: inline-block;
+    .form-group {
+      grid-column: 1 / span 4;
     }
 
-    .three-quaters-width {
-      width: 375px !important;
+    .half-width:nth-of-type(odd) {
+      grid-column: 1 / span 2;
+      justify-self: right;
+
+      input, label, .error {
+        width: 250px;
+      }
+    }
+    .half-width:nth-of-type(even) {
+      grid-column: 3 / span 4;
+
+      // Dropdown
+    }
+
+    .three-quaters-width{
+      grid-column: 1 / span 3;
+      justify-self: right;
+
+      input, label, .error {
+        width: 375px;
+      }
     }
 
     .one-quater-width {
-      width: 125px !important;
+      grid-column: 4;
+      justify-self: left;
+
+      input, label, .error {
+        width: 125px;
+      }
     }
 
     .buttons {
-      position: relative;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: inline-block;
-      width: auto;
+      justify-self: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  form {
+    width: 100%;
+
+    .form-group {
+      width: 80vw;
+    }
+
+    .buttons {
+      width: 60%;
+      justify-self: center;
+      text-align: center;
+
+      button {
+        margin: 10px 0;
+        width: 100%;
+      }
     }
   }
 }

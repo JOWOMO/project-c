@@ -32,9 +32,9 @@ html, body {
 h1 {
   font-size: $h1FontSize;
   color: #000;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
+//   position: absolute;
+//   left: 50%;
+//   transform: translate(-50%, 0);
   text-align: center;
   font-weight: normal;
 }
@@ -175,12 +175,12 @@ button {
   }
 }
 
-form {
-  overflow: hidden;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+// form {
+//   overflow: hidden;
+//   position: relative;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
 
   .form-group {
     position: relative;
@@ -265,7 +265,7 @@ form {
     text-align: center;
     display: inline-block;
   }
-}
+// }
 
 a {
   text-decoration: none;
