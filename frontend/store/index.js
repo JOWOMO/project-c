@@ -77,10 +77,6 @@ export const mutations = {
     set_validation_state(state,payload){
         this.state.validation_state = payload
     },
-    // save route for redirect
-    save_route(state,payload){
-        this.state.route = payload
-    }
 }
 
 export const actions = {

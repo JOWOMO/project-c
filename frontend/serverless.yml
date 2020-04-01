@@ -2,6 +2,7 @@ service: bee-to-bee-client
 
 plugins:
   - serverless-finch
+  - serverless-cloudfront-distribution-certificate
 
 provider:
   name: aws
@@ -28,7 +29,18 @@ custom:
        ALL_OBJECTS:
         - name: Cache-Control
           value: no-cache
-        
+
+  publicurls: 
+    ${ssm:/btb/${self:custom.stage}/cloudfronturl~split}
+
+  cfdDomain:
+    domainNames:
+      ${self:custom.publicurls}
+
+    cloudFront: WebAppCloudFrontDistribution
+    retries: 15
+    minimumProtocolVersion: TLSv1.2_2018
+
 resources:
   Resources:
     WebAppS3Bucket:
@@ -69,6 +81,30 @@ resources:
         CloudFrontOriginAccessIdentityConfig:
           Comment: "origin identity"
 
+    # '.' at the end is required
+    DnsRecord:
+      DependsOn: 
+        - WebAppCloudFrontDistribution
+
+      Type: "AWS::Route53::RecordSet"
+      Properties:
+        AliasTarget:
+          DNSName:
+            Fn::GetAtt:
+              - WebAppCloudFrontDistribution
+              - DomainName
+
+          HostedZoneId: ${ssm:/btb/dnszone}
+
+        HostedZoneName: ${ssm:/btb/dnszonename}.
+
+        # we only take the first element as A, the rest must be configured in 53 directly
+        Name: 
+           Fn::Select:
+            - 0
+            - ${self:custom.publicurls}
+        Type: 'A'
+
     # the cloud front distribution
     WebAppCloudFrontDistribution:
       Type: AWS::CloudFront::Distribution
@@ -90,9 +126,9 @@ resources:
                       - Ref: CloudFrontOriginAccessIdentity
 
           Enabled: 'true'
-          ## Uncomment the following section in case you are using a custom domain
-          # Aliases:
-          # - mysite.example.com
+          Aliases: 
+            ${self:custom.publicurls}
+
           DefaultRootObject: index.html
 
           ## Since the Single Page App is taking care of the routing we need to make sure ever path is served with index.html

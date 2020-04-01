@@ -9,6 +9,10 @@
 * [Poetry](https://python-poetry.org/docs/) for Python depency management
 * [npm](https://www.npmjs.com/get-npm) for serverless framework
 
+### Preconfiguration
+
+`poetry config virtualenvs.in-project true`
+
 ### Dev Environment
 
 1. npm install

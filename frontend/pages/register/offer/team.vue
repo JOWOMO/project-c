@@ -22,9 +22,9 @@ export default {
       ]
     };
   },
-  layout: "register",
+ layout: "default",
   components: {
-    Sidebar,
+    sidebar,
     tag
   },
   data() {

@@ -78,7 +78,6 @@
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-import { Auth } from 'aws-amplify'
 
 export default {
   layout:'register',

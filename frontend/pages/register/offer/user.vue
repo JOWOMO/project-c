@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-     <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+     <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
     <h1>Persönliche Daten</h1>
     <p>Wir benötigen ein paar Informationen, um loszulegen</p>
     <profile route="/register/offer/validate" class="profile-form" />
@@ -9,7 +9,7 @@
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-import sidebarLogin from "@/components/sidebar_login.vue";
+import sidebar from "@/components/sidebar_login.vue";
 import profile from "@/components/user-form.vue";
 // import Checkmark from '@/components/checkmark.vue'
 
@@ -44,7 +44,7 @@ export default {
   },
   layout: "register",
   components: {
-    sidebarLogin,
+    sidebar,
     profile
     // Checkmark
   }

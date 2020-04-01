@@ -1,39 +1,38 @@
-import { Auth } from 'aws-amplify'
-import Amplify, * as AmplifyModules from 'aws-amplify'
+import Auth from '@aws-amplify/auth'
 
-Amplify.configure({
-    Auth: {
-        // REQUIRED - Amazon Cognito Identity Pool ID
-        identityPoolId: process.env.identityPoolId, 
-        // REQUIRED - Amazon Cognito Region
-        region: process.env.region, 
-        // OPTIONAL - Amazon Cognito User Pool ID
-        userPoolId: process.env.userPoolId,
-        // OPTIONAL - Amazon Cognito Web Client ID
-        userPoolWebClientId: process.env.userPoolWebClientId, 
-    }
+Auth.configure({
+  identityPoolId: process.env.identityPoolId,
+  region: process.env.region,
+  userPoolId: process.env.userPoolId,
+  userPoolWebClientId: process.env.userPoolWebClientId,
+
+  storage: localStorage,
 });
+
 export const state = () => ({
   isAuthenticated: false,
-  user: null
+  user: null,
 })
 
 export const mutations = {
   set(state, user) {
+    console.info('setting user state to', user);
+
     state.isAuthenticated = !!user
     state.user = user
   }
 }
 export const getters = {
-  login(state){
+  login(state) {
     return state.isAuthenticated;
-  } 
+  }
 }
 
 export const actions = {
-  async session({ commit }){
+  async session({ commit }) {
     return await Auth.currentSession()
   },
+
   async load({ commit }) {
     try {
       const user = await Auth.currentAuthenticatedUser()
@@ -43,29 +42,42 @@ export const actions = {
       commit('set', null)
     }
   },
-  async register(_, {email, password}) {
-    console.log("email inside register", email);
+
+  async register({ commit }, { email, password }) {
     const user = await Auth.signUp({
       username: email,
       password,
       attributes: { email },
-    })
-  
-    console.log(user)
-    return user
+    });
+
+    console.log('auth', 'register', user);
+    commit('set', user);
+    return user;
   },
-  async confirm(_, {email, code}) {
-    console.log("code:",code);
-    return await Auth.confirmSignUp(email, code)
-  }, 
-  async login({commit}, {userdata}) {
-    console.log(userdata)
-    const user = await Auth.signIn(userdata.email, userdata.pwd)
-    commit('set', user)
-    return user
+
+  async token() {
+    const currentSession = await Auth.currentSession();
+    return currentSession.getAccessToken().getJwtToken();
   },
-  async logout({commit}) {
-    await Auth.signOut()
-    commit('set', null)
+
+  async confirm({ commit }, { email, code }) {
+    console.log("code:", code);
+    return await Auth.confirmSignUp(email, code);
+  },
+
+  async login({ commit, $Amplify }, { userdata }) {
+    // there is a mismatch in naming
+    const user = await Auth.signIn(userdata.email, userdata.pwd || userdata.password);
+
+    // safety check
+    await Auth.currentSession();
+
+    commit('set', user);
+    return user;
+  },
+
+  async logout({ commit }) {
+    await Auth.signOut();
+    commit('set', null);
   },
 }

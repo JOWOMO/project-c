@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
-
 export default {
   data() {
     return {

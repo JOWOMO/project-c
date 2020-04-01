@@ -10,7 +10,7 @@
 
       <div v-else class="profile">
         <span>Maike</span> <!-- TODO: Add user name -->
-        <img src="/images/profile.jpg" alt="" class="profile_img"> <!-- TODO: Add img from database -->
+        <img v-on:click="logout" src="/images/profile.jpg" alt="" class="profile_img"> <!-- TODO: Add img from database -->
       </div>
     </nav>
   </div>
@@ -35,7 +35,7 @@ export default {
     },
     logout: function() {
       this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
+      this.$router.push("/");
     }
   },
   computed: {
