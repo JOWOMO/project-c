@@ -1,0 +1,53 @@
+<template>
+  <div class="tag-container" @click="setActive">
+    <div class="card">
+      <h3>Eigenschaften hinzufügen</h3>
+      <tag
+        v-for="skill in skills"
+        :key="skill.name"
+        :skill="skill.name"
+       />
+    </div>
+  </div>
+</template>
+
+<script>
+import tag from '@/components/tag_skill.vue'
+
+export default {
+  name: 'tag-cloud',
+  methods: {
+    setActive() {
+      this.$emit('changeActive', false)
+    }
+  },
+  props: {
+    skills: Array
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import 'assets/global';
+
+.tag-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #00000030;
+
+  .card {
+    max-width: 1000px;
+    max-height: 700px;
+    background: $background;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    padding: 20px;
+  }
+}
+</style>

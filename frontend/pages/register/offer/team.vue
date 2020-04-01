@@ -1,16 +1,21 @@
 <template>
   <div class="container">
-    <sidebarLogin v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
 
     <h1>Dein Unternehmen</h1>
     <p>Erzähl uns mehr über dein Team</p>
+
+    <team class="team-form" />
+    <div class="form-group buttons">
+      <button @click.prevent="$router.push('/register/company')">Zurück</button>
+      <button class="primary" @click.prevent="check_tags">Registrieren</button>
+    </div>
   </div>
 </template>
 
 <script>
 import sidebar from "@/components/sidebar_login.vue";
 import team from '@/components/team-form.vue'
-import tag from "@/components/tag/tag_skill.vue";
 
 export default {
   head() {
@@ -26,7 +31,7 @@ export default {
   middleware:'authenticated',
   components: {
     sidebar,
-    tag
+    team
   },
   data() {
     return {
@@ -130,99 +135,61 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 400px auto;
+  grid-template-rows: 1fr 1fr 10fr;
   height: 100vh;
+  padding: 0;
+
+  .sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
 
   h1 {
-    position: relative;
-    left: 500px;
-    top: 70px;
+    grid-column: 2;
+    justify-self: left;
+    margin: 50px 0 0 10px;
   }
 
   p {
-    color: #00000070;
-    font-weight: bold;
-    position: relative;
-    left: 500px;
-    top: 110px;
+    grid-column: 2;
+    margin-left: 10px;
+  }
 
-    span {
-      font-weight: normal;
-    }
+  .team-form {
+    grid-column: 2;
+    margin-right: 10px;
   }
-  #invalid_tags {
-    color: #00000070;
-    font-weight: bold;
-    position: relative;
-    left: 500px;
-    top: 110px;
-  }
-  .button_wrapper {
-    position: relative;
-    top: 110px;
-    left: 500px;
-    .btn {
-      width: 130px;
-      height: 40px;
-      border-radius: 20px;
-      outline: none;
-      border: none;
-      font-size: 16px;
-      margin: 30px 30px 0 30px;
-    }
-    .btn-secondary {
-      color: grey;
-      position: relative;
-      bottom: 30px;
-      left: 0;
-      width: 80px;
-    }
 
-    .btn-primary {
-      background: deepskyblue;
-      color: #fff;
-      position: relative;
-      bottom: 30px;
-      right: -200px;
-    }
-  }
-  .tag-wrapper {
-    position: relative;
-    top: 110px;
-    left: 500px;
-    padding: 20px;
-    width: 60vw;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  .buttons {
+    grid-column: 2;
   }
 }
 
-@media only screen and (max-width: 1000px) {
-  .sidebar {
-    display: none;
-  }
-
-  h1 {
+@media only screen and (max-width: 950px) {
+  .container {
+    grid-template-columns: 0fr 1fr;
     width: 100vw;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-  }
+    padding: 50px 20px;
 
-  p {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-  }
+    p, h1 {
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
 
-  .tag-wrapper {
-    width: 100vw !important;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-    justify-content: center;
+    .sidebar {
+      display: none;
+    }
+
+    .team-form {
+      width: 100%;
+    }
+
+    .buttons {
+      justify-self: center !important;
+    }
   }
 }
 </style>

@@ -133,6 +133,43 @@ button {
     }
   }
 
+  textarea {
+    background: $uiComponent;
+    border-radius: 10px;
+    border: 2px solid $border;
+    width: $input-width;
+    height: 50px;
+    padding-left: 10px;
+    color: #000;
+    outline: none;
+    font-size: 14px;
+    z-index: 1;
+
+    &:focus {
+      background: $uiComponentHighlighted;
+      border-color: $primary;
+      padding: 10px 0 0 14px;
+    }
+
+    &:valid {
+      padding: 10px 0 0 14px;
+    }
+
+    &:valid + label {
+      top: 14%;
+      font-size: 9px;
+      color: #000;
+      font-weight: normal;
+    }
+
+    &:focus + label {
+      top: 14%;
+      font-size: 9px;
+      color: $primary;
+      font-weight: bold;
+    }
+  }
+
   .error {
     color: $error;
   }

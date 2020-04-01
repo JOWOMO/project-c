@@ -54,6 +54,7 @@ export default {
   */
   plugins: [
     '@/plugins/vuelidate.js',
+    '@/plugins/vue-textarea-autosize.js'
     // {
     //   src: '@/plugins/amplify.js',
     //   mode: 'client'
@@ -134,7 +135,7 @@ export default {
       default: {
         // required
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
-        
+
         getAuth: async () => {
             const token = await Vue.prototype.$store.dispatch('auth/token');
             return token;
