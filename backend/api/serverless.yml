@@ -97,11 +97,36 @@ resources:
         UsernameAttributes:
           - email
 
+        EmailConfiguration:
+          SourceArn: ${ssm:/btb/prod/cognitosender}
+
+        VerificationMessageTemplate:
+          DefaultEmailOption: CONFIRM_WITH_CODE
+          EmailSubject: Bestätigen Sie Ihre E-Mail-Adresse
+          EmailMessage: |
+            Bee-to-Bee Konto
+            <h1>Bestätigen Sie Ihre E-Mail-Adresse</h1>
+
+            <p>Um die Einrichtung dieses Bee-to-Bee-Kontos abzuschließen, müssen wir nur noch sicherstellen, dass diese E-Mail-Adresse Ihnen gehört.</p>
+
+            <p>
+            Verwenden Sie zum Bestätigen Ihrer E-Mail-Adresse den folgenden Sicherheitscode: <b>{####}</b>
+            </p>
+
+            <p>
+            Wenn Sie diesen Code nicht angefordert haben, können Sie diese E-Mail ignorieren, da Ihre E-Mail-Adresse u. U. versehentlich von einer anderen Person eingegeben wurde.
+            </p>
+
+            <p>
+            Mit freundlichen Grüßen<br/>
+            Ihr Bee-to-Bee-Team
+            </p>
+
         Policies:
           PasswordPolicy:
             MinimumLength: 6
             RequireLowercase: False
-            RequireNumbers: True
+            RequireNumbers: False
             RequireSymbols: False
             RequireUppercase: True
             TemporaryPasswordValidityDays: 1

@@ -35,7 +35,7 @@ export default {
     },
     logout: function() {
       this.$store.dispatch("auth/logout");
-     //  this.$router.push("/login");
+      this.$router.push("/");
     }
   },
   computed: {

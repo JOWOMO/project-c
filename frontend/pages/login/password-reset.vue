@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
 import { required, email } from "vuelidate/lib/validators";
 
 export default {
@@ -38,33 +37,32 @@ export default {
     return {
       email: "",
       submitted: false,
-      error:''
+      error: ""
     };
   },
   validations: {
-
-      email: { required, email }
-    
+    email: { required, email }
   },
   methods: {
     async reset_password() {
-       this.submitted = true;
+      this.submitted = true;
 
-        // stop here if form is invalid
-        this.$v.$touch();
-        if (this.$v.$invalid) {
-            return;
-        }
+      // stop here if form is invalid
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+      
       const username = this.email;
       console.log("reset password");
 
       await Auth.forgotPassword(username)
-        .then((data) => {
+        .then(data => {
           // redirect to new-password
-          this.$router.push("new-password")
+          this.$router.push("new-password");
         })
         .catch(err => {
-          this.error = err.message
+          this.error = err.message;
         });
     }
   }

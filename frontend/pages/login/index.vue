@@ -49,10 +49,10 @@
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-const Cookie = process.client ? require('js-cookie') : undefined
+// const Cookie = process.client ? require("js-cookie") : undefined;
 
 export default {
-  layout: 'register',
+  layout: "register",
   head() {
     return {
       title: "Login",
@@ -79,50 +79,35 @@ export default {
       pwd: { required, minLength: minLength(6) }
     }
   },
-  created(){
-
-  },
+  created() {},
+  
   methods: {
     async login() {
       this.submitted = true;
 
-        // stop here if form is invalid
-        this.$v.$touch();
-        if (this.$v.$invalid) {
-            return;
-        }
-      const user = await this.$store
-        .dispatch("auth/login", { userdata: this.user })
-        .then(user => {
-         
-          console.log("User: ", user);  
-          console.log("pushing: ",this.$store.state.route)
-          if(this.$store.state.route == "" && this.$store.state.route == undefined ){
-            // route is empty
-            // push to dashboard
-         this.$router.push('/dashboard')
-          }else{
-            this.$router.push(this.$store.state.route)
-          }
-        })
-        .catch(err => {
-          this.false_auth = true;
-          console.log("Email or Passwort incorrect", err);
+      // stop here if form is invalid
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }
+
+      try {
+        const user = await this.$store.dispatch("auth/login", {
+          userdata: this.user
         });
 
-      // this.$router.push('/dashboard')
+        const route = this.$route.query.return_url;
+        if (route == "" || route == null) {
+          console.log('No return_url going to dashboard');
+          this.$router.push("/dashboard");
+        } else {
+          this.$router.push(route);
+        }
+      } catch (err) {
+        this.false_auth = true;
+        console.log("Email or Passwort incorrect", err);
+      }
     }
-    // async add_user() {
-    //     this.submitted = true;
-
-    //     // stop here if form is invalid
-    //     this.$v.$touch();
-    //     if (this.$v.$invalid) {
-    //         return;
-    //     }
-    //     this.$store.dispatch('add_user', this.user)
-    //     this.$router.push('/register/company')
-    // }
   }
 };
 </script>

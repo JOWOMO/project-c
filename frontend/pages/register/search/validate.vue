@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import { Auth } from 'aws-amplify'
 import { required, email, numeric } from "vuelidate/lib/validators"
 import login from '@/components/login_register_flow.vue'
 

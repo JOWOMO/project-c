@@ -128,14 +128,17 @@
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import validate from "@/components/validate.vue";
+
 export default {
   name: "profile",
   components: {
     validate
   },
-    props:{
+  
+  props:{
     route:String
   },
+  
   data() {
     return {
       user: {
@@ -151,6 +154,7 @@ export default {
 
     };
   },
+
   validations: {
     user: {
       firstName: { required },
@@ -161,6 +165,7 @@ export default {
       agb: { sameAs: sameAs(() => true) }
     }
   },
+
   methods: {
     async add_user() {
       this.submitted = true;
@@ -170,30 +175,38 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      // this.$store.dispatch('add_user', this.user)
-      // this.$store.commit("register_user_state", this.user);
-      this.$store.commit("register_user_state", this.user);
-      console.log("add user ");
-      this.$store
-        .dispatch("auth/register", {
-          email: this.user.email,
-          password: this.user.pwd
-        })
-        .then(user => {
-          console.log("user: ", user);
 
-          this.$store.commit("set_validation_state",true)
-          this.$router.push(this.route)
-        })
-        .catch(err => {
-          // user exists
+      this.$store.commit("register_user_state", this.user);
+
+      try {
+        const user = await this.$store.dispatch(
+          "auth/register", 
+          {
+            email: this.user.email,
+            password: this.user.pwd,
+          },
+        );
+
+        console.log("user: ", user);
+
+        this.$store.commit("set_validation_state",true);
+        this.$router.push(this.route);
+      }
+      catch (err) {        
+        console.log("err: ", err);
+        if (err.code === 'UsernameExistsException') {
+          this.error = 'Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?';
+        } else if (err.code === 'InvalidPasswordException') { 
+          this.error = 'Das Passwort entspricht nicht den Komplexitätsanforderungen. Bitte gib mindestns 6 Zeichen bestehend aus Groß- und Kleinbuchstaben ein.';
+        } else {
           this.error = err.message;
-          console.log("err: ", err);
-        });
-    }
+        }
+      }
+    },
   },
 
   middelware: "authenticated",
+
   created() {
     this.$store.commit("update_position", {
       positions: {

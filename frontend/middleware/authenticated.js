@@ -1,13 +1,11 @@
-export default async function  ({
-    store,redirect
-}){
-    // if(process.server){
-    
-    // return redirect("/login")
-    // }else{
-    //     console.log('isAuthenticated', store.state.auth.isAuthenticated);
-    //     if(!store.state.auth.isAuthenticated){
-    //         return redirect("/login")
-    //     }
-    // }
+export default async function ({
+    store, redirect, route
+}) {
+    try {
+        console.info('Checking authentication');
+        await store.dispatch('auth/token');
+    } catch (e) {
+        console.error('no current user', e);
+        redirect(200, '/login', { return_url: route.path });
+    }
 }

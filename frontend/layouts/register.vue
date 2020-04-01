@@ -1,6 +1,6 @@
 <template>
     <div>
-      <Cookies v-if="!Cookie" />
+      <!-- <Cookies v-if="!Cookie" /> -->
       <nuxt />
     </div>
 </template>
@@ -10,23 +10,24 @@ import Cookies from '@/components/cookies.vue'
 
 export default {
   components: {
-    Cookies
+    // Cookies
   },
   data(){
     return{
-      Cookie:true
+      // Cookie:true
     }
   },
-  async beforeCreate(){
-    const cookie = this.$cookies.get('accepted Cookies')
-    if(cookie == undefined || false){
-      console.log(cookie)
-      this.Cookie = false;
-    }else{
-      console.log(true);
-      this.Cookie = true;
-    }
-  }
+  
+  // async beforeCreate(){
+  //   const cookie = this.$cookies.get('accepted Cookies')
+  //   if(cookie == undefined || false){
+  //     console.log(cookie)
+  //     this.Cookie = false;
+  //   }else{
+  //     console.log(true);
+  //     this.Cookie = true;
+  //   }
+  // }
 }
 </script>
 

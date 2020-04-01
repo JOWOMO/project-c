@@ -54,10 +54,10 @@ export default {
   */
   plugins: [
     '@/plugins/vuelidate.js',
-    {
-      src: '@/plugins/amplify.js',
-      mode: 'client'
-    }
+    // {
+    //   src: '@/plugins/amplify.js',
+    //   mode: 'client'
+    // }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -133,11 +133,12 @@ export default {
     clientConfigs: {
       default: {
         // required
-        httpEndpoint: `https://${findAWSExport('ApiGatewayRestApiId')}.execute-api.eu-west-1.amazonaws.com/dev/graphql`,
-
-        // optional
-        // override HTTP endpoint in browser only
-        // browserHttpEndpoint: '/graphql',
+        httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
+        
+        getAuth: async () => {
+            const token = await Vue.prototype.$store.dispatch('auth/token');
+            return token;
+        },
 
         // optional
         // See https://www.apollographql.com/docs/link/links/http.html#options
@@ -145,19 +146,8 @@ export default {
           credentials: 'same-origin'
         },
 
-        // You can use `wss` for secure connection (recommended in production)
-        // Use `null` to disable subscriptions
-        // wsEndpoint: 'ws://localhost:4000', // optional
-
-        // LocalStorage token
-        tokenName: 'apollo-token', // optional
-
         // Enable Automatic Query persisting with Apollo Engine
         persisting: false, // Optional
-
-        // Use websockets for everything (no HTTP)
-        // You need to pass a `wsEndpoint` for this to work
-        // websocketsOnly: false // Optional
       },
     },
   },
