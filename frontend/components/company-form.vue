@@ -21,7 +21,11 @@
       <div class="form-group half-width dropdown">
 
         <div class="select-box">
-          <div class="options-container active" ref="optionsContainer">
+          <div
+            class="options-container"
+            ref="optionsContainer"
+            :class="{active: isActive}"
+          > <!-- TODO: add v-for - fetch from db -->
             <div class="option" ref="option" @click="select">
               <input type="radio" class="radio" name="category" id="Handwerker">
               <label for="Handwerker">Handwerker</label>
@@ -56,7 +60,7 @@
             </div>
           </div>
 
-          <div class="selected" ref="selected" @click="toggle">
+          <div class="selected" ref="selected" @click="isActive = !isActive">
             Branche
           </div>
         </div>
@@ -112,6 +116,7 @@ export default {
   data() {
     return {
       submitted: false,
+      isActive: false,
       user: {
         company_name: "",
         company_addr: "",
@@ -144,9 +149,9 @@ export default {
       this.$router.push("/register/team");
       // this.$store.dispatch("add_company", this.user); // TODO: save it after validate.vue
     },
-    toggleClass() {
-      this.$refs.optionsContainer.toggle("active")
-    },
+    // toggleClass() {
+    //   this.$refs.optionsContainer.toggle("active")
+    // },
     select() {
       this.$refs.innerHTML = this.$refs.industrys
     }
@@ -176,97 +181,7 @@ export default {
     grid-template-rows: 1fr;
     gap: 20px;
     justify-content: center;
-    align-items: center;
-
-    .dropdown {
-      .selected {
-        background: #222;
-        border-radius: 8px;
-        margin-bottom: 8px;
-        color: #fff;
-        position: relative;
-
-        order: 0;
-
-        &::after {
-          content: '';
-          background: url(../static/icons/dropdown.svg);
-          background-size: contain;
-          background-repeat: no-repeat;
-
-          position: absolute;
-          height: 100%;
-          width: 32px;
-          right: 10px;
-          top: 5px;
-
-          transition: all .4s;
-        }
-      }
-
-      .select-box {
-        display: flex;
-        width: 400px;
-        flex-direction: column;
-
-        .options-container {
-          background: #222;
-          color: #fff;
-          // max-height: 0;
-          width: 100%;
-          // opacity: 0;
-          transition: all .5s;
-          border-radius: 8px;
-          overflow: hidden;
-
-          order: 1;
-
-          &.active {
-            max-height: 250px;
-            opacity: 1;
-            overflow-y: scroll;
-          }
-
-          &.active + .selected::after {
-            transform: rotate(180deg);
-            top: -6px;
-          }
-        }
-
-
-        &::-webkit-scrollbar {
-          width: 8px;
-          background: #111;
-          border-radius: 0 8px 8px 0;
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: #333;
-          border-radius: 0 8px 8px 0;
-        }
-
-        .option, .selected {
-          padding: 12px 24px;
-          cursor: pointer;
-
-          &:hover {
-            background: #444;
-          }
-
-          .radio {
-            display: none;
-          }
-        }
-
-        label {
-          cursor: pointer;
-          position: static;
-          color: #fff;
-          transform: none;
-          font-size: 16px !important;
-        }
-      }
-    }
+    align-items: start;
 
     .form-group {
       grid-column: 1 / span 4;
@@ -288,7 +203,7 @@ export default {
 
     .three-quaters-width{
       grid-column: 1 / span 3;
-      justify-self: right;
+      justify-self: center;
 
       input, label, .error {
         width: 375px;
@@ -297,7 +212,7 @@ export default {
 
     .one-quater-width {
       grid-column: 4;
-      justify-self: left;
+      justify-self: center;
 
       input, label, .error {
         width: 125px;
