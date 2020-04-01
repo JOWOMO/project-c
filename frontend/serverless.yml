@@ -155,7 +155,7 @@ resources:
   
     # '.' at the end is required
     DnsRecord:
-      Type: "AWS::Route53::RecordSet"
+      Type: AWS::Route53::RecordSet
       DependsOn: WebAppCloudFrontDistribution
       Properties:
         AliasTarget:
@@ -163,16 +163,17 @@ resources:
             Fn::GetAtt:
               - WebAppCloudFrontDistribution
               - DomainName
+          HostedZoneId: Z2FDTNDATAQYW2 # cloudfront
 
-          HostedZoneId: ${ssm:/btb/dnszone}
-
-        HostedZoneName: ${ssm:/btb/dnszonename}.
+        HostedZoneId: ${ssm:/btb/dnszone}
+        # HostedZoneName: ${ssm:/btb/dnszonename}.
 
         # we only take the first element as A, the rest must be configured in 53 directly
         Name: 
            Fn::Select:
             - 0
             - ${self:custom.publicurls}
+            - '.'
         Type: 'A'
 
   Outputs:
