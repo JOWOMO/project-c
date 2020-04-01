@@ -98,7 +98,7 @@
       </div>
 
       <div class="form-group info">
-        <textarea-autosize name="info" min-height="50" placeholder="Zusätzliche Information" required />
+        <textarea-autosize name="info" placeholder="Zusätzliche Information" required />
         <label for="info"></label>
       </div>
 

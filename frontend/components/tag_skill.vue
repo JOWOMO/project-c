@@ -1,6 +1,6 @@
 <template>
   <div @click="set_active" v-bind:class="{selected: active}" class="tag">
-    <p>{{ skill }}</p>
+    <span>{{ skill }}</span>
   </div>
 </template>
 
@@ -14,6 +14,11 @@ export default {
   },
   props: {
     skill: String
+  },
+  methods: {
+    set_active() {
+      this.active = true
+    }
   }
 };
 </script>
@@ -22,30 +27,22 @@ export default {
 @import 'assets/global';
 
 .tag {
-  width: 200px;
-  height: 70px;
-  border: 2px solid $primary;
-  border-radius: 10px;
-  text-align: center;
-  margin: 20px;
+  border: 1px solid $primary;
+  border-radius: 30px;
+  display: inline-block;
+  margin: 10px;
+  padding: 3px 10px;
 
-  p {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 70px;
-    color: deepskyblue;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  &:hover {
+    background: $uiComponentHighlighted;
   }
-}
 
-.selected {
-  background: deepskyblue;
+  &.active {
+    background: $primary;
 
-  p {
-    color: #fff;
+    span {
+      color: #fff;
+    }
   }
 }
 </style>

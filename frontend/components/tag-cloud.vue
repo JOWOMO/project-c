@@ -2,6 +2,7 @@
   <div class="tag-container" @click="setActive">
     <div class="card">
       <h3>Eigenschaften hinzufügen</h3>
+      <span>{{ skills.length }} für Team {{ team }} ausgewählt</span>
       <tag
         v-for="skill in skills"
         :key="skill.name"
@@ -16,10 +17,19 @@ import tag from '@/components/tag_skill.vue'
 
 export default {
   name: 'tag-cloud',
+  data() {
+    return {
+      skills: [],
+      team: 1
+    }
+  },
   methods: {
     setActive() {
       this.$emit('changeActive', false)
     }
+  },
+  components: {
+    tag
   },
   props: {
     skills: Array
@@ -48,6 +58,11 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 10px;
     padding: 20px;
+
+    span {
+      display: block;
+      color: lighten(#000, 20);
+    }
   }
 }
 </style>
