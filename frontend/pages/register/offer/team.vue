@@ -5,7 +5,7 @@
     <h1>Ich biete</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
  
-    <team refs="Hallo"
+    <team ref="save"
       class="team-form"
       v-for="team in teams"
       :key="team.id"
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     save(){
-      this.$refs.team.hallo()
+      this.$refs.save[0].submit()
     },
     addTeam() {
       this.teams.push({

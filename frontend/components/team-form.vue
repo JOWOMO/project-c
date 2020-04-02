@@ -91,7 +91,7 @@
 
       <div class="form-group info">
         <textarea-autosize
-          v-mode="extraInfo"
+          v-model="extraInfo"
           name="info"
           placeholder="Zusätzliche Information"
           required
@@ -108,13 +108,14 @@
       </div>
 
       <div class="selectedSkills">
-        <tag v-for="skill in selectedTags" :key="skill.name" :skill="skill.name" selected />
+        <tag v-for="skill in selectedTags" :key="skill.name" :skill="skill" selected />
       </div>
 
       <tagCloud
         v-if="tagCloud"
         v-on:changeActive="hide($event)"
         :skills="skills"
+        :selected="selectedTags"
         @selectedTags="getTags"
         :id="id"
       />
@@ -146,40 +147,9 @@ export default {
       extraInfo: "",
       selectedNumber: "Anzahl Mitarbeiter",
       selectedTopic: "Bezeichnung ",
-      skills: [
-        // TODO: Fetch from db
-        // {
-        //   name: 'Security'
-        // },
-        // {
-        //   name: 'Handwerklich begabt'
-        // },
-        // {
-        //   name: 'Kundenkontakt'
-        // },
-        // {
-        //   name: 'Körperliche Arbeit'
-        // },
-        // {
-        //   name: 'erste Hilfe'
-        // },
-        // {
-        //   name: 'spricht deutsch'
-        // },
-        // {
-        //   name: 'Führerschein'
-        // },
-        // {
-        //   name: 'Staplerschein'
-        // }
-      ]
+      skills:[]
     };
   },
-   ready() {
-        this.$on('eventGreet', () => {
-          console.log("greting")
-        });
-      },
   components: {
     tagCloud,
     tag
@@ -188,9 +158,6 @@ export default {
     id: Number
   },
   methods: {
-    hallo:function(){
-      console.log("helllo")
-    },
     selected_number(number) {
       this.selectedNumber = number.toString();
       this.twoActive = false;
@@ -199,19 +166,33 @@ export default {
       this.selectedTopic = topic;
       this.oneActive = false;
     },
-    save(selectedTags, selectedTopic, selectedNumber, extraInfo) {
+    submit(selectedTags, selectedTopic, selectedNumber, extraInfo) {
+      console.log("submitting")
+      // validation
+      if(selectedTopic === "Bezeichnung"){
+        return this.error = "Das Team benötigt eine bezeichnung"
+      } else if(selectedNumber === "Anzahl Mitarbeiter"){
+        return this.error = "Die Anzahl der Mitabreiter wird benötigt"
+      } else if(selectedTags.legth <= 3){
+        return this.error = "Das Team benötigt min. 3 Eigentschaften"
+      }
+
+
+      console.log(this.selectedTopic)
       this.$apollo.query({query:getUser}).then(user=>{
         this.$apollo
           .mutate({
             mutation: addSupply,
             variables: {
-              companyId: user.me.companies[0].id,
+              companyId: this.$store.state.user.companies[0].id,
               name: this.selectedTopic,
               quantity: parseInt(this.selectedNumber),
-              skills: [this.selectedTags.id]
+              skills: [this.selectedTags[0].id]
             }
           })
-          .then(({ data }) => {});
+          .then(({ data }) => {
+            console.log("db response: ",data)
+          });
       })
     },
     hide(active) {

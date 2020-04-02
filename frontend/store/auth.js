@@ -1,3 +1,4 @@
+
 import Auth from '@aws-amplify/auth'
 
 Auth.configure({
@@ -43,11 +44,18 @@ export const actions = {
     }
   },
 
-  async register({ commit }, { email, password }) {
+  // we preserve the login information to be able to 
+  // continue the registration without additional details
+  async register({ commit }, { email, password, firstName, lastName }) {
     const user = await Auth.signUp({
       username: email,
       password,
-      attributes: { email },
+      
+      attributes: { 
+        email,
+        given_name: firstName,
+        family_name: lastName,
+      },
     });
 
     console.log('auth', 'register', user);
@@ -65,9 +73,25 @@ export const actions = {
     return await Auth.confirmSignUp(email, code);
   },
 
-  async login({ commit, $Amplify }, { userdata }) {
+  async startResetPassword({ commit }, { email }) {
+    console.log("reset:", email);
+    return await Auth.forgotPassword(email);
+  },
+
+  async resetPassword({commit}, { email, code, password }) {
+    await Auth.forgotPasswordSubmit(email, code, password);
+  },
+
+  async resendcode({commit}, { email }) {
+    await Auth.resendSignUp(email);
+  },
+
+  async login({ commit }, { userdata }) {
     // there is a mismatch in naming
-    const user = await Auth.signIn(userdata.email, userdata.pwd || userdata.password);
+    const user = await Auth.signIn(
+      userdata.email, 
+      userdata.pwd || userdata.password,
+    );
 
     // safety check
     await Auth.currentSession();

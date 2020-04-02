@@ -8,7 +8,7 @@
           <span>biete</span>
           <br />Mitarbeiter
         </h1>
-        <button @click="user_register" id="biete" class="hover-button">
+        <button @click="supply_register" id="biete" class="hover-button">
           Kostenlos Anmelden
           <svg
             width="21"
@@ -33,7 +33,7 @@
           <span>suche</span>
           <br />Mitarbeiter
         </h1>
-        <button v-on:click="company_register" id="suche" class="hover-button">
+        <button v-on:click="demand_register" id="suche" class="hover-button">
           Kostenlos Anmelden
           <svg
             width="21"
@@ -55,7 +55,6 @@
 </template>
 
 <script>
-
 export default {
   head() {
     return {
@@ -76,20 +75,16 @@ export default {
       user: ""
     };
   },
+
   layout: "no-auth",
   middelware: "authenticated",
+
   methods: {
-    user_register: function() {
-      this.$router.push("/register/offer/user");
+    demand_register: function() {
+      this.$router.push({ path: "/register/start", query: { flow: "demand" } });
     },
-    company_register: function() {
-      this.$router.push("/register/search/user");
-    },
-  },
-  computed: {
-    onload: function() {
-      console.log("loggin in");
-      this.$store.dispatch("auth/load");
+    supply_register: function() {
+      this.$router.push({ path: "/register/start", query: { flow: "supply" } });
     }
   }
 };

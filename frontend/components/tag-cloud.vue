@@ -10,8 +10,8 @@
       <div class="selected-tags">
         <tag
           v-for="tag in selectedTags"
-          :key="tag.name"
-          :skill="tag.name"
+          :key="tag.id"
+          :skill="tag"
           selected
           class="selected-tags"
         />
@@ -20,8 +20,9 @@
       <div class="unselected-tags">
         <tag
           v-for="skill in skills"
-          :key="skill.name"
-          :skill="skill.name"
+
+          :key="skill.id"
+          :skill="skill"
           @updateTag="updateTag"
           class="tags"
         />
@@ -43,23 +44,37 @@ export default {
   name: 'tag-cloud',
   data() {
     return {
-      selectedTags: []
+      selectedTags: [],
     }
   },
+  async created(){
+      //prove of concept comparing list
+      this.selectedTags = this.selected
+      console.log(this.selectedTags)
+      await this.skills.forEach(skill=>{
+        skill.active = false
+        this.selectedTags.forEach(tag=>{
+          if(skill.id == tag.id){
+            skill.active = true
+          }
+        })
+      })
+    },
   methods: {
     setActive() {
       this.$emit('changeActive', false)
     },
     updateTag(active, value) {
       console.log(active, value)
+    
       if(active == true) {
-        this.selectedTags.push({
-          name: value
-        })
+        this.selectedTags.push(
+          value
+        )
       } else {
-        const index = selectedTags.indexOf(value);
+        const index = this.selectedTags.indexOf(value);
         if (index > -1) {
-          selectedTags.splice(index, 1);
+          this.selectedTags.splice(index, 1);
         }
       }
     },
@@ -72,6 +87,7 @@ export default {
   },
   props: {
     skills: Array,
+    selected:Array,
     id: Number
   }
 }
