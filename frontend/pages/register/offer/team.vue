@@ -1,14 +1,28 @@
 <template>
   <div class="container">
-    <sidebar
-      v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]"
-      class="sidebar"
-    />
+    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich biete','state':positions.team}]" class="sidebar" />
 
     <h1>Ich biete</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
+ 
+    <team refs="Hallo"
+      class="team-form"
+      v-for="team in teams"
+      :key="team.id"
+      :id="team.id"
+    />
+ 
+    <button class="add" @click.prevent="addTeam">
+      <div class="circle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white"/>
+          <path d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z" fill="white"/>
+        </svg>
+      </div>
 
-    <team type="offer" class="team-form" />
+      <span>Weiteres Team hinzufügen</span>
+    </button>
+
     <div class="form-group buttons">
       <button @click.prevent="$router.push('/register/company')">Zurück</button>
       <button class="primary" @click.prevent="save">Registrieren</button>
@@ -19,6 +33,7 @@
 <script>
 import sidebar from "@/components/sidebar_login.vue";
 import team from "@/components/team-form.vue";
+import getUser from "@/apollo/queries/user"
 
 export default {
   head() {
@@ -36,6 +51,7 @@ export default {
     sidebar,
     team
   },
+  
   data() {
     return {
       isActive: false,
@@ -46,10 +62,20 @@ export default {
         skill: "skill",
         resource: "resource"
       },
-      positions: {
-        profile: {
-          editing: false,
-          passed: true
+      teams: [
+        {
+          id: 1
+        }
+      ],
+       positions:{
+        profile:{
+          editing:false,
+          passed:true,
+        },
+        company:{
+          editing:false,
+          passed:true,
+
         },
         company: {
           editing: false,
@@ -62,8 +88,19 @@ export default {
       }
     };
   },
+  async created(){
+    try{
+     const user = await this.$apollo.query({query:getUser})
+     this.$store.commit("updateUser",user.data.me)
+    }catch(err){
+      console.log("could not get user data",err)
+    }
+  },
   methods: {
-   addTeam() {
+    save(){
+      this.$refs.team.hallo()
+    },
+    addTeam() {
       this.teams.push({
         id: this.teams.length + 1
       })
@@ -102,8 +139,37 @@ export default {
     margin: 20px 10px 0 10px;
   }
 
+  .add {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    width: auto;
+    background: none;
+    cursor: pointer;
+
+    .circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #25A6DA;
+
+      svg {
+        margin-top: 13px;
+      }
+    }
+
+    span {
+      color: #25A6DA;
+      font-weight: bold;
+      margin-left: 10px;
+      display: inline-block;
+    }
+  }
+
   .buttons {
     grid-column: 2;
+    margin-top: 20px;
+    z-index: 1;
   }
 }
 
@@ -126,6 +192,7 @@ export default {
 
     .team-form {
       width: 100%;
+      margin: 0;
     }
 
     .buttons {

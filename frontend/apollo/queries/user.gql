@@ -1,7 +1,15 @@
-query Categories {  
+query user {  
     me{
-        id 
-        name
-        email
+        id,
+        name,
+        email,
+        companies{
+            id,
+            name,
+            street1,
+            postalCode,
+            city,
+        }
+
     }
 }
