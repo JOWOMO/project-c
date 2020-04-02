@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 query user {  
     me{
         id,
@@ -11,5 +12,12 @@ query user {
             city,
         }
 
+=======
+query me {  
+    me {
+        id 
+        name
+        email
+>>>>>>> e1ca710f2de3b6fc95bc0ba32eb6847993e43807
     }
 }

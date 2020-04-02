@@ -23,6 +23,7 @@ export const mutations = {
     state.user = user
   }
 }
+
 export const getters = {
   login(state) {
     return state.isAuthenticated;
@@ -34,11 +35,16 @@ export const actions = {
     return await Auth.currentSession()
   },
 
-  async load({ commit }) {
+  async load({ commit, rootState }) {
+    if (rootState.auth.user) {
+      return;
+    }
+
     try {
-      const user = await Auth.currentAuthenticatedUser()
-      commit('set', user)
-      return user
+      const user = await Auth.currentAuthenticatedUser();
+      commit('set', user);
+
+      return user;
     } catch (e) {
       commit('set', null)
     }
@@ -50,8 +56,8 @@ export const actions = {
     const user = await Auth.signUp({
       username: email,
       password,
-      
-      attributes: { 
+
+      attributes: {
         email,
         given_name: firstName,
         family_name: lastName,
@@ -59,8 +65,8 @@ export const actions = {
     });
 
     console.log('auth', 'register', user);
-    commit('set', user);
-    return user;
+    commit('set', user.user);
+    return user.user;
   },
 
   async token() {
@@ -68,9 +74,17 @@ export const actions = {
     return currentSession.getAccessToken().getJwtToken();
   },
 
-  async confirm({ commit }, { email, code }) {
+  async confirm({ commit, rootState }, { email, code }) {
     console.log("code:", code);
-    return await Auth.confirmSignUp(email, code);
+
+    try {
+      await Auth.confirmSignUp(email, code);
+    } catch (e) {
+      if (e.code !== 'NotAuthorizedException' || e.message != 'User cannot be confirmed. Current status is CONFIRMED') {
+        console.error(e);
+        throw e;
+      }
+    }
   },
 
   async startResetPassword({ commit }, { email }) {
@@ -78,19 +92,19 @@ export const actions = {
     return await Auth.forgotPassword(email);
   },
 
-  async resetPassword({commit}, { email, code, password }) {
+  async resetPassword({ commit }, { email, code, password }) {
     await Auth.forgotPasswordSubmit(email, code, password);
   },
 
-  async resendcode({commit}, { email }) {
+  async resendcode({ commit }, { email }) {
     await Auth.resendSignUp(email);
   },
 
-  async login({ commit }, { userdata }) {
+  async login({ commit }, { email, password }) {
     // there is a mismatch in naming
     const user = await Auth.signIn(
-      userdata.email, 
-      userdata.pwd || userdata.password,
+      email,
+      password,
     );
 
     // safety check

@@ -17,6 +17,21 @@ CREATE TABLE IF NOT EXISTS btb.skillgroup
     CONSTRAINT skillgroup_name UNIQUE (name)
 );
 
+CREATE SEQUENCE IF NOT EXISTS btb.industry_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    CACHE 1;
+
+CREATE TABLE IF NOT EXISTS btb.industry
+(
+    id integer NOT NULL DEFAULT nextval('btb.industry_id_seq'::regclass),
+    name text NOT NULL,
+    CONSTRAINT industry_pkey PRIMARY KEY (id),
+    CONSTRAINT industry_name UNIQUE (name)
+);
+
 CREATE SEQUENCE IF NOT EXISTS btb.skill_id_seq
     INCREMENT 1
     START 1
@@ -47,9 +62,13 @@ CREATE SEQUENCE IF NOT EXISTS btb.customer_id_seq
 CREATE TABLE IF NOT EXISTS btb.customer
 (
     id integer NOT NULL DEFAULT nextval('btb.customer_id_seq'::regclass),
+
     external_id text NOT NULL,
     email text NOT NULL,
-    name text NOT NULL,
+
+    first_name text NOT NULL,
+    last_name text NOT NULL,
+
     CONSTRAINT customer_pkey PRIMARY KEY (id),
     CONSTRAINT customer_email UNIQUE (email),
     CONSTRAINT customer_external_id UNIQUE (external_id)
@@ -64,8 +83,9 @@ CREATE SEQUENCE IF NOT EXISTS btb.company_id_seq
 
 CREATE TABLE IF NOT EXISTS btb.company
 (
-    id integer NOT NULL DEFAULT nextval('btb.company_id_seq'::regclass),
-    
+    id integer NOT NULL DEFAULT nextval('btb.company_id_seq'::regclass),    
+    industry_id integer,
+
     comments_int text,
     comments_ext text,
 
@@ -85,7 +105,10 @@ CREATE TABLE IF NOT EXISTS btb.company
     longitude numeric,
     latitude numeric,
     
-    CONSTRAINT company_pkey PRIMARY KEY (id)
+    CONSTRAINT company_pkey PRIMARY KEY (id),
+
+    CONSTRAINT company_industry_id FOREIGN KEY (industry_id)
+        REFERENCES btb.industry (id)
 );
 
 CREATE TABLE IF NOT EXISTS btb.company_customer
@@ -94,8 +117,10 @@ CREATE TABLE IF NOT EXISTS btb.company_customer
     company_id integer NOT NULL,
 
     CONSTRAINT company_customer_pkey PRIMARY KEY (company_id, customer_id),
+
     CONSTRAINT company_id FOREIGN KEY (company_id)
         REFERENCES btb.company (id),
+
     CONSTRAINT customer_id FOREIGN KEY (customer_id)
         REFERENCES btb.customer (id) 
 );

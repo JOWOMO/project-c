@@ -6,6 +6,7 @@ from btb.api.schema.resolvers import (
 )
 from .skills import Skill
 from flask import g
+from .industry import Industry
 
 
 class Company(ObjectType):
@@ -19,10 +20,17 @@ class Company(ObjectType):
     postal_code = String(required=True)
     city = String(required=True)
 
+    industry = Field(Industry, required=False)
+
     # lazy
     demands = List(lambda: Demand, resolver=demands_by_company)
     supplies = List(lambda: Supply, resolver=supplies_by_company)
 
+    def resolve_industry(root, info):
+        if root.industry_id is None:
+            return []
+
+        return g.industry_loader.load(root.industry_id)
 
 class Demand(ObjectType):
     id = ID(required=True)

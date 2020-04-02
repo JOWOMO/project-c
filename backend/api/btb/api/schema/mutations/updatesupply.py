@@ -27,7 +27,7 @@ class UpdateSupply(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, supply):
-        current_app.logger.debug("UpdateSupply", supply)
+        current_app.logger.debug("UpdateSupply %s", supply)
 
         with db.engine.begin() as conn:
             sql = text(
@@ -60,7 +60,7 @@ class RemoveSupply(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, id):
-        current_app.logger.debug("RemoveSupply", id)
+        current_app.logger.debug("RemoveSupply %s", id)
 
         with db.engine.begin() as conn:
             sql = text(

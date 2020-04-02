@@ -37,10 +37,14 @@ export default {
 
   methods: {
     handleStateChange(event, value) {
-      console.debug('handleStateChange', event);
-      
+      console.debug("handleStateChange", event);
+
       if (event === "redirect") {
-        this.$router.push(value || this.target_route || '/');
+        if (!this.target_route) {
+          this.$emit("user-authenticated");
+        } else {
+          this.$router.push(value || this.target_route || "/");
+        }
       } else if (event === "back") {
         this.$router.back();
       } else {
@@ -58,13 +62,9 @@ export default {
   props: {
     start_component: {
       type: String,
-      default: 'login',
+      default: "login"
     },
-    target_route: String,
-    flow: {
-      type: String,
-      default: '',
-    },
+    target_route: String
   }
 };
 </script>

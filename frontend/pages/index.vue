@@ -9,7 +9,7 @@
           <br />Mitarbeiter
         </h1>
         <button @click="supply_register" id="biete" class="hover-button">
-          Kostenlos Anmelden
+          {{ action_text }}
           <svg
             width="21"
             height="16"
@@ -34,7 +34,7 @@
           <br />Mitarbeiter
         </h1>
         <button v-on:click="demand_register" id="suche" class="hover-button">
-          Kostenlos Anmelden
+          {{ action_text }}
           <svg
             width="21"
             height="16"
@@ -70,14 +70,16 @@ export default {
       ]
     };
   },
-  data() {
-    return {
-      user: ""
-    };
+
+  computed: {
+    action_text() {
+      return this.$store.state.auth.user 
+        ? "Teams bearbeiten"
+        : "Kostenlos anmelden";
+    }
   },
 
   layout: "no-auth",
-  middelware: "authenticated",
 
   methods: {
     demand_register: function() {
