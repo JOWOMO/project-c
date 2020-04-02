@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
-    <profile route="/register/search/validate" />
+     <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+    <h1>Persönliche Daten</h1>
+    <p>Wir benötigen ein paar Informationen, um loszulegen</p>
+    <profile route="/register/offer/validate" class="profile-form" />
   </div>
 </template>
 
@@ -23,7 +25,7 @@ export default {
   },
   data(){
     return{
-       positions:{
+      positions:{
         profile:{
           editing:true,
           passed:false,
@@ -37,7 +39,7 @@ export default {
           editing:false,
           passed: false,
         },
-       }
+      }
     }
   },
   layout: "register",
@@ -51,74 +53,56 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 400px auto;
+  grid-template-rows: 1fr 1fr 10fr;
   height: 100vh;
+  padding: 0;
 
-  h1 {
-    position: relative;
-    left: 500px; // min 400px
-    top: 70px;
+  .sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 3;
   }
 
-  form {
-    position: relative;
-    left: 500px; // min 400px
-    top: 120px;
-    overflow: hidden;
+  h1 {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: left;
+    margin: 50px 0 0 10px;
+  }
 
-    .form-group {
-      margin: 20px;
+  p {
+    grid-column: 2;
+    grid-row: 2;
+    margin-left: 10px;
+  }
 
-      label {
-        font-weight: bold;
-        font-size: 18px;
-        display: block;
-      }
-
-      input {
-        width: 400px;
-        height: 40px;
-        border: 1px solid grey;
-        border-radius: 5px;
-        background-color: #00000007;
-        padding-left: 10px;
-        font-size: 14px;
-        outline: none;
-        margin-top: 10px;
-      }
-
-      .btn {
-        width: 130px;
-        height: 40px;
-        border-radius: 20px;
-        outline: none;
-        border: none;
-        font-size: 16px;
-        margin: 30px 30px 0 30px;
-      }
-
-      .btn-secondary {
-        color: grey;
-        position: relative;
-        bottom: 30px;
-        left: 0;
-        width: 80px;
-      }
-
-      .btn-primary {
-        background: deepskyblue;
-        color: #fff;
-        position: relative;
-        bottom: 30px;
-        right: -200px;
-      }
-    }
+  .profile-form {
+    grid-column: 2;
+    grid-row: 3;
+    margin-right: 10px;
   }
 }
 
-@media only screen and (max-width: 1115px) {
-  .sidebar {
-    display: none;
+@media only screen and (max-width: 950px) {
+  .container {
+    grid-template-columns: 0fr 1fr;
+    width: 100vw;
+    padding: 50px 20px;
+
+    p, h1 {
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
+
+    .sidebar {
+      display: none;
+    }
+
+    .profile-form {
+      width: 100%;
+    }
   }
 }
 </style>
