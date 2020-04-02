@@ -1,7 +1,9 @@
 <template>
   <div class="navbar">
     <nav>
-      <nuxt-link to="/"><img src="/images/logo.svg" alt="Logo" class="logo"></nuxt-link>
+      <nuxt-link to="/">
+        <img src="/images/logo.svg" alt="Logo" class="logo" />
+      </nuxt-link>
 
       <div v-if="!$store.state.auth.isAuthenticated" class="links">
         <nuxt-link to="/faq" class="link">FAQ</nuxt-link>
@@ -9,35 +11,60 @@
       </div>
 
       <div v-else class="profile">
-        <span>Maike</span> <!-- TODO: Add user name -->
-        <img v-on:click="logout" src="/images/profile.jpg" alt="" class="profile_img"> <!-- TODO: Add img from database -->
+        <span>{{ title }}</span>
+        <!-- TODO: Add img from database -->
+        <img v-on:click="logout" src="/images/profile.jpg" alt class="profile_img" />
       </div>
     </nav>
   </div>
 </template>
 
 <script>
+import me from "@/apollo/queries/user";
+
 export default {
   name: "Navbar",
+
   props: {
     auth: Boolean
   },
+
   data() {
     return {
       login: false,
-      lol: false
-      // isAuthenticated: false
+      lol: false,
+      title: ""
     };
   },
+
+  async created() {
+    if (this.$store.state.auth.user) {
+      try {
+        // we need to find out where we stand
+        const result = await this.$apollo.query({
+          query: me
+        });
+
+        console.log(result.data);
+        this.title = result.data.me.name || result.data.me.email;
+      } catch (e) {
+        console.error(e);
+        this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`
+      }
+    }
+  },
+
   methods: {
     print: function() {
       console.log(this.isAuthenticated);
     },
+
     logout: function() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/");
     }
   },
+
   computed: {
     isAuthenticated() {
       // console.log(this.$store.state.auth.isAuthenticated);

@@ -1,5 +1,5 @@
-query Categories {  
-    me{
+query me {  
+    me {
         id 
         name
         email

@@ -49,7 +49,10 @@ CREATE TABLE IF NOT EXISTS btb.customer
     id integer NOT NULL DEFAULT nextval('btb.customer_id_seq'::regclass),
     external_id text NOT NULL,
     email text NOT NULL,
-    name text NOT NULL,
+
+    first_name text NOT NULL,
+    last_name text NOT NULL,
+
     CONSTRAINT customer_pkey PRIMARY KEY (id),
     CONSTRAINT customer_email UNIQUE (email),
     CONSTRAINT customer_external_id UNIQUE (external_id)

@@ -1,7 +1,7 @@
 <template>
   <div>
-      <h1>Persönliche Daten</h1>
-      <p>Wir benötigen ein paar Informationen, um loszulegen</p>
+    <h1>Persönliche Daten</h1>
+    <p>Wir benötigen ein paar Informationen, um loszulegen</p>
 
     <div class="form-container">
       <form method="POST" @submit.prevent="register" novalidate>
@@ -59,17 +59,17 @@
         <div class="form-group half-width">
           <input
             type="password"
-            v-model="user.pwd"
+            v-model="user.password"
             id="password"
             name="password"
             class="form-control"
-            :class="{ 'is-invalid': submitted && $v.user.pwd.$error }"
+            :class="{ 'is-invalid': submitted && $v.user.password.$error }"
             required
           />
           <label for="password">Password</label>
-          <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback">
-            <span v-if="!$v.user.pwd.required">Password is required</span>
-            <span v-if="!$v.user.pwd.minLength">Password must be at least 6 characters</span>
+          <div v-if="submitted && $v.user.password.$error" class="invalid-feedback">
+            <span v-if="!$v.user.password.required">Password is required</span>
+            <span v-if="!$v.user.password.minLength">Password must be at least 6 characters</span>
           </div>
         </div>
 
@@ -101,7 +101,6 @@
             v-model="user.agb"
             id="checkbox"
             name="checkbox"
-            value="true"
             class="form-control checkbox"
             :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
           />
@@ -129,21 +128,13 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 // import addUser from "@/apollo/mutations/add_user";
 
 export default {
-  name: "profile",
-  components: {
-  },
-
-  props: {
-    route: String
-  },
-
   data() {
     return {
       user: {
         firstName: "",
         lastName: "",
         email: "",
-        pwd: "",
+        password: "",
         confirmpwd: "",
         agb: false
       },
@@ -157,8 +148,8 @@ export default {
       firstName: { required },
       lastName: { required },
       email: { required, email },
-      pwd: { required, minLength: minLength(6) },
-      confirmpwd: { required, sameAsPassword: sameAs("pwd") },
+      password: { required, minLength: minLength(6) },
+      confirmpwd: { required, sameAsPassword: sameAs("password") },
       agb: { sameAs: sameAs(() => true) }
     }
   },
@@ -177,12 +168,13 @@ export default {
         return;
       }
 
-      this.$store.commit("register_user_state", this.user);
+      // we need to clone the object
+      this.$store.commit("register_user_state", { ...this.user });
 
       try {
         const user = await this.$store.dispatch("auth/register", {
           email: this.user.email,
-          password: this.user.pwd,
+          password: this.user.password,
           firstName: this.user.firstName,
           lastName: this.user.lastName
         });

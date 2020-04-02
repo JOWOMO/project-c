@@ -1,8 +1,8 @@
 insert into btb.customer
     values 
-    (1, 'DebugUserId', 'email@email.com', 'name'),
-    (2, 'DebugUserId2', 'email2@email.com', 'name'),
-    (3, 'DebugUserId3', 'email3@email.com', 'name')
+    (1, 'DebugUserId', 'email@email.com', 'first', 'last'),
+    (2, 'DebugUserId2', 'email2@email.com', 'first', 'last'),
+    (3, 'DebugUserId3', 'email3@email.com', 'first', 'last')
 ;
      
 insert into btb.company

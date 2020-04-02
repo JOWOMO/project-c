@@ -51,7 +51,7 @@
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-// import addUser from "@/apollo/mutations/add_user";
+import addUser from "@/apollo/mutations/add_user";
 
 export default {
   components: {},
@@ -89,14 +89,38 @@ export default {
       }
 
       try {
-        const user = await this.$store.dispatch("auth/confirm", {
+        let user;
+
+        await this.$store.dispatch("auth/confirm", {
           email: this.user.email,
           code: this.user.code
         });
 
+        // https://github.com/amazon-archives/amazon-cognito-identity-js/issues/186#issuecomment-335690410
+        if (this.$store.state.register_state.user.password) {
+          user = await this.$store.dispatch(
+            "auth/login",
+            this.$store.state.register_state.user
+          );
+        } else {
+          this.$emit("change-state", "login");
+          return;
+        }
+
+        await this.$apollo.mutate({
+          mutation: addUser,
+          variables: {
+            email: this.user.email,
+
+            // they have been stored during the register procedure
+            first: user.attributes.given_name,
+            last: user.attributes.family_name
+          }
+        });
+
         this.$emit("change-state", "redirect");
       } catch (err) {
-        // console.log("err: ", err);
+        console.error("err: ", err);
         // if (err.code === "UsernameExistsException") {
         //   this.error =
         //     "Das hat leider nicht geklappt. Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?";

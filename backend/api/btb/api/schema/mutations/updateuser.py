@@ -7,9 +7,9 @@ from flask import g, current_app
 
 
 class UserInput(graphene.InputObjectType):
-    name = graphene.String(required=True)
+    first_name = graphene.String(required=True)
+    last_name = graphene.String(required=True)
     email = graphene.String(required=True)
-
 
 class UpdateUser(graphene.Mutation):
     class Arguments:
@@ -25,7 +25,7 @@ class UpdateUser(graphene.Mutation):
             sql = text(
                 """
 update btb.customer
-set name = :name, email = :email
+set first_name = :first_name, last_name = :last_name, email = :email
 where external_id = :id
             """
             )
