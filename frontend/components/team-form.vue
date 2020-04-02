@@ -119,8 +119,8 @@
         @selectedTags="getTags"
         :id="id"
       />
+    <p>{{ error }}</p>
     </form>
-    
   </div>
 </template>
 
@@ -146,8 +146,9 @@ export default {
       selectedTags: [],
       extraInfo: "",
       selectedNumber: "Anzahl Mitarbeiter",
-      selectedTopic: "Bezeichnung ",
-      skills:[]
+      selectedTopic: "Bezeichnung",
+      skills:[],
+      error: ''
     };
   },
   components: {
@@ -166,19 +167,20 @@ export default {
       this.selectedTopic = topic;
       this.oneActive = false;
     },
-    submit(selectedTags, selectedTopic, selectedNumber, extraInfo) {
+    submit() {
       console.log("submitting")
+      
       // validation
-      if(selectedTopic === "Bezeichnung"){
-        return this.error = "Das Team benötigt eine bezeichnung"
-      } else if(selectedNumber === "Anzahl Mitarbeiter"){
-        return this.error = "Die Anzahl der Mitabreiter wird benötigt"
-      } else if(selectedTags.legth <= 3){
-        return this.error = "Das Team benötigt min. 3 Eigentschaften"
+      if(this.selectedTopic === "Bezeichnung"){
+        this.error = "Das Team benötigt eine Bezeichnung"
+        return 
+      } else if(this.selectedNumber === "Anzahl Mitarbeiter"){
+        this.error = "Die Anzahl der Mitabreiter wird benötigt"
+        return 
+      } else if(this.selectedTags.length < 3){
+        this.error = "Das Team benötigt min. 3 Eigentschaften "
+        return 
       }
-
-
-      console.log(this.selectedTopic)
       this.$apollo.query({query:getUser}).then(user=>{
         this.$apollo
           .mutate({
