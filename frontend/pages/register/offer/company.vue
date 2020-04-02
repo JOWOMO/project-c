@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-     <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+     <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich biete','state':positions.team}]" class="sidebar" />
     <h1>Dein Unternehmen</h1>
     <p>Erzähle uns mehr über dein Unternehmen</p>
     <Company class="company-form" />

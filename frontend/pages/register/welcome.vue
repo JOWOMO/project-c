@@ -1,75 +1,82 @@
 <template>
   <div class="container">
-    <img :src="img" alt="Profile picture" />
+    <div class="images">
+      <img src="/icons/user.svg">
+      <img src="/images/profile.jpg"> <!-- TODO: Add v-bind -->
+    </div>
 
-    <h1>Willkommen {{ name }}</h1>
-     <nuxt-link to="/">Hallo</nuxt-link>
+    <h1>Willkommen {{name}}!</h1>
 
-    <p>Du bist jetzt in der Suche auffindbar. Entdecke Personalpartner, die deinem Profil entsprechen. Die Kriterien kannst du jeder Zeit in deinem Profil anpassen.</p>
+    <p>Du bist ab jetzt in der Suche auffindbar. Entdecke passende Personal Partner, die deinem Profil entsprechen. Deine Kriterien kannst du jederzeit anpassen.</p>
 
-    <nuxt-link to="/dashboard" class="button">Profil ansehen</nuxt-link>
-    <nuxt-link to="/search" class="button">Personalpartner anzeigen</nuxt-link>
+    <div class="buttons">
+      <button>Profil ansehen</button>
+      <button class="primary">Personalpartner anzeigen</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      img: "",
-      name: ""
-    };
-  },
-  middleware: "authenticated",
-  methods: {
-    getUser() {
-      const user = this.$axios.get(`${process.env.db}/users/1`);
-      this.img = user.profile_img;
-      this.name = user.firstName;
-    }
-  },
-  created() {
-    this.getUser();
-  },
-  middelware: "authenticated"
-};
+
+}
 </script>
 
 <style lang="scss" scoped>
 .container {
-  text-align: center;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 5fr 1fr 1fr 1fr;
 
-  img {
-    width: 50vw;
-    height: 50vw;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+  .images {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
-  h1 {
-    margin: 20px;
+    img {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      border: 3px solid #00000010;
+      object-fit: cover;
+
+      &:nth-of-type(odd) {
+        transform: translateX(20px);
+      }
+      &:nth-of-type(even) {
+        transform: translateX(-20px);
+      }
+    }
   }
 
   p {
-    width: 70vw;
-    position: relative;
-    left: 15vw;
+    width: 40%;
+    justify-self: center;
+    text-align: center;
   }
 
-  .button {
-    background: deepskyblue;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 20px;
-    padding: 10px 15px;
-    margin: 20px;
+  .buttons {
+    justify-self: center;
+
+    button {
+      width: 250px;
+    }
   }
 }
 
-@media only screen and (max-width: 786px) {
+@media only screen and (max-width: 765px) {
+  .container {
+    grid-template-rows: 1fr .5fr 1fr 1fr;
+    width: 100vw;
+  }
   img {
-    width: 60vw;
-    height: 60vw;
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .buttons {
+    text-align: center;
   }
 }
 </style>

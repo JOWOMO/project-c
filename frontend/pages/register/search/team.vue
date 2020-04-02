@@ -1,34 +1,38 @@
 <template>
   <div class="container">
-   <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
-    <h1>Mein Team</h1>
-    <p>
-      Diese Skills hat mein Team
-      <span>(min. eine Person)</span>
-    </p>
-    <span id="invalid_tags" v-if="valid_skills">Sie haben noch keine Skills ausgewählt.</span>
-    <div class="tag-wrapper">
-      <tag v-for="skill in skills" :key="skill.skill" :skill="skill.skill" :type="type.skill" />
-    </div>
-    <p>Ausserdem kann ich bereitstellen</p>
-    <div class="tag-wrapper">
-      <tag
-        v-for="resource in resources"
-        :key="resource.resource"
-        :skill="resource.resource"
-        :type="type.resource"
-      />
-    </div>
-    <div class="button_wrapper">
-      <button class="btn btn-secondary" @click.prevent="$router.push('/register/company')">Zurück</button>
-      <button class="btn btn-primary" @click.prevent="check_tags">registrieren</button>
+    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+
+    <h1>Ich suche</h1>
+    <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
+
+    <team
+      class="team-form"
+      v-for="team in teams"
+      :key="team.id"
+      :id="team.id"
+    />
+
+    <button class="add" @click.prevent="addTeam">
+      <div class="circle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white"/>
+          <path d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z" fill="white"/>
+        </svg>
+      </div>
+
+      <span>Weiteres Team hinzufügen</span>
+    </button>
+
+    <div class="form-group buttons">
+      <button @click.prevent="$router.push('/register/company')">Zurück</button>
+      <button class="primary" @click.prevent="check_tags">Registrieren</button>
     </div>
   </div>
 </template>
 
 <script>
 import sidebar from "@/components/sidebar_login.vue";
-import tag from "@/components/tag/tag_skill.vue";
+import team from '@/components/team-form.vue'
 
 export default {
   head() {
@@ -44,7 +48,7 @@ export default {
   middleware:'authenticated',
   components: {
     sidebar,
-    tag
+    team
   },
   data() {
     return {
@@ -56,7 +60,12 @@ export default {
         skill: "skill",
         resource: "resource"
       },
-         positions:{
+      teams: [
+        {
+          id: 1
+        }
+      ],
+       positions:{
         profile:{
           editing:false,
           passed:true,
@@ -71,106 +80,99 @@ export default {
           passed: false,
         },
       }
-    };
+    }
+
   },
 };
 </script>
 
 <style scoped lang="scss">
 .container {
-  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 400px auto;
+  grid-auto-rows: min-content;
   height: 100vh;
+  padding: 0;
+
+  .sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
 
   h1 {
-    position: relative;
-    left: 500px;
-    top: 70px;
+    grid-column: 2;
+    justify-self: left;
+    margin: 50px 0 0 10px;
   }
 
   p {
-    color: #00000070;
-    font-weight: bold;
-    position: relative;
-    left: 500px;
-    top: 110px;
+    grid-column: 2;
+    margin: 10px 0 10px 10px;
+  }
+
+  .team-form {
+    grid-column: 2;
+    margin: 20px 10px 0 10px;
+  }
+
+  .add {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    width: auto;
+    background: none;
+    cursor: pointer;
+
+    .circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #25A6DA;
+
+      svg {
+        margin-top: 13px;
+      }
+    }
 
     span {
-      font-weight: normal;
+      color: #25A6DA;
+      font-weight: bold;
+      margin-left: 10px;
+      display: inline-block;
     }
   }
-  #invalid_tags {
-    color: #00000070;
-    font-weight: bold;
-    position: relative;
-    left: 500px;
-    top: 110px;
-  }
-  .button_wrapper {
-    position: relative;
-    top: 110px;
-    left: 500px;
-    .btn {
-      width: 130px;
-      height: 40px;
-      border-radius: 20px;
-      outline: none;
-      border: none;
-      font-size: 16px;
-      margin: 30px 30px 0 30px;
-    }
-    .btn-secondary {
-      color: grey;
-      position: relative;
-      bottom: 30px;
-      left: 0;
-      width: 80px;
-    }
 
-    .btn-primary {
-      background: deepskyblue;
-      color: #fff;
-      position: relative;
-      bottom: 30px;
-      right: -200px;
-    }
-  }
-  .tag-wrapper {
-    position: relative;
-    top: 110px;
-    left: 500px;
-    padding: 20px;
-    width: 60vw;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  .buttons {
+    grid-column: 2;
+    margin-top: 20px;
+    z-index: 1;
   }
 }
 
-@media only screen and (max-width: 1000px) {
-  .sidebar {
-    display: none;
-  }
-
-  h1 {
+@media only screen and (max-width: 950px) {
+  .container {
+    grid-template-columns: 0fr 1fr;
     width: 100vw;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-  }
+    padding: 50px 20px;
 
-  p {
-    width: 100vw;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-  }
+    p, h1 {
+      width: 100%;
+      text-align: center;
+      margin: 0;
+    }
 
-  .tag-wrapper {
-    width: 100vw !important;
-    left: 0 !important;
-    text-align: center;
-    padding: 0 10px 0 10px;
-    justify-content: center;
+    .sidebar {
+      display: none;
+    }
+
+    .team-form {
+      width: 100%;
+      margin: 0;
+    }
+
+    .buttons {
+      justify-self: center !important;
+    }
   }
 }
 </style>
