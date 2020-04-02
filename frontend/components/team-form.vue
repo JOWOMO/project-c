@@ -125,6 +125,7 @@ import tag from '@/components/tag_skill.vue'
 
 export default {
   name: 'team',
+  props:[type],
   data() {
     return {
       oneActive: false,

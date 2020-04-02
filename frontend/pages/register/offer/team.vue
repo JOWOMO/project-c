@@ -5,7 +5,7 @@
     <h1>Dein Unternehmen</h1>
     <p>Erzähl uns mehr über dein Team</p>
 
-    <team class="team-form" />
+    <team type="offer" class="team-form" />
     <div class="form-group buttons">
       <button @click.prevent="$router.push('/register/company')">Zurück</button>
       <button class="primary" @click.prevent="check_tags">Registrieren</button>
