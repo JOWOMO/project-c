@@ -1,5 +1,5 @@
 <template>
-  <div @click="set_active" v-bind:class="{selected: active}" class="tag">
+  <div @click="set_active" :class="{selected: active || selected}" class="tag">
     <span>{{ skill }}</span>
   </div>
 </template>
@@ -13,11 +13,16 @@ export default {
     };
   },
   props: {
-    skill: String
+    skill: String,
+    selected: {
+      type: Boolean,
+      required: false
+    }
   },
   methods: {
     set_active() {
       this.active = true
+      this.$emit('updateTag', this.active, this.skill)
     }
   }
 };
@@ -37,7 +42,7 @@ export default {
     background: $uiComponentHighlighted;
   }
 
-  &.active {
+  &.selected {
     background: $primary;
 
     span {
