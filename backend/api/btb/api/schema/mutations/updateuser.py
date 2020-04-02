@@ -19,7 +19,7 @@ class UpdateUser(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, user):
-        current_app.logger.debug("UpdateUser", user)
+        current_app.logger.debug("UpdateUser %s", user)
 
         with db.engine.begin() as conn:
             sql = text(
