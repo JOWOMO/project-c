@@ -80,7 +80,7 @@ export default {
     }
   },
   created() {},
-  
+
   methods: {
     async login() {
       this.submitted = true;
@@ -114,70 +114,38 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  overflow-x: hidden;
-  height: 100vh;
-  position: relative;
-
-  #invalid_login {
-    position: relative;
-    right: 50px;
-  }
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 1fr 5fr;
 
   h1 {
-    font-weight: bold;
+    margin: 50px 0 0 0;
   }
 
-  form {
-    overflow: hidden;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .form-group {
+    margin: 30px 0 30px 0;
+  }
+}
 
-    .link-wrapper {
-      width: 500px;
-      display: inline-block;
-      position: relative;
-      left: 50%;
-      transform: translate(-50%, -50%);
+@media only screen and (max-width: 765px) {
+  .container {
+    justify-content: center;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 80vw;
 
-      .link {
-        position: relative;
-        top: -20px;
-        font-weight: normal;
+    h1 {
+      margin: 50px 0 0 0;
+    }
+
+    .form-group {
+      width: 80vw;
+
+      input, label, .error {
+        width: 100%;
       }
     }
 
-    .buttonWrapper {
-      text-align: center;
-      margin-top: 40px;
-
-      button {
-        margin: 10px 30px;
-      }
-
-      .primary {
-        width: 150px;
-      }
-    }
-  }
-}
-
-@media only screen and (min-height: 1300px) {
-  form {
-    top: 350px !important;
-  }
-}
-
-@media screen and (max-width: 786px) {
-  .link-wrapper {
-    width: 90% !important;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  form {
-    top: 350px !important;
   }
 }
 </style>
