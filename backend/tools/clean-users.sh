@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/.bashrc
 
-USER_POOL_ID=CHANGE_ME_HERE
+USER_POOL_ID=eu-west-1_pzbJXki5B
  
 RUN=1
 until [ $RUN -eq 0 ] ; do
