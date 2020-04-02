@@ -12,3 +12,5 @@ from .demands_by_company import demands_by_company
 
 from .match_supplies import match_supplies
 from .match_demand import match_demand
+
+from .industries import industries, IndustryLoader

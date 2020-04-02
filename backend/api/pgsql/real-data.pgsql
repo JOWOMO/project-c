@@ -1,3 +1,8 @@
+insert into btb.industry (id, name)
+    values 
+        (1, 'Unbekannt')
+on conflict do nothing;
+
 insert into btb.skillgroup (id, name)
     values 
         (1, 'Sprachen'),

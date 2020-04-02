@@ -11,7 +11,8 @@ insert into btb.company
         name,
         address_line1,
         postal_code,
-        city
+        city,
+        industry_id
     )
 select
     id, 
@@ -23,7 +24,8 @@ select
             btb.postalcodes OFFSET id
         LIMIT 1
     ),
-    'City ' || id
+    'City ' || id,
+    1
 from 
     generate_series(1,100000) id
 ;

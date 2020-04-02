@@ -9,6 +9,7 @@ from btb.api.schema.types import (
     MatchSupplyResult,
     MatchQueryInput,
     CursorInput,
+    Industry,
 )
 from btb.api.schema.resolvers import (
     me as resolveme,
@@ -19,6 +20,7 @@ from btb.api.schema.resolvers import (
     companies_by_principal,
     match_supplies,
     match_demand,
+    industries as industies_resolver,
 )
 from btb.api.schema.mutations import (
     UpdateCompany,
@@ -40,6 +42,7 @@ class Query(ObjectType):
     company = Field(Company, id=ID(required=True), resolver=company_by_id)
 
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
+    industries = List(NonNull(Industry), required=True, resolver=industies_resolver)
 
     match_supplies = Field(
         MatchSupplyResult,
