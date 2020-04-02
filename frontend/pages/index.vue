@@ -68,7 +68,6 @@ export default {
       ]
     };
   },
-
   computed: {
     action_text() {
       return this.$store.state.auth.user
@@ -76,9 +75,7 @@ export default {
         : "Kostenlos anmelden";
     }
   },
-
   layout: "no-auth",
-
   methods: {
     demand_register: function() {
       this.$router.push({ path: "/register/start", query: { flow: "demand" } });
@@ -90,42 +87,35 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~assets/global.scss";
-
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: calc(100vh - 80px);
   justify-content: center;
-
   .login-scale {
     display: grid;
     grid-template-rows: 1fr 10fr;
     width: 100%;
     overflow: hidden;
-
     &:hover .background {
       transform: scale(1.2);
     }
-
     .background {
       grid-row: 1 / span 2;
       grid-column: 1;
       z-index: 1;
       transition: transform .5s;
     }
-
     .left {
       background: url(/images/1.jpg) center center no-repeat;
       background-size: cover;
     }
-
     .right{
       background: url(/images/2.jpg) center center no-repeat;
       background-size: cover;
     }
-
     h1 {
       grid-row: 1;
       grid-column: 1;
@@ -133,12 +123,10 @@ export default {
       color: #fff;
       margin-top: 50px;
       z-index: 3;
-
       span {
         font-weight: bold;
       }
     }
-
     button {
       grid-row: 2;
       grid-column: 1;
@@ -152,11 +140,9 @@ export default {
       padding: 0 40px;
       margin-top: 30px;
       z-index: 3;
-
       &:hover {
         background: $primary;
         color: #fff;
-
         svg {
           path {
             fill: #fff;
@@ -166,23 +152,18 @@ export default {
     }
   }
 }
-
 @media only screen and (max-width: 765px) {
   .container {
     grid-template-columns: 1fr;
     grid-template-rows: 80vh 80vh;
-
     .login-scale {
       grid-column: 1;
-
       &:hover .background {
         transform: none;
       }
-
       .left {
         grid-column: 1;
       }
-
       .right {
         grid-column: 1;
       }

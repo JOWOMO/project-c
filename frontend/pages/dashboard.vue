@@ -83,8 +83,8 @@ export default {
       ]
     }
   },
- 
-  
+
+
   asyncData({ params, app }) {
     // console.log("asycData");
     return app.$axios.get(`${process.env.db}/matches`)
@@ -92,85 +92,17 @@ export default {
         // console.log("reponse match: ",response);
         const bestmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(0,3);
         const lessmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(3,6);
-        
+
         return {bestmatches:bestmatches,lessmatches:lessmatches }
       })
       .catch((err)=>{
         console.log("Err fetching match: ",err)
       });
   }
-  
+
 };
 </script>
 
 <style scoped lang="scss">
-.container {
-  margin: 40px;
 
-  p {
-    span {
-      color: deepskyblue;
-    }
-  }
-
-  .tags {
-    display: inline-block;
-    width: 60vw;
-
-    .tag {
-      border-radius: 30px;
-      border: 1px solid deepskyblue;
-      display: flex;
-      flex-direction: row;
-      margin: 10px;
-      padding: 5px 15px;
-      display: inline-block;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      display: inline-block;
-
-      p {
-        display: inline-block;
-      }
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: row;
-    float: right;
-
-    .save {
-      p {
-        margin-bottom: 10px;
-      }
-    }
-
-    .radio {
-      margin-left: 40px;
-
-      button {
-        width: 100px;
-        height: 40px;
-        margin: 0;
-        background: #00000007;
-        border: 2px solid #00000010;
-        outline: none;
-        font-size: 16px;
-
-        &:nth-of-type(odd) {
-          border-top-left-radius: 20px;
-          border-bottom-left-radius: 20px;
-        }
-
-        &:nth-of-type(even) {
-          border-top-right-radius: 20px;
-          border-bottom-right-radius: 20px;
-        }
-      }
-    }
-  }
-
-}
 </style>

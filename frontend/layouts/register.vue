@@ -17,7 +17,7 @@ export default {
       // Cookie:true
     }
   },
-  
+
   // async beforeCreate(){
   //   const cookie = this.$cookies.get('accepted Cookies')
   //   if(cookie == undefined || false){
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style>
-html {
+/* html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
@@ -49,5 +49,5 @@ html {
 *:after {
   box-sizing: border-box;
   margin: 0;
-}
+} */
 </style>

@@ -1,6 +1,5 @@
-
 <template>
-  <div class="flow-container">
+  <div>
     <div v-if="state == 'login'">
       <login @change-state="handleStateChange" />
     </div>
@@ -71,80 +70,5 @@ export default {
 
 
 <style lang="scss" scoped>
-.flow-container /deep/ {
-  h1 {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: left;
-    margin: 50px 0 0 10px;
-  }
 
-  p {
-    grid-column: 2;
-    grid-row: 2;
-    margin-left: 10px;
-  }
-
-  form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    gap: 20px;
-    justify-content: center;
-    align-items: start;
-    max-width: 800px;
-
-    .form-group {
-      grid-column: 1 / span 2;
-
-      input,
-      label,
-      .error {
-        width: 100%;
-      }
-    }
-
-    .half-width {
-      grid-column: 1;
-    }
-    .right {
-      grid-column: 2;
-    }
-
-    .agb {
-      grid-column: 1;
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-      align-items: center;
-
-      input[type="checkbox"] {
-        width: 21px;
-        // display: inline-block;
-        position: static;
-      }
-
-      label {
-        width: auto;
-        position: static;
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 765px) {
-  .flow /deep/ form {
-    grid-template-columns: 1fr 0 !important;
-    column-gap: 0 !important;
-
-    .half-width {
-      width: 100% !important;
-      grid-column: 1 !important;
-    }
-
-    .buttons {
-      justify-self: center !important;
-    }
-  }
-}
 </style>

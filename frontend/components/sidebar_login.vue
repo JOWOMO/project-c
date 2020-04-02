@@ -33,32 +33,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-aside {
-  width: 350px;
-  height: 100vh;
-  background: #fff;
-  padding: 20px;
-  position: fixed;
-  left: 0;
-  top: 0;
 
-  .b2b-sidebar-element-wrapper {
-    position: relative;
-    top: 10%;
-    transform: translate(0, -50%);
-
-    .b2b-sidebar-element {
-      display: flex;
-      flex-direction: row;
-      margin: 20px 0;
-
-      p {
-        margin-left: 20px;
-        color: #000;
-        font-size: 18px;
-        font-weight: normal;
-      }
-    }
-  }
-}
 </style>
