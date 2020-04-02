@@ -130,7 +130,9 @@ export default {
             console.log("everything passt our validation");
             this.$store.dispatch("auth/register", {
               email: this.$store.state.register_state.user.email,
-              password: this.$store.state.register_state.user.pwd
+              password: this.$store.state.register_state.user.pwd,
+              firstname: '',
+              lastname: '',
             });
             this.$router.push("/register/validate");
           }

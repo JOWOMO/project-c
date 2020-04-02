@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div v-if="!$store.state.validation_state" class="form-container">
-      <form method="POST" @submit.prevent="add_user" novalidate>
+      <h1>Persönliche Daten</h1>
+      <p>Wir benötigen ein paar Informationen, um loszulegen</p>
+
+    <div class="form-container">
+      <form method="POST" @submit.prevent="register" novalidate>
         <div class="form-group half-width">
           <input
             type="text"
@@ -104,12 +107,6 @@
           />
         </div>
 
-        <!-- <div v-if="!$v.user.agb.$invalid" class="invalid-feedback">
-          <span>
-            Ich akzeptiere die
-            <nuxt-link to="/impressum">AGB</nuxt-link>
-          </span>
-        </div>-->
         <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
           <span v-if="!$v.user.agb.required">
             Bitte die
@@ -119,7 +116,7 @@
 
         <span id="error">{{ error }}</span>
         <div class="form-group buttons">
-          <button @click.prevent="$router.push('/')">Zurück</button>
+          <button @click.prevent="back">Zurück</button>
           <button class="primary">Weiter</button>
         </div>
       </form>
@@ -129,13 +126,11 @@
 
 <script>
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-import validate from "@/components/validate.vue";
-import addUser from "@/apollo/mutations/add_user";
+// import addUser from "@/apollo/mutations/add_user";
 
 export default {
   name: "profile",
   components: {
-    validate
   },
 
   props: {
@@ -169,7 +164,11 @@ export default {
   },
 
   methods: {
-    async add_user() {
+    back() {
+      this.$emit("change-state", "back");
+    },
+
+    async register() {
       this.submitted = true;
 
       // stop here if form is invalid
@@ -183,116 +182,25 @@ export default {
       try {
         const user = await this.$store.dispatch("auth/register", {
           email: this.user.email,
-          password: this.user.pwd
+          password: this.user.pwd,
+          firstName: this.user.firstName,
+          lastName: this.user.lastName
         });
-        const client = this.$apollo.getClient();
 
-        this.$apollo
-          .mutate({
-            mutation: addUser,
-            variables: {
-              name: this.user.firstName,
-              email: this.user.email
-            }
-          })
-          .then(({ data }) => {
-            console.log(data);
-          });
-        console.log("user: ", user);
-
-        this.$store.commit("set_validation_state", true);
-        this.$router.push(this.route);
+        this.$emit("change-state", "validate");
       } catch (err) {
         console.log("err: ", err);
         if (err.code === "UsernameExistsException") {
           this.error =
-            "Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?";
+            "Das hat leider nicht geklappt. Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?";
         } else if (err.code === "InvalidPasswordException") {
           this.error =
-            "Das Passwort entspricht nicht den Komplexitätsanforderungen. Bitte gib mindestns 6 Zeichen bestehend aus Groß- und Kleinbuchstaben ein.";
+            "Das Passwort entspricht nicht den Komplexitätsanforderungen. Bitte gib mindestens 6 Zeichen bestehend aus Groß- und Kleinbuchstaben ein.";
         } else {
           this.error = err.message;
         }
       }
     }
-  },
-
-  middelware: "authenticated",
-
-  created() {
-    this.$store.commit("update_position", {
-      positions: {
-        profile: true,
-        company: false,
-        team: false
-      }
-    });
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.form-container {
-  form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    gap: 20px;
-    justify-content: center;
-    align-items: start;
-    max-width: 800px;
-
-    .form-group {
-      grid-column: 1 / span 2;
-
-      input,
-      label,
-      .error {
-        width: 100%;
-      }
-    }
-
-    .half-width {
-      grid-column: 1;
-    }
-    .right {
-      grid-column: 2;
-    }
-
-    .agb {
-      grid-column: 1;
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-      align-items: center;
-
-      input[type="checkbox"] {
-        width: 21px;
-        // display: inline-block;
-        position: static;
-      }
-
-      label {
-        width: auto;
-        position: static;
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 765px) {
-  form {
-    grid-template-columns: 1fr 0 !important;
-    column-gap: 0 !important;
-
-    .half-width {
-      width: 100% !important;
-      grid-column: 1 !important;
-    }
-
-    .buttons {
-      justify-self: center !important;
-    }
-  }
-}
-</style>
