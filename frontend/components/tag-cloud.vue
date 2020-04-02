@@ -5,7 +5,7 @@
         <h3>Eigenschaften hinzufügen</h3>
         <button @click.prevent="setActive"><img src="/icons/add.svg"></button>
       </div>
-      <span>{{ selectedTags.length }} für Team {{ team }} ausgewählt</span>
+      <span>{{ selectedTags.length }} für Team {{ id }} ausgewählt</span>
 
       <div class="selected-tags">
         <tag
@@ -43,8 +43,7 @@ export default {
   name: 'tag-cloud',
   data() {
     return {
-      selectedTags: [],
-      team: 1
+      selectedTags: []
     }
   },
   methods: {
@@ -72,7 +71,8 @@ export default {
     tag
   },
   props: {
-    skills: Array
+    skills: Array,
+    id: Number
   }
 }
 </script>
@@ -81,12 +81,13 @@ export default {
 @import 'assets/global';
 
 .tag-container {
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
   background: #00000030;
+  z-index: 3;
 
   .card {
     max-width: 1000px;
@@ -98,7 +99,7 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 10px;
     padding: 20px;
-    margin: 30px;
+    overflow-y: scroll;
 
     .head {
       display: flex;
@@ -134,6 +135,20 @@ export default {
 
       .primary {
         width: 200px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .card {
+    width: 90%;
+    height: 90%;
+    left: 5%;
+
+    .head {
+      button {
+        width: 30px !important;
       }
     }
   }

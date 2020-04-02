@@ -2,9 +2,11 @@
   <div class="form-container">
     <form novalidate>
       <div class="head">
-        <h2>Team {{ team }}</h2>
-        <input type="checkbox" class="switch">
-        <span>aktivieren</span>
+        <h2>Team {{ id }}</h2>
+        <div class="checkbox">
+          <input type="checkbox" class="switch">
+          <span>aktivieren</span>
+        </div>
       </div>
 
       <div class="form-group dropdown half-width">
@@ -124,18 +126,8 @@
         v-on:changeActive="hide($event)"
         :skills="skills"
         @selectedTags="getTags"
+        :id="id"
       />
-
-      <button class="add" @click.prevent="">
-        <div class="circle">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white"/>
-            <path d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z" fill="white"/>
-          </svg>
-        </div>
-
-        <span>Weiteres Team hinzufügen</span>
-      </button>
     </form>
   </div>
 </template>
@@ -185,6 +177,9 @@ export default {
     tagCloud,
     tag
   },
+  props: {
+    id: Number
+  },
   methods: {
     hide(active) {
       this.tagCloud = active
@@ -217,17 +212,19 @@ export default {
       justify-content: left;
       align-items: center;
 
-      h2 {
-        display: inline-block;
-        width: auto;
-      }
-
-      .switch {
+      .checkbox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         margin-left: 50px;
-      }
 
-      span {
-        margin-left: 10px;
+        span {
+          margin-left: 10px;
+        }
+
+        input {
+          margin: 0;
+        }
       }
     }
 
@@ -280,31 +277,8 @@ export default {
       grid-column: 1 / span 2;
     }
 
-    .add {
-      grid-column: 1;
-      display: flex;
-      align-items: center;
-      width: auto;
-      background: none;
-      cursor: pointer;
-
-      .circle {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: $primary;
-
-        svg {
-          margin-top: 13px;
-        }
-      }
-
-      span {
-        color: $primary;
-        font-weight: bold;
-        margin-left: 10px;
-        display: inline-block;
-      }
+    .overflow {
+      overflow: hidden;
     }
   }
 }
@@ -313,6 +287,14 @@ export default {
   form {
     grid-template-columns: 1fr 0 !important;
     column-gap: 0 !important;
+
+    .head {
+      justify-content: space-around !important;
+    }
+
+    .right {
+      grid-column: 1 !important;
+    }
   }
 }
 </style>
