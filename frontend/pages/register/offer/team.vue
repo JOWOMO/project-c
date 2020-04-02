@@ -2,8 +2,8 @@
   <div class="container">
     <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
 
-    <h1>Dein Unternehmen</h1>
-    <p>Erzähl uns mehr über dein Team</p>
+    <h1>Ich biete</h1>
+    <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
 
     <team class="team-form" />
     <div class="form-group buttons">
@@ -137,7 +137,7 @@ export default {
 .container {
   display: grid;
   grid-template-columns: 400px auto;
-  grid-template-rows: 1fr 1fr 10fr;
+  grid-auto-rows: min-content;
   height: 100vh;
   padding: 0;
 
@@ -154,12 +154,12 @@ export default {
 
   p {
     grid-column: 2;
-    margin-left: 10px;
+    margin: 10px 0 10px 10px;
   }
 
   .team-form {
     grid-column: 2;
-    margin-right: 10px;
+    margin: 20px 10px 0 10px;
   }
 
   .buttons {

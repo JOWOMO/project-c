@@ -1,13 +1,37 @@
 <template>
-  <div class="tag-container" @click="setActive">
+  <div class="tag-container"> <!-- @click="setActive" -->
     <div class="card">
-      <h3>Eigenschaften hinzufügen</h3>
-      <span>{{ skills.length }} für Team {{ team }} ausgewählt</span>
-      <tag
-        v-for="skill in skills"
-        :key="skill.name"
-        :skill="skill.name"
-       />
+      <div class="head">
+        <h3>Eigenschaften hinzufügen</h3>
+        <button @click.prevent="setActive"><img src="/icons/add.svg"></button>
+      </div>
+      <span>{{ selectedTags.length }} für Team {{ team }} ausgewählt</span>
+
+      <div class="selected-tags">
+        <tag
+          v-for="tag in selectedTags"
+          :key="tag.name"
+          :skill="tag.name"
+          selected
+          class="selected-tags"
+        />
+      </div>
+
+      <div class="unselected-tags">
+        <tag
+          v-for="skill in skills"
+          :key="skill.name"
+          :skill="skill.name"
+          @updateTag="updateTag"
+          class="tags"
+        />
+      </div>
+
+      <div class="button">
+        <button class="primary" @click.prevent="emitTags">
+          hinzufügen
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -19,13 +43,29 @@ export default {
   name: 'tag-cloud',
   data() {
     return {
-      skills: [],
+      selectedTags: [],
       team: 1
     }
   },
   methods: {
     setActive() {
       this.$emit('changeActive', false)
+    },
+    updateTag(active, value) {
+      console.log(active, value)
+      if(active == true) {
+        this.selectedTags.push({
+          name: value
+        })
+      } else {
+        const index = selectedTags.indexOf(value);
+        if (index > -1) {
+          selectedTags.splice(index, 1);
+        }
+      }
+    },
+    emitTags() {
+      this.$emit('selectedTags', this.selectedTags, false)
     }
   },
   components: {
@@ -58,10 +98,43 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 10px;
     padding: 20px;
+    margin: 30px;
+
+    .head {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        background: none;
+        width: 30px;
+        height: 30px;
+
+        img {
+          transform: rotate(45deg);
+        }
+      }
+    }
 
     span {
       display: block;
       color: lighten(#000, 20);
+    }
+
+    .unselected-tags, .selected-tags {
+      margin-top: 10px;
+    }
+
+    .button {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      .primary {
+        width: 200px;
+      }
     }
   }
 }

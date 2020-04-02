@@ -110,11 +110,32 @@
         </button>
       </div>
 
+      <div class="selectedSkills">
+        <tag
+          v-for="skill in selectedTags"
+          :key="skill.name"
+          :skill="skill.name"
+          selected
+        />
+      </div>
+
       <tagCloud
         v-if="tagCloud"
         v-on:changeActive="hide($event)"
         :skills="skills"
+        @selectedTags="getTags"
       />
+
+      <button class="add" @click.prevent="">
+        <div class="circle">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white"/>
+            <path d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z" fill="white"/>
+          </svg>
+        </div>
+
+        <span>Weiteres Team hinzufügen</span>
+      </button>
     </form>
   </div>
 </template>
@@ -131,7 +152,8 @@ export default {
       twoActive: false,
       tagCloud: false,
       team: 1,
-      skills: [
+      selectedTags: [],
+      skills: [ // TODO: Fetch from db
         {
           name: 'Security'
         },
@@ -166,6 +188,10 @@ export default {
   methods: {
     hide(active) {
       this.tagCloud = active
+    },
+    getTags(tags, active) {
+      this.tagCloud = active
+      this.selectedTags = tags // TODO: Write to db
     }
   }
 }
@@ -246,6 +272,38 @@ export default {
           display: inline;
           margin-left: 10px;
         }
+      }
+    }
+
+    .selectedSkills {
+      width: 100%;
+      grid-column: 1 / span 2;
+    }
+
+    .add {
+      grid-column: 1;
+      display: flex;
+      align-items: center;
+      width: auto;
+      background: none;
+      cursor: pointer;
+
+      .circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: $primary;
+
+        svg {
+          margin-top: 13px;
+        }
+      }
+
+      span {
+        color: $primary;
+        font-weight: bold;
+        margin-left: 10px;
+        display: inline-block;
       }
     }
   }
