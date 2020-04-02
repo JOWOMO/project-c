@@ -1,4 +1,7 @@
 export const state = () => ({
+    user:{
+
+    },
     register_state:{
         user:{
 

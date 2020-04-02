@@ -27,7 +27,7 @@ class UpdateDemand(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, demand):
-        current_app.logger.debug("UpdateDemand", demand)
+        current_app.logger.debug("UpdateDemand %s", demand)
 
         with db.engine.begin() as conn:
             sql = text(
@@ -60,7 +60,7 @@ class RemoveDemand(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, id):
-        current_app.logger.debug("RemoveDemand", id)
+        current_app.logger.debug("RemoveDemand %s", id)
 
         with db.engine.begin() as conn:
             sql = text(

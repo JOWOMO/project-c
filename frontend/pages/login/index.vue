@@ -1,58 +1,14 @@
 <template>
   <div class="container">
-    <h1>Willkommen zurück</h1>
-    <form method="POST" @submit.prevent="login" novalidate>
-      <span class="invalid-login" v-if="false_auth">Email oder Passwort inkorrekt</span>
-      <div class="form-group">
-        <input
-          type="text"
-          v-model="user.email"
-          id="email"
-          name="email"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.email.$error }"
-          required
-        />
-        <label for="email">Email</label>
-        <div v-if="submitted && $v.user.email.$error" class="invalid-feedback error">
-          <span v-if="!$v.user.email.required">Email wird benötigt</span>
-          <span v-if="!$v.user.email.email">Keine gültige Email</span>
-        </div>
-      </div>
-      <div class="form-group">
-        <input
-          type="password"
-          v-model="user.pwd"
-          id="password"
-          name="password"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.pwd.$error }"
-          required
-        />
-        <label for="password">Password</label>
-        <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback error">
-          <span v-if="!$v.user.pwd.required">Passwort wird benötigt</span>
-          <span v-if="!$v.user.pwd.minLength">Passwort muss wenigstens 6 Zeichen lang sein</span>
-        </div>
-      </div>
-
-      <div class="link-wrapper">
-        <nuxt-link to="/login/password-reset" class="link">Password vergessen?</nuxt-link>
-      </div>
-
-      <div class="form-group buttonWrapper">
-        <button class="primary">Login</button>
-      </div>
-    </form>
+    <auth v-bind:start_component="'login'" @user-authenticated="userAuthenticated" class="flow" />
   </div>
 </template>
 
 <script>
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-// const Cookie = process.client ? require("js-cookie") : undefined;
+import auth from "@/components/auth";
+import checkState from "@/apollo/queries/check_state";
 
 export default {
-  layout: "register",
   head() {
     return {
       title: "Login",
@@ -62,90 +18,65 @@ export default {
       ]
     };
   },
-  // layout: 'register',
-  data() {
-    return {
-      user: {
-        email: "",
-        pwd: ""
-      },
-      false_auth: false,
-      submitted: false
-    };
-  },
-  validations: {
-    user: {
-      email: { required, email },
-      pwd: { required, minLength: minLength(6) }
-    }
-  },
-  created() {},
 
   methods: {
-    async login() {
-      this.submitted = true;
+    async userAuthenticated() {
+      const client = this.$apollo.getClient();
 
-      // stop here if form is invalid
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        return;
-      }
+      // we need to find out where we stand
+      const result = await this.$apollo.query({
+        query: checkState
+      });
 
-      try {
-        const user = await this.$store.dispatch("auth/login", {
-          userdata: this.user
-        });
+      console.log(result)
 
-        const route = this.$route.query.return_url;
-        if (route == "" || route == null) {
-          console.log('No return_url going to dashboard');
-          this.$router.push("/dashboard");
+      if (result && result.data && result.data.me) {
+        const me = result.data.me;
+
+        if (me.companies.length === 0) {
+          // need to onboard for demand
+          this.$router.push(value || this.target_route || "/");
         } else {
-          this.$router.push(route);
+          this.$router.push("/dashboard");
         }
-      } catch (err) {
-        this.false_auth = true;
-        console.log("Email or Passwort incorrect", err);
+      } else {
+        this.$router.push("/");
       }
     }
+  },
+
+  layout: "no-auth",
+
+  components: {
+    auth
   }
 };
 </script>
 
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 .container {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  grid-template-rows: 1fr 5fr;
+  grid-template-columns: 0fr 1fr;
+  padding: 50px 20px;
 
-  h1 {
-    margin: 50px 0 0 0;
-  }
-
-  .form-group {
-    margin: 30px 0 30px 0;
+  .flow {
+    width: 100%;
   }
 }
 
-@media only screen and (max-width: 765px) {
-  .container {
-    justify-content: center;
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 80vw;
+// @media only screen and (max-width: 950px) {
+//   .container {
+//     grid-template-columns: 0fr 1fr;
+//     // width: 100vw;
+//     padding: 50px 20px;
 
-    h1 {
-      margin: 50px 0 0 0;
-    }
+//     // .sidebar {
+//     //   display: none;
+//     // }
 
-    .form-group {
-      width: 80vw;
-
-      input, label, .error {
-        width: 100%;
-      }
-    }
-
-  }
-}
+//     .flow {
+//       width: 100%;
+//     }
+//   }
+// }
 </style>

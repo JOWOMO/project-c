@@ -1,0 +1,16 @@
+query check_state {  
+    me {
+        id
+
+        companies {
+            supplies {
+                id
+            }
+            
+            demands {
+                id
+            }
+        }
+    }
+}
+

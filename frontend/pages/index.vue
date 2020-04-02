@@ -53,7 +53,6 @@
 </template>
 
 <script>
-
 export default {
   head() {
     return {
@@ -69,25 +68,23 @@ export default {
       ]
     };
   },
-  data() {
-    return {
-      user: ""
-    };
-  },
-  layout: "no-auth",
-  middelware: "authenticated",
-  methods: {
-    user_register: function() {
-      this.$router.push("/register/offer/user");
-    },
-    company_register: function() {
-      this.$router.push("/register/search/user");
-    },
-  },
+
   computed: {
-    onload: function() {
-      console.log("loggin in");
-      this.$store.dispatch("auth/load");
+    action_text() {
+      return this.$store.state.auth.user
+        ? "Teams bearbeiten"
+        : "Kostenlos anmelden";
+    }
+  },
+
+  layout: "no-auth",
+
+  methods: {
+    demand_register: function() {
+      this.$router.push({ path: "/register/start", query: { flow: "demand" } });
+    },
+    supply_register: function() {
+      this.$router.push({ path: "/register/start", query: { flow: "supply" } });
     }
   }
 };

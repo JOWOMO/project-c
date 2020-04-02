@@ -5,7 +5,7 @@ from sqlalchemy import text
 
 
 def companies_by_principal(root, info):
-    current_app.logger.debug("companies_by_principal", root)
+    current_app.logger.debug("companies_by_principal %s", root)
     sql = text(
         """
 select * 

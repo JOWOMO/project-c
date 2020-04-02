@@ -4,14 +4,14 @@
 
     <h1>Ich biete</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
-
-    <team
+ 
+    <team ref="save"
       class="team-form"
       v-for="team in teams"
       :key="team.id"
       :id="team.id"
     />
-
+ 
     <button class="add" @click.prevent="addTeam">
       <div class="circle">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,14 +25,15 @@
 
     <div class="form-group buttons">
       <button @click.prevent="$router.push('/register/company')">Zurück</button>
-      <button class="primary" @click.prevent="check_tags">Registrieren</button>
+      <button class="primary" @click.prevent="save">Registrieren</button>
     </div>
   </div>
 </template>
 
 <script>
 import sidebar from "@/components/sidebar_login.vue";
-import team from '@/components/team-form.vue'
+import team from "@/components/team-form.vue";
+import getUser from "@/apollo/queries/user"
 
 export default {
   head() {
@@ -45,11 +46,12 @@ export default {
     };
   },
   layout: "default",
-  middleware:'authenticated',
+  middleware: "authenticated",
   components: {
     sidebar,
     team
   },
+  
   data() {
     return {
       isActive: false,
@@ -75,69 +77,28 @@ export default {
           passed:true,
 
         },
-        team:{
-          editing:true,
-          passed: false,
+        company: {
+          editing: false,
+          passed: true
         },
-      }
-    }
-
-  },
-  methods: {
-    get_tags: async function() {
-      console.log("env: ",process.env.db)
-      await this.$axios
-        .$get(`${process.env.db}/tags`)
-        .then(response => {
-          console.log("response db: ", response);
-          this.skills = response;
-        })
-        .catch(err => {
-          console.log("error db: ", err);
-        });
-    },
-    get_resources: async function() {
-      await this.$axios
-        .$get(process.env.db + '/resources')
-        .then(response => {
-          console.log("response db: ", response);
-          this.resources = response;
-        })
-        .catch(err => {
-          console.log("error db: ", err);
-        });
-    },
-    myFilter: function() {
-      this.isActive = !this.isActive;
-    },
-    check_tags: function() {
-      // prove if at least one tag is checked
-      const tags = this.$store.getters["get_tags"];
-      console.log(tags);
-      for (var tag in tags) {
-        if (tag != null) {
-          this.valid_skills = false;
-          if (this.$store.state.register_state.user.email == undefined) {
-            // user is empty redirect to /register/user
-            this.$router.push("/register/user");
-          } else if (
-            this.$store.state.register_state.company.company_name == undefined
-          ) {
-            // company is empty redircet to /register/company
-            this.$router.push("/register/company");
-          } else {
-            // everything passt our validation --> sync all data with backend and cognito
-            console.log("everything passt our validation");
-            this.$store.dispatch("auth/register", {
-              email: this.$store.state.register_state.user.email,
-              password: this.$store.state.register_state.user.pwd
-            });
-            this.$router.push("/register/validate");
-          }
+        team: {
+          editing: true,
+          passed: false
         }
       }
-      console.log(this.valid_skills);
-      this.valid_skills = true;
+    };
+  },
+  async created(){
+    try{
+     const user = await this.$apollo.query({query:getUser})
+     this.$store.commit("updateUser",user.data.me)
+    }catch(err){
+      console.log("could not get user data",err)
+    }
+  },
+  methods: {
+    save(){
+      this.$refs.save[0].submit()
     },
     addTeam() {
       this.teams.push({
@@ -145,18 +106,7 @@ export default {
       })
     }
   },
-  created() {
-    this.$store.commit("update_position", {
-      positions: {
-        profile: false,
-        company: false,
-        team: true
-      }
-    });
-    console.log("full log:", this.resources);
-    this.get_tags();
-    this.get_resources();
-  }
+ 
 };
 </script>
 
@@ -229,7 +179,8 @@ export default {
     width: 100vw;
     padding: 50px 20px;
 
-    p, h1 {
+    p,
+    h1 {
       width: 100%;
       text-align: center;
       margin: 0;

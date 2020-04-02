@@ -4,103 +4,98 @@
       <div class="head">
         <h2>Team {{ id }}</h2>
         <div class="checkbox">
-          <input type="checkbox" class="switch">
+          <input type="checkbox" class="switch" />
           <span>aktivieren</span>
         </div>
       </div>
 
       <div class="form-group dropdown half-width">
         <div class="select-box">
-          <div
-            class="options-container"
-            ref="optionsContainer"
-            :class="{active: oneActive}"
-          > <!-- TODO: add v-for - fetch from db -->
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Handwerker">
+          <div class="options-container" ref="optionsContainer" :class="{active: oneActive}">
+            <!-- TODO: add v-for - fetch from db -->
+            <div @click="selected_topic('Handwerker')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Handwerker" />
               <label for="Handwerker">Handwerker</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Verkäufer">
+            <div @click="selected_topic('Verkäufer')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Verkäufer" />
               <label for="Verkäufer">Verkäufer</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Lagerarbeiter">
+            <div @click="selected_topic('Lagerarbeiter')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Lagerarbeiter" />
               <label for="Lagerarbeiter">Lagerarbeiter</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Spediteur">
+            <div @click="selected_topic('Spediteur')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Spediteur" />
               <label for="Spediteur">Spediteur</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Landwirt">
+            <div @click="selected_topic('Landwirt')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Landwirt" />
               <label for="Landwirt">Landwirt</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Krankenpfleger">
+            <div @click="selected_topic('Krankenpfleger')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Krankenpfleger" />
               <label for="Krankenpfleger">Krankenpfleger</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Mechaniker">
+            <div @click="selected_topic('Mechaniker')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Mechaniker" />
               <label for="Mechaniker">Mechaniker</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="Andere">
+            <div @click="selected_topic('Andere')" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="Andere" />
               <label for="Andere">Andere</label>
             </div>
           </div>
 
-          <div class="selected" ref="selected" @click="oneActive = !oneActive">
-            Bezeichnung
-          </div>
+          <div class="selected" ref="selected" @click="oneActive = !oneActive">{{ selectedTopic }}</div>
         </div>
       </div>
 
       <div class="form-group dropdown half-width right">
         <div class="select-box">
-          <div
-            class="options-container"
-            ref="optionsContainer"
-            :class="{active: twoActive}"
-          > <!-- TODO: add v-for - fetch from db -->
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="one">
+          <div class="options-container" ref="optionsContainer" :class="{active: twoActive}">
+            <!-- TODO: add v-for - fetch from db -->
+            <div @click="selected_number(1)" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="one" />
               <label for="one">1 - 5</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="five">
+            <div @click="selected_number(5)" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="five" />
               <label for="five">5 - 10</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="ten">
+            <div @click="selected_number(10)" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="ten" />
               <label for="ten">10 - 20</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="twenty">
+            <div @click="selected_number(20)" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="twenty" />
               <label for="twenty">20 - 30</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="thirty">
+            <div @click="selected_number(30)" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="thirty" />
               <label for="thirty">30 - 40</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="fourty">
+            <div @click="selected_number(40)" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="fourty" />
               <label for="fourty">40 - 50</label>
             </div>
-            <div class="option" ref="option">
-              <input type="radio" class="radio" name="category" id="fifty">
+            <div @click="selected_number(50)" class="option" ref="option">
+              <input type="radio" class="radio" name="category" id="fifty" />
               <label for="fifty">50 +</label>
             </div>
           </div>
 
-          <div class="selected" ref="selected" @click="twoActive = !twoActive">
-            Anzahl Mitarbeiter
-          </div>
+          <div class="selected" ref="selected" @click="twoActive = !twoActive">{{ selectedNumber }}</div>
         </div>
       </div>
 
       <div class="form-group info">
-        <textarea-autosize name="info" placeholder="Zusätzliche Information" required />
+        <textarea-autosize
+          v-model="extraInfo"
+          name="info"
+          placeholder="Zusätzliche Information"
+          required
+        />
         <label for="info"></label>
       </div>
 
@@ -108,36 +103,40 @@
         <span>Teamprofil</span>
         <button @click.prevent="tagCloud = !tagCloud">
           Bitte wählen
-          <img src="/icons/add.svg">
+          <img src="/icons/add.svg" />
         </button>
       </div>
 
       <div class="selectedSkills">
-        <tag
-          v-for="skill in selectedTags"
-          :key="skill.name"
-          :skill="skill.name"
-          selected
-        />
+        <tag v-for="skill in selectedTags" :key="skill.name" :skill="skill" selected />
       </div>
 
       <tagCloud
         v-if="tagCloud"
         v-on:changeActive="hide($event)"
         :skills="skills"
+        :selected="selectedTags"
         @selectedTags="getTags"
         :id="id"
       />
     </form>
+    
   </div>
 </template>
 
 <script>
-import tagCloud from '@/components/tag-cloud.vue'
-import tag from '@/components/tag_skill.vue'
+import tagCloud from "@/components/tag-cloud.vue";
+import tag from "@/components/tag_skill.vue";
+import getSkills from "@/apollo/queries/skills";
+import addSupply from "@/apollo/mutations/add_supply";
+import getUser from "@/apollo/queries/user";
 
 export default {
-  name: 'team',
+  name: "team",
+  props: {
+    type: String
+  },
+  
   data() {
     return {
       oneActive: false,
@@ -145,33 +144,11 @@ export default {
       tagCloud: false,
       team: 1,
       selectedTags: [],
-      skills: [ // TODO: Fetch from db
-        {
-          name: 'Security'
-        },
-        {
-          name: 'Handwerklich begabt'
-        },
-        {
-          name: 'Kundenkontakt'
-        },
-        {
-          name: 'Körperliche Arbeit'
-        },
-        {
-          name: 'erste Hilfe'
-        },
-        {
-          name: 'spricht deutsch'
-        },
-        {
-          name: 'Führerschein'
-        },
-        {
-          name: 'Staplerschein'
-        }
-      ]
-    }
+      extraInfo: "",
+      selectedNumber: "Anzahl Mitarbeiter",
+      selectedTopic: "Bezeichnung ",
+      skills:[]
+    };
   },
   components: {
     tagCloud,
@@ -181,19 +158,66 @@ export default {
     id: Number
   },
   methods: {
+    selected_number(number) {
+      this.selectedNumber = number.toString();
+      this.twoActive = false;
+    },
+    selected_topic(topic) {
+      this.selectedTopic = topic;
+      this.oneActive = false;
+    },
+    submit(selectedTags, selectedTopic, selectedNumber, extraInfo) {
+      console.log("submitting")
+      // validation
+      if(selectedTopic === "Bezeichnung"){
+        return this.error = "Das Team benötigt eine bezeichnung"
+      } else if(selectedNumber === "Anzahl Mitarbeiter"){
+        return this.error = "Die Anzahl der Mitabreiter wird benötigt"
+      } else if(selectedTags.legth <= 3){
+        return this.error = "Das Team benötigt min. 3 Eigentschaften"
+      }
+
+
+      console.log(this.selectedTopic)
+      this.$apollo.query({query:getUser}).then(user=>{
+        this.$apollo
+          .mutate({
+            mutation: addSupply,
+            variables: {
+              companyId: this.$store.state.user.companies[0].id,
+              name: this.selectedTopic,
+              quantity: parseInt(this.selectedNumber),
+              skills: [this.selectedTags[0].id]
+            }
+          })
+          .then(({ data }) => {
+            console.log("db response: ",data)
+          });
+      })
+    },
     hide(active) {
-      this.tagCloud = active
+      this.tagCloud = active;
     },
     getTags(tags, active) {
-      this.tagCloud = active
-      this.selectedTags = tags // TODO: Write to db
+      this.tagCloud = active;
+      this.selectedTags = tags; // TODO: Write to db
     }
+  },
+  async beforeCreate(context) {
+    const client = this.$apollo.getClient();
+    this.$apollo
+      .query({
+        query: getSkills
+      })
+      .then(({ data }) => {
+        return (this.skills = data.skills);
+      });
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/global';
+@import "assets/global";
 
 .form-container {
   form {
