@@ -1,11 +1,10 @@
 <template>
   <div class="container">
-    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar"
+    <sidebar v-bin:mode="mode"
   />
 
   <h1>Finde Personal-Partner</h1>
-  <div class="location">
-
+  <div class="distance">
     <span>{{ location }}</span>
     <div class="form-group half-width dropdown" id="dropdown">
       <div class="select-box">
@@ -52,8 +51,8 @@
   </div>
 
   <div class="radio">
-    <button>Karte</button>
     <button>Kacheln</button>
+    <button>Karte</button>
   </div>
 
     
@@ -219,29 +218,45 @@ export default {
     align-items: center;
 
     span {
-      
+      margin-right: 10px;
     }
   
     #dropdown {
       width: 200px;
+      
+      .selected {
+        border-radius: 30px;
+        border-color: $primary;
+        padding: 5px 15px;
+
+        &::after {
+          top: 12px;
+        }
+      }
+
+      .select-box.options-container.active + .selected::after {
+        top: 0px;
+      }
     }
   }
   
   .radio {
     grid-column: 3;
-    grid-row: 1;
+    grid-row: 1 / span 2;
+    justify-self: center;
+    align-self: center;
 
     button {
       border-radius: 0;
 
-      &:nth-of-type(odd) {
-        border-top-left-radius: 30px;
-        border-bottom-left-radius: 30px;
+      &:nth-of-type(even) {
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
       }
 
-      &:nth-of-type(even) {
-        border-top-right-radius: 30px ;
-        border-bottom-right-radius: 30px;
+      &:nth-of-type(odd) {
+        border-top-left-radius: 30px ;
+        border-bottom-left-radius: 30px;
       }
     }
   }

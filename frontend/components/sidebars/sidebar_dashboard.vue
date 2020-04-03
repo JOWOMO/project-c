@@ -1,15 +1,17 @@
 <template>
   <aside class="register-sidebar">
     <nuxt-link to="/"><img src="/images/logo.svg"></nuxt-link>
-
-    <div v-for="label in labels" :key="label.label" class="sidebar-element-wrapper">
-      <div class="sidebar-element"> <!-- v-bind:class="{active:this.$store.state.positions.profile}" -->
+    <h2>{{ mode }}</h2>
+    <!-- <div v-for="label in labels" :key="label.label" class="sidebar-element-wrapper">
+      <div class="sidebar-element"> 
         <img v-if="label.state.editing" src="/icons/arrow-left.svg">
         <img v-if="label.state.passed" src="/icons/checkmark.svg">
-        <p>{{ label.label }}</p>
+        <div class="circle">
+          <p>{{ label.number }}</p>
+        </div>
       </div>
 
-    </div>
+    </div> -->
   </aside>
 </template>
 
@@ -27,12 +29,14 @@ export default {
     }
   },
   props:{
-   labels:Array
+   mode:Object
   }
 };
 </script>
 
 <style lang="scss" scoped>
+// @import "~assets/global.scss";
+
 aside {
   width: 350px;
   height: 100vh;
@@ -52,12 +56,23 @@ aside {
       flex-direction: row;
       margin: 20px 0;
 
-      p {
-        margin-left: 20px;
-        color: #000;
-        font-size: 18px;
-        font-weight: normal;
+      .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #DA2566;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          color: #fff;
+          font-size: 18px;
+          font-weight: normal;
+        }
       }
+
     }
   }
 }
