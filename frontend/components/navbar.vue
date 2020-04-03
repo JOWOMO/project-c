@@ -30,19 +30,19 @@ export default {
   data() {
     return {
       login: false,
-      lol: false,
       title: ""
     };
   },
 
   async created() {
     if (this.$store.state.auth.user) {
+      console.log("user is empty")
       try {
         // we need to find out where we stand
         const result = await this.$apollo.query({
           query: me
         });
-
+        this.$store.commit('updateUser',result.data.me)
         console.log(result.data);
         this.title = result.data.me.name || result.data.me.email;
       } catch (e) {

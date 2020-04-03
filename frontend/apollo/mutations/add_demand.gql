@@ -1,0 +1,20 @@
+mutation updateDemand($companyId:ID!,$name:String!, $quantity:Int!,$skills:[Int!]){
+  updateDemand(
+    
+    demand:{
+      companyId:$companyId,
+      name:$name,
+      quantity:$quantity,
+      skills:$skills,
+      
+    }
+  ){
+    id
+    name
+    skills{
+        id
+        name 
+        group
+    }
+  }
+}

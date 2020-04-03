@@ -80,6 +80,7 @@ export default {
     demand_register: function() {
       this.$router.push({ path: "/register/start", query: { flow: "demand" } });
     },
+
     supply_register: function() {
       this.$router.push({ path: "/register/start", query: { flow: "supply" } });
     }

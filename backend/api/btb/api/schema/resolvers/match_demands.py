@@ -9,37 +9,37 @@ from flask import current_app, g
 from .match import MatchQuery
 
 
-class SupplyQuery(MatchQuery):
+class DemandQuery(MatchQuery):
     def __init__(self, skills, location):
-        super().__init__("btb.match_team_supply", skills, location)
+        super().__init__("btb.match_team_demand", skills, location)
 
     def map_result(self, record):
-        return self.map_default_result("supply", g.supply_loader, record)
+        return self.map_default_result("demand", g.demand_loader, record)
 
 
-def match_supply(supply, cursor = None):
-    match_query = SupplyQuery(supply['skills'], supply.postal_code)
+def match_demand(demand, cursor = None):
+    match_query = DemandQuery(demand.skills, demand.postal_code)
     # match_query.set_radius(demand.radius)
 
     if cursor is not None:
         match_query.set_offset(cursor.offset)
 
-    if "hourly_salary" in supply:
-        match_query.match_salary(supply["hourly_salary"])
+    if demand.max_hourly_salary:
+        match_query.match_salary(demand.max_hourly_salary)
 
-    if "quantity" in supply:
-        match_query.match_quantity(supply["quantity"])
+    if demand.quantity:
+        match_query.match_quantity(demand.quantity)
 
     return match_query.execute()
 
 
-def match_supply_by_id(root, info, id, cursor=None):
+def match_demand_by_id(root, info, id, cursor=None):
     with db.engine.begin() as conn:
-        sql = text("select s.*, c.postal_code from btb.team_supply s, btb.company c where s.company_id = c.id and s.id = :id")
+        sql = text("select d.*, c.postal_code from btb.team_demand d, btb.company c where d.company_id = c.id and d.id = :id")
         data = conn.execute(sql, id=id).fetchone()
 
         for row in data:
-            return match_supply(data, cursor)
+            return match_demand(data, cursor)
 
         return {
             "page_info": {
@@ -49,8 +49,8 @@ def match_supply_by_id(root, info, id, cursor=None):
         }
 
 
-def match_supplies_by_query(root, info, query, cursor=None):
-    match_query = SupplyQuery(query.skills, query.postal_code,)
+def match_demands_by_query(root, info, query, cursor=None):
+    match_query = DemandQuery(query.skills, query.postal_code,)
 
     match_query.set_radius(query.radius)
 

@@ -1,7 +1,8 @@
 query user {  
     me{
         id,
-        name,
+        firstName,
+        lastName,    
         email,
         companies{
             id,

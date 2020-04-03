@@ -119,8 +119,8 @@
         @selectedTags="getTags"
         :id="id"
       />
+      <p>{{ error }}</p>
     </form>
-
   </div>
 </template>
 
@@ -130,11 +130,12 @@ import tag from "@/components/tag_skill.vue";
 import getSkills from "@/apollo/queries/skills";
 import addSupply from "@/apollo/mutations/add_supply";
 import getUser from "@/apollo/queries/user";
+import addDemand from "@/apollo/mutations/add_demand";
 
 export default {
   name: "team",
   props: {
-    type: String
+    flow: String
   },
 
   data() {
@@ -146,8 +147,9 @@ export default {
       selectedTags: [],
       extraInfo: "",
       selectedNumber: "Anzahl Mitarbeiter",
-      selectedTopic: "Bezeichnung ",
-      skills:[]
+      selectedTopic: "Bezeichnung",
+      skills: [],
+      error: ""
     };
   },
   components: {
@@ -166,20 +168,27 @@ export default {
       this.selectedTopic = topic;
       this.oneActive = false;
     },
-    submit(selectedTags, selectedTopic, selectedNumber, extraInfo) {
-      console.log("submitting")
+    async getTagIds() {
+      let tagIds = [];
+      await this.selectedTags.forEach(tag => {
+        tagIds.push(tag.id);
+      });
+      return tagIds;
+    },
+   async submit() {
       // validation
-      if(selectedTopic === "Bezeichnung"){
-        return this.error = "Das Team benötigt eine bezeichnung"
-      } else if(selectedNumber === "Anzahl Mitarbeiter"){
-        return this.error = "Die Anzahl der Mitabreiter wird benötigt"
-      } else if(selectedTags.legth <= 3){
-        return this.error = "Das Team benötigt min. 3 Eigentschaften"
+      if (this.selectedTopic === "Bezeichnung") {
+        this.error = "Das Team benötigt eine Bezeichnung";
+        return;
+      } else if (this.selectedNumber === "Anzahl Mitarbeiter") {
+        this.error = "Die Anzahl der Mitabreiter wird benötigt";
+        return;
+      } else if (this.selectedTags.length < 3) {
+        this.error = "Das Team benötigt min. 3 Eigentschaften ";
+        return;
       }
 
-
-      console.log(this.selectedTopic)
-      this.$apollo.query({query:getUser}).then(user=>{
+      if (this.flow === "offer") {
         this.$apollo
           .mutate({
             mutation: addSupply,
@@ -191,9 +200,23 @@ export default {
             }
           })
           .then(({ data }) => {
-            console.log("db response: ",data)
+            console.log("db response: ", data);
           });
-      })
+      } else {
+        this.$apollo
+          .mutate({
+            mutation: addDemand,
+            variables: {
+              companyId: this.$store.state.user.companies[0].id,
+              name: this.selectedTopic,
+              quantity: parseInt(this.selectedNumber),
+              skills: await this.getTagIds()
+            }
+          })
+          .then(({ data }) => {
+            console.log("db response: ", data);
+          });
+      }
     },
     hide(active) {
       this.tagCloud = active;
@@ -217,7 +240,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/global';
+@import "assets/global";
 
 .form-container {
   form {

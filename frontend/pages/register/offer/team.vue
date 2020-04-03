@@ -9,6 +9,7 @@
       class="team-form"
       v-for="team in teams"
       :key="team.id"
+      flow="offer"
       :id="team.id"
     />
 
@@ -88,17 +89,11 @@ export default {
       }
     };
   },
-  async created(){
-    try{
-     const user = await this.$apollo.query({query:getUser})
-     this.$store.commit("updateUser",user.data.me)
-    }catch(err){
-      console.log("could not get user data",err)
-    }
-  },
   methods: {
-    save(){
-      this.$refs.save[0].submit()
+   async save(){
+      this.$refs.save.forEach(team=>{
+        team.submit()
+      })
     },
     addTeam() {
       this.teams.push({
