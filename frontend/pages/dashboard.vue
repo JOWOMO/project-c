@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+      <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
     <h1>Finde Personal-Partner</h1>
     <p>in der Nähe von <span>60223 Köln</span></p>
 
@@ -56,7 +57,7 @@
 
 <script>
 import CompanyCard from "@/components/company_card.vue";
-import sidebar from "@/components/sidebars/sidebar_login.vue"
+import sidebar from "@/components/sidebars/sidebar_dashboard.vue"
 export default {
   head() {
     return {
@@ -68,10 +69,13 @@ export default {
   },
   middleware:'authenticated',
   components: {
-    CompanyCard
+    CompanyCard,
+    sidebar
   },
   data() {
     return {
+      bestmatches:[],
+      lessmatches:[],
       tags: [
         {val:'Distanz in km'},
         {val:'Körperliche Arbeit'},
@@ -80,29 +84,69 @@ export default {
         {val:'Auto'},
         {val:'Fahrrad'},
         {val:'Vollzeit'}
-      ]
+      ],
+       positions:{
+        profile:{
+          editing:false,
+          passed:true,
+        },
+        company:{
+          editing:true,
+          passed:false,
+
+        },
+        team:{
+          editing:false,
+          passed: false,
+        },
+      }
     }
   },
 
 
-  asyncData({ params, app }) {
-    // console.log("asycData");
-    return app.$axios.get("http://localhost:4000/matches")
+ async fetch(){
+    console.log("fetching");
+    this.$axios.get("http://localhost:4000/matches")
       .then((response)=>{
-        // console.log("reponse match: ",response);
-        const bestmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(0,3);
-        const lessmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(3,6);
-
-        return {bestmatches:bestmatches,lessmatches:lessmatches }
+        console.log("reponse match: ",response);
+        this.bestmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(0,3);
+        this.lessmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(3,6);
+        console.log("bestmatches: ", this.bestmatches)
+        console.log("lessmatches",this.lessmatches)
       })
       .catch((err)=>{
         console.log("Err fetching match: ",err)
       });
-  }
+  },
+  fetchOnServer:false,
 
 };
 </script>
 
 <style scoped lang="scss">
+  .container{
+  display: grid;
+  grid-template-columns: 400px auto;
+  grid-template-rows: 1fr 1fr 10fr;
+  height: 100vh;
+  padding: 0;
 
+  .sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
+
+  h1 {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: left;
+    margin: 50px 0 0 10px;
+  }
+
+  p {
+    grid-column: 2;
+    grid-row: 2;
+    margin-left: 10px;
+  }
+  }
 </style>
