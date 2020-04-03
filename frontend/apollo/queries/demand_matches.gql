@@ -3,6 +3,25 @@ query demandMatches($id:ID!){
     matches{
       distance
       percentage
+      demand{
+        id
+        name
+        description 
+        skills{
+          id
+          name
+          group
+        }
+        quantity
+        maxHourlySalary
+        company{
+          id
+          name
+          street1
+          postalCode
+          city
+        }
+      }
     }
   }
 }

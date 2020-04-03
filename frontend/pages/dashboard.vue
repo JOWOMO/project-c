@@ -1,72 +1,63 @@
 <template>
   <div class="container">
-    <sidebar v-bin:mode="mode"
-  />
+    <sidebar v-bind:model="model" />
+   
+    
+    <h1>Finde Personal-Partner</h1>
+    <div class="distance">
+      <span>{{ location }}</span>
+      <div class="form-group half-width dropdown" id="dropdown">
+        <div class="select-box">
+          <div class="options-container" ref="optionsContainer" :class="{active: isActive}">
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="five" />
+              <label for="five">5km</label>
+            </div>
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="ten" />
+              <label for="ten">10km</label>
+            </div>
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="fifteen" />
+              <label for="fifteen">15km</label>
+            </div>
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="twenty" />
+              <label for="twenty">20km</label>
+            </div>
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="thirty" />
+              <label for="thirty">30km</label>
+            </div>
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="fourty" />
+              <label for="fourty">40km</label>
+            </div>
+            <div class="option" ref="option" @click="select">
+              <input type="radio" class="radio" name="category" id="fift" />
+              <label for="fift">50km +</label>
+            </div>
+          </div>
 
-  <h1>Finde Personal-Partner</h1>
-  <div class="distance">
-    <span>{{ location }}</span>
-    <div class="form-group half-width dropdown" id="dropdown">
-      <div class="select-box">
-        <div
-          class="options-container"
-          ref="optionsContainer"
-          :class="{active: isActive}"
-        >
-          <div class="option" ref="option" @click="select">
-            <input type="radio" class="radio" name="category" id="five">
-            <label for="five">5km</label>
-          </div>
-          <div class="option" ref="option" @click="select">
-            <input type="radio" class="radio" name="category" id="ten">
-            <label for="ten">10km</label>
-          </div>
-          <div class="option" ref="option" @click="select">
-            <input type="radio" class="radio" name="category" id="fifteen">
-            <label for="fifteen">15km</label>
-          </div>
-          <div class="option" ref="option" @click="select">
-            <input type="radio" class="radio" name="category" id="twenty">
-            <label for="twenty">20km</label>
-          </div>
-          <div class="option" ref="option" @click="select">
-            <input type="radio" class="radio" name="category" id="thirty">
-            <label for="thirty">30km</label>
-          </div>
-          <div class="option" ref="option" @click="select">
-            <input type="radio" class="radio" name="category" id="fourty">
-            <label for="fourty">40km</label>
-          </div>
-          <div class="option" ref="option" @click="select">
-            <input type="radio" class="radio" name="category" id="fift">
-            <label for="fift">50km +</label>
-          </div>
-        </div>
-
-        <div class="selected" ref="selected" @click="isActive = !isActive">
-          Entfernung
+          <div class="selected" ref="selected" @click="isActive = !isActive">Entfernung</div>
+          <button @click="print">{{ model }}</button>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="radio">
-    <button>Kacheln</button>
-    <button>Karte</button>
-  </div>
-
-  <div class="matches">
-    <companyCard
-      name="Reformhaus"
-      :km="5"
-      type="sucht"
-      emloyees="5"
-      profession="verkäufer-innen"
-      class="match"
-    />
-  </div>
-
+    <div class="radio">
+      <button>Kacheln</button>
+      <button>Karte</button>
+    </div>
     
+    <!-- <div class="matches">
+      <companyCard
+        v-for="match in model.demands[0]"
+        :key="match.name"
+        :company_name="match.name"
+        
+      /> 
+    </div> -->
 
     <!-- <div class="subheading">
       <img src="/icons/star.svg" alt="">
@@ -99,26 +90,25 @@
       :requirements="match.requirements"
       :matching="match.matching"
       :link="match.link"
-    ></CompanyCard> -->
+    ></CompanyCard>-->
   </div>
 </template>
 
 <script>
 import companyCard from "@/components/company-card.vue";
-import sidebar from "@/components/sidebars/sidebar_dashboard.vue"
-import getDemands  from "@/apollo/queries/demands"
-import demandMatches from "@/apollo/queries/demand_matches"
+import sidebar from "@/components/sidebars/sidebar_dashboard.vue";
+import getDemands from "@/apollo/queries/demands";
+import demandMatches from "@/apollo/queries/demand_matches";
+import getSkills from "@/apollo/queries/skills";
 
 export default {
   head() {
     return {
       title: "Dein Dashboard",
-      meta: [
-        { hid: "description", name: "description", content: "" }
-      ]
+      meta: [{ hid: "description", name: "description", content: "" }]
     };
   },
-  middleware:'authenticated',
+  middleware: "authenticated",
   components: {
     companyCard,
     sidebar
@@ -126,111 +116,34 @@ export default {
   data() {
     return {
       isActive: false,
-      location: '601234 Köln',
-      bestmatches:[],
-      lessmatches:[],
-      // mode = offer, supply
-      model:{
-        label:"",
-        matches:[]
-      },
-      tags: [
-        {val:'Distanz in km'},
-        {val:'Körperliche Arbeit'},
-        {val:'Anzahl Leih-Mitarbeiter'},
-        {val:'Führerschein'},
-        {val:'Auto'},
-        {val:'Fahrrad'},
-        {val:'Vollzeit'}
-      ],
-       positions:{
-        profile:{
-          editing:false,
-          passed:true,
-        },
-        company:{
-          editing:true,
-          passed:false,
-
-        },
-        team:{
-          editing:false,
-          passed: false,
-        },
-      }
-    }
+      location: "601234 Köln",
+      bestmatches: [],
+      lessmatches: [],
+      domands:[]
+    };
   },
+   methods:{
+     print(){
+       console.log(this.model)
+     }
+   },
+  
+   async fetch() {
+     try{
+       await this.$apollo.query({query:getDemands})
 
- async fetch(){
-    console.log("fetching");
-    // TODO: need to prove if offer or search flow
-    try{
-      // searchin route
-      this.model.label = "Ich suche"
-      const demands = await this.$apollo.query({query:getDemands})
-      
-      console.log("demands available: ",demands.data.companies[0])
-    
-      //Try to get matches for given demand ids
-      try{
-        console.log("legth",demands.data.companies[1].length)
-        for(let i = 0; i < demands.data.companies[1].demands.length; i++){
-          console.log("Hallo")
-          console.log("ids",demands.data.companies[1].demands[1].id)
-          const matches = await this.$apollo.query({query:demandMatches,variables:{
-            id:demands.data.companies[1].demands[i].id
-          }})
-          console.log(matches)
-          await this.model.matches.push({name:demands.data.companies[1].demands[i].name,matches:matches.data.matchDemand.matches});
-        }
-        console.log("Das ist die erste Seite der Matches",this.model.matches)
-      }catch(err){
-        // this will probably not fail because the return code is null and no exception
-        console.log("no match found",err)
-      }
-    }catch(err){
-      console.log("could not get demands")
-    }
-    this.$axios.get("http://localhost:4000/matches")
-      .then((response)=>{
-        console.log("reponse match: ",response);
-        this.bestmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(0,3);
-        this.lessmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(3,6);
-        
-      })
-      .catch((err)=>{
-        console.log("Err fetching match: ",err)
-      });
-      try{
-        const supply = await this.$axios.get("http://localhost:4000/supply")
-        const demand = await this.$axios.get("http://localhost:4000/demand") 
-        if(this.supply != null){
-          //user is searching
-          this.mode.label = "Mein Team"
-          this.mode.data = supply
-          this.mode.data.link = "Team/s verwalten"
-        }else if(demand != null){
-          // user is offering
-          this.mode.label = "Ich suche"
-          this.mode.data = demand
-        }else{
-          // nothing was set --> user need to set team proberties 
-          this.mode.label = "Team ist noch nich fertig Konfiguriert"
-          this.mode.data.link = "Eistellungen" 
-        }
-      }catch(err){
-        console.log("could not fetch data from api", err)
-      }
-  },
-  fetchOnServer:false,
-
+     }catch(err){
+       
+     }
+   }
+   
 };
 </script>
 
 <style scoped lang="scss">
 @import "~assets/global.scss";
 
-.container{
+.container {
   display: grid;
   grid-template-columns: 400px auto;
   grid-template-rows: 1fr 1fr 10fr;
@@ -254,16 +167,17 @@ export default {
     grid-row: 2;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: flex-start;
     align-items: flex-start;
 
     span {
       margin: 5px 10px 0 10px;
     }
-  
+
     #dropdown {
       width: 200px;
-      
+
       .selected {
         border-radius: 30px;
         border-color: $primary;
@@ -279,14 +193,15 @@ export default {
       }
     }
   }
-  
+
   .radio {
     margin-top: 50px;
     grid-column: 3;
     grid-row: 1 / span 2;
+    justify-self: flex-end;
+    align-self: center;
     justify-self: center;
     align-self: start;
-
     button {
       border-radius: 0;
 
@@ -296,7 +211,7 @@ export default {
       }
 
       &:nth-of-type(odd) {
-        border-top-left-radius: 30px ;
+        border-top-left-radius: 30px;
         border-bottom-left-radius: 30px;
       }
     }

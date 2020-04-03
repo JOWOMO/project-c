@@ -181,8 +181,8 @@ button {
   input[type='checkbox'] {
     -webkit-appearance: none;
     -moz-appearance: none;
-    height: 21px;
-    width: 21px;
+    height: 20px;
+    width: 20px;
     outline: none;
     display: inline-block;
     position: relative;
@@ -218,7 +218,7 @@ button {
     }
 
     &:not(.switch) {
-      width: 21px;
+      width: 20px;
 
       &:after {
         opacity: var(--o, 0);
@@ -260,7 +260,7 @@ button {
         border-radius: 50%;
         width: 15px;
         height: 15px;
-        background: $uiComponent;
+        background: #fff;
         transform: translateX(var(--x, 0));
       }
 
@@ -300,6 +300,15 @@ a {
 
   &:hover {
     background-color: darken($primary, 10%);
+  }
+}
+
+.cta {
+  background-color: $secondary;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($secondary, 10%);
   }
 }
 

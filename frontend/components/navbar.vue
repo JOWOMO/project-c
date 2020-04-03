@@ -51,7 +51,6 @@ export default {
       }
     }
   },
-
   methods: {
     print: function() {
       console.log(this.isAuthenticated);

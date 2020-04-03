@@ -2,9 +2,14 @@
     <div class="container">
         <h1>Oh nein - ein Error</h1>
         <nuxt-link to="/" class="link">Schnell, nach Hause</nuxt-link>
+        <p>{{ error }}</p>
     </div>
 </template>
-
+<script>
+  export default {
+    props: ['error'],
+  }
+</script>
 <style lang="scss" scoped>
 .container {
   display: flex;
