@@ -3,7 +3,7 @@
      <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
     <h1>Dein Unternehmen</h1>
     <p>Erzähle uns mehr über dein Unternehmen</p>
-    <Company class="company-form" />
+    <Company :flow="flow"   class="company-form" />
   </div>
 </template>
 
@@ -45,6 +45,14 @@ export default {
       }
     }
   },
+  created(){
+    console.log(this.$route.path)
+    if(this.$route.path == "/register/offer/company"){
+      this.flow = "offer"
+    }else if(this.$route.path == "/register/search/company"){
+      this.flow = "search"
+    }
+  }
 };
 </script>
 

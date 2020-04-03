@@ -1,46 +1,44 @@
 <template>
   <div class="container">
-    <sidebar v-bind:model="model" />
-   
-    
+    <sidebar v-bind:demands="demands" class="sidebar" />
+
     <h1>Finde Personal-Partner</h1>
     <div class="distance">
       <span>{{ location }}</span>
       <div class="form-group half-width dropdown" id="dropdown">
         <div class="select-box">
           <div class="options-container" ref="optionsContainer" :class="{active: isActive}">
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_distance(5)">
               <input type="radio" class="radio" name="category" id="five" />
               <label for="five">5km</label>
             </div>
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_distance(10)">
               <input type="radio" class="radio" name="category" id="ten" />
               <label for="ten">10km</label>
             </div>
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_distance(15)">
               <input type="radio" class="radio" name="category" id="fifteen" />
               <label for="fifteen">15km</label>
             </div>
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_distance(20)">
               <input type="radio" class="radio" name="category" id="twenty" />
               <label for="twenty">20km</label>
             </div>
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_distance(30)">
               <input type="radio" class="radio" name="category" id="thirty" />
               <label for="thirty">30km</label>
             </div>
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_distance(40)">
               <input type="radio" class="radio" name="category" id="fourty" />
               <label for="fourty">40km</label>
             </div>
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_distance(50)">
               <input type="radio" class="radio" name="category" id="fift" />
               <label for="fift">50km +</label>
             </div>
           </div>
 
-          <div class="selected" ref="selected" @click="isActive = !isActive">Entfernung</div>
-          <button @click="print">{{ model }}</button>
+          <div class="selected" ref="selected" @click="isActive = !isActive">{{ selectedDistance }}</div>
         </div>
       </div>
     </div>
@@ -49,48 +47,33 @@
       <button>Kacheln</button>
       <button>Karte</button>
     </div>
-    
-    <!-- <div class="matches">
+
+    <!-- <div class="matches" v-if="!map">
       <companyCard
         v-for="match in model.demands[0]"
         :key="match.name"
         :company_name="match.name"
         
       /> 
+    </div> 
+
+    <div class="map" v-else>
+      <GmapMap
+        :center="{lat:10, lng:10}"
+        :zoom="7"
+        map-type-id="terrain"
+        class="map"
+      >
+        <GmapMarker
+          :key="index"
+          v-for="(m, index) in markers"
+          :position="m.position"
+          :clickable="true"
+          :draggable="true"
+          @click="center=m.position"
+        />
+      </GmapMap>
     </div> -->
-
-    <!-- <div class="subheading">
-      <img src="/icons/star.svg" alt="">
-      <h2>Beste Matches</h2>
-    </div>
-
-    <div class="companyCards">
-      <CompanyCard
-        v-for="match in bestmatches"
-        :key="match.name"
-        :name="match.name"
-        :workers="match.workers"
-        :img="match.img"
-        :distance="match.distance"
-        :requirements="match.requirements"
-        :matching="match.matching"
-        :link="match.link"
-        class="companyCard"
-      ></CompanyCard>
-    </div>
-
-    <h2>Diese Partner könnten dich auch interessieren</h2>
-    <CompanyCard
-      v-for="match in lessmatches"
-      :key="match.name"
-      :name="match.name"
-      :workers="match.workers"
-      :img="match.img"
-      :distance="match.distance"
-      :requirements="match.requirements"
-      :matching="match.matching"
-      :link="match.link"
-    ></CompanyCard>-->
   </div>
 </template>
 
@@ -115,27 +98,36 @@ export default {
   },
   data() {
     return {
+      map: false,
       isActive: false,
       location: "601234 Köln",
       bestmatches: [],
       lessmatches: [],
-      domands:[]
+      demands:[],
+      selectedDistance: 'entfernung Wählen'
     };
   },
    methods:{
+    selected_distance(number) {
+      this.selectedDistance = number.toString();
+      this.isActive = false;
+    },
      print(){
-       console.log(this.model)
+       console.log(this.demands)
      }
    },
   
-   async fetch() {
-     try{
-       await this.$apollo.query({query:getDemands})
-
-     }catch(err){
+  async beforeCreate() {
+    try{
+      const client = this.$apollo.getClient();
+      this.demands = (await this.$apollo.query({query:getDemands})).data.companies
+      console.log(demands)
+      // load first matches for first page
+  }catch(err){
        
-     }
-   }
+    }
+  }
+
    
 };
 </script>
@@ -145,7 +137,7 @@ export default {
 
 .container {
   display: grid;
-  grid-template-columns: 400px auto;
+  grid-template-columns: 400px minmax(400px, 800px) auto;
   grid-template-rows: 1fr 1fr 10fr;
   height: 100vh;
   padding: 0;
@@ -195,15 +187,16 @@ export default {
   }
 
   .radio {
-    margin-top: 50px;
+    width: 100%;
     grid-column: 3;
     grid-row: 1 / span 2;
-    justify-self: flex-end;
-    align-self: center;
     justify-self: center;
-    align-self: start;
+    align-items: center;
+    margin-top: 50px;
+
     button {
       border-radius: 0;
+      width: 90px;
 
       &:nth-of-type(even) {
         border-top-right-radius: 30px;
@@ -220,25 +213,37 @@ export default {
   .matches {
     grid-column: 2 / span 3;
   }
+}
 
-  // .tag{
-  //   border: 1px solid $primary;
-  //   border-radius: 30px;
-  //   display: inline-block;
-  //   margin: 10px;
-  //   padding: 3px 10px;
+@media only screen and (max-width: 1150px) {
+  .container {
+    margin: 0 auto;
+    justify-content: center;
+    grid-template-columns: 1fr 0fr;
+    width: 80%;
 
-  //   &:hover {
-  //     background: $uiComponentHighlighted;
-  //   }
+    .sidebar, .radio {
+      display: none;
+    }
 
-  //   &.selected {
-  //     background: $primary;
+    h1, .distance, .matches  {
+      grid-column: 1;
+    }
 
-  //     span {
-  //       color: #fff;
-  //     }
-  //   }
-  // }
+    h1 {
+      justify-self: center;
+    }
+
+    .distance {
+      justify-content: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .distance {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
 }
 </style>

@@ -106,8 +106,6 @@
           </label>
         </div>
 
-
-
         <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
           <span v-if="!$v.user.agb.required">
             Bitte die
@@ -116,6 +114,9 @@
         </div>
       </div>
 
+      <div class="form-group profile-pic">
+        <input type="file">
+      </div>
 
       <span id="error">{{ error }}</span>
 
@@ -250,7 +251,7 @@ export default {
       grid-column: 2;
     }
     .agb {
-      grid-row: 4;
+      grid-row: 5;
       .wrapper-checkbox {
         grid-column: 1;
         display: flex;
@@ -276,7 +277,11 @@ export default {
 
     #error {
       grid-column: 2;
-      grid-row: 4 / span 5;
+      grid-row: 5 / span 6;
+    }
+
+    .profile-pic {
+      grid-row: 4;
     }
   }
 }
@@ -298,6 +303,7 @@ export default {
       grid-template-columns: 1fr 0 !important;
       column-gap: 0 !important;
       margin: 50px 0 0 0;
+
       .half-width {
         width: 100% !important;
         grid-column: 1 !important;
@@ -309,8 +315,16 @@ export default {
 
       #error {
         grid-column: 1;
-        grid-row: 7;
+        grid-row: 8;
         text-align: center;
+      }
+
+      .agb {
+        grid-row: 7;
+      }
+
+      .profile-pic {
+        grid-row: 6;
       }
 
       .form-container {

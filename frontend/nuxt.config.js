@@ -54,7 +54,8 @@ export default {
   */
   plugins: [
     '@/plugins/vuelidate.js',
-    '@/plugins/vue-textarea-autosize.js'
+    '@/plugins/vue-textarea-autosize.js',
+    '@/plugins/vue-google-maps.js'
     // {
     //   src: '@/plugins/amplify.js',
     //   mode: 'client'
@@ -193,6 +194,7 @@ export default {
       if (ctx.isDev) {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }
+      transpile: [/^vue2-google-maps($|\/)/]
     }
   }
 }

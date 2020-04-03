@@ -11,7 +11,7 @@
           :class="{ 'is-invalid': submitted && $v.user.company_name.$error }"
           required
         />
-         <label for="Firmennamen">Firmennamen (optional)</label>
+         <label for="Firmennamen">Firmennamen</label>
         <div
           v-if="submitted && !$v.user.company_name.required"
           class="invalid-feedback"
@@ -25,42 +25,42 @@
             ref="optionsContainer"
             :class="{active: isActive}"
           > <!-- TODO: add v-for - fetch from db -->
-            <div class="option" ref="option" @click="select">
+            <div class="option" ref="option"  @click="selected_topic('Handwerker')">
               <input type="radio" class="radio" name="category" id="Handwerker">
               <label for="Handwerker">Handwerker</label>
             </div>
-            <div class="option" ref="option">
+            <div class="option" ref="option"  @click="selected_topic('Verkäufer')">
               <input type="radio" class="radio" name="category" id="Verkäufer">
               <label for="Verkäufer">Verkäufer</label>
             </div>
-            <div class="option" ref="option">
+            <div class="option" ref="option"  @click="selected_topic('Lagerarbeiter')">
               <input type="radio" class="radio" name="category" id="Lagerarbeiter">
               <label for="Lagerarbeiter">Lagerarbeiter</label>
             </div>
-            <div class="option" ref="option">
+            <div class="option" ref="option"  @click="selected_topic('Spediteur')">
               <input type="radio" class="radio" name="category" id="Spediteur">
               <label for="Spediteur">Spediteur</label>
             </div>
-            <div class="option" ref="option">
+            <div class="option" ref="option"  @click="selected_topic('Landwirt')">
               <input type="radio" class="radio" name="category" id="Landwirt">
               <label for="Landwirt">Landwirt</label>
             </div>
-            <div class="option" ref="option">
+            <div class="option" ref="option" @click="selected_topic('Krankenpfleger')">
               <input type="radio" class="radio" name="category" id="Krankenpfleger">
               <label for="Krankenpfleger">Krankenpfleger</label>
             </div>
-            <div class="option" ref="option">
+            <div class="option" ref="option" @click="selected_topic('Mechaniker')">
               <input type="radio" class="radio" name="category" id="Mechaniker">
               <label for="Mechaniker">Mechaniker</label>
             </div>
-            <div class="option" ref="option">
+            <div class="option" ref="option" @click="selected_topic('Andere')">
               <input type="radio" class="radio" name="category" id="Andere">
               <label for="Andere">Andere</label>
             </div>
           </div>
 
           <div class="selected" ref="selected" @click="isActive = !isActive">
-            Branche
+            {{ selectedTopic }}
           </div>
         </div>
 
@@ -99,6 +99,22 @@
         </div>
       </div>
 
+      <div class="form-group city" id="city">
+        <input
+          type="string"
+          v-model="user.city"
+          id="city"
+          name="city"
+          class="form-control"
+          :class="{ 'is-invalid': submitted && $v.user.city.$error }"
+          required
+        />
+        <label for="company_postCode">Stadt</label>
+        <div v-if="submitted && $v.user.city.$error" class="invalid-feedback">
+          <span v-if="!$v.user.city.required">Eine Stadt wird benötigt</span>
+        </div>
+      </div>
+
       <div class="form-group buttons">
         <button @click.prevent="$router.push('/register/user')">Zurück</button>
         <button class="primary">Weiter</button>
@@ -120,19 +136,29 @@ export default {
         company_name: "",
         company_addr: "",
         company_postCode: "",
-        employees: 1
-      }
+        employees: 1,
+        city: ''
+      },
+      selectedTopic: 'Branche'
     };
+  },
+  props:{
+    flow:String
   },
   validations: {
     user: {
       company_name: { required },
       company_addr: { required },
       company_postCode: { required, numeric },
-      employees: { required, numeric, minValue: 1 }
+      employees: { required, numeric, minValue: 1 },
+      city: { required }
     }
   },
   methods: {
+    selected_topic(topic) {
+      this.selectedTopic = topic;
+      this.isActive = false;
+    },
     async add_company() {
 
       this.submitted = true;
@@ -154,14 +180,14 @@ export default {
               name: this.user.company_name,
               addressLine1: this.user.company_addr,
               postalCode: this.user.company_postCode,
-              city: "Buxtehude" // DOTO: from input for city
+              city: this.user.city
             }
           })
           .then(({ data }) => {
             console.log(data);
           });
       this.$store.commit("register_company_state", this.user);
-       this.$emit("change-state", "/register/offer");
+      this.$router.push(`/register/${this.flow}/team`)
       // this.$store.dispatch("add_company", this.user); // TODO: save it after validate.vue
     },
     // toggleClass() {
@@ -207,6 +233,10 @@ export default {
       }
     }
 
+    .city {
+      width: 75%;
+    }
+
     .half-width {
       &:nth-of-type(even) {
         grid-column: 2;
@@ -228,6 +258,10 @@ export default {
     .half-width {
       width: 100% !important;
       grid-column: 1 !important;
+    }
+
+    .city {
+      width: 100% !important;
     }
 
     .buttons {

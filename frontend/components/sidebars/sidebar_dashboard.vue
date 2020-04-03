@@ -2,17 +2,16 @@
   <aside class="register-sidebar">
     <nuxt-link to="/"><img src="/images/logo.svg"></nuxt-link>
     <p>Hallo</p>
-     <p>{{ model }}</p>
-     <!-- <div v-for="label in model" :key="label.label" class="sidebar-element-wrapper">
+     <p>{{ demands }}</p>
+     <div v-for="demand in demands" :key="demand.name" class="sidebar-element-wrapper">
       <div class="sidebar-element"> 
-        <img v-if="label.state.editing" src="/icons/arrow-left.svg">
-        <img v-if="label.state.passed" src="/icons/checkmark.svg">
-        <div class="circle">
-          <p>{{ label.number }}</p>
-        </div>
-      </div> -->
+          <p>{{ demand.demands[0].name}}</p>
+        <!-- <img v-if="label.state.editing" src="/icons/arrow-left.svg">
+        <img v-if="label.state.passed" src="/icons/checkmark.svg"> -->
+       
+      </div>
 
-    <!-- </div> -->
+    </div>
   </aside>
 </template>
 
@@ -30,7 +29,7 @@ export default {
     }
   },
   props:{
-   model:Object
+   demands:Array
   }
 };
 </script>

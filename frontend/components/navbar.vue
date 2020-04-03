@@ -42,6 +42,7 @@ export default {
         const result = await this.$apollo.query({
           query: me
         });
+        console.log("me",result)
         this.$store.commit('updateUser',result.data.me)
         console.log(result.data);
         this.title = result.data.me.name || result.data.me.email;

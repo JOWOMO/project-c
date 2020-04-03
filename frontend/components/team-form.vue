@@ -196,7 +196,8 @@ export default {
               companyId: this.$store.state.user.companies[0].id,
               name: this.selectedTopic,
               quantity: parseInt(this.selectedNumber),
-              skills: [this.selectedTags[0].id]
+              skills: await this.getTagIds(),
+              descriptionInt:this.extraInfo
             }
           })
           .then(({ data }) => {
@@ -210,13 +211,15 @@ export default {
               companyId: this.$store.state.user.companies[0].id,
               name: this.selectedTopic,
               quantity: parseInt(this.selectedNumber),
-              skills: await this.getTagIds()
+              skills: await this.getTagIds(),
+              descriptionInt:this.extraInfo
             }
           })
           .then(({ data }) => {
             console.log("db response: ", data);
           });
       }
+      this.$router.push("/dashboard")
     },
     hide(active) {
       this.tagCloud = active;

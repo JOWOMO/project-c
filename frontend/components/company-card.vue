@@ -11,13 +11,16 @@
         <tag
           v-for="skill in skills"
           :key="skill.id"
-          :skill="skill.name"
+          :skill="skill"
           class="tag"
         />
       </div>
       <div class="description">
         <h4>Beschreibung</h4>
-        <p>{{ description }}</p>
+        <div class="expansionWrapper" :class="{expanded: expanded}">
+          <p>{{ description }}</p>
+        </div>
+        <button class="link" @click="expanded = !expanded">{{ moreLess }}</button>
       </div>
       <span class="percent" :class="{green: bestMatch}">{{ percentage }}% passent zu deiner Suche</span>
     </div>
@@ -31,13 +34,13 @@
       <h4>{{ industry }}</h4>
       <div class="adress">
         <span>{{ adress.street }}</span>
-        <span>{{ adress.number }}</span>
+        <span>{{ adress.number }}</span> <br>
         <span>{{ adress.city }}</span>
       </div>
-      <div class="linkIcon">
-        <nuxt-link to="/">Alle Teams anzeigen</nuxt-link>
+      <nuxt-link to="/" class="link">
+        <span>Alle Teams anzeigen</span>
         <img src="/icons/arrow-left.svg">
-      </div>
+      </nuxt-link>
       <button class="cta">Jetzt verbinden</button>
     </div>
   </div>
@@ -47,6 +50,11 @@
 import tag from '@/components/tag_skill.vue'
 export default {
   name: 'companyCard',
+  data() {
+    return {
+      expanded: false
+    }
+  },
   components: {
     tag
   },
@@ -125,6 +133,9 @@ export default {
   computed: {
     bestMatch() {
       return (this.percentage >= 70) ? true : false
+    },
+    moreLess() {
+      return (this.expanded == false) ? 'mehr Anzeigen' : 'weniger Anzeigen'
     }
     
   }
@@ -134,7 +145,6 @@ export default {
 <style lang="scss" scoped>
 .card {
   max-width: 1000px;
-  height: 350px;
   margin: 30px;
   padding: 20px;
   background: #fff;
@@ -154,36 +164,62 @@ export default {
 
   .left {
     grid-column: 1;
+    justify-content: space-between;
 
-    .adress {
+    .location {
       display: flex;
       flex-direction: row;
       align-items: center;
 
       span {
         margin-left: 10px;
+        color: #00000060;
       }
     }
 
     .highlighted {
       color: #25A6DA;
       font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .tags {
+      .tag {
+        margin: 5px;
+      }
     }
 
     .description {
+      margin: 0;
       width: 80%;
-      height: 65px;
-      margin: 0 auto;
-      overflow: hidden;
 
-      p {
-        width: 100%;
+      .expansionWrapper {
+        overflow: hidden;
+        height: 65px;
+
+        p {
+          width: 100%;
+        }
+
+        &.expanded {
+          height: auto;
+        }
+      }
+
+      button {
+        margin: 3px 0 0 0;
+        padding: 0;
+        background: none;
+        color: #25A6DA;
+        width: auto;
+        height: auto;
+        cursor: pointer;
       }
     }
 
     .percent {
-      justify-self: flex-end;
       color: #EDBA38;
+      margin-top: 30px;
     }
 
     .green {
@@ -195,25 +231,32 @@ export default {
     grid-column: 2;
     margin-left: 40px;
 
+    .contact {
+      color: #00000060;
+    }
+
     img {
       width: 100px;
       height: 100px;
       border-radius: 50%;
       border: 2px solid #00000010;
       object-fit: cover;
+      margin-top: 10px;
     }
-    .adress {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
 
+    h3 {
+      margin-top: 10px;
+    }
+
+    .adress {
+      margin-top: 20px;
       span {
         color: #00000060;
       }
     }
 
-    .linkIcon {
+    a {
+      margin-top: 20px;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -224,27 +267,66 @@ export default {
         height: auto;
         border: none;
         border-radius: 0;
-      }
-
-      span {
-        display: inline-block;
+        margin: 0 0 0 20px;
       }
     }
 
     button {
-      max-width: 400px;
+      width: 200px;
       height: 40px;
-      margin: 0 10px;
+      margin: 20px 0 0 0;
       justify-self: center;
     }
   }
 
   .line {
     grid-column: 1;
+    grid-row: 1;
     justify-self: end;
     width: 2px;
     height: 100%;
-    background: #00000010;
+    background: #00000040;
+    border-radius: 1px;
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .card {
+    grid-template-columns: 1fr 0fr;
+    grid-template-rows: 1fr 1fr;
+
+    .left, .right {
+      align-items: center;
+      text-align: center;
+    }
+
+    .left {
+      grid-column: 1;
+      grid-row: 1;
+
+      .percent {
+        margin: 20px 0;
+      }
+    }
+
+    .right {
+      grid-column: 1;
+      grid-row: 2;
+      margin: 0;
+
+      .contact {
+        margin-top: 20px;
+      }
+
+    }
+
+    .line {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: end;
+      height: 2px;
+      width: 100%;
+    }
   }
 }
 </style>

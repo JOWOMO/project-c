@@ -37,9 +37,10 @@ export default {
   methods: {
     handleStateChange(event, value) {
       console.debug("handleStateChange", event);
-
       if (event === "redirect") {
+        console.log("target route",this.target_route)
         if (!this.target_route) {
+        
           this.$emit("user-authenticated");
         } else {
           this.$router.push(value || this.target_route || "/");
