@@ -1,4 +1,4 @@
-from graphene import ID, String, ObjectType, List, Field, Float, Int, NonNull
+from graphene import ID, String, ObjectType, List, Field, Float, Int, NonNull, Boolean
 from btb.api.schema.resolvers import (
     demands_by_company,
     supplies_by_company,
@@ -8,6 +8,11 @@ from .skills import Skill
 from flask import g
 from .industry import Industry
 
+class CompanyContact(ObjectType):
+    first_name = String(required=True)
+    last_name = String(required=True)
+
+    picture_url = String(required=False)
 
 class Company(ObjectType):
     id = ID(required=True)
@@ -21,10 +26,14 @@ class Company(ObjectType):
     city = String(required=True)
 
     industry = Field(Industry, required=False)
+    contact = Field(CompanyContact, required=True)
 
     # lazy
     demands = List(lambda: Demand, resolver=demands_by_company)
     supplies = List(lambda: Supply, resolver=supplies_by_company)
+
+    # def resolve_contact(root, info):
+    #     if root.
 
     def resolve_industry(root, info):
         if root.industry_id is None:
@@ -34,6 +43,7 @@ class Company(ObjectType):
 
 class Demand(ObjectType):
     id = ID(required=True)
+    is_active = Boolean(required=True)
     name = String(required=True)
     description = String(required=False)
 
@@ -52,6 +62,7 @@ class Demand(ObjectType):
 
 class Supply(ObjectType):
     id = ID(required=True)
+    is_active = Boolean(required=True)
     name = String(required=True)
     description = String(required=False)
 

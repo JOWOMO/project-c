@@ -10,10 +10,9 @@ def companies_by_principal(root, info):
         """
 select * 
 from 
-    btb.company c, btb.company_customer cu
+    btb.company_with_contact
 where   
-    c.id = cu.company_id 
-and cu.customer_id = :id
+    owner_id = :id 
 """
     )
 

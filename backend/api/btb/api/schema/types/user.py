@@ -9,10 +9,12 @@ class User(ObjectType):
     email = String(required=True)
 
     """Deprecated"""
-    name = String(required=False)
+    name = String(required=True)
     
-    first_name = String(required=False)
-    last_name = String(required=False)
+    first_name = String(required=True)
+    last_name = String(required=True)
+
+    picture_url = String(required=False)
 
     companies = List(Company, resolver=companies_by_principal)
 
