@@ -31,6 +31,7 @@ from btb.api.schema.mutations import (
     UpdateSupply,
     RemoveSupply,
     UpdateUser,
+    StartUploadPicture,
 )
 
 
@@ -88,6 +89,8 @@ class Mutation(ObjectType):
 
     update_supply = UpdateSupply.Field()
     remove_supply = RemoveSupply.Field()
+
+    start_upload_picture = StartUploadPicture.Field()
 
 
 executableSchema = Schema(query=Query, mutation=Mutation)

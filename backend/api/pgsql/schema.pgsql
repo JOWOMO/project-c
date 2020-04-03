@@ -69,6 +69,8 @@ CREATE TABLE IF NOT EXISTS btb.customer
     first_name text NOT NULL,
     last_name text NOT NULL,
 
+    picture_url text,
+
     CONSTRAINT customer_pkey PRIMARY KEY (id),
     CONSTRAINT customer_email UNIQUE (email),
     CONSTRAINT customer_external_id UNIQUE (external_id)
@@ -83,7 +85,7 @@ CREATE SEQUENCE IF NOT EXISTS btb.company_id_seq
 
 CREATE TABLE IF NOT EXISTS btb.company
 (
-    id integer NOT NULL DEFAULT nextval('btb.company_id_seq'::regclass),    
+    id integer NOT NULL DEFAULT nextval('btb.company_id_seq'::regclass),
     industry_id integer,
 
     comments_int text,
@@ -125,6 +127,34 @@ CREATE TABLE IF NOT EXISTS btb.company_customer
         REFERENCES btb.customer (id) 
 );
 
+drop view if exists btb.company_with_contact;
+create or replace view btb.company_with_contact as
+select 
+    co.*
+    ,jsonb_build_object(
+        'id',
+        u.id,
+        'first_name',
+        u.first_name,
+        'last_name',
+        u.last_name,
+        'email',
+        u.email,
+        'picture_url',
+        u.picture_url
+    ) 
+    as contact
+    ,u.id as owner_id
+from 
+    -- currently there is only a one to one realationship such this doesn't hurt
+    btb.company co,
+    btb.company_customer cc,
+    btb.customer u
+where 
+        cc.customer_id = u.id
+    and cc.company_id = co.id
+;
+
 CREATE SEQUENCE IF NOT EXISTS btb.team_demand_id_seq
     INCREMENT 1
     START 1
@@ -136,6 +166,8 @@ CREATE TABLE IF NOT EXISTS btb.team_demand
 (
     id integer NOT NULL DEFAULT nextval('btb.team_demand_id_seq'::regclass),
     company_id integer NOT NULL,
+    is_active boolean default true,
+
     name text NOT NULL,
     description_int text,
     description_ext text,
@@ -148,6 +180,9 @@ CREATE TABLE IF NOT EXISTS btb.team_demand
         REFERENCES btb.company (id)
 );
 
+CREATE INDEX IF NOT EXISTS idx_team_demand_skills on
+    btb.team_demand using gin(skills);
+
 CREATE SEQUENCE IF NOT EXISTS btb.team_supply_id_seq
     INCREMENT 1
     START 1
@@ -159,6 +194,7 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
 (
     id integer NOT NULL DEFAULT nextval('btb.team_supply_id_seq'::regclass),
     company_id integer NOT NULL,
+    is_active boolean default true,
     name text NOT NULL,
     description_int text,
     description_ext text,
@@ -229,8 +265,9 @@ from
 
     btb.centered_postalcodes p
 where 
+        s.is_active = true
     -- company for supplyp
-        s.company_id = co.id
+    and s.company_id = co.id
     and cu.company_id = s.company_id
     
     -- user condition
@@ -248,14 +285,14 @@ select
     co.id as company_id, 
     co.name as company_name, 
     
-    s.id record_id, 
-    s.skills, 
-    s.quantity, 
-    s.max_hourly_salary as hourly_salary, 
+    d.id record_id, 
+    d.skills, 
+    d.quantity, 
+    d.max_hourly_salary as hourly_salary, 
     
     p.point
 from 
-    btb.team_demand s, 
+    btb.team_demand d, 
     btb.company co,
 
     btb.company_customer cu,
@@ -263,9 +300,10 @@ from
 
     btb.centered_postalcodes p
 where 
+        d.is_active = true
     -- company for supplyp
-        s.company_id = co.id
-    and cu.company_id = s.company_id
+    and d.company_id = co.id
+    and cu.company_id = d.company_id
     
     -- user condition
     and cu.customer_id = u.id
