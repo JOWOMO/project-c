@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Bestätige deine Email adresse</h1>
-    <p>Wir haben dir eine Email geschickt. Bitte fügen Sie den verifizierungs Code hier ein</p>
+    <p>Wir haben dir eine Email geschickt. <br> Bitte fügen Sie den verifizierungs Code hier ein</p>
 
     <div class="form-container">
       <form method="POST" @submit.prevent="confirm">
@@ -13,6 +13,7 @@
             name="email"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.email.$error }"
+            required
           />
           <label for="email">Email</label>
           <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
@@ -29,6 +30,7 @@
             name="code"
             class="form-control"
             :class="{ 'is-invalid': submitted && $v.user.code.$error }"
+            required
           />
           <label for="code">Code</label>
           <div v-if="submitted && $v.user.code.$error" class="invalid-feedback">
@@ -141,27 +143,25 @@ export default {
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-rows: 1fr 5fr;
+  grid-template-rows: 1fr .5fr 3fr;
 
   h1 {
     margin: 50px 0 0 0;
   }
 
   p {
-    width: 100%;
     text-align: center;
   }
 
   .form-group {
-    margin: 30px 0 30px 0;
-    left: 10%;
+    margin: 30px 0;
   }
 }
 
 @media only screen and (max-width: 765px) {
   .container {
     justify-content: center;
-    grid-template-rows: auto 1fr;
+    // grid-template-rows: 1fr .5fr 3fr;
     grid-template-columns: 80vw;
 
     h1 {
@@ -170,17 +170,10 @@ export default {
 
     .form-group {
       width: 80vw;
-      left: 0;
 
-      input,
-      label,
-      .error {
+      input, label, .error {
         width: 100%;
       }
-    }
-
-    .buttons {
-      text-align: center;
     }
   }
 }

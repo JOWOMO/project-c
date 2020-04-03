@@ -117,7 +117,7 @@ export default {
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-rows: 1fr 5fr;
+  grid-template-rows: 1fr 3fr;
 
   h1 {
     margin: 50px 0 0 0;
@@ -145,7 +145,6 @@ export default {
         width: 100%;
       }
     }
-
   }
 }
 </style>

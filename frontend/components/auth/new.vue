@@ -1,5 +1,5 @@
 <template>
-  <div class="form-container">
+  <div class="container">
     <h1>Neues Passwort vergeben</h1>
 
     <form method="POST" @submit.prevent="new_pwd" novalidate>
@@ -139,7 +139,7 @@ export default {
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-rows: 1fr 5fr;
+  grid-template-rows: 1fr 3fr;
 
   h1 {
     margin: 50px 0 0 0;
@@ -163,9 +163,7 @@ export default {
     .form-group {
       width: 80vw;
 
-      input,
-      label,
-      .error {
+      input, label, .error {
         width: 100%;
       }
     }

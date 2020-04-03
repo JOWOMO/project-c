@@ -92,7 +92,7 @@
       <div class="form-group agb">
         <label class="margin" for="checkbox">
           Bitte Akzeptiere unsere
-          <nuxt-link to="/agb">AGB</nuxt-link>um fortzufahren
+          <nuxt-link to="/agb">AGB</nuxt-link> um fortzufahren
         </label>
 
         <input
@@ -197,7 +197,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  width: 100vw;
+  // width: 100vw;
   display: grid;
   grid-template-columns: 400px auto;
   grid-template-rows: 1fr 1fr 10fr;
@@ -223,11 +223,12 @@ export default {
     grid-row: 3;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 50px);
     gap: 20px;
     justify-content: center;
     align-items: start;
     max-width: 800px;
+
     .form-group {
       grid-column: 1 / span 2;
       input,
@@ -274,13 +275,10 @@ export default {
       margin: 0;
     }
 
-    // .sidebar {
-    //   display: none;
-    // }
-
     form {
       grid-template-columns: 1fr 0 !important;
       column-gap: 0 !important;
+      margin: 50px 0 0 0;
       .half-width {
         width: 100% !important;
         grid-column: 1 !important;
