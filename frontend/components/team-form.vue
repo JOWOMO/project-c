@@ -119,7 +119,7 @@
         @selectedTags="getTags"
         :id="id"
       />
-    <p>{{ error }}</p>
+      <p>{{ error }}</p>
     </form>
   </div>
 </template>
@@ -130,13 +130,14 @@ import tag from "@/components/tag_skill.vue";
 import getSkills from "@/apollo/queries/skills";
 import addSupply from "@/apollo/mutations/add_supply";
 import getUser from "@/apollo/queries/user";
+import addDemand from "@/apollo/mutations/add_demand";
 
 export default {
   name: "team",
   props: {
-    type: String
+    flow: String
   },
-  
+
   data() {
     return {
       oneActive: false,
@@ -147,8 +148,8 @@ export default {
       extraInfo: "",
       selectedNumber: "Anzahl Mitarbeiter",
       selectedTopic: "Bezeichnung",
-      skills:[],
-      error: ''
+      skills: [],
+      error: ""
     };
   },
   components: {
@@ -168,20 +169,20 @@ export default {
       this.oneActive = false;
     },
     submit() {
-      console.log("submitting")
-      
+      console.log("submitting");
+
       // validation
-      if(this.selectedTopic === "Bezeichnung"){
-        this.error = "Das Team benötigt eine Bezeichnung"
-        return 
-      } else if(this.selectedNumber === "Anzahl Mitarbeiter"){
-        this.error = "Die Anzahl der Mitabreiter wird benötigt"
-        return 
-      } else if(this.selectedTags.length < 3){
-        this.error = "Das Team benötigt min. 3 Eigentschaften "
-        return 
+      if (this.selectedTopic === "Bezeichnung") {
+        this.error = "Das Team benötigt eine Bezeichnung";
+        return;
+      } else if (this.selectedNumber === "Anzahl Mitarbeiter") {
+        this.error = "Die Anzahl der Mitabreiter wird benötigt";
+        return;
+      } else if (this.selectedTags.length < 3) {
+        this.error = "Das Team benötigt min. 3 Eigentschaften ";
+        return;
       }
-      this.$apollo.query({query:getUser}).then(user=>{
+      if (flow === "offer") {
         this.$apollo
           .mutate({
             mutation: addSupply,
@@ -193,9 +194,23 @@ export default {
             }
           })
           .then(({ data }) => {
-            console.log("db response: ",data)
+            console.log("db response: ", data);
           });
-      })
+      } else {
+        this.$apollo
+          .mutate({
+            mutation: addSupply,
+            variables: {
+              companyId: this.$store.state.user.companies[0].id,
+              name: this.selectedTopic,
+              quantity: parseInt(this.selectedNumber),
+              skills: [this.selectedTags[0].id]
+            }
+          })
+          .then(({ data }) => {
+            console.log("db response: ", data);
+          });
+      }
     },
     hide(active) {
       this.tagCloud = active;

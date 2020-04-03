@@ -64,19 +64,19 @@ export default {
   }
 }
 
-// @media only screen and (max-width: 950px) {
-//   .container {
-//     grid-template-columns: 0fr 1fr;
-//     // width: 100vw;
-//     padding: 50px 20px;
+@media only screen and (max-width: 950px) {
+  .container {
+    grid-template-columns: 0fr 1fr;
+    // width: 100vw;
+    padding: 50px 20px;
 
-//     // .sidebar {
-//     //   display: none;
-//     // }
+    // .sidebar {
+    //   display: none;
+    // }
 
-//     .flow {
-//       width: 100%;
-//     }
-//   }
-// }
+    .flow {
+      width: 100%;
+    }
+  }
+}
 </style>

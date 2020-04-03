@@ -9,6 +9,7 @@
       class="team-form"
       v-for="team in teams"
       :key="team.id"
+      flow="offer"
       :id="team.id"
     />
  

@@ -1,17 +1,18 @@
 <template>
   <div class="container">
-    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich suche','state':positions.team}]" class="sidebar" />
+    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich biete','state':positions.team}]" class="sidebar" />
 
     <h1>Ich suche</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
-
-    <team
+ 
+    <team ref="save"
       class="team-form"
       v-for="team in teams"
       :key="team.id"
+      flow="offer"
       :id="team.id"
     />
-
+ 
     <button class="add" @click.prevent="addTeam">
       <div class="circle">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +26,7 @@
 
     <div class="form-group buttons">
       <button @click.prevent="$router.push('/register/company')">Zurück</button>
-      <button class="primary" @click.prevent="check_tags">Registrieren</button>
+      <button class="primary" @click.prevent="save">Registrieren</button>
     </div>
   </div>
 </template>
@@ -83,6 +84,24 @@ export default {
     }
 
   },
+  async created(){
+    try{
+     const user = await this.$apollo.query({query:getUser})
+     this.$store.commit("updateUser",user.data.me)
+    }catch(err){
+      console.log("could not get user data",err)
+    }
+  },
+  methods: {
+    save(){
+      this.$refs.save[0].submit()
+    },
+    addTeam() {
+      this.teams.push({
+        id: this.teams.length + 1
+      })
+    }
+  }
 };
 </script>
 
