@@ -250,6 +250,7 @@ export default {
       grid-column: 2;
     }
     .agb {
+      grid-row: 4;
       .wrapper-checkbox {
         grid-column: 1;
         display: flex;

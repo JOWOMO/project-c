@@ -190,8 +190,8 @@ button {
     position: relative;
     margin: 0;
     cursor: pointer;
-    border: 1px solid var(--bc, lighten($primary, 10)); // var(--border)
-    background: var(--b, #fff);
+    border: 2px solid $uiComponentHighlighted;
+    background: $uiComponent;
     transition: background .3s, border-color .3s, box-shadow .2s;
 
     &:after {
@@ -204,8 +204,8 @@ button {
     }
 
     &:checked {
-      --b: $primary;
-      --bc: $primary;
+      background: #25A6DA !important;
+      border: #25A6DA !important;
       --d-o: .3s;
       --d-t: .6s;
       --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
@@ -214,13 +214,9 @@ button {
     &:hover {
       &:not(:checked) {
         &:not(:disabled) {
-          --bc: lighten($primary, 10);
+          border: #25A6DA;
         }
       }
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 $primary;
     }
 
     &:not(.switch) {
@@ -243,7 +239,7 @@ button {
       &:after {
         width: 5px;
         height: 9px;
-        border: 2px solid $primary;
+        border: 2px solid #fff;
         border-top: 0;
         border-left: 0;
         left: 7px;
@@ -266,12 +262,12 @@ button {
         border-radius: 50%;
         width: 15px;
         height: 15px;
-        background: var(--ab, #fff);
+        background: $uiComponent;
         transform: translateX(var(--x, 0));
       }
 
       &:checked {
-        --ab: #fff;
+        background: #25A6DA;
         --x: 17px;
       }
     }

@@ -56,7 +56,7 @@
 
 <script>
 import CompanyCard from "@/components/company_card.vue";
-import sidebar from "@/components/sidebar.vue"
+import sidebar from "@/components/sidebars/sidebar_login.vue"
 export default {
   head() {
     return {
