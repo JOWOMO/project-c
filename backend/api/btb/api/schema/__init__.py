@@ -18,8 +18,10 @@ from btb.api.schema.resolvers import (
     company_by_id,
     skills as skills_resolver,
     companies_by_principal,
-    match_supplies,
-    match_demand,
+    match_supplies_by_query,
+    match_demands_by_query,
+    match_demand_by_id,
+    match_supply_by_id,
     industries as industies_resolver,
 )
 from btb.api.schema.mutations import (
@@ -43,21 +45,37 @@ class Query(ObjectType):
 
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
     industries = List(NonNull(Industry), required=True, resolver=industies_resolver)
+    
+    match_demand = Field(
+        MatchDemandResult,
+        cursor=Argument(CursorInput),
+        id=Argument(ID, required=True),
+        required=True,
+        resolver=match_demand_by_id,
+    )
+
+    match_supply = Field(
+        MatchSupplyResult,
+        cursor=Argument(CursorInput),
+        id=Argument(ID, required=True),
+        required=True,
+        resolver=match_supply_by_id,
+    )
 
     match_supplies = Field(
         MatchSupplyResult,
         cursor=Argument(CursorInput),
         query=Argument(MatchQueryInput, required=True),
         required=True,
-        resolver=match_supplies,
+        resolver=match_supplies_by_query,
     )
 
-    match_demand = Field(
+    match_demands = Field(
         MatchDemandResult,
         cursor=Argument(CursorInput),
         query=Argument(MatchQueryInput, required=True),
         required=True,
-        resolver=match_demand,
+        resolver=match_demands_by_query,
     )
 
 
