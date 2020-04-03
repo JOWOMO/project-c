@@ -7,8 +7,8 @@
         <span>biete</span>
         <br />Mitarbeiter
       </h1>
-      <button @click="user_register" id="biete" class="hover-button">
-        Kostenlos Anmelden
+      <button @click="supply_register" id="biete" class="hover-button">
+          {{ action_text }}
         <svg
           width="21"
           height="16"
@@ -32,8 +32,8 @@
         <span>suche</span>
         <br />Mitarbeiter
       </h1>
-      <button v-on:click="company_register" id="suche" class="hover-button">
-        Kostenlos Anmelden
+      <button v-on:click="demand_register" id="suche" class="hover-button">
+          {{ action_text }}
         <svg
           width="21"
           height="16"
@@ -80,6 +80,7 @@ export default {
     demand_register: function() {
       this.$router.push({ path: "/register/start", query: { flow: "demand" } });
     },
+    
     supply_register: function() {
       this.$router.push({ path: "/register/start", query: { flow: "supply" } });
     }
