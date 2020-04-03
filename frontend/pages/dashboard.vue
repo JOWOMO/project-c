@@ -130,9 +130,9 @@ export default {
       bestmatches:[],
       lessmatches:[],
       // mode = offer, supply
-      mode:{
-        label:{},
-        data:{}
+      model:{
+        label:"",
+        matches:[]
       },
       tags: [
         {val:'Distanz in km'},
@@ -165,32 +165,38 @@ export default {
     console.log("fetching");
     // TODO: need to prove if offer or search flow
     try{
+      // searchin route
+      this.model.label = "Ich suche"
       const demands = await this.$apollo.query({query:getDemands})
-      console.log("demands available: ",demands)
-      // Try to get matches for given demand ids
-      // try{
-      //   const matches = await this.$apollo.query({query:demandMatches,variables:{
-      //     id:demands
-      //   }})
-      // }catch(err){
-      //   // this will probably not fail because the return code is null and no exception
-      //   console.log("no match found",err)
-      // }
+      
+      console.log("demands available: ",demands.data.companies[0])
+    
+      //Try to get matches for given demand ids
+      try{
+        console.log("legth",demands.data.companies[1].length)
+        for(let i = 0; i < demands.data.companies[1].demands.length; i++){
+          console.log("Hallo")
+          console.log("ids",demands.data.companies[1].demands[1].id)
+          const matches = await this.$apollo.query({query:demandMatches,variables:{
+            id:demands.data.companies[1].demands[i].id
+          }})
+          console.log(matches)
+          await this.model.matches.push({name:demands.data.companies[1].demands[i].name,matches:matches.data.matchDemand.matches});
+        }
+        console.log("Das ist die erste Seite der Matches",this.model.matches)
+      }catch(err){
+        // this will probably not fail because the return code is null and no exception
+        console.log("no match found",err)
+      }
     }catch(err){
       console.log("could not get demands")
     }
-
-
-
-
     this.$axios.get("http://localhost:4000/matches")
       .then((response)=>{
         console.log("reponse match: ",response);
         this.bestmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(0,3);
         this.lessmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(3,6);
         
-        console.log("bestmatches: ", this.bestmatches)
-        console.log("lessmatches",this.lessmatches)
       })
       .catch((err)=>{
         console.log("Err fetching match: ",err)

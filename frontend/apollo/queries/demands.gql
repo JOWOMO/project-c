@@ -2,6 +2,7 @@ query getDemands{
   companies{
     demands{
       id
+      name
     }
   }
 }
