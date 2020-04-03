@@ -66,7 +66,7 @@ export default {
     },
     updateTag(active, value) {
       console.log(active, value)
-    
+
       if(active == true) {
         this.selectedTags.push(
           value

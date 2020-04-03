@@ -4,7 +4,7 @@
 
     <h1>Ich biete</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
- 
+
     <team ref="save"
       class="team-form"
       v-for="team in teams"
@@ -12,7 +12,7 @@
       flow="offer"
       :id="team.id"
     />
- 
+
     <button class="add" @click.prevent="addTeam">
       <div class="circle">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +52,7 @@ export default {
     sidebar,
     team
   },
-  
+
   data() {
     return {
       isActive: false,
@@ -89,17 +89,11 @@ export default {
       }
     };
   },
-  async created(){
-    try{
-     const user = await this.$apollo.query({query:getUser})
-     this.$store.commit("updateUser",user.data.me)
-    }catch(err){
-      console.log("could not get user data",err)
-    }
-  },
   methods: {
-    save(){
-      this.$refs.save[0].submit()
+   async save(){
+      this.$refs.save.forEach(team=>{
+        team.submit()
+      })
     },
     addTeam() {
       this.teams.push({
@@ -107,7 +101,7 @@ export default {
       })
     }
   },
- 
+
 };
 </script>
 
@@ -180,8 +174,7 @@ export default {
     width: 100vw;
     padding: 50px 20px;
 
-    p,
-    h1 {
+    p, h1 {
       width: 100%;
       text-align: center;
       margin: 0;
@@ -193,7 +186,7 @@ export default {
 
     .team-form {
       width: 100%;
-      margin: 0;
+      margin: 30px 0 0 0;
     }
 
     .buttons {

@@ -1,22 +1,20 @@
 <template>
-  <div class="navbar">
-    <nav>
-      <nuxt-link to="/">
-        <img src="/images/logo.svg" alt="Logo" class="logo" />
-      </nuxt-link>
+  <nav>
+    <nuxt-link to="/">
+      <img src="/images/logo.svg" alt="Logo" class="logo" />
+    </nuxt-link>
 
-      <div v-if="!$store.state.auth.isAuthenticated" class="links">
-        <nuxt-link to="/faq" class="link">FAQ</nuxt-link>
-        <button class="primary" @click="$router.push('/login')">Login</button>
-      </div>
+    <div v-if="!$store.state.auth.isAuthenticated" class="links">
+      <nuxt-link to="/faq" class="link">FAQ</nuxt-link>
+      <button class="primary" @click="$router.push('/login')">Login</button>
+    </div>
 
-      <div v-else class="profile">
-        <span>{{ title }}</span>
-        <!-- TODO: Add img from database -->
-        <img v-on:click="logout" src="/images/profile.jpg" alt class="profile_img" />
-      </div>
-    </nav>
-  </div>
+    <div v-else class="profile">
+      <span>{{ title }}</span>
+      <!-- TODO: Add img from database -->
+      <img v-on:click="logout" src="/images/profile.jpg" alt class="profile_img" />
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -44,7 +42,7 @@ export default {
         const result = await this.$apollo.query({
           query: me
         });
-
+        this.$store.commit('updateUser',result.data.me)
         console.log(result.data);
         this.title = result.data.me.name || result.data.me.email;
       } catch (e) {
@@ -76,17 +74,16 @@ export default {
 
 <style scoped lang="scss">
 nav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   width: 100vw;
   height: 80px;
-  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
 
-  .link {
-    margin-right: 20px;
-    font-weight: normal;
+  .profile, .links {
+    display: inline-block;
   }
 
   .profile {
@@ -95,17 +92,25 @@ nav {
     align-items: center;
 
     span {
+      margin-right: 20px;
       font-weight: bold;
+    }
+  }
+
+  .links {
+    .link {
       margin-right: 20px;
     }
   }
 }
 
-@media only screen and (max-width: 786px) {
-  nav {
-    background: none;
+@media only screen and (max-width: 765px) {
+  .logo {
+    display: none;
+  }
 
-    .logo {
+  .profile {
+    span {
       display: none;
     }
   }

@@ -1,9 +1,9 @@
 <template>
-  <aside class="b2b-register-sidebar">
+  <aside class="register-sidebar">
     <nuxt-link to="/"><img src="/images/logo.svg"></nuxt-link>
 
-    <div v-for="label in labels" :key="label.label" class="b2b-sidebar-element-wrapper">
-      <div class="b2b-sidebar-element"> <!-- v-bind:class="{active:this.$store.state.positions.profile}" -->
+    <div v-for="label in labels" :key="label.label" class="sidebar-element-wrapper">
+      <div class="sidebar-element"> <!-- v-bind:class="{active:this.$store.state.positions.profile}" -->
         <img v-if="label.state.editing" src="/icons/arrow-left.svg">
         <img v-if="label.state.passed" src="/icons/checkmark.svg">
         <p>{{ label.label }}</p>
@@ -42,12 +42,12 @@ aside {
   left: 0;
   top: 0;
 
-  .b2b-sidebar-element-wrapper {
+  .sidebar-element-wrapper {
     position: relative;
     top: 10%;
     transform: translate(0, -50%);
 
-    .b2b-sidebar-element {
+    .sidebar-element {
       display: flex;
       flex-direction: row;
       margin: 20px 0;

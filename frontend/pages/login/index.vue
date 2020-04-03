@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <auth v-bind:start_component="'login'" @user-authenticated="userAuthenticated" class="flow" />
+  <div>
+     <auth v-bind:start_component="'login'" @user-authenticated="userAuthenticated" />
   </div>
 </template>
 
@@ -18,7 +18,6 @@ export default {
       ]
     };
   },
-
   methods: {
     async userAuthenticated() {
       const client = this.$apollo.getClient();
@@ -44,14 +43,13 @@ export default {
       }
     }
   },
-
   layout: "no-auth",
-
   components: {
     auth
   }
 };
 </script>
+<<<<<<< HEAD
 
 
 <style scoped lang="scss">
@@ -80,3 +78,5 @@ export default {
   }
 }
 </style>
+=======
+>>>>>>> 43392a3f7b03ec91635b234258ff4dc48bbd49c7

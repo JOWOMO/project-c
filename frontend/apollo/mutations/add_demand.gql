@@ -1,7 +1,7 @@
 mutation updateDemand($companyId:ID!,$name:String!, $quantity:Int!,$skills:[Int!]){
   updateDemand(
     
-    supply:{
+    demand:{
       companyId:$companyId,
       name:$name,
       quantity:$quantity,
@@ -11,5 +11,10 @@ mutation updateDemand($companyId:ID!,$name:String!, $quantity:Int!,$skills:[Int!
   ){
     id
     name
+    skills{
+        id
+        name 
+        group
+    }
   }
 }

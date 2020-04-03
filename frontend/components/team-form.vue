@@ -168,9 +168,14 @@ export default {
       this.selectedTopic = topic;
       this.oneActive = false;
     },
-    submit() {
-      console.log("submitting");
-
+    async getTagIds() {
+      let tagIds = [];
+      await this.selectedTags.forEach(tag => {
+        tagIds.push(tag.id);
+      });
+      return tagIds;
+    },
+   async submit() {
       // validation
       if (this.selectedTopic === "Bezeichnung") {
         this.error = "Das Team benötigt eine Bezeichnung";
@@ -182,7 +187,8 @@ export default {
         this.error = "Das Team benötigt min. 3 Eigentschaften ";
         return;
       }
-      if (flow === "offer") {
+
+      if (this.flow === "offer") {
         this.$apollo
           .mutate({
             mutation: addSupply,
@@ -199,12 +205,12 @@ export default {
       } else {
         this.$apollo
           .mutate({
-            mutation: addSupply,
+            mutation: addDemand,
             variables: {
               companyId: this.$store.state.user.companies[0].id,
               name: this.selectedTopic,
               quantity: parseInt(this.selectedNumber),
-              skills: [this.selectedTags[0].id]
+              skills: await this.getTagIds()
             }
           })
           .then(({ data }) => {
