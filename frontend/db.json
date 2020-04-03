@@ -148,6 +148,27 @@
       "link": "/comanies/6"
     }
   ],
+  "supply":{
+
+  },
+  "demand":{
+          "supply": {
+            "id": "1000",
+            "name": "Supply Team 1000",
+            "description": null,
+            "quantity": 3,
+            "skills": [
+              {
+                "id": "202",
+                "name": "Staplerführerschein"
+              },
+              {
+                "id": "301",
+                "name": "Ersthelfer"
+              }
+            ]
+          }
+        },
   "tags": [
     {"skill": "Auto fahren"},
     {"skill": "Teilzeit"},
