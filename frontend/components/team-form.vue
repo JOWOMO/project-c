@@ -217,5 +217,108 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/global';
 
+.form-container {
+  form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    gap: 20px;
+    justify-content: center;
+    align-items: start;
+    max-width: 800px;
+
+    .head {
+      grid-column: 1 / span 2;
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items: center;
+
+      .checkbox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 50px;
+
+        span {
+          margin-left: 10px;
+        }
+
+        input {
+          margin: 0;
+        }
+      }
+    }
+
+    .form-group {
+      grid-column: 1 / span 2;
+    }
+
+    .half-width {
+      grid-column: 1;
+      width: 100%;
+    }
+
+    .right {
+      grid-column: 2;
+      width: 100%;
+    }
+
+    .info {
+      label {
+        z-index: 99;
+      }
+
+      textarea {
+        width: 100%;
+        z-index: 1;
+      }
+    }
+
+    .skills {
+      span {
+        display: block;
+      }
+
+      button {
+        width: 200px;
+        height: 60px;
+        padding: 20px;
+        margin-top: 10px;
+        border: 2px solid $uiComponentHighlighted;
+
+        img {
+          display: inline;
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .selectedSkills {
+      width: 100%;
+      grid-column: 1 / span 2;
+    }
+
+    .overflow {
+      overflow: hidden;
+    }
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  form {
+    grid-template-columns: 1fr 0 !important;
+    column-gap: 0 !important;
+
+    .head {
+      justify-content: space-around !important;
+    }
+
+    .right {
+      grid-column: 1 !important;
+    }
+  }
+}
 </style>

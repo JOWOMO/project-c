@@ -94,5 +94,79 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/global';
 
+.tag-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #00000030;
+  z-index: 3;
+
+  .card {
+    max-width: 1000px;
+    max-height: 700px;
+    background: $background;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    padding: 20px;
+    overflow-y: scroll;
+
+    .head {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        background: none;
+        width: 30px;
+        height: 30px;
+
+        img {
+          transform: rotate(45deg);
+        }
+      }
+    }
+
+    span {
+      display: block;
+      color: lighten(#000, 20);
+    }
+
+    .unselected-tags, .selected-tags {
+      margin-top: 10px;
+    }
+
+    .button {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      .primary {
+        width: 200px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .card {
+    width: 90%;
+    height: 90%;
+    left: 5%;
+
+    .head {
+      button {
+        width: 30px !important;
+      }
+    }
+  }
+}
 </style>

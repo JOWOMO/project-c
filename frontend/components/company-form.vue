@@ -189,5 +189,50 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.form-container {
+  form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    gap: 20px;
+    justify-content: center;
+    align-items: start;
+    max-width: 800px;
 
+    .form-group {
+      grid-column: 1 / span 2;
+
+      input, label, .error {
+        width: 100%;
+      }
+    }
+
+    .half-width {
+      &:nth-of-type(even) {
+        grid-column: 2;
+        width: 50%;
+      }
+      &:nth-of-type(odd) {
+        grid-column: 1;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  form {
+    grid-template-columns: 1fr 0 !important;
+    column-gap: 0 !important;
+
+    .half-width {
+      width: 100% !important;
+      grid-column: 1 !important;
+    }
+
+    .buttons {
+      justify-self: center !important;
+    }
+  }
+}
 </style>

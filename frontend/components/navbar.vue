@@ -96,6 +96,12 @@ nav {
       font-weight: bold;
     }
   }
+
+  .links {
+    .link {
+      margin-right: 20px;
+    }
+  }
 }
 
 @media only screen and (max-width: 765px) {
@@ -105,7 +111,6 @@ nav {
 
   .profile {
     span {
-
       display: none;
     }
   }

@@ -89,6 +89,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~assets/global.scss";
+
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -73,3 +73,42 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 1fr 5fr;
+
+  h1 {
+    margin: 50px 0 0 0;
+  }
+
+  .form-group {
+    margin: 30px 0 30px 0;
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .container {
+    justify-content: center;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 80vw;
+
+    h1 {
+      margin: 50px 0 0 0;
+    }
+
+    .form-group {
+      width: 80vw;
+
+      input,
+      label,
+      .error {
+        width: 100%;
+      }
+    }
+  }
+}
+</style>

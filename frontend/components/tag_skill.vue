@@ -33,5 +33,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'assets/global';
 
+.tag {
+  border: 1px solid $primary;
+  border-radius: 30px;
+  display: inline-block;
+  margin: 10px;
+  padding: 3px 10px;
+
+  &:hover {
+    background: $uiComponentHighlighted;
+  }
+
+  &.selected {
+    background: $primary;
+
+    span {
+      color: #fff;
+    }
+  }
+}
 </style>

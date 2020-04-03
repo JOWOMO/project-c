@@ -136,4 +136,52 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+.container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 1fr 5fr;
 
+  h1 {
+    margin: 50px 0 0 0;
+  }
+
+  p {
+    width: 100%;
+    text-align: center;
+  }
+
+  .form-group {
+    margin: 30px 0 30px 0;
+    left: 10%;
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .container {
+    justify-content: center;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 80vw;
+
+    h1 {
+      margin: 50px 0 0 0;
+    }
+
+    .form-group {
+      width: 80vw;
+      left: 0;
+
+      input,
+      label,
+      .error {
+        width: 100%;
+      }
+    }
+
+    .buttons {
+      text-align: center;
+    }
+  }
+}
+</style>
