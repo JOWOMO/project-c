@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <sidebar v-bin:mode="mode" />
+    <sidebar v-bin:mode="mode" class="sidebar" />
 
     <h1>Finde Personal-Partner</h1>
     <div class="distance">
@@ -48,7 +48,7 @@
       <button>Karte</button>
     </div>
 
-    <div class="matches">
+    <div class="matches" v-if="!map">
       <companyCard
         v-for="match in matches"
         :key="match.id"
@@ -67,38 +67,23 @@
       />
     </div>
 
-    <!-- <div class="subheading">
-      <img src="/icons/star.svg" alt="">
-      <h2>Beste Matches</h2>
+    <div class="map" v-else>
+      <GmapMap
+        :center="{lat:10, lng:10}"
+        :zoom="7"
+        map-type-id="terrain"
+        class="map"
+      >
+        <GmapMarker
+          :key="index"
+          v-for="(m, index) in markers"
+          :position="m.position"
+          :clickable="true"
+          :draggable="true"
+          @click="center=m.position"
+        />
+      </GmapMap>
     </div>
-
-    <div class="companyCards">
-      <CompanyCard
-        v-for="match in bestmatches"
-        :key="match.name"
-        :name="match.name"
-        :workers="match.workers"
-        :img="match.img"
-        :distance="match.distance"
-        :requirements="match.requirements"
-        :matching="match.matching"
-        :link="match.link"
-        class="companyCard"
-      ></CompanyCard>
-    </div>
-
-    <h2>Diese Partner könnten dich auch interessieren</h2>
-    <CompanyCard
-      v-for="match in lessmatches"
-      :key="match.name"
-      :name="match.name"
-      :workers="match.workers"
-      :img="match.img"
-      :distance="match.distance"
-      :requirements="match.requirements"
-      :matching="match.matching"
-      :link="match.link"
-    ></CompanyCard>-->
   </div>
 </template>
 
@@ -122,6 +107,7 @@ export default {
   },
   data() {
     return {
+      map: false,
       isActive: false,
       location: "601234 Köln",
       bestmatches: [],
@@ -464,7 +450,7 @@ export default {
 
 .container {
   display: grid;
-  grid-template-columns: 400px auto;
+  grid-template-columns: 400px minmax(400px, 800px) auto;
   grid-template-rows: 1fr 1fr 10fr;
   height: 100vh;
   padding: 0;
@@ -514,15 +500,16 @@ export default {
   }
 
   .radio {
-    margin-top: 50px;
+    width: 100%;
     grid-column: 3;
     grid-row: 1 / span 2;
-    justify-self: flex-end;
-    align-self: center;
     justify-self: center;
-    align-self: start;
+    align-items: center;
+    margin-top: 50px;
+
     button {
       border-radius: 0;
+      width: 90px;
 
       &:nth-of-type(even) {
         border-top-right-radius: 30px;
@@ -539,25 +526,37 @@ export default {
   .matches {
     grid-column: 2 / span 3;
   }
+}
 
-  // .tag{
-  //   border: 1px solid $primary;
-  //   border-radius: 30px;
-  //   display: inline-block;
-  //   margin: 10px;
-  //   padding: 3px 10px;
+@media only screen and (max-width: 1150px) {
+  .container {
+    margin: 0 auto;
+    justify-content: center;
+    grid-template-columns: 1fr 0fr;
+    width: 80%;
 
-  //   &:hover {
-  //     background: $uiComponentHighlighted;
-  //   }
+    .sidebar, .radio {
+      display: none;
+    }
 
-  //   &.selected {
-  //     background: $primary;
+    h1, .distance, .matches  {
+      grid-column: 1;
+    }
 
-  //     span {
-  //       color: #fff;
-  //     }
-  //   }
-  // }
+    h1 {
+      justify-self: center;
+    }
+
+    .distance {
+      justify-content: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .distance {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
 }
 </style>
