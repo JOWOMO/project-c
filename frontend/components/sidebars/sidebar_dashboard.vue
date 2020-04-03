@@ -1,15 +1,16 @@
 <template>
   <aside class="register-sidebar">
     <nuxt-link to="/"><img src="/images/logo.svg"></nuxt-link>
-    <p>Hallo</p>
-     <p>{{ demands }}</p>
-     <div v-for="demand in demands" :key="demand.name" class="sidebar-element-wrapper">
+    <p>Ich {{ flow }}</p>
+     <div v-if="flow == 'suche'">
+     <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
       <div class="sidebar-element"> 
-          <p>{{ demand.demands[0].name}}</p>
+          <p>{{ element.name }}</p>
         <!-- <img v-if="label.state.editing" src="/icons/arrow-left.svg">
         <img v-if="label.state.passed" src="/icons/checkmark.svg"> -->
        
       </div>
+     </div>
 
     </div>
   </aside>
@@ -19,7 +20,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "sidebar",
+  name: "sidebar",  
   computed: {
     ...mapGetters(["get_sidebar_position"])
   },
@@ -29,7 +30,13 @@ export default {
     }
   },
   props:{
-   demands:Array
+   data:Array,
+   flow:String
+  },
+  data() {
+    return {
+      searcOffer: 'suche'
+    }
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <sidebar v-bind:demands="demands" class="sidebar" />
+    <sidebar :flow="flow" :data="demands.demands" class="sidebar" />
 
     <h1>Finde Personal-Partner</h1>
     <div class="distance">
@@ -104,7 +104,9 @@ export default {
       bestmatches: [],
       lessmatches: [],
       demands:[],
-      selectedDistance: 'entfernung Wählen'
+      supplies:[],
+      selectedDistance: 'entfernung Wählen',
+      flow:''
     };
   },
    methods:{
@@ -119,9 +121,12 @@ export default {
   
   async beforeCreate() {
     try{
+      // route for demand TODO: need to know demand or supply
       const client = this.$apollo.getClient();
-      this.demands = (await this.$apollo.query({query:getDemands})).data.companies
-      console.log(demands)
+      this.demands = (await this.$apollo.query({query:getDemands})).data.companies[0]
+      this.flow = 'suche' 
+      console.log(this.demands)
+
       // load first matches for first page
   }catch(err){
        
