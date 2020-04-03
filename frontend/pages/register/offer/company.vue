@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import sidebar from "@/components/sidebar_login.vue";
+import sidebar from "@/components/sidebars/sidebar_login.vue";
 import Company from "@/components/company-form.vue";
 export default {
   head() {

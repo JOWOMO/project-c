@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import sidebar from "@/components/sidebar_login.vue";
+import sidebar from "@/components/sidebars/sidebar_login.vue";
 import team from '@/components/team-form.vue'
 
 export default {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import sidebar from "@/components/sidebar_login.vue";
+import sidebar from "@/components/sidebars/sidebar_login.vue";
 import auth from "@/components/auth";
 
 export default {
