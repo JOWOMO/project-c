@@ -38,12 +38,7 @@
             </div>
           </div>
 
-<<<<<<< HEAD
-          <div class="selected" ref="selected" @click="isActive = !isActive">Branche</div>
-=======
-        <div class="selected" ref="selected" @click="isActive = !isActive">
-          Entfernung
->>>>>>> fb1b515b8dc231a257900bfcfb56eef376269192
+          <div class="selected" ref="selected" @click="isActive = !isActive">Entfernung</div>
         </div>
       </div>
     </div>
@@ -53,7 +48,6 @@
       <button>Karte</button>
     </div>
 
-<<<<<<< HEAD
     <div class="matches">
       <companyCard
         v-for="match in matches"
@@ -72,20 +66,6 @@
         :percentage="match.percentage"
       />
     </div>
-=======
-  <div class="matches">
-    <companyCard
-      name="Reformhaus"
-      :km="5"
-      type="sucht"
-      emloyees="5"
-      profession="verkäufer-innen"
-      class="match"
-    />
-  </div>
-
-    
->>>>>>> fb1b515b8dc231a257900bfcfb56eef376269192
 
     <!-- <div class="subheading">
       <img src="/icons/star.svg" alt="">
@@ -124,14 +104,10 @@
 
 <script>
 import companyCard from "@/components/company-card.vue";
-<<<<<<< HEAD
 import sidebar from "@/components/sidebars/sidebar_dashboard.vue";
-=======
-import sidebar from "@/components/sidebars/sidebar_dashboard.vue"
-import getDemands  from "@/apollo/queries/demands"
-import demandMatches from "@/apollo/queries/demand_matches"
+import getDemands from "@/apollo/queries/demands";
+import demandMatches from "@/apollo/queries/demand_matches";
 
->>>>>>> fb1b515b8dc231a257900bfcfb56eef376269192
 export default {
   head() {
     return {
@@ -160,17 +136,17 @@ export default {
           industry_worker: "Verkäufer",
           skills: [
             {
-              id:1,
-              name:"Kundenkontakt"
+              id: 1,
+              name: "Kundenkontakt"
             },
             {
-              id:2,
-              name:"Deutsch"
+              id: 2,
+              name: "Deutsch"
             },
             {
-              id:3,
-              name:"Führerschein"
-            },
+              id: 3,
+              name: "Führerschein"
+            }
           ],
           description:
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore ipsa reiciendis qui, sit dolorum possimus? Eaque, mollitia aliquid. Modi hic voluptas impedit dolorem tempore vitae dolores laudantium quos eveniet veniam consectetur, facere sapiente atque quidem molestias, fuga nemo esse.",
@@ -193,17 +169,17 @@ export default {
           industry_worker: "Verkäufer",
           skills: [
             {
-              id:1,
-              name:"Kundenkontakt"
+              id: 1,
+              name: "Kundenkontakt"
             },
             {
-              id:2,
-              name:"Deutsch"
+              id: 2,
+              name: "Deutsch"
             },
             {
-              id:3,
-              name:"Führerschein"
-            },
+              id: 3,
+              name: "Führerschein"
+            }
           ],
           description:
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore ipsa reiciendis qui, sit dolorum possimus? Eaque, mollitia aliquid. Modi hic voluptas impedit dolorem tempore vitae.",
@@ -226,17 +202,17 @@ export default {
           industry_worker: "Verkäufer",
           skills: [
             {
-              id:1,
-              name:"Kundenkontakt"
+              id: 1,
+              name: "Kundenkontakt"
             },
             {
-              id:2,
-              name:"Deutsch"
+              id: 2,
+              name: "Deutsch"
             },
             {
-              id:3,
-              name:"Führerschein"
-            },
+              id: 3,
+              name: "Führerschein"
+            }
           ],
           description:
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore ipsa!",
@@ -259,17 +235,17 @@ export default {
           industry_worker: "Verkäufer",
           skills: [
             {
-              id:1,
-              name:"Kundenkontakt"
+              id: 1,
+              name: "Kundenkontakt"
             },
             {
-              id:2,
-              name:"Deutsch"
+              id: 2,
+              name: "Deutsch"
             },
             {
-              id:3,
-              name:"Führerschein"
-            },
+              id: 3,
+              name: "Führerschein"
+            }
           ],
           description:
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore ipsa reiciendis qui, sit dolorum possimus? Eaque, mollitia aliquid. Modi hic voluptas impedit dolorem tempore vitae dolores laudantium.",
@@ -292,17 +268,17 @@ export default {
           industry_worker: "Verkäufer",
           skills: [
             {
-              id:1,
-              name:"Kundenkontakt"
+              id: 1,
+              name: "Kundenkontakt"
             },
             {
-              id:2,
-              name:"Deutsch"
+              id: 2,
+              name: "Deutsch"
             },
             {
-              id:3,
-              name:"Führerschein"
-            },
+              id: 3,
+              name: "Führerschein"
+            }
           ],
           description:
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore ipsa reiciendis qui, sit dolorum possimus? Eaque, mollitia aliquid.",
@@ -325,17 +301,17 @@ export default {
           industry_worker: "Verkäufer",
           skills: [
             {
-              id:1,
-              name:"Kundenkontakt"
+              id: 1,
+              name: "Kundenkontakt"
             },
             {
-              id:2,
-              name:"Deutsch"
+              id: 2,
+              name: "Deutsch"
             },
             {
-              id:3,
-              name:"Führerschein"
-            },
+              id: 3,
+              name: "Führerschein"
+            }
           ],
           description:
             "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore ipsa reiciendis qui, sit dolorum possimus? Eaque, mollitia aliquid. Modi hic voluptas impedit dolorem tempore vitae dolores laudantium quos eveniet veniam consectetur, facere sapiente atque quidem molestias, fuga nemo esse quia velit laboriosam vero!",
@@ -372,22 +348,17 @@ export default {
         company: {
           editing: true,
           passed: false
-        },
-<<<<<<< HEAD
-        team: {
-          editing: false,
-          passed: false
-=======
+        }
       }
-    }
+    };
   },
 
- async fetch(){
+  async fetch() {
     console.log("fetching");
     // TODO: need to prove if offer or search flow
-    try{
-      const demands = await this.$apollo.query({query:getDemands})
-      console.log("demands available: ",demands)
+    try {
+      const demands = await this.$apollo.query({ query: getDemands });
+      console.log("demands available: ", demands);
       // Try to get matches for given demand ids
       // try{
       //   const matches = await this.$apollo.query({query:demandMatches,variables:{
@@ -397,51 +368,52 @@ export default {
       //   // this will probably not fail because the return code is null and no exception
       //   console.log("no match found",err)
       // }
-    }catch(err){
-      console.log("could not get demands")
+    } catch (err) {
+      console.log("could not get demands");
     }
 
+    this.$axios
+      .get("http://localhost:4000/matches")
+      .then(response => {
+        console.log("reponse match: ", response);
+        this.bestmatches = response.data
+          .sort((a, b) => (a.matching > b.matching ? -1 : 1))
+          .slice(0, 3);
+        this.lessmatches = response.data
+          .sort((a, b) => (a.matching > b.matching ? -1 : 1))
+          .slice(3, 6);
 
-
-
-    this.$axios.get("http://localhost:4000/matches")
-      .then((response)=>{
-        console.log("reponse match: ",response);
-        this.bestmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(0,3);
-        this.lessmatches = response.data.sort((a, b) => (a.matching > b.matching) ? -1 : 1).slice(3,6);
-        
-        console.log("bestmatches: ", this.bestmatches)
-        console.log("lessmatches",this.lessmatches)
+        console.log("bestmatches: ", this.bestmatches);
+        console.log("lessmatches", this.lessmatches);
       })
-      .catch((err)=>{
-        console.log("Err fetching match: ",err)
+      .catch(err => {
+        console.log("Err fetching match: ", err);
       });
-      try{
-        const supply = await this.$axios.get("http://localhost:4000/supply")
-        const demand = await this.$axios.get("http://localhost:4000/demand") 
-        if(this.supply != null){
-          //user is searching
-          this.mode.label = "Mein Team"
-          this.mode.data = supply
-          this.mode.data.link = "Team/s verwalten"
-        }else if(demand != null){
-          // user is offering
-          this.mode.label = "Ich suche"
-          this.mode.data = demand
-        }else{
-          // nothing was set --> user need to set team proberties 
-          this.mode.label = "Team ist noch nich fertig Konfiguriert"
-          this.mode.data.link = "Eistellungen" 
->>>>>>> fb1b515b8dc231a257900bfcfb56eef376269192
-        }
-      }
-    };
-  },
-  methods: {
-    select() {
 
-    }
+    try {
+      const supply = await this.$axios.get("http://localhost:4000/supply");
+      const demand = await this.$axios.get("http://localhost:4000/demand");
+      if (this.supply != null) {
+        //user is searching
+        this.mode.label = "Mein Team";
+        this.mode.data = supply;
+        this.mode.data.link = "Team/s verwalten";
+      } else if (demand != null) {
+        // user is offering
+        this.mode.label = "Ich suche";
+        this.mode.data = demand;
+      } else {
+        // nothing was set --> user need to set team proberties
+        this.mode.label = "Team ist noch nich fertig Konfiguriert";
+        this.mode.data.link = "Eistellungen";
+      }
+    } catch {}
   }
+  // methods: {
+  //   select() {
+
+  //   }
+  // }
 
   // async fetch() {
   //   console.log("fetching");
@@ -514,13 +486,9 @@ export default {
     grid-row: 2;
     display: flex;
     flex-direction: row;
-<<<<<<< HEAD
-    justify-content: start;
     align-items: center;
-=======
     justify-content: flex-start;
     align-items: flex-start;
->>>>>>> fb1b515b8dc231a257900bfcfb56eef376269192
 
     span {
       margin: 5px 10px 0 10px;
@@ -549,14 +517,10 @@ export default {
     margin-top: 50px;
     grid-column: 3;
     grid-row: 1 / span 2;
-<<<<<<< HEAD
     justify-self: flex-end;
     align-self: center;
-=======
     justify-self: center;
     align-self: start;
->>>>>>> fb1b515b8dc231a257900bfcfb56eef376269192
-
     button {
       border-radius: 0;
 

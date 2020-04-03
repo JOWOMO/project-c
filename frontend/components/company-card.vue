@@ -134,7 +134,7 @@ export default {
 
   .right {
     grid-column: 2;
-    margin-left: 15px;
+    margin-left: 40px;
 
     img {
       width: 100px;
