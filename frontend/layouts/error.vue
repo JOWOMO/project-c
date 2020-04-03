@@ -13,7 +13,8 @@
   align-items: center;
 
   link {
-    
+    margin-top: 50px;
+    font-size: 20px;
   }
 }
 </style>

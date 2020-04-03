@@ -2,7 +2,6 @@
   <div class="container">
     <h1>Willkommen zurück</h1>
     <form method="POST" @submit.prevent="login" novalidate>
-      <span class="invalid-login" v-if="false_auth">Email oder Passwort inkorrekt</span>
       <div class="form-group">
         <input
           type="text"
@@ -14,7 +13,7 @@
           required
         />
         <label for="email">Email</label>
-        <div v-if="submitted && $v.user.email.$error" class="invalid-feedback error">
+        <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
           <span v-if="!$v.user.email.required">Email wird benötigt</span>
           <span v-if="!$v.user.email.email">Keine gültige Email</span>
         </div>
@@ -30,15 +29,17 @@
           required
         />
         <label for="password">Password</label>
-        <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback error">
+        <div v-if="submitted && $v.user.pwd.$error" class="invalid-feedback">
           <span v-if="!$v.user.pwd.required">Passwort wird benötigt</span>
           <span v-if="!$v.user.pwd.minLength">Passwort muss wenigstens 6 Zeichen lang sein</span>
         </div>
       </div>
 
       <div class="link-wrapper">
-        <nuxt-link to="/login/password-reset" class="link">Password vergessen?</nuxt-link>
+        <a @click="resetPassword" class="link">Password vergessen?</a>
       </div>
+
+      <span id="error">{{error}}</span>
 
       <div class="form-group buttonWrapper">
         <button class="primary">Login</button>
@@ -70,7 +71,8 @@ export default {
         pwd: ""
       },
       false_auth: false,
-      submitted: false
+      submitted: false,
+      error: ''
     };
   },
   validations: {
@@ -82,28 +84,31 @@ export default {
   created() {},
 
   methods: {
+    cancel() {
+      this.$emit("change-state", "back");
+    },
+    resetPassword() {
+      this.$emit("change-state", "reset");
+    },
     async login() {
       this.submitted = true;
-
       // stop here if form is invalid
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
-
       try {
-        const user = await this.$store.dispatch("auth/login", {
-          userdata: this.user
-        });
-
-        const route = this.$route.query.return_url;
-        if (route == "" || route == null) {
-          console.log('No return_url going to dashboard');
-          this.$router.push("/dashboard");
-        } else {
-          this.$router.push(route);
-        }
+        // we need to clone the object
+        this.$store.commit("register_user_state", { ...this.user });
+        const user = await this.$store.dispatch("auth/login", this.user);
+        this.$emit("change-state", "redirect");
       } catch (err) {
+        console.log("err: ", err);
+        this.error = err.message
+        // we need to verify him
+        if (err.code === "UserNotConfirmedException") {
+          this.$emit("change-state", "validate");
+        }
         this.false_auth = true;
         console.log("Email or Passwort incorrect", err);
       }
@@ -123,6 +128,16 @@ export default {
     margin: 50px 0 0 0;
   }
 
+  #error {
+    margin-top: 20px;
+    grid-column: 2;
+    grid-row: 5;
+  }
+
+  .buttons {
+    grid-column: 1;
+  }
+
   .form-group {
     margin: 30px 0 30px 0;
   }
@@ -136,6 +151,12 @@ export default {
 
     h1 {
       margin: 50px 0 0 0;
+    }
+
+    #error {
+      grid-column: 1;
+      grid-row: 4;
+      text-align: center;
     }
 
     .form-group {

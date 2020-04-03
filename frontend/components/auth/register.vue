@@ -90,29 +90,35 @@
       </div>
 
       <div class="form-group agb">
-        <label class="margin" for="checkbox">
-          Bitte Akzeptiere unsere
-          <nuxt-link to="/agb">AGB</nuxt-link> um fortzufahren
-        </label>
+        <div class="wrapper-checkbox">
+          <input
+            type="checkbox"
+            v-model="user.agb"
+            id="checkbox"
+            name="checkbox"
+            class="form-control checkbox"
+            :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
+          />
 
-        <input
-          type="checkbox"
-          v-model="user.agb"
-          id="checkbox"
-          name="checkbox"
-          class="form-control checkbox"
-          :class="{ 'is-invalid': submitted && $v.user.agb.$error }"
-        />
+          <label class="margin" for="checkbox">
+            Bitte Akzeptiere unsere
+            <nuxt-link to="/agb">AGB</nuxt-link> um fortzufahren
+          </label>
+        </div>
+
+
+
+        <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
+          <span v-if="!$v.user.agb.required">
+            Bitte die
+            <nuxt-link to="/info/impressum">AGB</nuxt-link> akzeptieren
+          </span>
+        </div>
       </div>
 
-      <div v-if="submitted && $v.user.agb.$error" class="invalid-feedback">
-        <span v-if="!$v.user.agb.required">
-          Bitte die
-          <nuxt-link to="/info/impressum">AGB</nuxt-link> akzeptieren
-        </span>
-      </div>
 
       <span id="error">{{ error }}</span>
+
       <div class="form-group buttons">
         <button @click.prevent="back">Zurück</button>
         <button class="primary">Weiter</button>
@@ -223,7 +229,7 @@ export default {
     grid-row: 3;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, 50px);
+    grid-template-rows: repeat(5, auto);
     gap: 20px;
     justify-content: center;
     align-items: start;
@@ -244,20 +250,32 @@ export default {
       grid-column: 2;
     }
     .agb {
-      grid-column: 1;
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-      align-items: center;
-      input[type="checkbox"] {
-        width: 21px;
-        // display: inline-block;
-        position: static;
+      .wrapper-checkbox {
+        grid-column: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        input[type="checkbox"] {
+          width: 21px;
+          // display: inline-block;
+          position: static;
+        }
+
+        label {
+          position: static;
+          font-size: 14px;
+        }
       }
-      label {
-        width: auto;
-        position: static;
+
+      .invalid-feedback {
+        margin-top: 10px;
       }
+    }
+
+    #error {
+      grid-column: 2;
+      grid-row: 4 / span 5;
     }
   }
 }
@@ -286,6 +304,12 @@ export default {
 
       .buttons {
         justify-self: center !important;
+      }
+
+      #error {
+        grid-column: 1;
+        grid-row: 7;
+        text-align: center;
       }
 
       .form-container {

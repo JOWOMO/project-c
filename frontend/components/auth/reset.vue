@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <span>{{ error }}</span>
+      <span id="error">{{ error }}</span>
 
       <div class="form-group buttonWrapper">
         <button class="secondary" @click.prevent="back">Zurück</button>
@@ -85,6 +85,11 @@ export default {
     margin: 50px 0 0 0;
   }
 
+  #error {
+    grid-column: 2;
+    grid-row: 4 / span 5;
+  }
+
   .form-group {
     margin: 30px 0 30px 0;
   }
@@ -98,6 +103,12 @@ export default {
 
     h1 {
       margin: 50px 0 0 0;
+    }
+
+    #error {
+      grid-column: 1;
+      grid-row: 7;
+      text-align: center;
     }
 
     .form-group {

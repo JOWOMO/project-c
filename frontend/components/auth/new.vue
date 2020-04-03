@@ -74,7 +74,7 @@
         </div>
       </div>
 
-      <span>{{ error }}</span>
+      <span id="error">{{ error }}</span>
 
       <div class="form-group buttonWrapper">
         <button class="secondary" @click.prevent="$router.push('/')">Zurück</button>
@@ -139,10 +139,15 @@ export default {
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-rows: 1fr 3fr;
+  grid-template-rows: auto auto auto auto;
 
   h1 {
     margin: 50px 0 0 0;
+  }
+
+  #error {
+    grid-column: 2;
+    grid-row: 4 / span 5;
   }
 
   .form-group {
@@ -153,11 +158,19 @@ export default {
 @media only screen and (max-width: 765px) {
   .container {
     justify-content: center;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto;
     grid-template-columns: 80vw;
 
     h1 {
       margin: 50px 0 0 0;
+    }
+
+    form {
+      #error {
+        grid-column: 1;
+        grid-row: 7;
+        text-align: center;
+      }
     }
 
     .form-group {

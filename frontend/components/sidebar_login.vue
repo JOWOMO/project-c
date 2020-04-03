@@ -61,4 +61,10 @@ aside {
     }
   }
 }
+
+@media only screen and (max-width: 950px){
+  aside {
+    display: none;
+  }
+}
 </style>
