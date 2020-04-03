@@ -44,7 +44,7 @@
         </div>
 
         <div class="selected" ref="selected" @click="isActive = !isActive">
-          Branche
+          Entfernung
         </div>
       </div>
     </div>
@@ -53,6 +53,17 @@
   <div class="radio">
     <button>Kacheln</button>
     <button>Karte</button>
+  </div>
+
+  <div class="matches">
+    <companyCard
+      name="Reformhaus"
+      :km="5"
+      type="sucht"
+      emloyees="5"
+      profession="verkäufer-innen"
+      class="match"
+    />
   </div>
 
     
@@ -93,8 +104,11 @@
 </template>
 
 <script>
-import CompanyCard from "@/components/company_card.vue";
+import companyCard from "@/components/company-card.vue";
 import sidebar from "@/components/sidebars/sidebar_dashboard.vue"
+import getDemands  from "@/apollo/queries/demands"
+import demandMatches from "@/apollo/queries/demand_matches"
+
 export default {
   head() {
     return {
@@ -106,7 +120,7 @@ export default {
   },
   middleware:'authenticated',
   components: {
-    CompanyCard,
+    companyCard,
     sidebar
   },
   data() {
@@ -149,6 +163,26 @@ export default {
 
  async fetch(){
     console.log("fetching");
+    // TODO: need to prove if offer or search flow
+    try{
+      const demands = await this.$apollo.query({query:getDemands})
+      console.log("demands available: ",demands)
+      // Try to get matches for given demand ids
+      // try{
+      //   const matches = await this.$apollo.query({query:demandMatches,variables:{
+      //     id:demands
+      //   }})
+      // }catch(err){
+      //   // this will probably not fail because the return code is null and no exception
+      //   console.log("no match found",err)
+      // }
+    }catch(err){
+      console.log("could not get demands")
+    }
+
+
+
+
     this.$axios.get("http://localhost:4000/matches")
       .then((response)=>{
         console.log("reponse match: ",response);
@@ -214,11 +248,11 @@ export default {
     grid-row: 2;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 
     span {
-      margin-right: 10px;
+      margin: 5px 10px 0 10px;
     }
   
     #dropdown {
@@ -234,17 +268,18 @@ export default {
         }
       }
 
-      .select-box.options-container.active + .selected::after {
-        top: 0px;
+      .options-container.active + .selected::after {
+        top: -12px;
       }
     }
   }
   
   .radio {
+    margin-top: 50px;
     grid-column: 3;
     grid-row: 1 / span 2;
     justify-self: center;
-    align-self: center;
+    align-self: start;
 
     button {
       border-radius: 0;
@@ -259,6 +294,10 @@ export default {
         border-bottom-left-radius: 30px;
       }
     }
+  }
+
+  .matches {
+    grid-column: 2 / span 3;
   }
 
   // .tag{

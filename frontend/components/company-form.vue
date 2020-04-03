@@ -161,7 +161,7 @@ export default {
             console.log(data);
           });
       this.$store.commit("register_company_state", this.user);
-      this.$router.push("/register/team");
+       this.$emit("change-state", "/register/offer");
       // this.$store.dispatch("add_company", this.user); // TODO: save it after validate.vue
     },
     // toggleClass() {

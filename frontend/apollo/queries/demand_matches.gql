@@ -1,0 +1,8 @@
+query demandMatches($id:ID!){
+  matchDemand(id:$id){
+    matches{
+      distance
+      percentage
+    }
+  }
+}
