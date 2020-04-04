@@ -1,17 +1,25 @@
 <template>
   <aside class="register-sidebar">
-    <nuxt-link to="/"><img src="/images/logo.svg"></nuxt-link>
-    <p>Ich {{ flow }}</p>
+    <nuxt-link to="/" class="logo"><img src="/images/logo.svg"></nuxt-link>
+    <div class="wrapper-content">
+    <p>Ich {{ flow }}</p> <!-- TODO: add team edit page -->
      <div v-if="flow == 'suche'">
-     <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
-      <div class="sidebar-element"> 
-          <p>{{ element.name }}</p>
-        <!-- <img v-if="label.state.editing" src="/icons/arrow-left.svg">
-        <img v-if="label.state.passed" src="/icons/checkmark.svg"> -->
-       
-      </div>
+       <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
+          <div @click="changeTeam(element)" class="sidebar-element"> 
+              <img src="/icons/arrow-left.svg">
+              <p>{{ element.name }}</p>       
+          </div>
+       </div>
      </div>
-
+     <div v-else >
+       <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
+        <div class="sidebar-element"> 
+          <img src="/icons/arrow-left.svg">
+          <p>{{ element.name }}</p>       
+        </div>
+      </div>
+      <nuxt-link to="/edit/team">Teams verwalten</nuxt-link>
+    </div>
     </div>
   </aside>
 </template>
@@ -37,7 +45,14 @@ export default {
     return {
       searcOffer: 'suche'
     }
+  },
+  methods:{
+    
+    changeTeam(team){
+      this.$emit("handel-state",team  )
+    }
   }
+
 };
 </script>
 
@@ -51,8 +66,9 @@ aside {
   padding: 20px;
   position: fixed;
   left: 0;
-  top: 0;
-
+  top: 0;   
+  .wrapper-content{
+    margin-top:50px;
   .sidebar-element-wrapper {
     position: relative;
     top: 10%;
@@ -61,8 +77,10 @@ aside {
     .sidebar-element {
       display: flex;
       flex-direction: row;
+    img{
+      margin-right:10px;
+    }
       margin: 20px 0;
-
       .circle {
         width: 30px;
         height: 30px;
@@ -82,11 +100,25 @@ aside {
 
     }
   }
+  }
 }
 
-@media only screen and (max-width: 950px){
+@media only screen and (max-width: 1150px){
   aside {
-    display: none;
+    width: 40vw;
+    z-index: 5;
+
+    .logo {
+      img {
+        width: 80%;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 450px){
+  aside {
+    width: 80vw;
+    z-index: 5;
   }
 }
 </style>

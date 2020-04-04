@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <sidebar :flow="flow" :data="demands.demands" class="sidebar" />
+    <sidebar @handel-state="handelState" :flow="flow" :data="demands" class="sidebar" :class="{expand: sidebar}" />
+    <div class="burger-menu" @click="sidebar =! sidebar" :class="{expand: sidebar}" />
 
     <h1>Finde Personal-Partner</h1>
     <div class="distance">
@@ -8,31 +9,31 @@
       <div class="form-group half-width dropdown" id="dropdown">
         <div class="select-box">
           <div class="options-container" ref="optionsContainer" :class="{active: isActive}">
-            <div class="option" ref="option"  @click="selected_distance(5)">
+            <div class="option" ref="option" @click="selected_distance(5)">
               <input type="radio" class="radio" name="category" id="five" />
               <label for="five">5km</label>
             </div>
-            <div class="option" ref="option"  @click="selected_distance(10)">
+            <div class="option" ref="option" @click="selected_distance(10)">
               <input type="radio" class="radio" name="category" id="ten" />
               <label for="ten">10km</label>
             </div>
-            <div class="option" ref="option"  @click="selected_distance(15)">
+            <div class="option" ref="option" @click="selected_distance(15)">
               <input type="radio" class="radio" name="category" id="fifteen" />
               <label for="fifteen">15km</label>
             </div>
-            <div class="option" ref="option"  @click="selected_distance(20)">
+            <div class="option" ref="option" @click="selected_distance(20)">
               <input type="radio" class="radio" name="category" id="twenty" />
               <label for="twenty">20km</label>
             </div>
-            <div class="option" ref="option"  @click="selected_distance(30)">
+            <div class="option" ref="option" @click="selected_distance(30)">
               <input type="radio" class="radio" name="category" id="thirty" />
               <label for="thirty">30km</label>
             </div>
-            <div class="option" ref="option"  @click="selected_distance(40)">
+            <div class="option" ref="option" @click="selected_distance(40)">
               <input type="radio" class="radio" name="category" id="fourty" />
               <label for="fourty">40km</label>
             </div>
-            <div class="option" ref="option"  @click="selected_distance(50)">
+            <div class="option" ref="option" @click="selected_distance(50)">
               <input type="radio" class="radio" name="category" id="fift" />
               <label for="fift">50km +</label>
             </div>
@@ -48,16 +49,22 @@
       <button>Karte</button>
     </div>
 
-    <!-- <div class="matches" v-if="!map">
+     <div class="matches" v-if="!map">
       <companyCard
-        v-for="match in model.demands[0]"
+        v-for="match in matches"
         :key="match.name"
         :company_name="match.name"
-        
+        :distance="match.distance"
+        :employees="match.demand.quantity"
+        :skills="match.demand.skills"
+        :description="match.demand.description"
+        :profile_name="match.demand.company.name"
+        :percentage="match.percentage"
+        :adress="{street:match.demand.company.street1,city:match.demand.company.city,number:match.demand.company.postalCode}"
       /> 
     </div> 
 
-    <div class="map" v-else>
+    <!-- <div class="map" v-else>
       <GmapMap
         :center="{lat:10, lng:10}"
         :zoom="7"
@@ -73,7 +80,7 @@
           @click="center=m.position"
         />
       </GmapMap>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -98,42 +105,55 @@ export default {
   },
   data() {
     return {
+      sidebar: false,
       map: false,
       isActive: false,
       location: "601234 Köln",
       bestmatches: [],
       lessmatches: [],
-      demands:[],
-      supplies:[],
-      selectedDistance: 'entfernung Wählen',
-      flow:''
+      matches: [],
+      demands: [],
+      supplies: [],
+      selectedDistance: "entfernung Wählen",
+      flow: ""
     };
   },
-   methods:{
+  methods: {
+    // handel which matches should be displayed
+    async handelState(team) {
+      // getting matches for other team
+      console.log("calling hadel state",team);
+      this.matches = (await this.$apollo.query({
+        query: demandMatches,
+        variables: {
+          id: team.id
+        }
+      })).data.matchDemand.matches;
+      console.log("matches: ",this.matches)
+    },
     selected_distance(number) {
       this.selectedDistance = number.toString();
       this.isActive = false;
     },
-     print(){
-       console.log(this.demands)
-     }
-   },
-  
+    print() {
+      console.log(this.demands);
+    }
+  },
+
   async beforeCreate() {
-    try{
+    try {
       // route for demand TODO: need to know demand or supply
       const client = this.$apollo.getClient();
-      this.demands = (await this.$apollo.query({query:getDemands})).data.companies[0]
-      this.flow = 'suche' 
-      console.log(this.demands)
+      this.demands = (
+        await this.$apollo.query({ query: getDemands })
+      ).data.companies[1].demands;
+      this.flow = "suche";
+      this.handelState(this.demands[0])
+      console.log("all demands: ",this.demands)
 
       // load first matches for first page
-  }catch(err){
-       
-    }
+    } catch (err) {}
   }
-
-   
 };
 </script>
 
@@ -146,6 +166,10 @@ export default {
   grid-template-rows: 1fr 1fr 10fr;
   height: 100vh;
   padding: 0;
+
+  .burger-menu {
+    display: none;
+  }
 
   .sidebar {
     grid-column: 1;
@@ -227,11 +251,59 @@ export default {
     grid-template-columns: 1fr 0fr;
     width: 80%;
 
-    .sidebar, .radio {
+    .sidebar {
+      display: none;
+
+      &.expand {
+        display: inline-block !important;
+      }
+    }
+
+    .burger-menu {
+      grid-column: 1;
+      justify-self: start;
+      display: inline-block;
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 30px;
+      height: 5px;
+      background: #000;
+      border-radius: 5px;
+      transition: all 1s ease;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 10px;
+        left: 0;
+        width: 30px;
+        height: 5px;
+        background: #000;
+        border-radius: 5px;
+        transition: all 1s ease;
+      }
+
+      &.expand {
+        right: 30px !important;
+        transform: rotate(90deg) !important;
+        transform-origin: center;
+      }
+
+      &.expand + &::after {
+        transform: rotate(-180deg) !important;
+        transform-origin: center;
+      }
+    }
+
+    .radio {
       display: none;
     }
 
-    h1, .distance, .matches  {
+    h1,
+    .distance,
+    .matches {
       grid-column: 1;
     }
 
