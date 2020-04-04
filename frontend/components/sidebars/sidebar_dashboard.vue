@@ -4,9 +4,9 @@
     <div class="wrapper-content">
     <p>Ich {{ flow }}</p> <!-- TODO: add team edit page -->
      <div v-if="flow == 'suche'">
-       <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
-          <div @click="changeTeam(element)" class="sidebar-element"> 
-              <img src="/icons/arrow-left.svg">
+       <div v-for="(element,index) in data" :key="element.id" class="sidebar-element-wrapper">
+          <div @click="changeTeam(element,index)" class="sidebar-element"> 
+              <img v-if="pointer[index].active" src="/icons/arrow-left.svg">
               <p>{{ element.name }}</p>       
           </div>
        </div>
@@ -14,7 +14,6 @@
      <div v-else >
        <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
         <div class="sidebar-element"> 
-          <img src="/icons/arrow-left.svg">
           <p>{{ element.name }}</p>       
         </div>
       </div>
@@ -43,13 +42,20 @@ export default {
   },
   data() {
     return {
-      searcOffer: 'suche'
+     pointer:[
+      {"active":true}
+     ]
     }
+  },
+  created(){
+    console.log("pointer",this.pointer[0].active)
   },
   methods:{
     
-    changeTeam(team){
-      this.$emit("handel-state",team  )
+    changeTeam(team,index){
+      this.pointer = []
+      this.pointer[index] = {active:true}
+      this.$emit("handel-state",team,index)
     }
   }
 
@@ -71,9 +77,8 @@ aside {
     margin-top:50px;
   .sidebar-element-wrapper {
     position: relative;
-    top: 10%;
-    transform: translate(0, -50%);
-
+    transform: translate(5%, -50%);
+   
     .sidebar-element {
       display: flex;
       flex-direction: row;

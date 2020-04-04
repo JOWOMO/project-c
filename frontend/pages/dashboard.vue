@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     // handel which matches should be displayed
-    async handelState(team) {
+    async handelState(team,index) {
       // getting matches for other team
       console.log("calling hadel state",team);
       this.matches = (await this.$apollo.query({
@@ -148,10 +148,10 @@ export default {
         await this.$apollo.query({ query: getDemands })
       ).data.companies[1].demands;
       this.flow = "suche";
-      this.handelState(this.demands[0])
+      this.handelState(this.demands[0],0)
       console.log("all demands: ",this.demands)
-
-      // load first matches for first page
+      // setting first team in sidebar to active
+      this.demands[0].active = true
     } catch (err) {}
   }
 };

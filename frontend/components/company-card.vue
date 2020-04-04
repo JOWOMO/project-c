@@ -125,11 +125,7 @@ export default {
         required: false,
         default:80
     }
-  },
-  created(){
-      console.log("comany-card",this.comapny_name)
-  },
-  
+  },  
   computed: {
     bestMatch() {
       return (this.percentage >= 70) ? true : false
