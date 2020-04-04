@@ -1,0 +1,83 @@
+.container {
+  h1 {
+    text-align: left;
+    padding-bottom: 14px;
+  }
+
+  p {
+    padding-bottom: 75px;
+    color: #7B7B7B;
+  }
+
+  .buttons {
+    margin-top: 21px;
+
+    display: grid;
+    grid-gap: 24px;
+    grid-auto-flow: column;
+    
+    button {
+      width: 100%;
+    }
+  }
+
+  form {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+
+    .form-group {
+      grid-column: 1 / span 2;
+    }
+
+    .half-width {
+      grid-column: 1;
+    }
+
+    .right {
+      grid-column: 2;
+    }
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    padding: 20px;
+    
+    form {
+      display: flex;
+      flex-direction: column;
+
+      grid-gap: 20px;
+      grid-template-columns: 1fr;
+  
+      .form-group {
+        grid-column: auto;
+      }
+  
+      .half-width {
+        grid-column: auto;
+      }
+  
+      .right {
+        grid-column: auto;
+      }
+
+      .buttons {
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        // grid-gap: 24px;
+        // grid-auto-flow: row;
+        
+        button {
+          margin-top: 21px;
+          width: 100%;
+        }
+      }
+    } 
+  }
+}

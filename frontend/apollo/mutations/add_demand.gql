@@ -1,4 +1,11 @@
-mutation updateDemand($companyId:ID!,$name:String!, $quantity:Int!,$skills:[Int!],$descriptionInt:String!,$descriptionExt:String),{
+mutation updateDemand(
+  $companyId:ID!,
+  $name:String!, 
+  $quantity:Int!,
+  $skills:[ID!],
+  $descriptionInt:String!,
+  $descriptionExt:String
+),{
   updateDemand(
     
     demand:{
@@ -8,7 +15,7 @@ mutation updateDemand($companyId:ID!,$name:String!, $quantity:Int!,$skills:[Int!
       skills:$skills,
       descriptionInt:$descriptionInt,
       descriptionExt:$descriptionExt
-      
+      isActive: true
     }
   ){
     id

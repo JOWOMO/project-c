@@ -11,7 +11,6 @@
 
     <div v-else class="profile">
       <span>{{ title }}</span>
-      <!-- TODO: Add img from database -->
       <img v-on:click="logout" src="/images/profile.jpg" alt class="profile_img" />
     </div>
   </nav>
@@ -75,12 +74,14 @@ export default {
 <style scoped lang="scss">
 nav {
   width: 100vw;
-  height: 80px;
+  height: 120px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 48px;
+
+  background-color: #FFFFFF;
 
   .profile, .links {
     display: inline-block;

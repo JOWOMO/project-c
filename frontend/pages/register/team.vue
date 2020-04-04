@@ -1,7 +1,6 @@
 <template>
+<div>
   <div class="container">
-    <sidebar v-bind:labels="[{'label':'Persönliche Daten','state':positions.profile},{'label':'Dein Unternehmen','state':positions.company},{'label':'Ich biete','state':positions.team}]" class="sidebar" />
-
     <h1>Ich biete</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
 
@@ -24,15 +23,16 @@
       <span>Weiteres Team hinzufügen</span>
     </button>
 
-    <div class="form-group buttons">
+    <div class="buttons">
       <button @click.prevent="$router.push('/register/company')">Zurück</button>
       <button class="primary" @click.prevent="save">Registrieren</button>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
-import sidebar from "@/components/sidebars/sidebar_login.vue";
+import sidebar from "@/components/sidebars/register.vue";
 import team from "@/components/team-form.vue";
 import getUser from "@/apollo/queries/user"
 
@@ -106,28 +106,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
-  display: grid;
-  grid-template-columns: 400px auto;
-  grid-auto-rows: min-content;
-  height: 100vh;
-  padding: 0;
 
-  .sidebar {
-    grid-column: 1;
-    grid-row: 1 / span 3;
-  }
-
-  h1 {
-    grid-column: 2;
-    justify-self: left;
-    margin: 50px 0 0 10px;
-  }
-
-  p {
-    grid-column: 2;
-    margin: 10px 0 10px 10px;
-  }
 
   .team-form {
     grid-column: 2;
@@ -161,37 +140,11 @@ export default {
     }
   }
 
-  .buttons {
-    grid-column: 2;
-    margin-top: 20px;
-    z-index: 1;
-  }
-}
 
 @media only screen and (max-width: 950px) {
-  .container {
-    grid-template-columns: 0fr 1fr;
-    width: 100vw;
-    padding: 50px 20px;
-
-    p, h1 {
-      width: 100%;
-      text-align: center;
-      margin: 0;
-    }
-
-    .sidebar {
-      display: none;
-    }
-
     .team-form {
       width: 100%;
       margin: 30px 0 0 0;
     }
-
-    .buttons {
-      justify-self: center !important;
-    }
-  }
 }
 </style>

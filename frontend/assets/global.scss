@@ -1,25 +1,12 @@
 // Global
-$primary: #25A6DA;
-$secondary: #DA2566;
-$background: #F8FDFF;
-
-$success: #00DE3E;
-$warning: #EDBA38;
-$error: #EE0000;
-
-$uiComponent: #00000006;
-$uiComponentHighlighted: #00000010;
-$border: #00000010;
-
-$fontColor: #282323;
+@import './colors';
 
 $h1FontSize: 36px;
 $h2FontSize: 24px;
 $h3FontSize: 20px;
 
-$buttonFormText: 16px;
-
- $input-width: 500px;
+$buttonFormText: 18px;
+$input-width: 100%;
 
 *,
 *:before,
@@ -31,7 +18,15 @@ $buttonFormText: 16px;
 html, body {
   font-family: 'Roboto', sans-serif;
   background: $background;
+  margin: 0;
+  padding: 0;
 }
+
+// #__layout > :first-child {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100vh;
+// }
 
 h1 {
   font-size: $h1FontSize;
@@ -39,8 +34,9 @@ h1 {
 //   position: absolute;
 //   left: 50%;
 //   transform: translate(-50%, 0);
-  text-align: center;
-  font-weight: normal;
+  // text-align: center;
+  font-weight: bold;
+  line-height: 42px;
 }
 
 h2 {
@@ -53,14 +49,16 @@ h3 {
   color: $fontColor;
 }
 
-// TODO: Add hover
 button {
-  border-radius: 40px;
-  width: 100px;
-  height: 40px;
+  border-radius: 90px;
+
+  min-width: 200px;
+  height: 50px;
+
   background: $uiComponent;
   font-size: $buttonFormText;
-  margin: 10px 0;
+  font-weight: 500;
+  
   transition: all .5s ease;
   border: none;
   outline: none;
@@ -71,211 +69,11 @@ button {
   }
 }
 
-.form-group {
-  position: relative;
-
-  label {
-    position: absolute;
-    top: 15px;
-    left: 5px;
-    font-weight: normal;
-    font-size: 15px;
-    display: inline-block;
-    text-align: left;
-    padding-left: 12px;
-    transition: all .5s ease;
-    color: $fontColor;
-  }
-
-  input {
-    background: $uiComponent;
-    border-radius: 10px;
-    border: 2px solid $border;
-    width: $input-width;
-    height: 50px;
-    padding-left: 10px;
-    color: #000;
-    outline: none;
-    font-size: 14px;
-
-    &:focus {
-      background: $uiComponentHighlighted;
-      border-color: $primary;
-      padding: 10px 0 0 14px;
-    }
-
-    &:valid {
-      padding: 10px 0 0 14px;
-    }
-
-    &:valid + label {
-      top: 14%;
-      font-size: 9px;
-      color: $fontColor;
-      font-weight: normal;
-    }
-
-    &:focus + label {
-      top: 14%;
-      font-size: 9px;
-      color: $primary;
-      font-weight: bold;
-    }
-
-    &[type=number]::-webkit-inner-spin-button,
-    &[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      margin: 0;
-    }
-  }
-
-  textarea {
-    background: $uiComponent;
-    border-radius: 10px;
-    border: 2px solid $border;
-    width: $input-width;
-    height: 50px;
-    padding-left: 10px;
-    color: $fontColor;
-    outline: none;
-    font-size: 14px;
-    z-index: 1;
-
-    &:focus {
-      background: $uiComponentHighlighted;
-      border-color: $primary;
-      padding: 10px 0 0 14px;
-    }
-
-    &:valid {
-      padding: 10px 0 0 14px;
-    }
-
-    &:valid + label {
-      top: 14%;
-      font-size: 9px;
-      color: $fontColor;
-      font-weight: normal;
-    }
-
-    &:focus + label {
-      top: 14%;
-      font-size: 9px;
-      color: $primary;
-      font-weight: bold;
-    }
-  }
-
-  .error {
-    color: $error;
-  }
-}
-
-.invalid-login {
-  color: $error;
-}
-
-@supports(-webkit-appearance: none) or (-moz-appearance: none) {
-  input[type='checkbox'] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    height: 20px;
-    width: 20px;
-    outline: none;
-    display: inline-block;
-    position: relative;
-    margin: 0;
-    cursor: pointer;
-    border: 2px solid $uiComponentHighlighted;
-    background: $uiComponent;
-    transition: background .3s, border-color .3s, box-shadow .2s;
-
-    &:after {
-      content: '';
-      display: block;
-      left: 0;
-      top: 0;
-      position: absolute;
-      transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
-    }
-
-    &:checked {
-      background: #25A6DA !important;
-      border: #25A6DA !important;
-      --d-o: .3s;
-      --d-t: .6s;
-      --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
-    }
-
-    &:hover {
-      &:not(:checked) {
-        &:not(:disabled) {
-          border: #25A6DA;
-        }
-      }
-    }
-
-    &:not(.switch) {
-      width: 20px;
-
-      &:after {
-        opacity: var(--o, 0);
-      }
-
-      &:checked {
-        --o: 1;
-      }
-    }
-  }
-
-  input[type='checkbox'] {
-    &:not(.switch) {
-      border-radius: 7px;
-
-      &:after {
-        width: 5px;
-        height: 9px;
-        border: 2px solid #fff;
-        border-top: 0;
-        border-left: 0;
-        left: 7px;
-        top: 4px;
-        transform: rotate(var(--r, 20deg));
-      }
-
-      &:checked {
-        --r: 43deg;
-      }
-    }
-
-    &.switch {
-      width: 38px;
-      border-radius: 11px;
-
-      &:after {
-        left: 2px;
-        top: 2px;
-        border-radius: 50%;
-        width: 15px;
-        height: 15px;
-        background: #fff;
-        transform: translateX(var(--x, 0));
-      }
-
-      &:checked {
-        background: #25A6DA;
-        --x: 17px;
-      }
-    }
-  }
-}
-
 a {
-  text-decoration: none;
-  color: #000;
+  font-size: 14px;
   font-weight: bold;
+  text-decoration: none;
+  color: $primary;
   transition: all .3s ease;
 
   &:hover {
@@ -290,10 +88,6 @@ a {
   height: 50px;
 }
 
-// .container {
-//   padding: 50px;
-// }
-
 .primary {
   background-color: $primary;
   color: #fff;
@@ -303,99 +97,24 @@ a {
   }
 }
 
-.cta {
-  background-color: $secondary;
-  color: #fff;
+.secondary {
+  background-color: transparent;
+  border: 1px solid $primary;
+  color: $primary;
 
   &:hover {
-    background-color: darken($secondary, 10%);
+    color: #ffffff;
+    background-color: darken($primary, 10%);
   }
 }
 
-.dropdown {
-  .selected {
-    background: $uiComponent;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    color: $fontColor;
-    position: relative;
-    border: 2px solid $border;
-    order: 0;
+// .cta {
+//   background-color: $secondary;
+//   color: #fff;
 
-    &::after {
-      content: '';
-      background: url(../static/icons/dropdown.svg);
-      background-size: contain;
-      background-repeat: no-repeat;
-      position: absolute;
-      height: 100%;
-      width: 18px;
-      right: 10px;
-      top: 20px;
-      transition: all .4s;
-    }
-  }
+//   &:hover {
+//     background-color: darken($secondary, 10%);
+//   }
+// }
 
-  .select-box {
-    display: flex;
-    flex-direction: column;
-
-    .options-container {
-      background: $uiComponent;
-      color: $fontColor;
-      border: 2px solid $border;
-      max-height: 0;
-      width: 100%;
-      opacity: 0;
-      transition: all .5s;
-      border-radius: 8px;
-      overflow: hidden;
-      order: 1;
-
-      &.active {
-        max-height: 250px;
-        opacity: 1;
-        overflow-y: scroll;
-      }
-
-      &.active + .selected::after {
-        transform: rotate(180deg);
-        transform-origin: center;
-        top: -15px;
-      }
-    }
-
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background: #000;
-      border-radius: 0 8px 8px 0;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #fff;
-      border-radius: 0 8px 8px 0;
-    }
-
-    .option, .selected {
-      padding: 12px 24px;
-      cursor: pointer;
-
-      &:hover {
-        background: $uiComponentHighlighted;
-      }
-
-      .radio {
-        display: none;
-      }
-    }
-
-    label {
-      cursor: pointer;
-      position: static;
-      color: #000;
-      transform: none;
-      font-size: 15px !important;
-    }
-  }
-}
+@import './form';

@@ -75,101 +75,100 @@ export default {
         : "Kostenlos anmelden";
     }
   },
-  layout: "no-auth",
   methods: {
     demand_register: function() {
-      this.$router.push({ path: "/register/start", query: { flow: "demand" } });
+      this.$router.push({ path: "/register", query: { flow: "demand" } });
     },
 
     supply_register: function() {
-      this.$router.push({ path: "/register/start", query: { flow: "supply" } });
+      this.$router.push({ path: "/register", query: { flow: "supply" } });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/global.scss";
+// @import "~assets/global.scss";
 
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: calc(100vh - 80px);
-  justify-content: center;
-  .login-scale {
-    display: grid;
-    grid-template-rows: 1fr 10fr;
-    width: 100%;
-    overflow: hidden;
-    &:hover .background {
-      transform: scale(1.2);
-    }
-    .background {
-      grid-row: 1 / span 2;
-      grid-column: 1;
-      z-index: 1;
-      transition: transform .5s;
-    }
-    .left {
-      background: url(/images/1.jpg) center center no-repeat;
-      background-size: cover;
-    }
-    .right{
-      background: url(/images/2.jpg) center center no-repeat;
-      background-size: cover;
-    }
-    h1 {
-      grid-row: 1;
-      grid-column: 1;
-      font-weight: normal;
-      color: #fff;
-      margin-top: 50px;
-      z-index: 3;
-      span {
-        font-weight: bold;
-      }
-    }
-    button {
-      grid-row: 2;
-      grid-column: 1;
-      justify-self: center;
-      width: 300px;
-      background: #fff;
-      color: $primary;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      padding: 0 40px;
-      margin-top: 30px;
-      z-index: 3;
-      &:hover {
-        background: $primary;
-        color: #fff;
-        svg {
-          path {
-            fill: #fff;
-          }
-        }
-      }
-    }
-  }
-}
-@media only screen and (max-width: 765px) {
-  .container {
-    grid-template-columns: 1fr;
-    grid-template-rows: 80vh 80vh;
-    .login-scale {
-      grid-column: 1;
-      &:hover .background {
-        transform: none;
-      }
-      .left {
-        grid-column: 1;
-      }
-      .right {
-        grid-column: 1;
-      }
-    }
-  }
-}
+// .container {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr;
+//   grid-template-rows: calc(100vh - 80px);
+//   justify-content: center;
+//   .login-scale {
+//     display: grid;
+//     grid-template-rows: 1fr 10fr;
+//     width: 100%;
+//     overflow: hidden;
+//     &:hover .background {
+//       transform: scale(1.2);
+//     }
+//     .background {
+//       grid-row: 1 / span 2;
+//       grid-column: 1;
+//       z-index: 1;
+//       transition: transform .5s;
+//     }
+//     .left {
+//       background: url(/images/1.jpg) center center no-repeat;
+//       background-size: cover;
+//     }
+//     .right{
+//       background: url(/images/2.jpg) center center no-repeat;
+//       background-size: cover;
+//     }
+//     h1 {
+//       grid-row: 1;
+//       grid-column: 1;
+//       font-weight: normal;
+//       color: #fff;
+//       margin-top: 50px;
+//       z-index: 3;
+//       span {
+//         font-weight: bold;
+//       }
+//     }
+//     button {
+//       grid-row: 2;
+//       grid-column: 1;
+//       justify-self: center;
+//       width: 300px;
+//       background: #fff;
+//       color: $primary;
+//       display: flex;
+//       flex-direction: row;
+//       justify-content: space-around;
+//       padding: 0 40px;
+//       margin-top: 30px;
+//       z-index: 3;
+//       &:hover {
+//         background: $primary;
+//         color: #fff;
+//         svg {
+//           path {
+//             fill: #fff;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// @media only screen and (max-width: 765px) {
+//   .container {
+//     grid-template-columns: 1fr;
+//     grid-template-rows: 80vh 80vh;
+//     .login-scale {
+//       grid-column: 1;
+//       &:hover .background {
+//         transform: none;
+//       }
+//       .left {
+//         grid-column: 1;
+//       }
+//       .right {
+//         grid-column: 1;
+//       }
+//     }
+//   }
+// }
 </style>

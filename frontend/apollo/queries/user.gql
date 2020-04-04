@@ -7,7 +7,7 @@ query user {
         companies{
             id,
             name,
-            street1,
+            addressLine1,
             postalCode,
             city,
         }

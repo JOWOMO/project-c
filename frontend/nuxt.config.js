@@ -39,6 +39,11 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,700&display=swap' },
     ]
   },
+
+  router: {
+    // trailingSlash: false,
+  },
+  
   /*
   ** Customize the progress-bar color
   */
@@ -65,6 +70,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxt/typescript-build',
     '@nuxtjs/gtm',
   ],
   /*

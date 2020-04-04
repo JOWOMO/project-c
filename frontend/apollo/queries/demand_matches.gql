@@ -17,7 +17,7 @@ query demandMatches($id:ID!){
         company{
           id
           name
-          street1
+          addressLine1
           postalCode
           city
         }

@@ -1,0 +1,232 @@
+@import './colors.scss';
+
+$input-width: 100%;
+
+$labelColor: #787878; 
+$fontColor: #484848;
+
+$fontSize: 18px;
+
+form {
+  padding: 0;
+  margin: 0;
+}
+
+.form-group {
+    position: relative;
+
+    .field-validation {
+      // margin-top: 20px;
+      color: $error;
+      padding-top: 4px;
+      padding-left: 4px;
+      font-size: 12px;
+    }
+  
+    label {
+      position: absolute;
+      top: 21px;
+      left: 10px;
+      font-weight: normal;
+      font-size: $fontSize;
+      display: inline-block;
+      text-align: left;
+      padding-left: 12px;
+      transition: all .5s ease;
+      color: $fontColor;
+    }
+  
+    select, input {
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+    }
+  
+    input, select {
+      background: $uiComponent;
+      border-radius: 8px;
+      border: 1px solid $border;
+      width: $input-width;
+      
+      height: 70px;
+      // padding-left: 10px;
+
+      color: #000;
+      outline: none;
+      font-size: $fontSize;
+  
+      &:focus {
+        background: $uiComponentHighlighted;
+        border-color: $primary;
+        padding: 20px 0 0 21px;
+      }
+  
+      &:valid {
+        padding: 20px 0 0 21px;
+      }
+  
+      &:valid + label {
+        top: 11px;
+        font-size: 12px;
+        color: $labelColor;
+        font-weight: normal;
+      }
+  
+      &:focus + label {
+        top: 11px;
+        font-size: 12px;
+        color: $primary;
+        font-weight: bold;
+      }
+  
+      &[type=number]::-webkit-inner-spin-button,
+      &[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+      }
+    }
+
+    .is-invalid {
+      border: 1px solid $error !important;
+    }
+  
+    textarea {
+      background: $uiComponent;
+      border-radius: 10px;
+      border: 2px solid $border;
+      width: $input-width;
+      height: 50px;
+      padding-left: 10px;
+      color: $fontColor;
+      outline: none;
+      font-size: $fontSize;
+      z-index: 1;
+  
+      &:focus {
+        background: $uiComponentHighlighted;
+        border-color: $primary;
+        padding: 10px 0 0 14px;
+      }
+  
+      &:valid {
+        padding: 10px 0 0 14px;
+      }
+  
+      &:valid + label {
+        top: 14%;
+        font-size: 9px;
+        color: $fontColor;
+        font-weight: normal;
+      }
+  
+      &:focus + label {
+        top: 14%;
+        font-size: 9px;
+        color: $primary;
+        font-weight: bold;
+      }
+    }
+  
+    .error {
+      color: $error;
+    }
+  }
+
+
+@supports(-webkit-appearance: none) or (-moz-appearance: none) {
+  input[type='checkbox'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 20px;
+    width: 20px;
+    outline: none;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border: 2px solid $uiComponentHighlighted;
+    background: $uiComponent;
+    transition: background .3s, border-color .3s, box-shadow .2s;
+
+    &:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      position: absolute;
+      transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
+    }
+
+    &:checked {
+      background: #25A6DA !important;
+      border: #25A6DA !important;
+      --d-o: .3s;
+      --d-t: .6s;
+      --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
+    }
+
+    &:hover {
+      &:not(:checked) {
+        &:not(:disabled) {
+          border: #25A6DA;
+        }
+      }
+    }
+
+    &:not(.switch) {
+      width: 20px;
+
+      &:after {
+        opacity: var(--o, 0);
+      }
+
+      &:checked {
+        --o: 1;
+      }
+    }
+  }
+
+  input[type='checkbox'] {
+    &:not(.switch) {
+      border-radius: 7px;
+
+      &:after {
+        width: 5px;
+        height: 9px;
+        border: 2px solid #fff;
+        border-top: 0;
+        border-left: 0;
+        left: 7px;
+        top: 4px;
+        transform: rotate(var(--r, 20deg));
+      }
+
+      &:checked {
+        --r: 43deg;
+      }
+    }
+
+    &.switch {
+      width: 38px;
+      border-radius: 11px;
+
+      &:after {
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        background: #fff;
+        transform: translateX(var(--x, 0));
+      }
+
+      &:checked {
+        background: #25A6DA;
+        --x: 17px;
+      }
+    }
+  }
+}
