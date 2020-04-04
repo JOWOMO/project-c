@@ -4,7 +4,7 @@
       <div class="head">
         <h2>Team {{ id }}</h2>
         <div class="checkbox">
-          <input type="checkbox" class="switch" />
+          <input v-model="active" type="checkbox" class="switch" />
           <span>aktivieren</span>
         </div>
       </div>
@@ -140,6 +140,7 @@ export default {
 
   data() {
     return {
+      active:false,
       oneActive: false,
       twoActive: false,
       tagCloud: false,
@@ -197,7 +198,8 @@ export default {
               name: this.selectedTopic,
               quantity: parseInt(this.selectedNumber),
               skills: await this.getTagIds(),
-              descriptionInt:this.extraInfo
+              descriptionInt:this.extraInfo,
+              active:this.active
             }
           })
           .then(({ data }) => {
@@ -212,7 +214,8 @@ export default {
               name: this.selectedTopic,
               quantity: parseInt(this.selectedNumber),
               skills: await this.getTagIds(),
-              descriptionInt:this.extraInfo
+              descriptionInt:this.extraInfo,
+              active:this.active
             }
           })
           .then(({ data }) => {

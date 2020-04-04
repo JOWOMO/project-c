@@ -5,7 +5,8 @@
     <h1>Ich biete</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
 
-    <team ref="save"
+    <team 
+      ref="save"
       class="team-form"
       v-for="team in teams"
       :key="team.id"
