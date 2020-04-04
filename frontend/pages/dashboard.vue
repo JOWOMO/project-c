@@ -265,13 +265,13 @@ export default {
       justify-self: start;
       display: inline-block;
       position: absolute;
-      top: 30px;
+      top: 80px;
       left: 30px;
       width: 30px;
       height: 5px;
       background: #000;
       border-radius: 5px;
-      transition: all 1s ease;
+      // transition: all 1s ease;
 
       &::after {
         content: "";
@@ -283,18 +283,15 @@ export default {
         height: 5px;
         background: #000;
         border-radius: 5px;
-        transition: all 1s ease;
       }
 
       &.expand {
-        right: 30px !important;
-        transform: rotate(90deg) !important;
-        transform-origin: center;
+        left: 41vw;
+        transform: rotate(-45deg);
       }
 
-      &.expand + &::after {
-        transform: rotate(-180deg) !important;
-        transform-origin: center;
+      &.expand::after {
+        transform: rotate(-90deg) translateX(35%);
       }
     }
 
@@ -318,7 +315,17 @@ export default {
   }
 }
 
-@media only screen and (max-width: 765px) {
+@media only screen and (max-width: 550px) {
+  .burger-menu {
+    top: 50px !important;
+    z-index: 10;
+
+    &.expand {
+      left: 85vw !important;
+      transform: rotate(-45deg);
+    }
+  }
+
   .distance {
     flex-direction: column !important;
     align-items: center !important;
