@@ -65,7 +65,6 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxtjs/gtm',
   ],
   /*
   ** Nuxt.js modules
@@ -77,6 +76,8 @@ export default {
     'cookie-universal-nuxt',
     // Doc: https://github.com/nuxt-community/apollo-module
     '@nuxtjs/apollo',
+    // Doc: https://github.com/nuxt-community/gtm-module
+    '@nuxtjs/gtm',
     // Doc: https://github.com/nuxt-community/nuxt-i18n
     [
       'nuxt-i18n',
@@ -150,8 +151,8 @@ export default {
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
 
         getAuth: async () => {
-            const token = await Vue.prototype.$store.dispatch('auth/token');
-            return token;
+          const token = await Vue.prototype.$store.dispatch('auth/token');
+          return token;
         },
 
         // optional
@@ -171,17 +172,15 @@ export default {
   */
   axios: {
   },
-  /*
-  ** Google tag manager configuration
-  */
   gtm: {
+    // Set to false to disable module in development mode
     dev: true,
 
     id: null,
     layer: 'dataLayer',
     variables: {},
 
-    pageTracking: false,
+    pageTracking: true,
     pageViewEventName: 'nuxtRoute',
 
     autoInit: true,
@@ -202,7 +201,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (ctx.isDev) {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }

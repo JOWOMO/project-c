@@ -1,7 +1,7 @@
 <template>
     <div>
-      <!-- <Cookies v-if="!Cookie" /> -->
       <nuxt />
+      <Cookies v-if="!Cookie" />
     </div>
 </template>
 
@@ -10,7 +10,7 @@ import Cookies from '@/components/cookies.vue'
 
 export default {
   components: {
-    // Cookies
+    Cookies
   },
   data(){
     return{

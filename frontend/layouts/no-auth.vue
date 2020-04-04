@@ -2,18 +2,18 @@
   <div>
     <Navbar />
     <nuxt />
-    <!-- <Cookie /> -->
+    <Cookie />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/navbar.vue'
-// import Cookie from '@/components/cookies.vue'
+import Cookie from '@/components/cookies.vue'
 
 export default {
   components: {
     Navbar,
-    // Cookie
+    Cookie
   },
 
   middleware: ['loaduser'],
@@ -26,7 +26,7 @@ export default {
   //   // console.log(this.$store.state.auth.isAuthenticated)
   //   // if(!this.$store.state.auth.isAuthenticated){
   //   //   this.$store.commit('save_route',this.$router.path)
-     
+
   //   // }else{
   //     this.state = true;
   //   // }
