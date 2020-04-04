@@ -207,10 +207,7 @@ export default {
       } else if (this.selectedTags.length < 3) {
         this.error = "Das Team benötigt min. 3 Eigentschaften ";
         return;
-      }
-      console.log("stateeeeee: ",this.flow)
-      console.log(this.active,this.$store.state.user.companies[0].id)
-      
+      }      
       if(this.edit){
          if (this.flow === "offer") {
         this.$apollo
@@ -282,14 +279,14 @@ export default {
           });
       }
       }
-      // this.$router.push("/dashboard")
+     this.$router.push("/dashboard")
     },
     hide(active) {
       this.tagCloud = active;
     },
     getTags(tags, active) {
       this.tagCloud = active;
-      this.selectedTags = tags; // TODO: Write to db
+      this.selectedTags = tags; 
     }
   },
   async created() {

@@ -25,7 +25,7 @@ export default {
   methods: {
     set_active() {
       this.active = !this.active
-      console.log("active",this.active)
+      console.log("state",this.active)
       this.$emit('updateTag', this.active, this.skill)
     }
   }

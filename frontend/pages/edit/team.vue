@@ -21,10 +21,19 @@
             :key="team.id + 4"
             flow="offer"
             :edit="true"
-            :id="team.name"
+            :id="1"
             :savedTeam="team"
             editing
         />
+          <team 
+      ref="save"
+      class="team-form"
+      v-for="team in teams"
+      :key="team.id"
+      flow="offer"
+      :id="team.id"
+      :savedTeam="[{name:'Teilzeit',id:'201'}]"
+    />
 
         <button class="add" @click.prevent="addTeam">
             <div class="circle">
@@ -54,9 +63,9 @@ export default {
     },
     data(){
         return{
-            teams: [],
+            teams: [{id:1}],
             savedTeams:{
-
+                
             }
         }
     },

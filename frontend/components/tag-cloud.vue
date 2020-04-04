@@ -51,14 +51,15 @@ export default {
       //prove of concept comparing list
       this.selectedTags = this.selected
       console.log(this.selectedTags)
-      await this.skills.forEach(skill=>{
+      await this.skills.forEach(async skill=>{
         skill.active = false
-        this.selectedTags.forEach(tag=>{
+        await this.selectedTags.forEach(tag=>{
           if(skill.id == tag.id){
             skill.active = true
           }
         })
       })
+      console.log("skill: ",this.skills)
     },
   methods: {
     setActive() {
@@ -88,7 +89,7 @@ export default {
   props: {
     skills: Array,
     selected:Array,
-    id: Number
+    id: [String, Number]
   }
 }
 </script>
