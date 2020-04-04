@@ -19,8 +19,7 @@
 
       <div class="unselected-tags">
         <tag
-          v-for="skill in skills"
-
+          v-for="skill in newskills"
           :key="skill.id"
           :skill="skill"
           @updateTag="updateTag"
@@ -45,42 +44,46 @@ export default {
   data() {
     return {
       selectedTags: [],
-     
+      newskills : []
     }
   },
-  async created(){
-      //prove of concept comparing list
-      this.selectedTags = this.selected
-      console.log("selected task",this.selectedTags)
-      console.log("skills",this.skills)
-      await this.skills.forEach(async skill=>{
-        skill.active = false
-        await this.selectedTags.forEach(tag=>{
-          if(skill.id == tag.id){
-            skill.active = true
-            tag.active = true 
-          }
-        })
-      })
-      console.log("after comparision selected tags",this.selectedTags)
-      console.log("skills after comparision",this.skills)
-    },
+ 
+  mounted() {
+    // Compare the selected tags with all available tags
+   
+    this.compareList(this.skills, this.selected)  
+  },
   methods: {
+
+   async compareList(skills, selected){
+
+     await this.skills.forEach(async skill=>{
+
+        for(var tag = 0; tag < selected.length; tag++){
+          if(skill.id === selected[tag].id){
+            skill.active = true
+            this.selectedTags.push(skill)
+            break;
+          }else{
+            skill.active = false
+          }
+        }
+        this.newskills.push(skill)
+    })
+    
+      
+    },
     setActive() {
       this.$emit('changeActive', false)
     },
     async updateTag(active, value) {
-      console.log(active, value)
-      console.log("length: ",value.length)
       if(active == true) {
         this.selectedTags.push(
           value
         )
       } else {
-        console.log('selected Tags, value', value)
+        
         const index = await this.selectedTags.indexOf(value);
-        console.log("index: ",index)
-        console.log("selectedList: ",this.selectedTags)
         if (index > -1) {
           this.selectedTags.splice(index, 1);
         }

@@ -3,7 +3,7 @@
         <h1>Teams bearbeiten</h1>
         <p>Bearbeite deine Teams oder füge neue hinzu</p>
 
-        <!-- <team 
+        <team 
             ref="save"
             class="team-form"
             v-for="team in savedTeams.demands"
@@ -13,27 +13,16 @@
             :id="team.name"
             :savedTeam="team"
             editing
-        /> -->
-         <!-- <team 
+        />
+         <team 
             ref="save"
             class="team-form"
-            v-for="(team,index) in savedTeams.supplies"
+            v-for="team in savedTeams.supplies"
             :key="team.id + 4"
             flow="offer"
             :edit="true"
-            :id="index"
-            :savedTeam="team"
-            editing
-          /> -->
-          <team 
-            ref="save"
-            class="team-form"
-            v-for="team in teams"
-            :key="team.id"
-            flow="offer"
-            :id="team.id"
-            :edit="true"
-            :savedTeam="[{'id':'400','name':'Teilzeit'},{'id':'400','name':'Teilzeit'}]"
+            :id="team.name"
+            :savedSkills="team.skills"
             editing
           />
 
@@ -66,9 +55,9 @@ export default {
     data(){
         return{
             teams: [{id:1}],
-            savedTeams:{
+            savedTeams: [{
                 
-            }
+            }]
         }
     },
     methods: {

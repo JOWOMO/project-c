@@ -12,6 +12,9 @@ export default {
       active: false
     };
   },
+  created(){
+    this.active = this.skill.active
+  },
   props: {
     skill: Object,
     selected: {
@@ -19,13 +22,9 @@ export default {
       required: false
     }
   },
-  created(){
-    this.active = this.skill.active
-  },
   methods: {
     set_active() {
       this.active = !this.active
-      console.log("state",this.active)
       this.$emit('updateTag', this.active, this.skill)
     }
   }
@@ -50,7 +49,7 @@ export default {
     background: $uiComponentHighlighted;
   }
 
-  &.selected {
+  &.selected, &.active  {
     background: $primary;
 
     span {

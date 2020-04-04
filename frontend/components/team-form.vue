@@ -148,7 +148,7 @@ export default {
       twoActive: false,
       tagCloud: false,
       team: 1,
-      selectedTags: [{'id':'400','name':'Teilzeit'},{'id':'201','name':'Bla'}],
+      selectedTags:[],
       extraInfo: "",
       selectedNumber: "Anzahl Mitarbeiter",
       selectedTopic: "Bezeichnung",
@@ -174,7 +174,7 @@ export default {
       required:false,
       default:false
     },
-    savedTeam:{
+    savedSkills:{
       type:Array,
       required:false
     }
@@ -223,7 +223,6 @@ export default {
             }
           })
           .then(({ data }) => {
-            console.log("db response: ", data);
           });
       } else {
         this.$apollo
@@ -284,14 +283,11 @@ export default {
       this.tagCloud = active;
     },
     getTags(tags, active) {
-      console.log("deleting tags");
-      console.log(tags)
-      console.log(active)
       this.tagCloud = active;
       this.selectedTags = tags; 
     }
   },
-  async created() {
+  mounted() { // async
     const client = this.$apollo.getClient();
     this.$apollo
       .query({
@@ -301,8 +297,7 @@ export default {
         return (this.skills = data.skills);
       });
    if(this.edit){
-     this.selectedTags = this.savedTeam.skills
-     console.log("selected list or Object?: ",this.selectedTags)
+     this.selectedTags = this.savedSkills
    }
    
   }
