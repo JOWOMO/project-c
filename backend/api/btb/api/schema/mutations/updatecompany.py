@@ -10,12 +10,14 @@ class CompanyInput(graphene.InputObjectType):
     id = graphene.ID(required=False)
     name = graphene.String(required=True)
     logo_url = graphene.String()
+    
     address_line1 = graphene.String(required=True)
     address_line2 = graphene.String()
     address_line3 = graphene.String()
+
     postal_code = graphene.String(required=True)
     city = graphene.String(required=True)
-    industry = graphene.Int()
+    industry = graphene.ID()
 
 
 class UpdateCompany(graphene.Mutation):

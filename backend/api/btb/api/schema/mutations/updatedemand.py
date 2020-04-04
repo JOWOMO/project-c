@@ -16,7 +16,7 @@ class DemandInput(graphene.InputObjectType):
     description_ext = graphene.String()
 
     quantity = graphene.Int(required=True)
-    skills = graphene.List(graphene.Int)
+    skills = graphene.List(graphene.ID)
     max_hourly_salary = graphene.Float()
 
 

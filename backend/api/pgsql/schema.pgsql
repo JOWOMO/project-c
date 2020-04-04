@@ -151,8 +151,8 @@ from
     btb.company_customer cc,
     btb.customer u
 where 
-        cc.customer_id = u.id
-    and cc.company_id = co.id
+        co.id =  cc.customer_id 
+    and u.id  = cc.customer_id
 ;
 
 CREATE SEQUENCE IF NOT EXISTS btb.team_demand_id_seq

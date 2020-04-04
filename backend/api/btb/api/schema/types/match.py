@@ -41,7 +41,7 @@ class SupplyMatch(ObjectType):
 
 
 class MatchSupplyResult(ObjectType):
-    matches = List(SupplyMatch, required=True)
+    matches = List(NonNull(SupplyMatch), required=True)
     page_info = Field(PageInfo, required=True)
 
 
@@ -52,5 +52,5 @@ class DemandMatch(ObjectType):
 
 
 class MatchDemandResult(ObjectType):
-    matches = List(DemandMatch, required=True)
+    matches = List(NonNull(DemandMatch), required=True)
     page_info = Field(PageInfo, required=True)

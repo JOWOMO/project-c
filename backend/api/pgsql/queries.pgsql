@@ -31,3 +31,10 @@ from btb.company
 
 
 select array[0] & array [1]
+
+
+select * 
+from 
+    btb.company_with_contact
+where   
+    owner_id = 1

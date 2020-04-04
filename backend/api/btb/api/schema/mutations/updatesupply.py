@@ -16,7 +16,7 @@ class SupplyInput(graphene.InputObjectType):
     description_ext = graphene.String()
 
     quantity = graphene.Int(required=True)
-    skills = graphene.List(graphene.Int)
+    skills = graphene.List(graphene.ID)
     hourly_salary = graphene.Float()
 
 

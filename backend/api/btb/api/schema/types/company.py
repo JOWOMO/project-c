@@ -18,9 +18,9 @@ class Company(ObjectType):
     id = ID(required=True)
     name = String(required=True)
 
-    street1 = String(required=False)
-    street2 = String(required=False)
-    street3 = String(required=False)
+    address_line1 = String(required=False)
+    address_line2 = String(required=False)
+    address_line3 = String(required=False)
 
     postal_code = String(required=True)
     city = String(required=True)
@@ -29,8 +29,8 @@ class Company(ObjectType):
     contact = Field(CompanyContact, required=True)
 
     # lazy
-    demands = List(lambda: Demand, resolver=demands_by_company)
-    supplies = List(lambda: Supply, resolver=supplies_by_company)
+    demands = List(lambda: NonNull(Demand), resolver=demands_by_company)
+    supplies = List(lambda: NonNull(Supply), resolver=supplies_by_company)
 
     # def resolve_contact(root, info):
     #     if root.
