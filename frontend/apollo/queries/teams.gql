@@ -1,4 +1,4 @@
-query getDemands{
+query getTeams{
   companies{
     demands{
       id
@@ -12,6 +12,18 @@ query getDemands{
       }
       quantity
       
+    }
+    supplies{
+      id
+      name
+      isActive
+      description
+      skills{
+        id 
+        name
+        group
+      }
+      quantity
     }
   }
 }

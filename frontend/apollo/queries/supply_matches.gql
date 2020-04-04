@@ -1,0 +1,26 @@
+query supplyMatches($id:ID!){
+  matchSupply(id:$id){
+    matches{
+      distance
+      percentage
+      supply{
+        id
+        name
+        description 
+        skills{
+          id
+          name
+          group
+        }
+        quantity
+        company{
+          id
+          name
+          street1
+          postalCode
+          city
+        }
+      }
+    }
+  }
+}

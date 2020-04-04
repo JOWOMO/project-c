@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <sidebar @handel-state="handelState" :flow="flow" :data="demands" class="sidebar" :class="{expand: sidebar}" />
+    <sidebar @handel-state="handelState" :flow="flow" :demand="teams.demands" :supply="teams.supplies" class="sidebar" :class="{expand: sidebar}" />
     <div class="burger-menu" @click="sidebar =! sidebar" :class="{expand: sidebar}" />
 
     <h1>Finde Personal-Partner</h1>
@@ -50,7 +50,7 @@
       <button @click="map = true">Karte</button>
     </div> -->
 
-     <div class="matches" v-if="!map">
+    <div class="matches" v-if="flow === 'DemandMatch'">
       <companyCard
         v-for="match in matches"
         :key="match.name"
@@ -62,6 +62,20 @@
         :profile_name="match.demand.company.name"
         :percentage="match.percentage"
         :adress="{street:match.demand.company.street1,city:match.demand.company.city,number:match.demand.company.postalCode}"
+      />
+    </div>
+     <div class="matches" v-else>
+      <companyCard
+        v-for="match in matches"
+        :key="match.name"
+        :company_name="match.name"
+        :distance="match.distance"
+        :employees="match.supply.quantity"
+        :skills="match.supply.skills"
+        :description="match.supply.description"
+        :profile_name="match.supply.company.name"
+        :percentage="match.percentage"
+        :adress="{street:match.supply.company.street1,city:match.supply.company.city,number:match.supply.company.postalCode}"
       />
     </div>
 
@@ -88,9 +102,9 @@
 <script>
 import companyCard from "@/components/company-card.vue";
 import sidebar from "@/components/sidebars/sidebar_dashboard.vue";
-import getDemands from "@/apollo/queries/demands";
+import getTeams from "@/apollo/queries/teams";
 import demandMatches from "@/apollo/queries/demand_matches";
-import getSkills from "@/apollo/queries/skills";
+import supplyMatches from "@/apollo/queries/supply_matches"
 
 export default {
   head() {
@@ -116,21 +130,36 @@ export default {
       demands: [],
       supplies: [],
       selectedDistance: "entfernung Wählen",
-      flow: ""
+      flow: "",
+      teams:[]
     };
   },
   methods: {
     // handel which matches should be displayed
     async handelState(team,index) {
       // getting matches for other team
-      console.log("calling hadel state",team);
+      if(team.__typename == "Demand"){
+        console.log("calling hadel state",team);
       this.matches = (await this.$apollo.query({
         query: demandMatches,
         variables: {
           id: team.id
         }
       })).data.matchDemand.matches;
+      this.flow = "DemandMatch"
       console.log("matches: ",this.matches)
+      }else{
+        this.matches = (await this.$apollo.query({
+          query: supplyMatches,
+        variables: {
+          id: team.id
+        }
+      })).data.matchSupply.matches;
+        this.flow = "SupplyMatch"
+      console.log("matches: ",this.matches)
+      }
+      // closing sidebar for mobile when selecting the team      
+      this.sidebar = false
     },
     selected_distance(number) {
       this.selectedDistance = number.toString();
@@ -145,15 +174,18 @@ export default {
     try {
       // route for demand TODO: need to know demand or supply
       const client = this.$apollo.getClient();
-      this.demands = (
-        await this.$apollo.query({ query: getDemands })
-      ).data.companies[1].demands;
-      this.flow = "suche";
-      this.handelState(this.demands[0],0)
-      console.log("all demands: ",this.demands)
-      // setting first team in sidebar to active
-      this.demands[0].active = true
-    } catch (err) {}
+      this.teams = (
+        await this.$apollo.query({ query: getTeams })
+      ).data.companies[1];
+      // this.flow = "suche";
+      this.handelState(this.teams.demands[0],0)
+      console.log("log teams",this.teams)
+      // console.log("all demands: ",this.demands)
+      // // setting first team in sidebar to active
+      // this.demands[0].active = true
+    } catch (err) {
+      console.log(err)
+    }
   }
 };
 </script>

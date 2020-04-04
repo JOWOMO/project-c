@@ -3,23 +3,29 @@
     <nuxt-link to="/" class="logo"><img src="/images/logo.svg"></nuxt-link>
     <div class="wrapper-content">
     <p>Ich {{ flow }}</p> <!-- TODO: add team edit page -->
-     <div v-if="flow == 'suche'">
-       <div v-for="(element,index) in data" :key="element.id" class="sidebar-element-wrapper">
+     <!-- <div v-if="flow == 'suche'"> -->
+       <div v-for="(element,index) in demand" :key="element.id" class="sidebar-element-wrapper">
           <div @click="changeTeam(element,index)" class="sidebar-element"> 
-              <img v-if="pointer[index]" src="/icons/arrow-left.svg">
+              <img v-if="pointerDemands[index]" src="/icons/arrow-left.svg">
+              <p>{{ element.name }}</p>       
+          </div>
+       </div>
+        <div v-for="(element,index) in supply" :key="element.name" class="sidebar-element-wrapper">
+          <div @click="changeTeam(element,index)" class="sidebar-element"> 
+              <img v-if="pointerSupplies[index]" src="/icons/arrow-left.svg">
               <p>{{ element.name }}</p>       
           </div>
        </div>
      </div>
-     <div v-else >
+     <!-- <div v-else >
        <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
         <div class="sidebar-element"> 
           <p>{{ element.name }}</p>       
-        </div>
-      </div>
-      <nuxt-link to="/edit/team">Teams verwalten</nuxt-link>
-    </div>
-    </div>
+        </div>-->
+      <!-- </div>  -->
+    <!-- </div> -->
+    <nuxt-link to="/edit/team?flow=search">Teams verwalten</nuxt-link>
+    <!-- </div> -->
   </aside>
 </template>
 
@@ -37,24 +43,31 @@ export default {
     }
   },
   props:{
-   data:Array,
+   demand:Array,
+   supply:Array,
    flow:String
   },
   data() {
     return {
-      pointer:[
-        true
-      ]
+     pointerDemands:[
+       true
+     ],
+     pointerSupplies:[]
     }
   },
-  created(){
-    console.log("pointer",this.pointer[0].active)
+  updated() {
+    console.log('demand/supply', this.demand, this.supply)
   },
   methods:{
-    
     changeTeam(team,index){
-      this.pointer = []
-      this.pointer[index] = {active:true}
+      this.pointerDemands = []
+      this.pointerSupplies = []
+      console.log("type:",team.__typename)
+      if(team.__typename == "Demand"){
+        this.pointerDemands[index] = {active:true}
+      }else{
+        this.pointerSupplies[index] = {active:true}
+      }
       this.$emit("handel-state",team,index)
     }
   }
@@ -73,6 +86,11 @@ aside {
   position: fixed;
   left: 0;
   top: 0;
+
+  .sidebar-element-wrapper {
+    cursor: pointer;
+  }
+
   .wrapper-content{
     margin-top:50px;
   .sidebar-element-wrapper {

@@ -4,7 +4,11 @@
       <div class="head">
         <h2>Team {{ id }}</h2>
         <div class="checkbox">
-          <input v-model="active" type="checkbox" class="switch" />
+          <input 
+            v-model="active" 
+            type="checkbox" 
+            class="switch"
+          />
           <span>aktivieren</span>
         </div>
       </div>
@@ -131,12 +135,11 @@ import getSkills from "@/apollo/queries/skills";
 import addSupply from "@/apollo/mutations/add_supply";
 import getUser from "@/apollo/queries/user";
 import addDemand from "@/apollo/mutations/add_demand";
+import getDemands from "@/apollo/queries/demands";
 
 export default {
   name: "team",
-  props: {
-    flow: String
-  },
+ 
 
   data() {
     return {
@@ -158,7 +161,11 @@ export default {
     tag
   },
   props: {
-    id: Number
+    id: Number,
+    flow: {
+      type: String,
+      required: false
+    }
   },
   methods: {
     selected_number(number) {
@@ -232,7 +239,7 @@ export default {
       this.selectedTags = tags; // TODO: Write to db
     }
   },
-  async beforeCreate(context) {
+  async created() {
     const client = this.$apollo.getClient();
     this.$apollo
       .query({
@@ -241,6 +248,25 @@ export default {
       .then(({ data }) => {
         return (this.skills = data.skills);
       });
+    if(this.flow == "search"){
+      try{
+        // fetching data only in editing mode
+        const demands = this.$apollo.query({
+           query:getDemands,
+         }).data
+         console.log("demands inside editing team",demands)
+      }catch(err){
+        console.log("could not get demands: ",err)
+      }
+    } else if(this.flow == "offer"){
+      // fetching data only in editing mode
+        const demands = this.this.$apollo.query({
+           query:getDemands,
+         }).data
+    }else{
+      // register flow do not fetch demands or supply
+    }
+   
   }
 };
 </script>
