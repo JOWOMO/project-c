@@ -43,19 +43,20 @@
       </div>
     </div>
 
-    <div class="radio">
-      <button>Kacheln</button>
-      <button>Karte</button>
-    </div>
+    <!-- Map / Grid toggle buttons -->
+    <!-- <div class="radio">
+      <button @click="map = false">Kacheln</button>
+      <button @click="map = true">Karte</button>
+    </div> -->
 
     <!-- <div class="matches" v-if="!map">
       <companyCard
         v-for="match in model.demands[0]"
         :key="match.name"
         :company_name="match.name"
-        
-      /> 
-    </div> 
+
+      />
+    </div>
 
     <div class="map" v-else>
       <GmapMap
@@ -118,22 +119,22 @@ export default {
        console.log(this.demands)
      }
    },
-  
+
   async beforeCreate() {
     try{
       // route for demand TODO: need to know demand or supply
       const client = this.$apollo.getClient();
       this.demands = (await this.$apollo.query({query:getDemands})).data.companies[0]
-      this.flow = 'suche' 
+      this.flow = 'suche'
       console.log(this.demands)
 
       // load first matches for first page
   }catch(err){
-       
+
     }
   }
 
-   
+
 };
 </script>
 

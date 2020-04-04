@@ -76,7 +76,19 @@ export default {
     // Doc: https://github.com/microcipcip/cookie-universal/tree/master/packages/cookie-universal-nuxt
     'cookie-universal-nuxt',
     // Doc: https://github.com/nuxt-community/apollo-module
-    '@nuxtjs/apollo'
+    '@nuxtjs/apollo',
+    // Doc: https://github.com/nuxt-community/nuxt-i18n
+    [
+      'nuxt-i18n',
+      {
+        locales: ['de', 'en'],
+        defaultLocale: 'de',
+        vueI18n: {
+          fallbackLocale: 'en',
+          messages: {}
+        }
+      }
+    ]
   ],
 
   env: {

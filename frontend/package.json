@@ -23,6 +23,7 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "nuxt": "^2.0.0",
+    "nuxt-i18n": "^6.8.1",
     "vue-textarea-autosize": "^1.1.1",
     "vue2-google-maps": "^0.10.7",
     "vuelidate": "^0.7.5"
