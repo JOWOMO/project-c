@@ -3,13 +3,26 @@
         <h1>Teams bearbeiten</h1>
         <p>Bearbeite deine Teams oder füge neue hinzu</p>
 
-        <team 
+        <!-- <team 
             ref="save"
             class="team-form"
-            v-for="team in teams"
+            v-for="team in savedTeams.demands"
             :key="team.id"
-            :flow="flow"
-            :id="team.id"
+            flow="search"
+            :edit="true"
+            :id="team.name"
+            :savedTeam="team"
+            editing
+        /> -->
+         <team 
+            ref="save"
+            class="team-form"
+            v-for="team in savedTeams.supplies"
+            :key="team.id + 4"
+            flow="offer"
+            :edit="true"
+            :id="team.name"
+            :savedTeam="team"
             editing
         />
 
@@ -33,6 +46,7 @@
 
 <script>
 import team from '@/components/team-form.vue'
+import getTeams from "@/apollo/queries/teams"
 
 export default {
     components: {
@@ -40,14 +54,18 @@ export default {
     },
     data(){
         return{
-            teams: [{
-                id: 1
-            }]
+            teams: [],
+            savedTeams:{
+
+            }
         }
     },
     methods: {
         save() {
             // TODO: Save to db
+             this.$refs.save.forEach(team=>{
+             team.submit()
+      })
         },
         addTeam() {
             this.teams.push({
@@ -55,8 +73,22 @@ export default {
             })
         }
     },
-    created(){
+    async created(){
         console.log(this.$route)
+        
+      
+        // fetching data only in editing mode
+        const client = this.$apollo.getClient();
+        try{
+            this.savedTeams = (await this.$apollo.query({
+                query:getTeams,
+             })).data.companies[0]
+            console.log("saved teams",this.savedTeams)
+            }catch{
+
+            }
+            
+     
     },
     computed:{
         flow:function(){

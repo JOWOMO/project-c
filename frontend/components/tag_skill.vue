@@ -42,6 +42,10 @@ export default {
   margin: 10px;
   padding: 3px 10px;
 
+  span {
+    user-select: none;
+  }
+
   &:hover {
     background: $uiComponentHighlighted;
   }

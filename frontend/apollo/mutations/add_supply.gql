@@ -1,7 +1,8 @@
-mutation updateSupply($companyId:ID!,$name:String!, $quantity:Int!,$skills:[Int!],$active:Boolean){
+mutation updateSupply($id:ID,$companyId:ID!,$name:String!, $quantity:Int!,$skills:[Int!],$active:Boolean!){
   updateSupply(
     
     supply:{
+      id:$id,
       companyId:$companyId,
       name:$name,
       quantity:$quantity,

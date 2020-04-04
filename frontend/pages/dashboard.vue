@@ -44,12 +44,6 @@
       </div>
     </div>
 
-    <!-- Map / Grid toggle buttons -->
-    <!-- <div class="radio">
-      <button @click="map = false">Kacheln</button>
-      <button @click="map = true">Karte</button>
-    </div> -->
-
     <div class="matches" v-if="flow === 'DemandMatch'">
       <companyCard
         v-for="match in matches"
@@ -78,24 +72,6 @@
         :adress="{street:match.supply.company.street1,city:match.supply.company.city,number:match.supply.company.postalCode}"
       />
     </div>
-
-    <!-- <div class="map" v-else>
-      <GmapMap
-        :center="{lat:10, lng:10}"
-        :zoom="7"
-        map-type-id="terrain"
-        class="map"
-      >
-        <GmapMarker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          :clickable="true"
-          :draggable="true"
-          @click="center=m.position"
-        />
-      </GmapMap>
-    </div>-->
   </div>
 </template>
 

@@ -137,6 +137,7 @@ import getUser from "@/apollo/queries/user";
 import addDemand from "@/apollo/mutations/add_demand";
 import getDemands from "@/apollo/queries/demands";
 
+
 export default {
   name: "team",
  
@@ -161,10 +162,22 @@ export default {
     tag
   },
   props: {
-    id: Number,
+    id: {
+      type: [String, Number],
+      required: false
+    },
     flow: {
       type: String,
-      required: false
+      required: false,
+    },
+    edit:{
+      type:Boolean,
+      required:false,
+      default:false
+    },
+    savedTeam:{
+      type:Object,
+      required:false
     }
   },
   methods: {
@@ -195,8 +208,47 @@ export default {
         this.error = "Das Team benötigt min. 3 Eigentschaften ";
         return;
       }
-
-      if (this.flow === "offer") {
+      console.log("stateeeeee: ",this.flow)
+      console.log(this.active,this.$store.state.user.companies[0].id)
+      
+      if(this.edit){
+         if (this.flow === "offer") {
+        this.$apollo
+          .mutate({
+            mutation: addSupply,
+            variables: {
+              id:this.savedTeam.id,
+              companyId: this.$store.state.user.companies[0].id,
+              name: this.selectedTopic,
+              quantity: parseInt(this.selectedNumber),
+              skills: await this.getTagIds(),
+              descriptionInt:this.extraInfo,
+              active:this.active
+            }
+          })
+          .then(({ data }) => {
+            console.log("db response: ", data);
+          });
+      } else {
+        this.$apollo
+          .mutate({
+            mutation: addDemand,
+            variables: {
+              id:this.savedTeam.id,
+              companyId: this.$store.state.user.companies[0].id,
+              name: this.selectedTopic,
+              quantity: parseInt(this.selectedNumber),
+              skills: await this.getTagIds(),
+              descriptionInt:this.extraInfo,
+              active:this.active
+            }
+          })
+          .then(({ data }) => {
+            console.log("db response: ", data);
+          });
+      }
+      }else{
+        if (this.flow === "offer") {
         this.$apollo
           .mutate({
             mutation: addSupply,
@@ -229,7 +281,8 @@ export default {
             console.log("db response: ", data);
           });
       }
-      this.$router.push("/dashboard")
+      }
+      // this.$router.push("/dashboard")
     },
     hide(active) {
       this.tagCloud = active;
@@ -248,24 +301,9 @@ export default {
       .then(({ data }) => {
         return (this.skills = data.skills);
       });
-    if(this.flow == "search"){
-      try{
-        // fetching data only in editing mode
-        const demands = this.$apollo.query({
-           query:getDemands,
-         }).data
-         console.log("demands inside editing team",demands)
-      }catch(err){
-        console.log("could not get demands: ",err)
-      }
-    } else if(this.flow == "offer"){
-      // fetching data only in editing mode
-        const demands = this.this.$apollo.query({
-           query:getDemands,
-         }).data
-    }else{
-      // register flow do not fetch demands or supply
-    }
+   if(this.edit){
+     this.selectedTags = this.savedTeam.skills
+   }
    
   }
 };
