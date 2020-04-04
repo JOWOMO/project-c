@@ -45,35 +45,42 @@ export default {
   data() {
     return {
       selectedTags: [],
+     
     }
   },
   async created(){
       //prove of concept comparing list
       this.selectedTags = this.selected
-      console.log(this.selectedTags)
+      console.log("selected task",this.selectedTags)
+      console.log("skills",this.skills)
       await this.skills.forEach(async skill=>{
         skill.active = false
         await this.selectedTags.forEach(tag=>{
           if(skill.id == tag.id){
             skill.active = true
+            tag.active = true 
           }
         })
       })
-      console.log("skill: ",this.skills)
+      console.log("after comparision selected tags",this.selectedTags)
+      console.log("skills after comparision",this.skills)
     },
   methods: {
     setActive() {
       this.$emit('changeActive', false)
     },
-    updateTag(active, value) {
+    async updateTag(active, value) {
       console.log(active, value)
-
+      console.log("length: ",value.length)
       if(active == true) {
         this.selectedTags.push(
           value
         )
       } else {
-        const index = this.selectedTags.indexOf(value);
+        console.log('selected Tags, value', value)
+        const index = await this.selectedTags.indexOf(value);
+        console.log("index: ",index)
+        console.log("selectedList: ",this.selectedTags)
         if (index > -1) {
           this.selectedTags.splice(index, 1);
         }
@@ -83,13 +90,13 @@ export default {
       this.$emit('selectedTags', this.selectedTags, false)
     }
   },
-  components: {
+  components: { 
     tag
   },
   props: {
     skills: Array,
     selected:Array,
-    id: [String, Number]
+    id: [String, Number],
   }
 }
 </script>

@@ -140,7 +140,6 @@ import getDemands from "@/apollo/queries/demands";
 
 export default {
   name: "team",
- 
 
   data() {
     return {
@@ -149,7 +148,7 @@ export default {
       twoActive: false,
       tagCloud: false,
       team: 1,
-      selectedTags: [],
+      selectedTags: [{'id':'400','name':'Teilzeit'},{'id':'201','name':'Bla'}],
       extraInfo: "",
       selectedNumber: "Anzahl Mitarbeiter",
       selectedTopic: "Bezeichnung",
@@ -176,7 +175,7 @@ export default {
       default:false
     },
     savedTeam:{
-      type:Object,
+      type:Array,
       required:false
     }
   },
@@ -285,6 +284,9 @@ export default {
       this.tagCloud = active;
     },
     getTags(tags, active) {
+      console.log("deleting tags");
+      console.log(tags)
+      console.log(active)
       this.tagCloud = active;
       this.selectedTags = tags; 
     }
@@ -300,6 +302,7 @@ export default {
       });
    if(this.edit){
      this.selectedTags = this.savedTeam.skills
+     console.log("selected list or Object?: ",this.selectedTags)
    }
    
   }

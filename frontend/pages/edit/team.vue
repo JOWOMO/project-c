@@ -14,26 +14,28 @@
             :savedTeam="team"
             editing
         /> -->
-         <team 
+         <!-- <team 
             ref="save"
             class="team-form"
-            v-for="team in savedTeams.supplies"
+            v-for="(team,index) in savedTeams.supplies"
             :key="team.id + 4"
             flow="offer"
             :edit="true"
-            :id="1"
+            :id="index"
             :savedTeam="team"
             editing
-        />
+          /> -->
           <team 
-      ref="save"
-      class="team-form"
-      v-for="team in teams"
-      :key="team.id"
-      flow="offer"
-      :id="team.id"
-      :savedTeam="[{name:'Teilzeit',id:'201'}]"
-    />
+            ref="save"
+            class="team-form"
+            v-for="team in teams"
+            :key="team.id"
+            flow="offer"
+            :id="team.id"
+            :edit="true"
+            :savedTeam="[{'id':'400','name':'Teilzeit'},{'id':'400','name':'Teilzeit'}]"
+            editing
+          />
 
         <button class="add" @click.prevent="addTeam">
             <div class="circle">
