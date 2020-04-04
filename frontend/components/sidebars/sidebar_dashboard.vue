@@ -6,7 +6,7 @@
      <div v-if="flow == 'suche'">
        <div v-for="(element,index) in data" :key="element.id" class="sidebar-element-wrapper">
           <div @click="changeTeam(element,index)" class="sidebar-element"> 
-              <img v-if="pointer[index].active" src="/icons/arrow-left.svg">
+              <img v-if="pointer[index]" src="/icons/arrow-left.svg">
               <p>{{ element.name }}</p>       
           </div>
        </div>
@@ -27,7 +27,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "sidebar",  
+  name: "sidebar",
   computed: {
     ...mapGetters(["get_sidebar_position"])
   },
@@ -42,9 +42,9 @@ export default {
   },
   data() {
     return {
-     pointer:[
-      {"active":true}
-     ]
+      pointer:[
+        true
+      ]
     }
   },
   created(){
@@ -72,7 +72,7 @@ aside {
   padding: 20px;
   position: fixed;
   left: 0;
-  top: 0;   
+  top: 0;
   .wrapper-content{
     margin-top:50px;
   .sidebar-element-wrapper {
@@ -120,9 +120,9 @@ aside {
     }
   }
 }
-@media only screen and (max-width: 450px){
+@media only screen and (max-width: 550px){
   aside {
-    width: 80vw;
+    width: 100vw;
     z-index: 5;
   }
 }

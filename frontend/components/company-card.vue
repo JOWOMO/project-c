@@ -133,7 +133,7 @@ export default {
     moreLess() {
       return (this.expanded == false) ? 'mehr Anzeigen' : 'weniger Anzeigen'
     }
-    
+
   }
 }
 </script>
@@ -286,7 +286,7 @@ export default {
   }
 }
 
-@media only screen and (max-width: 765px) {
+@media only screen and (max-width: 1150px) {
   .card {
     grid-template-columns: 1fr 0fr;
     grid-template-rows: 1fr 1fr;
@@ -324,5 +324,9 @@ export default {
       width: 100%;
     }
   }
+}
+
+@media only screen and (max-width: 765px) {
+  
 }
 </style>
