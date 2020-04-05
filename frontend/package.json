@@ -20,8 +20,8 @@
     "@nuxtjs/apollo": "^4.0.0-rc19",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/gtm": "^2.2.3",
-    "@types/lodash": "^4.14.149",
     "cookie-universal-nuxt": "^2.1.3",
+    "core-js": "^3.6.4",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "lodash": "^4.17.15",
@@ -35,6 +35,7 @@
     "vuelidate-property-decorators": "^1.0.28"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
     "@graphql-codegen/cli": "^1.13.1",
     "@graphql-codegen/typescript": "^1.13.1",
     "@graphql-codegen/typescript-graphql-files-modules": "^1.13.1",
