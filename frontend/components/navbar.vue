@@ -17,7 +17,7 @@
       </div>
       <div class="dropdown" :class="{expanded: active}">
         <div class="options">
-          <button>Passwort ändern</button>
+          <button @click="new_password">Passwort ändern</button>
           <button class="red" @click="warning = !warning">Benutzer löschen</button>
         </div>
         <button class="blue" @click="logout">Logout</button>
@@ -82,6 +82,9 @@ export default {
     async deleteUser() {
       this.$store.dispatch('auth/delete')
       this.$router.push("/");
+    },
+    async new_password() {
+      // add password reset page
     }
   },
 

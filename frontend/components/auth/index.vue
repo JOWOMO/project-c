@@ -6,6 +6,9 @@
     <div v-if="state == 'register'">
       <register @change-state="handleStateChange" />
     </div>
+    <div v-if="state == 'newPassword'">
+      <newPassword @change-state="handleStateChange" />
+    </div>
     <div v-if="state == 'validate'">
       <validate @change-state="handleStateChange" />
     </div>
@@ -40,7 +43,7 @@ export default {
       if (event === "redirect") {
         console.log("target route",this.target_route)
         if (!this.target_route) {
-        
+
           this.$emit("user-authenticated");
         } else {
           this.$router.push(value || this.target_route || "/");
