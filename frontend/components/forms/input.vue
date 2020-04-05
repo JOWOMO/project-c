@@ -36,29 +36,7 @@
       v-bind:validation="validation"
       v-bind:label="label"
     >
-      <div
-        v-if="validation.required != null && !validation.required"
-        class="field-validation"
-      >{{ label }} is erforderlich.</div>
-
-      <div v-if="validation.required == null || validation.required">
-        <div
-          v-if="validation.email != null && !validation.email"
-          class="field-validation"
-        >{{ label }} ist keine gültige E-Mail Adresse.</div>
-        <div
-          v-if="validation.sameAs != null && !validation.sameAs"
-          class="field-validation"
-        >{{ label }} stimmt nicht überein.</div>
-        <div
-          v-if="validation.between != null && !validation.between"
-          class="field-validation"
-        >{{ label }} muss zwischen {{validation.$params.between.min}} und {{validation.$params.between.max}} sein.</div>
-        <div
-          v-if="validation.minLength != null && !validation.minLength"
-          class="field-validation"
-        >{{ label }} muss mindestens {{validation.$params.minLength.min}} Zeichen lang sein.</div>
-      </div>
+        <validations :label="label" :validation="validation" :submitted="submitted" />
     </slot>
   </div>
 </template>
@@ -75,8 +53,10 @@ import {
   On
 } from "nuxt-property-decorator";
 import { Validation } from "vuelidate";
+import { get } from 'lodash';
+import  validations from "./validations.vue";
 
-@Component
+@Component({components: {validations}})
 export default class extends Vue {
   @Inject("validation")
   validationAccessor!: any;
@@ -125,7 +105,9 @@ export default class extends Vue {
   mounted() {
     // we need to bind to the validation event as
     // injected properties are not reactive
-    this.validation = this.validationAccessor()[this.id] || {};
+    const accessor = this.validationAccessor();
+    this.validation = accessor ? get(accessor, this.id, {}) : {};
+
     this.$parent.$on("validate", this.parentValidate.bind(this));
   }
 

@@ -1,7 +1,7 @@
 query getSkills{
   skills{
     id
-    group
     name
+    group
   }
 }

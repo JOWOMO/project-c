@@ -59,12 +59,6 @@ export default {
   */
   plugins: [
     '@/plugins/vuelidate.js',
-    '@/plugins/vue-textarea-autosize.js',
-    '@/plugins/vue-google-maps.js'
-    // {
-    //   src: '@/plugins/amplify.js',
-    //   mode: 'client'
-    // }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -82,7 +76,21 @@ export default {
     // Doc: https://github.com/microcipcip/cookie-universal/tree/master/packages/cookie-universal-nuxt
     'cookie-universal-nuxt',
     // Doc: https://github.com/nuxt-community/apollo-module
-    '@nuxtjs/apollo'
+    '@nuxtjs/apollo',
+    // Doc: https://github.com/nuxt-community/gtm-module
+    '@nuxtjs/gtm',
+    // Doc: https://github.com/nuxt-community/nuxt-i18n
+    [
+      'nuxt-i18n',
+      {
+        locales: ['de'],
+        defaultLocale: 'de',
+        vueI18n: {
+          fallbackLocale: 'de',
+          messages: {}
+        }
+      }
+    ]
   ],
 
   env: {
@@ -144,8 +152,8 @@ export default {
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
 
         getAuth: async () => {
-            const token = await Vue.prototype.$store.dispatch('auth/token');
-            return token;
+          const token = await Vue.prototype.$store.dispatch('auth/token');
+          return token;
         },
 
         // optional
@@ -165,17 +173,15 @@ export default {
   */
   axios: {
   },
-  /*
-  ** Google tag manager configuration
-  */
   gtm: {
+    // Set to false to disable module in development mode
     dev: true,
 
     id: null,
     layer: 'dataLayer',
     variables: {},
 
-    pageTracking: false,
+    pageTracking: true,
     pageViewEventName: 'nuxtRoute',
 
     autoInit: true,
@@ -196,7 +202,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (ctx.isDev) {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }

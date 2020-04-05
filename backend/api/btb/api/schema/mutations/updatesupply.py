@@ -30,11 +30,13 @@ class UpdateSupply(graphene.Mutation):
     def mutate(root, info, supply):
         current_app.logger.debug("UpdateSupply %s", supply)
 
+        supply.skills 
+
         with db.engine.begin() as conn:
             sql = text(
                 """
 insert into btb.team_supply (id, company_id, is_active, name, description_int, description_ext, quantity, skills, hourly_salary)
-values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :is_active, :name, :description_int, :description_ext, :quantity, :skills, :hourly_salary)
+values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :is_active, :name, :description_int, :description_ext, :quantity, (:skills)::int[], :hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 

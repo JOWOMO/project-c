@@ -17,7 +17,7 @@ class CompanyInput(graphene.InputObjectType):
 
     postal_code = graphene.String(required=True)
     city = graphene.String(required=True)
-    industry = graphene.ID()
+    industry = graphene.ID(required=True)
 
 
 class UpdateCompany(graphene.Mutation):

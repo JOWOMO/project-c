@@ -3,6 +3,15 @@ query getDemands{
     demands{
       id
       name
+      isActive
+      description
+      skills{
+        id 
+        name
+        group
+      }
+      quantity
+      
     }
   }
 }

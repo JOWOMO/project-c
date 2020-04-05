@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import tag from '@/components/tag_skill.vue'
+import tag from '@/components/team/skill.vue'
 export default {
   name: 'companyCard',
   data() {
@@ -125,11 +125,7 @@ export default {
         required: false,
         default:80
     }
-  },
-  created(){
-      console.log("comany-card",this.comapny_name)
-  },
-  
+  },  
   computed: {
     bestMatch() {
       return (this.percentage >= 70) ? true : false
@@ -137,7 +133,7 @@ export default {
     moreLess() {
       return (this.expanded == false) ? 'mehr Anzeigen' : 'weniger Anzeigen'
     }
-    
+
   }
 }
 </script>
@@ -290,7 +286,7 @@ export default {
   }
 }
 
-@media only screen and (max-width: 765px) {
+@media only screen and (max-width: 1150px) {
   .card {
     grid-template-columns: 1fr 0fr;
     grid-template-rows: 1fr 1fr;
@@ -328,5 +324,9 @@ export default {
       width: 100%;
     }
   }
+}
+
+@media only screen and (max-width: 765px) {
+  
 }
 </style>

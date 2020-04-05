@@ -1,5 +1,5 @@
 <template>
-  <auth :start_component="'login'" @user-authenticated="userAuthenticated" />
+  <auth :start_component="'login'" @back="back" @user-authenticated="userAuthenticated" />
 </template>
 
 <script lang="ts">
@@ -23,6 +23,10 @@ export default class extends Vue {
       title: "Login",
       meta: [{ hid: "description", name: "description", content: "" }]
     };
+  }
+
+  back() {
+    this.$router.push("/");
   }
 
   async userAuthenticated() {

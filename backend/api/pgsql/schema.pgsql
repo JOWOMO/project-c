@@ -151,7 +151,7 @@ from
     btb.company_customer cc,
     btb.customer u
 where 
-        co.id =  cc.customer_id 
+        co.id =  cc.company_id 
     and u.id  = cc.customer_id
 ;
 

@@ -17,19 +17,19 @@ declare module '*/add_demand.gql' {
 }
     
 
-declare module '*/add_supply.gql' {
+declare module '*/add_user.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const updateSupply: DocumentNode;
+  export const userAdd: DocumentNode;
 
   export default defaultDocument;
 }
     
 
-declare module '*/add_user.gql' {
+declare module '*/update_supply.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const userAdd: DocumentNode;
+  export const updateSupply: DocumentNode;
 
   export default defaultDocument;
 }
@@ -85,6 +85,24 @@ declare module '*/skills.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
   export const getSkills: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/supply_matches.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const supplyMatches: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/teams.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const getTeams: DocumentNode;
 
   export default defaultDocument;
 }

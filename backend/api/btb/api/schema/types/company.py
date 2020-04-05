@@ -47,7 +47,7 @@ class Demand(ObjectType):
     name = String(required=True)
     description = String(required=False)
 
-    skills = List(NonNull(Skill), required=False)
+    skills = List(NonNull(Skill), required=True)
 
     quantity = Int(required=True)
     max_hourly_salary = Float(required=False)
@@ -66,7 +66,7 @@ class Supply(ObjectType):
     name = String(required=True)
     description = String(required=False)
 
-    skills = List(NonNull(Skill), required=False)
+    skills = List(NonNull(Skill), required=True)
 
     quantity = Int(required=True)
     hourly_salary = Float(required=False)

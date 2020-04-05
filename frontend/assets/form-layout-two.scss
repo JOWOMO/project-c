@@ -10,14 +10,13 @@
   }
 
   .buttons {
-    margin-top: 21px;
+    padding-top: 21px;
+    display: flex;
+    justify-content: space-between;
 
-    display: grid;
-    grid-gap: 24px;
-    grid-auto-flow: column;
-    
     button {
-      width: 100%;
+      max-width: 200px;
+      width: auto;
     }
   }
 
@@ -25,6 +24,9 @@
     display: grid;
     grid-gap: 20px;
     grid-template-columns: repeat(2, 1fr);
+
+    // need to touch this again, 
+    // min-width: 640px;
 
     .form-group {
       grid-column: 1 / span 2;
@@ -50,12 +52,11 @@
     form {
       display: flex;
       flex-direction: column;
-
-      grid-gap: 20px;
       grid-template-columns: 1fr;
   
       .form-group {
         grid-column: auto;
+        padding-bottom: 20px;
       }
   
       .half-width {

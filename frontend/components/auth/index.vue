@@ -41,7 +41,7 @@ export default class Auth extends Vue {
   @Prop({ type: String, required: false, default: "Login" })
   readonly start_component!: String;
 
-  @Prop({ type: Object, required: false }) 
+  @Prop({ type: String, required: false }) 
   readonly target_route!: any;
 
   state: String = this.start_component;
@@ -58,7 +58,7 @@ export default class Auth extends Vue {
         this.$router.push(value || this.target_route as string || "/");
       }
     } else if (event === "back") {
-      this.$router.back();
+        this.$emit("back");
     } else {
       this.state = event;
     }

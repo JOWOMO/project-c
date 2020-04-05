@@ -7,9 +7,9 @@
     <div class="menu">
       <div v-for="(label, index) in labels" :key="label" class="sidebar-element-wrapper">
         <div :class="['sidebar-element', index === selectedElement ? 'selected': '']">
-          <img v-if="index === selectedElement" src="/icons/arrow-left.svg" />
-          <img v-if="index < selectedElement" src="/icons/checkmark.svg" />
+          <img v-if="index === selectedElement" src="/icons/arrow-left.svg" />          
           <p>{{ label }}</p>
+          <img v-if="index < selectedElement" src="/icons/checkmark.svg" />
         </div>
       </div>
     </div>
@@ -39,50 +39,45 @@ export default class Sidebar extends Vue {
   width: 330px;
 
   background: #fff;
-
-  a {
-    z-index: 1000;
-    padding-top: 40px;
-    width: 100%;
-    text-align: center;
-  }
-
-  p {
-    margin-left: 20px;
-    color: #7b7b7b;
-    font-size: 18px;
-    font-weight: normal;
-  }
-
-  .selected p {
-    color: #484848;
-    font-weight: 500;
-  }
-
-  .menu {
-    padding-left: 58px;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: center;
-
-    margin-top: -130px;
-  }
-
-  .sidebar-element {
-    display: flex;
-    flex-direction: row;
-    margin: 10px 0;
-  }
 }
 
-@media only screen and (max-height: 780px) {
-  .register-sidebar {
-    .menu {
-      display: block;
-      height: auto;
-      margin-top: 90px !important;
-    }
+a {
+  z-index: 1000;
+  padding-top: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+p {
+  margin-left: 20px;
+  color: #7b7b7b;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.selected p {
+  color: #484848;
+  font-weight: 500;
+}
+
+.menu {
+  padding-left: 58px;
+  display: flex;
+  flex-direction: column;
+  // height: 100vh;
+  justify-content: center;
+  padding-top: 120px;
+
+  // margin-top: -130px;
+}
+
+.sidebar-element {
+  display: flex;
+  flex-direction: row;
+  margin: 16px 0;
+
+  img {
+    margin: 0 10px;
   }
 }
 </style>

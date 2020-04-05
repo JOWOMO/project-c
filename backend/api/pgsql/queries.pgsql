@@ -38,3 +38,5 @@ from
     btb.company_with_contact
 where   
     owner_id = 1
+
+    

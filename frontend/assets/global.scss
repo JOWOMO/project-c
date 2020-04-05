@@ -64,9 +64,9 @@ button {
   outline: none;
   color: $fontColor;
 
-  &:hover {
-      background: $uiComponentHighlighted;
-  }
+  // &:hover {
+  //     background: $uiComponentHighlighted;
+  // }
 }
 
 a {
@@ -101,6 +101,17 @@ a {
   background-color: transparent;
   border: 1px solid $primary;
   color: $primary;
+
+  &:hover {
+    color: #ffffff;
+    background-color: darken($primary, 10%);
+  }
+}
+
+.third {
+  background-color: white;
+  border: 1px solid $border;
+  color: #484848;
 
   &:hover {
     color: #ffffff;

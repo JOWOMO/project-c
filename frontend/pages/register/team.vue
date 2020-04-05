@@ -1,150 +1,365 @@
 <template>
-<div>
-  <div class="container">
-    <h1>Ich biete</h1>
-    <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
+  <div>
+    <div class="container">
+      <h1>{{ workflow().displayName }}</h1>
+      <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
 
-    <team ref="save"
-      class="team-form"
-      v-for="team in teams"
-      :key="team.id"
-      flow="offer"
-      :id="team.id"
-    />
-
-    <button class="add" @click.prevent="addTeam">
-      <div class="circle">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white"/>
-          <path d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z" fill="white"/>
-        </svg>
+      <div v-for="(team, idx) in supplies" :key="idx">
+        <div class="team-container">
+          <div v-if="!team.expanded" class="edit secondary" @click="toggleVisibilitySupply(idx)">
+            <img src="/icons/edit.svg" />
+          </div>
+          <team
+            class="team-form"
+            v-bind:value="team"
+            @input="updateSupply(idx, $event)"
+            :topics="topics"
+            :skills="skills"
+          />
+        </div>
+        <hr />
       </div>
 
-      <span>Weiteres Team hinzufügen</span>
-    </button>
+      <div v-for="(team, idx) in demands" :key="idx">
+        <div class="team-container">
+          <div v-if="!team.expanded" class="edit secondary" @click="toggleVisibilityDemand(idx)">
+            <img src="/icons/edit.svg" />
+          </div>
+          <team
+            class="team-form"
+            v-bind:value="team"
+            @input="updateDemand(idx, $event)"
+            :topics="topics"
+            :skills="skills"
+          />
+        </div>
+        <hr />
+      </div>
 
-    <div class="buttons">
-      <button @click.prevent="$router.push('/register/company')">Zurück</button>
-      <button class="primary" @click.prevent="save">Registrieren</button>
+      <button class="add" @click.prevent="addTeam">
+        <div class="circle">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white" />
+            <path
+              d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+
+        <span>Weiteres Team hinzufügen</span>
+      </button>
+
+      <div class="buttons">
+        <button class="secondary" @click.prevent="back">Zurück</button>
+        <button class="primary" @click.prevent="save">Abschließen</button>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
-<script>
-import sidebar from "@/components/sidebars/register.vue";
-import team from "@/components/team-form.vue";
-import getUser from "@/apollo/queries/user"
+<script lang="ts">
+import {
+  Inject,
+  Vue,
+  Component,
+  Prop,
+  State,
+  Provide,
+  Emit,
+  Watch
+} from "nuxt-property-decorator";
 
-export default {
-  head() {
-    return {
-      title: "Register - Team",
-      meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        { hid: "description", name: "description", content: "" }
-      ]
-    };
-  },
-  layout: "default",
-  middleware: "authenticated",
-  components: {
-    sidebar,
-    team
-  },
+import team, { TeamDetails } from "@/components/team/index.vue";
+import getTeams from "@/apollo/queries/teams.gql";
 
-  data() {
-    return {
-      isActive: false,
-      valid_skills: false,
+import updateSupply from "@/apollo/mutations/update_supply.gql";
+import updateDemand from "@/apollo/mutations/update_demand.gql";
+
+import {
+  GetTeamsQuery,
+  GetTeamsQueryVariables,
+  Company,
+  Skill,
+  Demand,
+  Supply,
+  UpdateSupplyMutation,
+  UpdateSupplyMutationVariables,
+  UpdateDemandMutation,
+  UpdateDemandMutationVariables
+} from "@/apollo/schema";
+
+import { WorkflowProvider, RegistrationFlow } from "../register.vue";
+
+@Component({
+  components: { team }
+})
+export default class extends Vue {
+  @Inject("workflow") workflow!: WorkflowProvider;
+
+  company!: Pick<Company, "id">;
+
+  demands: TeamDetails[] = [];
+  supplies: TeamDetails[] = [];
+
+  skills: Pick<Skill, "id" | "name">[] = [];
+  topics: any[] = [];
+
+  addTeam() {
+    this.supplies.push({
+      number: ++this.counter,
+      quantity: 0,
       skills: [],
-      resources: [],
-      type: {
-        skill: "skill",
-        resource: "resource"
-      },
-      teams: [
-        {
-          id: 1
-        }
-      ],
-       positions:{
-        profile:{
-          editing:false,
-          passed:true,
-        },
-        company:{
-          editing:false,
-          passed:true,
+      isActive: true,
+      expanded: true
+    });
+  }
 
-        },
-        company: {
-          editing: false,
-          passed: true
-        },
-        team: {
-          editing: true,
-          passed: false
-        }
-      }
-    };
-  },
-  methods: {
-   async save(){
-      this.$refs.save.forEach(team=>{
-        team.submit()
-      })
-    },
-    addTeam() {
-      this.teams.push({
-        id: this.teams.length + 1
-      })
+  toggleVisibilitySupply(idx: number) {
+    this.$set(this.supplies[idx], 'expanded',  true);
+  }
+
+  toggleVisibilityDemand(idx: number) {
+    this.$set(this.demands[idx], 'expanded',  true);
+  }
+
+  updateSupply(idx: number, value: TeamDetails) {
+    console.log("Updating", idx, value);
+
+    // if the user canceled the dialog this way, he canceled a new item
+    if (value.quantity === 0) {
+      this.counter -= 1;
+      this.supplies.splice(idx, 1);
+    } else {
+      this.supplies.splice(idx, 1, value);
     }
-  },
+  }
 
-};
+  updateDemand(idx: number, value: TeamDetails) {
+    console.log("Updating", idx, value);
+
+    // if the user canceled the dialog this way, he canceled a new item
+    if (value.quantity === 0) {
+      this.counter -= 1;
+      this.demands.splice(idx, 1);
+    } else {
+      this.demands.splice(idx, 1, value);
+    }
+  }
+
+  back() {
+    this.$router.push(`/register/company`);
+  }
+
+  async save() {
+    for (const supply of this.supplies.filter(s => s.modified)) {
+      console.log("Saving", supply);
+      await this.$apollo.mutate<
+        UpdateSupplyMutation,
+        UpdateSupplyMutationVariables
+      >({
+        mutation: updateSupply,
+        variables: {
+          companyId: this.company.id,
+          name: supply.name!,
+          quantity: supply.quantity,
+          skills: supply.skills,
+          id: supply.id,
+          active: supply.isActive!,
+          descriptionExt: supply.description
+        }
+      });
+    }
+
+    for (const supply of this.demands.filter(s => s.modified)) {
+      console.log("Saving", supply);
+      await this.$apollo.mutate<
+        UpdateDemandMutation,
+        UpdateDemandMutationVariables
+      >({
+        mutation: updateDemand,
+        variables: {
+          companyId: this.company.id,
+          name: supply.name!,
+          quantity: supply.quantity,
+          skills: supply.skills,
+          id: supply.id,
+          active: supply.isActive!,
+          descriptionExt: supply.description
+        }
+      });
+    }
+
+    this.$router.push(`/welcome`);
+  }
+
+  counter = 0;
+  map(r: Demand | Supply): TeamDetails {
+    return {
+      number: ++this.counter,
+      id: r.id,
+      isActive: r.isActive,
+      name: r.name,
+      quantity: r.quantity,
+      skills: r.skills.map(s => s.id),
+      description: r.description || undefined
+    };
+  }
+
+  async created() {
+    this.workflow().setStage(2);
+
+    this.topics = [
+      "Demand Team 2",
+      "Handwerker",
+      "Verköufer",
+      "Lagerarbeiter",
+      "Krankenpfleger"
+    ].map(e => ({ id: e, name: e }));
+
+    try {
+      const client = this.$apollo.getClient();
+      const result = await this.$apollo.query<
+        GetTeamsQuery,
+        GetTeamsQueryVariables
+      >({
+        query: getTeams
+      });
+
+      const companies = result?.data?.companies;
+      if (!companies || companies.length == 0) {
+        throw new Error("we can't be here.");
+      }
+
+      this.skills = result.data?.skills;
+      this.company = companies[0]!;
+
+      // other code does work for both arrays
+      // by just leaving one unfilled we achieve what we want
+      if (this.workflow().type === RegistrationFlow.demand) {
+        this.counter = 0;
+        //@ts-ignore
+        this.demands = (this.company.demands || []).map(this.map.bind(this));
+      } else {
+        this.counter = 0;
+        //@ts-ignore
+        this.supplies = (this.company.supplies || []).map(this.map.bind(this));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/colors";
 
-
-  .team-form {
-    grid-column: 2;
-    margin: 20px 10px 0 10px;
+.container {
+  h1 {
+    text-align: left;
+    padding-bottom: 14px;
+    margin-top: 50px;
   }
 
-  .add {
-    grid-column: 2;
+  p {
+    padding-bottom: 75px;
+    color: #7b7b7b;
+  }
+
+  .buttons {
+    padding-top: 21px;
     display: flex;
-    align-items: center;
-    width: auto;
-    background: none;
-    cursor: pointer;
+    justify-content: space-between;
 
-    .circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #25A6DA;
-
-      svg {
-        margin-top: 13px;
-      }
+    button {
+      max-width: 200px;
+      width: auto;
     }
 
-    span {
-      color: #25A6DA;
-      font-weight: bold;
-      margin-left: 10px;
-      display: inline-block;
+    margin-bottom: 50px;
+    margin-top: 50px;
+  }
+
+  hr {
+    margin-top: 30px; // 20px coming from tags
+    margin-bottom: 30px;
+
+    border-top: 1px solid $border;
+  }
+
+  width: 640px;
+  height: 100vh;
+}
+
+.team-container {
+  position: relative;
+
+  .edit {
+    position: absolute;
+    left: 0;
+
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+
+    background-color: white;
+    border: 1px solid $border;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: translateX(-88px);
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.add {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  width: auto;
+  background: none;
+  cursor: pointer;
+
+  .circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #25a6da;
+
+    svg {
+      margin-top: 13px;
     }
   }
 
-
-@media only screen and (max-width: 950px) {
-    .team-form {
-      width: 100%;
-      margin: 30px 0 0 0;
-    }
+  span {
+    color: #25a6da;
+    font-weight: 500;
+    margin-left: 44px;
+    display: inline-block;
+  }
 }
+
+// @media only screen and (max-width: 950px) {
+//   .team-form {
+//     width: 100%;
+//     margin: 30px 0 0 0;
+//   }
+
+//   // .buttons {
+//   //   justify-self: center !important;
+//   // }
+// }
 </style>

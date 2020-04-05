@@ -105,15 +105,15 @@ nav {
   }
 }
 
-@media only screen and (max-width: 765px) {
-  .logo {
-    display: none;
-  }
+// @media only screen and (max-width: 765px) {
+//   .logo {
+//     display: none;
+//   }
 
-  .profile {
-    span {
-      display: none;
-    }
-  }
-}
+//   .profile {
+//     span {
+//       display: none;
+//     }
+//   }
+// }
 </style>

@@ -5,10 +5,11 @@
         <p>{{ error }}</p>
     </div>
 </template>
+
 <script>
-  export default {
-    props: ['error'],
-  }
+export default {
+  props: ['error'],
+}
 </script>
 <style lang="scss" scoped>
 .container {

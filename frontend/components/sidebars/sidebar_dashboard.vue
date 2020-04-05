@@ -1,18 +1,31 @@
 <template>
   <aside class="register-sidebar">
-    <nuxt-link to="/"><img src="/images/logo.svg"></nuxt-link>
-    <p>Ich {{ flow }}</p>
-     <div v-if="flow == 'suche'">
-     <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
-      <div class="sidebar-element"> 
-          <p>{{ element.name }}</p>
-        <!-- <img v-if="label.state.editing" src="/icons/arrow-left.svg">
-        <img v-if="label.state.passed" src="/icons/checkmark.svg"> -->
-       
-      </div>
+    <nuxt-link to="/" class="logo"><img src="/images/logo.svg"></nuxt-link>
+    <div class="wrapper-content">
+    <p>Ich {{ flow }}</p> <!-- TODO: add team edit page -->
+     <!-- <div v-if="flow == 'suche'"> -->
+       <div v-for="(element,index) in demand" :key="element.id" class="sidebar-element-wrapper">
+          <div @click="changeTeam(element,index)" class="sidebar-element"> 
+              <img v-if="pointerDemands[index]" src="/icons/arrow-left.svg">
+              <p>{{ element.name }}</p>       
+          </div>
+       </div>
+        <div v-for="(element,index) in supply" :key="element.name" class="sidebar-element-wrapper">
+          <div @click="changeTeam(element,index)" class="sidebar-element"> 
+              <img v-if="pointerSupplies[index]" src="/icons/arrow-left.svg">
+              <p>{{ element.name }}</p>       
+          </div>
+       </div>
      </div>
-
-    </div>
+     <!-- <div v-else >
+       <div v-for="element in data" :key="element.id" class="sidebar-element-wrapper">
+        <div class="sidebar-element"> 
+          <p>{{ element.name }}</p>       
+        </div>-->
+      <!-- </div>  -->
+    <!-- </div> -->
+    <nuxt-link to="/edit/team?flow=search">Teams verwalten</nuxt-link>
+    <!-- </div> -->
   </aside>
 </template>
 
@@ -20,7 +33,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "sidebar",  
+  name: "sidebar",
   computed: {
     ...mapGetters(["get_sidebar_position"])
   },
@@ -30,14 +43,35 @@ export default {
     }
   },
   props:{
-   data:Array,
+   demand:Array,
+   supply:Array,
    flow:String
   },
   data() {
     return {
-      searcOffer: 'suche'
+     pointerDemands:[
+       true
+     ],
+     pointerSupplies:[]
+    }
+  },
+  updated() {
+    console.log('demand/supply', this.demand, this.supply)
+  },
+  methods:{
+    changeTeam(team,index){
+      this.pointerDemands = []
+      this.pointerSupplies = []
+      console.log("type:",team.__typename)
+      if(team.__typename == "Demand"){
+        this.pointerDemands[index] = {active:true}
+      }else{
+        this.pointerSupplies[index] = {active:true}
+      }
+      this.$emit("handel-state",team,index)
     }
   }
+
 };
 </script>
 
@@ -54,15 +88,22 @@ aside {
   top: 0;
 
   .sidebar-element-wrapper {
-    position: relative;
-    top: 10%;
-    transform: translate(0, -50%);
+    cursor: pointer;
+  }
 
+  .wrapper-content{
+    margin-top:50px;
+  .sidebar-element-wrapper {
+    position: relative;
+    transform: translate(5%, -50%);
+   
     .sidebar-element {
       display: flex;
       flex-direction: row;
+    img{
+      margin-right:10px;
+    }
       margin: 20px 0;
-
       .circle {
         width: 30px;
         height: 30px;
@@ -82,11 +123,25 @@ aside {
 
     }
   }
+  }
 }
 
-@media only screen and (max-width: 950px){
+@media only screen and (max-width: 1150px){
   aside {
-    display: none;
+    width: 40vw;
+    z-index: 5;
+
+    .logo {
+      img {
+        width: 80%;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 550px){
+  aside {
+    width: 100vw;
+    z-index: 5;
   }
 }
 </style>

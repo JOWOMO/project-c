@@ -4,6 +4,7 @@ mutation addCompany(
   $addressLine1:String!,
   $postalCode:String!,
   $city:String!
+  $industry: ID!
 ){
   updateCompany(
     company:{
@@ -11,7 +12,8 @@ mutation addCompany(
       name:$name,
       addressLine1:$addressLine1,
       postalCode:$postalCode,
-      city:$city
+      city:$city,
+      industry: $industry
     }
   ){
     id

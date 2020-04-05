@@ -1,29 +1,28 @@
 <template>
-    <auth 
-        v-bind:start_component="'register'" 
-        v-bind:target_route="'/register/company'"
-    />
+  <auth v-bind:start_component="'register'" v-bind:target_route="'/register/company'" @back="back" />
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'nuxt-class-component';
-import { Inject } from 'nuxt-property-decorator'
+import { Vue, Component, Inject } from "nuxt-property-decorator";
 
 import auth from "@/components/auth/index.vue";
+import { WorkflowProvider } from "../register.vue";
 
 @Component({
   components: {
     auth
-  },
-  inject: ['setState'],
+  }
 })
 export default class extends Vue {
-    @Inject('setState') setState!: (num: number) => void;
+  @Inject("workflow") workflow!: WorkflowProvider;
 
-    created() {
-        this.setState(0);
-    }
+  back() {
+    this.$router.push("/");
+  }
+
+  created() {
+    this.workflow().setStage(0);
+  }
 }
 </script>
 

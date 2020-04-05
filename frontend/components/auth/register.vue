@@ -17,12 +17,7 @@
       </div>
 
       <div v-if="!userExists" class="form-group half-width">
-        <formInput 
-          :id="'password'" 
-          :label="'Passwort'" 
-          v-model="password" 
-          :type="'password'" 
-        />
+        <formInput :id="'password'" :label="'Passwort'" v-model="password" :type="'password'" />
       </div>
 
       <div v-if="!userExists" class="form-group half-width right">
@@ -34,33 +29,23 @@
         />
       </div>
 
-      <div v-if="!userExists" class="form-group agb">
-        <div class="wrapper-checkbox">
-          <formInput
-            :id="'agb'"
-            :label="'Bitte akzeptiere unsere AGB'"
-            v-model="agb"
-            :type="'checkbox'"
-          >
-            <template v-slot:label>
-              Bitte Akzeptiere unsere
-              <nuxt-link to="/agb">AGB</nuxt-link>um fortzufahren
-            </template>
-          </formInput>
-        </div>
-      </div>
-
-      <!-- <div class="form-group profile-pic">
-        <input type="file" />
-      </div> -->
-
-      <span id="error">{{ error }}</span>
-
-      <div class="buttons">
-        <button class="secondary" @click.prevent="back">Zurück</button>
-        <button class="primary">Weiter</button>
+      <div v-if="!userExists" class="form-group">
+        <formCheckbox :id="'agb'" :label="'Bitte akzeptiere unsere AGB'" v-model="agb">
+          <template>
+            Bitte Akzeptiere unsere
+              <nuxt-link to="/agb">AGB</nuxt-link>
+            um fortzufahren
+          </template>
+        </formCheckbox>
       </div>
     </form>
+
+    <span id="error">{{ error }}</span>
+
+    <div class="buttons">
+      <button class="secondary" @click.prevent="back">Zurück</button>
+      <button class="primary" @click.prevent="register">Weiter</button>
+    </div>
   </div>
 </template>
 
@@ -79,9 +64,10 @@ import { UserAddMutation, UserAddMutationVariables } from "@/apollo/schema";
 import addUser from "@/apollo/mutations/add_user.gql";
 
 import formInput from "@/components/forms/input.vue";
+import formCheckbox from "@/components/forms/checkbox.vue";
 
 @Component({
-  components: { formInput }
+  components: { formInput, formCheckbox }
 })
 export default class extends Vue {
   userExists = false;
@@ -97,7 +83,9 @@ export default class extends Vue {
   authenticatedUser?: CognitoUser;
 
   @Provide("validation")
-  validation() { return this.$v; }
+  validation() {
+    return this.$v;
+  }
 
   error = "";
 
@@ -119,7 +107,7 @@ export default class extends Vue {
       firstName: { required },
       lastName: { required },
       email: { required, email },
-      
+
       password: { required, minLength: minLength(6) },
       confirmpwd: { sameAs: sameAs("password") },
 
@@ -128,7 +116,7 @@ export default class extends Vue {
   }
 
   async created() {
-    console.log('created');
+    console.log("created");
 
     if (this.authenticatedUser) {
       const result = await this.$apollo.query<RegistrationUserQuery>({
@@ -205,6 +193,7 @@ export default class extends Vue {
     this.$emit("validate");
 
     if (this.$v.$invalid) {
+      console.debug('invalid form', this.$v);
       return;
     }
 
@@ -218,5 +207,5 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  @import '@/assets/form-layout-two';
+@import "@/assets/form-layout-two";
 </style>

@@ -4,21 +4,13 @@
       <h1>Dein Unternehmen</h1>
       <p>Erzähle uns mehr über dein Unternehmen</p>
 
-      <form method="POST" @submit.prevent="updateCompany" novalidate>
+      <form method="POST" novalidate>
         <div class="form-group half-width">
           <formInput :id="'name'" :label="'Name'" v-model="name" />
         </div>
 
-        <div class="form-group half-width right" id="dropdown">
-          <select v-model="industry">
-            <option
-              name="industry"
-              v-for="ind in industries"
-              :key="ind.id"
-              :value="ind.id"
-            >{{ind.name}}</option>
-          </select>
-          <label for="industry">Industrie</label>
+        <div class="form-group half-width right">
+          <formSelect :id="industry" :label="'Industrie'" :values="industries" v-model="industry" />
         </div>
 
         <div class="form-group">
@@ -34,12 +26,12 @@
         </div>
 
         <span id="error">{{ error }}</span>
+      </form>
 
         <div class="buttons">
           <button class="secondary" @click.prevent="back">Zurück</button>
-          <button class="primary">Weiter</button>
+          <button class="primary" @click.prevent="updateCompany">Weiter</button>
         </div>
-      </form>
     </div>
   </div>
 </template>
@@ -69,14 +61,17 @@ import addCompany from "@/apollo/mutations/add_company.gql";
 import userQuery from "@/apollo/queries/registration/company.gql";
 
 import formInput from "@/components/forms/input.vue";
+import formSelect from "@/components/forms/select.vue";
+import { WorkflowProvider } from "../register.vue";
 
 @Component({
   components: {
-    formInput
+    formInput,
+    formSelect
   }
 })
 export default class extends Vue {
-  @Inject("setState") setState!: (num: number) => void;
+  @Inject("workflow") workflow!: WorkflowProvider;
 
   industries?: { id: string; name: string }[] = [];
   error = "";
@@ -104,11 +99,15 @@ export default class extends Vue {
   city?: string | null | undefined = "";
 
   async created() {
-    this.setState(1);
+    this.workflow().setStage(1);
 
     const result = await this.$apollo.query<RegistrationCompanyQuery>({
       query: userQuery
     });
+
+    if (result.data && result.data.industries) {
+      this.industries = result.data.industries;
+    }
 
     if (result.data && result.data.me) {
       const me = result.data.me;
@@ -125,14 +124,10 @@ export default class extends Vue {
         this.industry = company.industry?.id;
       }
     }
-
-    if (result.data && result.data.industries) {
-      this.industries = result.data.industries;
-    }
   }
 
   back() {
-    this.$router.back();
+    this.$router.push(`/register`);
   }
 
   async updateCompany() {
@@ -145,6 +140,7 @@ export default class extends Vue {
 
     try {
       const client = this.$apollo.getClient();
+
       await this.$apollo.mutate<
         AddCompanyMutation,
         AddCompanyMutationVariables
@@ -155,7 +151,8 @@ export default class extends Vue {
           name: this.name!,
           addressLine1: this.address!,
           postalCode: this.postalcode!,
-          city: this.city!
+          city: this.city!,
+          industry: this.industry!
         }
       });
 

@@ -40,7 +40,7 @@ export type CompanyInput = {
   addressLine3?: Maybe<Scalars['String']>;
   postalCode: Scalars['String'];
   city: Scalars['String'];
-  industry?: Maybe<Scalars['ID']>;
+  industry: Scalars['ID'];
 };
 
 export type CursorInput = {
@@ -53,7 +53,7 @@ export type Demand = {
   isActive: Scalars['Boolean'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  skills?: Maybe<Array<Skill>>;
+  skills: Array<Skill>;
   quantity: Scalars['Int'];
   maxHourlySalary?: Maybe<Scalars['Float']>;
   company: Company;
@@ -226,7 +226,7 @@ export type Supply = {
   isActive: Scalars['Boolean'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  skills?: Maybe<Array<Skill>>;
+  skills: Array<Skill>;
   quantity: Scalars['Int'];
   hourlySalary?: Maybe<Scalars['Float']>;
   company: Company;
@@ -275,6 +275,7 @@ export type AddCompanyMutationVariables = {
   addressLine1: Scalars['String'];
   postalCode: Scalars['String'];
   city: Scalars['String'];
+  industry: Scalars['ID'];
 };
 
 
@@ -287,12 +288,14 @@ export type AddCompanyMutation = (
 );
 
 export type UpdateDemandMutationVariables = {
+  id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];
   name: Scalars['String'];
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Scalars['ID']>>;
-  descriptionInt: Scalars['String'];
+  descriptionInt?: Maybe<Scalars['String']>;
   descriptionExt?: Maybe<Scalars['String']>;
+  active: Scalars['Boolean'];
 };
 
 
@@ -301,26 +304,10 @@ export type UpdateDemandMutation = (
   & { updateDemand?: Maybe<(
     { __typename?: 'Demand' }
     & Pick<Demand, 'id' | 'name'>
-    & { skills?: Maybe<Array<(
+    & { skills: Array<(
       { __typename?: 'Skill' }
       & Pick<Skill, 'id' | 'name' | 'group'>
-    )>> }
-  )> }
-);
-
-export type UpdateSupplyMutationVariables = {
-  companyId: Scalars['ID'];
-  name: Scalars['String'];
-  quantity: Scalars['Int'];
-  skills?: Maybe<Array<Scalars['ID']>>;
-};
-
-
-export type UpdateSupplyMutation = (
-  { __typename?: 'Mutation' }
-  & { updateSupply?: Maybe<(
-    { __typename?: 'Supply' }
-    & Pick<Supply, 'id' | 'name'>
+    )> }
   )> }
 );
 
@@ -334,6 +321,26 @@ export type UserAddMutationVariables = {
 export type UserAddMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'updateUser'>
+);
+
+export type UpdateSupplyMutationVariables = {
+  id?: Maybe<Scalars['ID']>;
+  companyId: Scalars['ID'];
+  name: Scalars['String'];
+  quantity: Scalars['Int'];
+  skills?: Maybe<Array<Scalars['ID']>>;
+  active: Scalars['Boolean'];
+  descriptionInt?: Maybe<Scalars['String']>;
+  descriptionExt?: Maybe<Scalars['String']>;
+};
+
+
+export type UpdateSupplyMutation = (
+  { __typename?: 'Mutation' }
+  & { updateSupply?: Maybe<(
+    { __typename?: 'Supply' }
+    & Pick<Supply, 'id' | 'name'>
+  )> }
 );
 
 export type Check_StateQueryVariables = {};
@@ -372,10 +379,10 @@ export type DemandMatchesQuery = (
       & { demand: (
         { __typename?: 'Demand' }
         & Pick<Demand, 'id' | 'name' | 'description' | 'quantity' | 'maxHourlySalary'>
-        & { skills?: Maybe<Array<(
+        & { skills: Array<(
           { __typename?: 'Skill' }
           & Pick<Skill, 'id' | 'name' | 'group'>
-        )>>, company: (
+        )>, company: (
           { __typename?: 'Company' }
           & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
         ) }
@@ -393,7 +400,11 @@ export type GetDemandsQuery = (
     { __typename?: 'Company' }
     & { demands?: Maybe<Array<(
       { __typename?: 'Demand' }
-      & Pick<Demand, 'id' | 'name'>
+      & Pick<Demand, 'id' | 'name' | 'isActive' | 'description' | 'quantity'>
+      & { skills: Array<(
+        { __typename?: 'Skill' }
+        & Pick<Skill, 'id' | 'name' | 'group'>
+      )> }
     )>> }
   )>> }
 );
@@ -438,8 +449,64 @@ export type GetSkillsQuery = (
   { __typename?: 'Query' }
   & { skills: Array<(
     { __typename?: 'Skill' }
-    & Pick<Skill, 'id' | 'group' | 'name'>
+    & Pick<Skill, 'id' | 'name' | 'group'>
   )> }
+);
+
+export type SupplyMatchesQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type SupplyMatchesQuery = (
+  { __typename?: 'Query' }
+  & { matchSupply: (
+    { __typename?: 'MatchSupplyResult' }
+    & { matches: Array<(
+      { __typename?: 'SupplyMatch' }
+      & Pick<SupplyMatch, 'distance' | 'percentage'>
+      & { supply: (
+        { __typename?: 'Supply' }
+        & Pick<Supply, 'id' | 'name' | 'description' | 'quantity'>
+        & { skills: Array<(
+          { __typename?: 'Skill' }
+          & Pick<Skill, 'id' | 'name' | 'group'>
+        )>, company: (
+          { __typename?: 'Company' }
+          & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
+        ) }
+      ) }
+    )> }
+  ) }
+);
+
+export type GetTeamsQueryVariables = {};
+
+
+export type GetTeamsQuery = (
+  { __typename?: 'Query' }
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & Pick<Skill, 'id' | 'name'>
+  )>, companies?: Maybe<Array<(
+    { __typename?: 'Company' }
+    & Pick<Company, 'id'>
+    & { demands?: Maybe<Array<(
+      { __typename?: 'Demand' }
+      & Pick<Demand, 'id' | 'name' | 'isActive' | 'description' | 'quantity'>
+      & { skills: Array<(
+        { __typename?: 'Skill' }
+        & Pick<Skill, 'id'>
+      )> }
+    )>>, supplies?: Maybe<Array<(
+      { __typename?: 'Supply' }
+      & Pick<Supply, 'id' | 'name' | 'isActive' | 'description' | 'quantity'>
+      & { skills: Array<(
+        { __typename?: 'Skill' }
+        & Pick<Skill, 'id'>
+      )> }
+    )>> }
+  )>> }
 );
 
 export type UserQueryVariables = {};
