@@ -1,10 +1,10 @@
 export default async function ({
-    store, redirect, route
+  store, redirect, route
 }) {
-    try {
-        console.info('loading user');
-        await store.dispatch('auth/load');
-    } catch (e) {
-        console.error('failed to load', e);
-    }
+  try {
+    console.info('loading user');
+    await store.dispatch('auth/load');
+  } catch (e) {
+    console.error('failed to load', e);
+  }
 }

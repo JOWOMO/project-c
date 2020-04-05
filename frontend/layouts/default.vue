@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar></Navbar>
+    <Navbar />
     <nuxt v-if="state"/>
     <loading v-else></loading>
     <Cookie />
@@ -18,35 +18,12 @@ export default {
     Cookie,
     loading
   },
-
+  // Dispatch loadUser in vuex store
   middleware: ['loaduser'],
-
   data(){
     return{
-      // Cookie:true,
       state:true
     }
-  },
-
-  // async beforeCreate(){
-  //   const cookie = this.$cookies.get('accepted Cookies')
-  //   this.Cookie = cookie;
-
-  //   const user = await this.$store.dispatch('auth/load')
-  //   // console.log(this.$store.state.auth.isAuthenticated)
-  //   // if(!this.$store.state.auth.isAuthenticated){
-  //   //   this.$store.commit('save_route',this.$router.history.current.path)
-  //   //   this.$router.push("/login")
-  //   // }else{
-  //     this.state = true;
-  //   // }
-  // },
-
-  // computed:{
-  //   onload(){
-  //     console.log("loggin in")
-  //     this.$store.dispatch('auth/load')
-  //   }
-  // }
+  }
 }
 </script>
