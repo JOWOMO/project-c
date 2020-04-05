@@ -49,27 +49,32 @@ export default {
   },
  
   mounted() {
-    // Compare the selected tags with all available tags
-   
-    this.compareList(this.skills, this.selected)  
+      // Compare the selected tags with all available tags
+      this.newskills = []
+      this.compareList(this.skills, this.selected)  
   },
   methods: {
 
    async compareList(skills, selected){
-
-     await this.skills.forEach(async skill=>{
-
-        for(var tag = 0; tag < selected.length; tag++){
-          if(skill.id === selected[tag].id){
-            skill.active = true
-            this.selectedTags.push(skill)
-            break;
-          }else{
-            skill.active = false
+        this.newskills = []
+        await this.skills.forEach(async skill=>{
+        skill.active = false
+        if(selected != null){ 
+          for(var tag = 0; tag < selected.length; tag++){
+            if(skill.id === selected[tag].id){
+              skill.active = true
+              this.selectedTags.push(skill)
+              break;
+            }else{
+              skill.active = false
+            }
           }
+        }else{
+          skill.active = false
         }
         this.newskills.push(skill)
     })
+
     
       
     },
