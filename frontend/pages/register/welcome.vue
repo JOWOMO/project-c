@@ -18,7 +18,15 @@
 
 <script>
 export default {
-
+  head() {
+    return {
+      title: "Willkommen bei Bee2Bee",
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        { hid: "description", name: "description", content: "Schön dich an Board zu haben. Gehe auf das Dashboard um dir deine Matches anzuzeigen" }
+      ]
+    };
+  },
 }
 </script>
 

@@ -85,8 +85,8 @@ import supplyMatches from "@/apollo/queries/supply_matches"
 export default {
   head() {
     return {
-      title: "Dein Dashboard",
-      meta: [{ hid: "description", name: "description", content: "" }]
+      title: "Dashboard",
+      meta: [{ hid: "description", name: "description", content: "Auf dem Dashboard siehst du deine Matches und kannst deine Teams bearbeiten." }]
     };
   },
   middleware: "authenticated",
@@ -134,7 +134,7 @@ export default {
         this.flow = "SupplyMatch"
       console.log("matches: ",this.matches)
       }
-      // closing sidebar for mobile when selecting the team      
+      // closing sidebar for mobile when selecting the team
       this.sidebar = false
     },
     selected_distance(number) {

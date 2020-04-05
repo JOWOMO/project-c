@@ -1,101 +1,119 @@
 <template>
-    <div class="container">
-        <h1>Teams bearbeiten</h1>
-        <p>Bearbeite deine Teams oder füge neue hinzu</p>
+  <div class="container">
+    <h1>Teams bearbeiten</h1>
+    <p>Bearbeite deine Teams oder füge neue hinzu</p>
 
-        <team 
-            ref="save"
-            class="team-form"
-            v-for="team in savedTeams.demands"
-            :key="team.id"
-            flow="search"
-            :edit="true"
-            :id="team.name"
-            :savedTeam="team"
-            editing
-        />
-         <team 
-            ref="save"
-            class="team-form"
-            v-for="team in savedTeams.supplies"
-            :key="team.id + 4"
-            flow="offer"
-            :edit="true"
-            :id="team.name"
-            :savedSkills="team.skills"
-            editing
+    <team
+      ref="save"
+      class="team-form"
+      v-for="team in savedTeams.demands"
+      :key="team.id"
+      flow="search"
+      :edit="true"
+      :id="team.name"
+      :savedTeam="team"
+      editing
+    />
+    <team
+      ref="save"
+      class="team-form"
+      v-for="team in savedTeams.supplies"
+      :key="team.id + 4"
+      flow="offer"
+      :edit="true"
+      :id="team.name"
+      :savedSkills="team.skills"
+      editing
+    />
+
+    <button class="add" @click.prevent="addTeam">
+      <div class="circle">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white" />
+          <path
+            d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z"
+            fill="white"
           />
+        </svg>
+      </div>
 
-        <button class="add" @click.prevent="addTeam">
-            <div class="circle">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white"/>
-                <path d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z" fill="white"/>
-                </svg>
-            </div>
+      <span>Weiteres Team hinzufügen</span>
+    </button>
 
-            <span>Weiteres Team hinzufügen</span>
-        </button>
-
-        <div class="form-group buttons">
-            <button @click.prevent="$router.push('/dashboard')">Zurück</button>
-            <button class="primary" @click.prevent="save">Speichern</button>
-        </div>
+    <div class="form-group buttons">
+      <button @click.prevent="$router.push('/dashboard')">Zurück</button>
+      <button class="primary" @click.prevent="save">Speichern</button>
     </div>
+  </div>
 </template>
 
 <script>
-import team from '@/components/team-form.vue'
-import getTeams from "@/apollo/queries/teams"
+import team from "@/components/team-form.vue";
+import getTeams from "@/apollo/queries/teams";
 
 export default {
-    components: {
-        team
-    },
-    data(){
-        return{
-            teams: [{id:1}],
-            savedTeams: [{
-                
-            }]
+  head() {
+    return {
+      title: "Bearbeiten - Team",
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "Wir sind Bee2Bee, eine Plattform, die in der Zeit der Corona-Kriese Unternehmen hilft ihre Arbeiter nicht in Kurzarbeit schicken zu müssen."
         }
+      ]
+    };
+  },
+  components: {
+    team
+  },
+  data() {
+    return {
+      teams: [{ id: 1 }],
+      savedTeams: [{}]
+    };
+  },
+  methods: {
+    save() {
+      // TODO: Save to db
+      this.$refs.save.forEach(team => {
+        team.submit();
+      });
     },
-    methods: {
-        save() {
-            // TODO: Save to db
-             this.$refs.save.forEach(team=>{
-             team.submit()
-      })
-        },
-        addTeam() {
-            this.teams.push({
-                id: this.teams.length + 1
-            })
-        }
-    },
-    async created(){
-        console.log(this.$route)
-        
-      
-        // fetching data only in editing mode
-        const client = this.$apollo.getClient();
-        try{
-            this.savedTeams = (await this.$apollo.query({
-                query:getTeams,
-             })).data.companies[0]
-            console.log("saved teams",this.savedTeams)
-            }catch{
+    addTeam() {
+      this.teams.push({
+        id: this.teams.length + 1
+      });
+    }
+  },
+  async created() {
+    console.log(this.$route);
 
-            }
-            
-     
-    },
-    computed:{
-        flow:function(){
-            return this.$route.query.flow
-        }
-    },
-}
+    // fetching data only in editing mode
+    const client = this.$apollo.getClient();
+    try {
+      this.savedTeams = (
+        await this.$apollo.query({
+          query: getTeams
+        })
+      ).data.companies[0];
+      console.log("saved teams", this.savedTeams);
+    } catch {}
+  },
+  computed: {
+    flow: function() {
+      return this.$route.query.flow;
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -139,7 +157,7 @@ export default {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: #25A6DA;
+      background: #25a6da;
 
       svg {
         margin-top: 13px;
@@ -147,7 +165,7 @@ export default {
     }
 
     span {
-      color: #25A6DA;
+      color: #25a6da;
       font-weight: bold;
       margin-left: 10px;
       display: inline-block;
@@ -167,7 +185,8 @@ export default {
     width: 100vw;
     padding: 50px 20px;
 
-    p, h1 {
+    p,
+    h1 {
       width: 100%;
       text-align: center;
       margin: 0;

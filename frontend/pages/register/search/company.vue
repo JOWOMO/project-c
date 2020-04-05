@@ -13,10 +13,10 @@ import Company from "@/components/company-form.vue";
 export default {
   head() {
     return {
-      title: "Register - Company",
+      title: "Registrieren - Firma",
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        { hid: "description", name: "description", content: "" }
+        { hid: "description", name: "description", content: "Bitte gib uns Informationen über deine Firma." }
       ]
     };
   },

@@ -1,4 +1,4 @@
-
+import { CognitoUser } from "amazon-cognito-identity-js";
 import Auth from '@aws-amplify/auth'
 
 Auth.configure({
@@ -50,7 +50,7 @@ export const actions = {
     }
   },
 
-  // we preserve the login information to be able to 
+  // we preserve the login information to be able to
   // continue the registration without additional details
   async register({ commit }, { email, password, firstName, lastName }) {
     const user = await Auth.signUp({
@@ -118,4 +118,20 @@ export const actions = {
     await Auth.signOut();
     commit('set', null);
   },
+
+  // https://github.com/aws-amplify/amplify-js/issues/469
+  async delete({commit}) {
+    Auth
+      .currentAuthenticatedUser()
+      .then((user) => new Promise((resolve, reject) => {
+        user.deleteUser(error => {
+          if (error) {
+            return reject (error);
+          }
+          resolve()
+          commit('set', null)
+        });
+      }))
+      .catch(e => console.error(e))
+  }
 }

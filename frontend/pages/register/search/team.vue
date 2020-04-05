@@ -4,7 +4,7 @@
 
     <h1>Ich suche</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
- 
+
     <team ref="save"
       class="team-form"
       v-for="team in teams"
@@ -12,7 +12,7 @@
       flow="offer"
       :id="team.id"
     />
- 
+
     <button class="add" @click.prevent="addTeam">
       <div class="circle">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -38,10 +38,10 @@ import team from '@/components/team-form.vue'
 export default {
   head() {
     return {
-      title: "Register - Team",
+      title: "Registrieren - Team",
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        { hid: "description", name: "description", content: "" }
+        { hid: "description", name: "description", content: "Bitte gib uns Informationen über dein Team." }
       ]
     };
   },
@@ -84,7 +84,7 @@ export default {
     }
 
   },
-  
+
   methods: {
    async save(){
       this.$refs.save.forEach(team=>{

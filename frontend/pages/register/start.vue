@@ -22,11 +22,10 @@ export default {
       title: "Registrieren",
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        { hid: "description", name: "description", content: "" }
+        { hid: "description", name: "description", content: "Um diese Plattform nutzen zu können musst du dich anmelden. Du kannst deine Teams hinzufügen und an andere Ausleihen oder selbst nach Aushilfe suchen." }
       ]
     };
   },
-
   created() {
     this.target_route = this.$route.query.flow === 'demand'
         ? '/register/search/company'

@@ -63,7 +63,7 @@ export default {
           hid: "description",
           name: "description",
           content:
-            "Wir bieten eine Plattform für kleine / mittelständige Unternehmen Mittarbeier vor der Kurzarbeit zu bewahren. Unternehmen können Mitarbeiter an andrere zum gleichen Lohn ausleihen. Eventuelle Unterschiede zahlt das Arbeitsamt."
+            "Wir bieten eine Plattform für kleine / mittelständige Unternehmen um Mittarbeier vor der Kurzarbeit zu bewahren. Unternehmen können Mitarbeiter an andrere zum gleichen Lohn ausleihen. Eventuelle Unterschiede im Lohn zahlt das Arbeitsamt."
         }
       ]
     };

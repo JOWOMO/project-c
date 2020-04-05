@@ -8,17 +8,16 @@
 
 <script>
 export default {
-  head () {
-        return {
-            title: 'Impressum',
-            meta: [
-                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-                { hid: 'description', name: 'description', content: 'Das Impressum.' }
-            ]
-        }
-    }
-  
-}
+  head() {
+    return {
+      title: "Impressum",
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        { hid: "description", name: "description", content: "Das Impressum." }
+      ]
+    };
+  }
+};
 </script>
 
 <style scoped lang="scss">

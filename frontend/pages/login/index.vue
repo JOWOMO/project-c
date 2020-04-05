@@ -14,7 +14,7 @@ export default {
       title: "Login",
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        { hid: "description", name: "description", content: "" }
+        { hid: "description", name: "description", content: "Willkommen zurück. Logge dich ein und suche nach matches." }
       ]
     };
   },

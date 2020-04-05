@@ -5,7 +5,7 @@
     <h1>Ich biete</h1>
     <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
 
-    <team 
+    <team
       ref="save"
       class="team-form"
       v-for="team in teams"
@@ -40,10 +40,10 @@ import getUser from "@/apollo/queries/user"
 export default {
   head() {
     return {
-      title: "Register - Team",
+      title: "Registrieren - Team",
       meta: [
         // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        { hid: "description", name: "description", content: "" }
+        { hid: "description", name: "description", content: "Bitte gib uns Informationen über dein Team." }
       ]
     };
   },
