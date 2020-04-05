@@ -1,31 +1,30 @@
 <template>
   <div>
-    <div class="wrapper">
-      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    </div>
+    <h1>Impressum</h1>
   </div>
 </template>
 
-<script>
-export default {
-  head () {
-        return {
-            title: 'Impressum',
-            meta: [
-                // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-                { hid: 'description', name: 'description', content: 'Das Impressum.' }
-            ]
+<script lang="ts">
+import { Component, Vue, Provide } from "nuxt-property-decorator";
+import { Meta } from "@/components/decorator";
+
+@Component
+export default class extends Vue {
+  @Meta
+  head() {
+    return {
+      title: "Title",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: ""
         }
-    }
-  
+      ]
+    };
+  }
 }
 </script>
 
-<style scoped lang="scss">
-.wrapper {
-  p {
-    font-weight: normal;
-    font-size: 20px;
-  }
-}
+<style>
 </style>

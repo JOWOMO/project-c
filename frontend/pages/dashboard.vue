@@ -86,8 +86,8 @@ export default {
   layout: "search",
   head() {
     return {
-      title: "Dein Dashboard",
-      meta: [{ hid: "description", name: "description", content: "" }]
+      title: "Dashboard",
+      meta: [{ hid: "description", name: "description", content: "Auf dem Dashboard siehst du deine Matches und kannst deine Teams bearbeiten." }]
     };
   },
   components: {
@@ -134,7 +134,7 @@ export default {
         this.flow = "SupplyMatch"
       console.log("matches: ",this.matches)
       }
-      // closing sidebar for mobile when selecting the team      
+      // closing sidebar for mobile when selecting the team
       this.sidebar = false
     },
     selected_distance(number) {

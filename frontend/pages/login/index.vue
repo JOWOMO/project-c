@@ -21,7 +21,10 @@ export default class extends Vue {
   head() {
     return {
       title: "Login",
-      meta: [{ hid: "description", name: "description", content: "" }]
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        { hid: "description", name: "description", content: "Willkommen zurück. Logge dich ein und suche nach matches." }
+      ]
     };
   }
 

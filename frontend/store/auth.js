@@ -1,4 +1,3 @@
-
 import Auth from '@aws-amplify/auth'
 
 Auth.configure({
@@ -50,7 +49,7 @@ export const actions = {
     }
   },
 
-  // we preserve the login information to be able to 
+  // we preserve the login information to be able to
   // continue the registration without additional details
   async register({ commit }, { email, password, firstName, lastName }) {
     const user = await Auth.signUp({
