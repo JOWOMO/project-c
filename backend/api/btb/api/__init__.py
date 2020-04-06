@@ -10,14 +10,12 @@ from flask_cors import CORS
 def create_app():
     app = Flask(__name__)
 
-    # only need this for localhost
-    if app.debug:
-        cors = CORS(
-            app, 
-            resources={r"/*": {"origins": "*"}},
-            methods=['GET', 'HEAD', 'POST', 'OPTIONS'],
-            supports_credentials=True,
-        )
+    cors = CORS(
+        app, 
+        resources={r"/*": {"origins": "*"}},
+        methods=['GET', 'HEAD', 'POST', 'OPTIONS'],
+        supports_credentials=True,
+    )
 
     app.config["SQLALCHEMY_DATABASE_URI"] = environ["SQLALCHEMY_DATABASE_URI"]
     # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

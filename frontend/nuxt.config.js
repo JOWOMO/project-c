@@ -39,15 +39,11 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,700&display=swap' },
     ]
   },
-
-  router: {
-    // trailingSlash: false,
-  },
   
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#DA2566' },
+  loading: { color: '#25A6DA' },
   /*
   ** Global SCSS
   */
@@ -71,10 +67,6 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    // Doc: https://github.com/microcipcip/cookie-universal/tree/master/packages/cookie-universal-nuxt
-    'cookie-universal-nuxt',
     // Doc: https://github.com/nuxt-community/apollo-module
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt-community/gtm-module
@@ -105,37 +97,9 @@ export default {
   ** See https://github.com/nuxt-community/apollo-module
   */
   apollo: {
-    tokenName: 'apollo-token', // optional, default: apollo-token
-    cookieAttributes: {
-      /*
-      ** Define when the cookie will be removed. Value can be a Number
-      ** which will be interpreted as days from time of creation or a
-      ** Date instance. If omitted, the cookie becomes a session cookie.
-      */
-      expires: 7, // optional, default: 7 (days)
-
-      /**
-        * Define the path where the cookie is available. Defaults to '/'
-        */
-      // path: '/', // optional
-      /**
-        * Define the domain where the cookie is available. Defaults to
-        * the domain of the page where the cookie was created.
-        */
-      // domain: 'example.com', // optional
-
-      /**
-        * A Boolean indicating if the cookie transmission requires a
-        * secure protocol (https). Defaults to false.
-        */
-      secure: false,
-    },
-    includeNodeModules: true, // optional, default: false (this includes graphql-tag for node_modules folder)
-    authenticationType: '', // required to be empty
-    // (Optional) Default 'apollo' definition
+    includeNodeModules: true,
+    authenticationType: '', 
     defaultOptions: {
-      // See 'apollo' definition
-      // For example: default query options
       $query: {
         loadingKey: 'loading',
         fetchPolicy: 'cache-and-network',
@@ -148,30 +112,15 @@ export default {
     // required
     clientConfigs: {
       default: {
-        // required
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
-
-        getAuth: async () => {
-          const token = await Vue.prototype.$store.dispatch('auth/token');
-          return token;
-        },
-
-        // optional
-        // See https://www.apollographql.com/docs/link/links/http.html#options
         httpLinkOptions: {
-          credentials: 'same-origin'
+            fetchOptions: {
+                mode: 'cors'
+            },
         },
-
-        // Enable Automatic Query persisting with Apollo Engine
-        persisting: false, // Optional
-      },
+        persisting: false, 
+      }
     },
-  },
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
   },
   gtm: {
     // Set to false to disable module in development mode
