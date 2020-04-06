@@ -42,7 +42,6 @@ export default class extends Vue {
 .tag {
   border-radius: 90px;
   height: 50px;
-  background-color: $uiComponent;
   border: 1px solid $border;
 
   display: flex;
@@ -50,7 +49,6 @@ export default class extends Vue {
   padding-right: 10px;
 
   font-size: $textsize;
-  color: $inputtextcolor;
 
   span {
     padding: 10px;
