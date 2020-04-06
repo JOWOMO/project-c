@@ -70,7 +70,7 @@ export const actions = {
 
   async token() {
     const currentSession = await Auth.currentSession();
-    return currentSession.getAccessToken().getJwtToken();
+    return currentSession.getIdToken().getJwtToken();
   },
 
   async confirm({ commit, rootState }, { email, code }) {
