@@ -80,33 +80,33 @@ a {
 }
 
 .primary {
-  background-color: $primary;
-  color: #fff;
+  background-color: $primary !important;
+  color: #fff !important;
 
   &:hover {
-    background-color: darken($primary, 10%);
+    background-color: darken($primary, 10%) !important;
   }
 }
 
 .secondary {
-  background-color: transparent;
-  border: 1px solid $primary;
-  color: $primary;
+  background-color: transparent !important;
+  border: 1px solid $primary !important;
+  color: $primary !important;
 
   &:hover {
-    color: #ffffff;
-    background-color: darken($primary, 10%);
+    color: #ffffff !important;
+    background-color: darken($primary, 10%) !important;
   }
 }
 
 .third {
-  background-color: white;
-  border: 1px solid $border;
-  color: #484848;
+  background-color: white !important;
+  border: 1px solid $border !important;
+  color: #484848 !important;
 
   &:hover {
-    color: #ffffff;
-    background-color: darken($primary, 10%);
+    color: #ffffff !important;
+    background-color: darken($primary, 10%) !important;
   }
 }
 
