@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="page">
     <navbar class="navbar" />
     <nuxt class="screen-center" />
   </div>
@@ -21,9 +21,30 @@ export default class extends Vue {}
 <style lang="scss" scoped>
 @import "@/assets/screen";
 
-.center {
+.page {
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .page {
+    display: block;
+  }
+
+  .screen-center {
+    padding-top: 44px;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  .page {
+    display: block;
+  }
+
+  .screen-center {
+    padding-bottom: 44px;
+    padding-top: 44px;
+  }
 }
 </style>

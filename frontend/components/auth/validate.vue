@@ -41,7 +41,7 @@
         <a @click="resend" class="link">E-Mail kam nicht an?</a>
       </div>
 
-      <span id="error">{{ error }}</span>
+      <span id="error" v-if="error">{{ error }}</span>
       <div class="buttons">
         <button class="primary">Weiter</button>
       </div>
@@ -135,3 +135,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/form-layout-single';
+</style>

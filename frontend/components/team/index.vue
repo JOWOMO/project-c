@@ -10,12 +10,12 @@
           <div class="field">Bezeichnung</div>
           <div>{{ editTeam.name || '-' }}</div>
         </div>
-    
+
         <div class="row">
           <div>Anzahl Mitarbeiter</div>
-          <div>{{ editTeam.quantity }} </div>
+          <div>{{ editTeam.quantity }}</div>
         </div>
- 
+
         <div class="nobr">
           <formSwitch class="sw" :id="'editTeam.isActive'" disabled v-model="editTeam.isActive" />
 
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div v-if="editTeam.expanded">    
+    <div v-if="editTeam.expanded">
       <div class="team-header">
         <h2>Team {{ formattedNumber }}</h2>
 
@@ -37,11 +37,20 @@
 
       <form novalidate>
         <div class="form-group half-width">
-          <formSelect id="editTeam.name" v-model="editTeam.name" :label="'Bezeichnung'" :values="topics" />
+          <formSelect
+            id="editTeam.name"
+            v-model="editTeam.name"
+            :label="'Bezeichnung'"
+            :values="topics"
+          />
         </div>
 
         <div class="form-group right">
-          <formInput :id="'editTeam.quantity'" v-model="editTeam.quantity" :label="'Anzahl Mitarbeiter'" />
+          <formInput
+            :id="'editTeam.quantity'"
+            v-model="editTeam.quantity"
+            :label="'Anzahl Mitarbeiter'"
+          />
         </div>
 
         <div class="form-group">
@@ -56,27 +65,21 @@
 
         <div class="form-group lbl">
           Teamprofil (min. 3)
-
-          <validations 
-            :label="'Teamprofil'" 
-            :validation="$v['editTeam']['skills']" 
-            :submitted="true" 
+          <validations
+            :label="'Teamprofil'"
+            :validation="$v['editTeam']['skills']"
+            :submitted="true"
           />
         </div>
 
-        <div class="form-group skills">
+        <div class="form-group">
           <div class="skills">
             <button class="third" @click.prevent="showTagCloud = !showTagCloud">
               Bitte wählen
               <span>+</span>
             </button>
 
-            <tag 
-              class="tag"
-              v-for="skill in skillWithNames" 
-              :key="skill.id" 
-              :name="skill.name" 
-            />
+            <tag class="tag" v-for="skill in skillWithNames" :key="skill.id" :name="skill.name" />
           </div>
         </div>
 
@@ -92,7 +95,7 @@
           <button class="primary" @click.prevent="confirm">OK</button>
         </div>
       </form>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -118,7 +121,12 @@ import formSelect from "@/components/forms/select.vue";
 import formTextArea from "@/components/forms/textarea.vue";
 import formSwitch from "@/components/forms/switch.vue";
 
-import { required, numeric, minValue, minLength } from "vuelidate/lib/validators";
+import {
+  required,
+  numeric,
+  minValue,
+  minLength
+} from "vuelidate/lib/validators";
 import { Validate, Validations } from "vuelidate-property-decorators";
 
 type KeyValuePair = {
@@ -141,7 +149,15 @@ export type TeamDetails = {
 };
 
 @Component({
-  components: { tagCloud, tag, formInput, formSelect, formTextArea, formSwitch, validations }
+  components: {
+    tagCloud,
+    tag,
+    formInput,
+    formSelect,
+    formTextArea,
+    formSwitch,
+    validations
+  }
 })
 export default class extends Vue {
   @Provide("validation")
@@ -172,11 +188,11 @@ export default class extends Vue {
           minValue: minValue(1)
         },
         name: {
-          required,
+          required
         },
         skills: {
           required,
-          minLength: minLength(3),
+          minLength: minLength(3)
         }
       }
     };
@@ -203,14 +219,14 @@ export default class extends Vue {
     this.showTagCloud = false;
   }
 
-  @Watch('value', {deep: true, immediate: true}) 
+  @Watch("value", { deep: true, immediate: true })
   teamUpdated(newVal: TeamDetails) {
-    this.editTeam = JSON.parse(JSON.stringify(this.value))
+    this.editTeam = JSON.parse(JSON.stringify(this.value));
   }
 
   mounted() {
     // make deep copy
-    this.editTeam = JSON.parse(JSON.stringify(this.value))
+    this.editTeam = JSON.parse(JSON.stringify(this.value));
   }
 
   cancel() {
@@ -235,11 +251,10 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/global";
-// @import "assets/form-layout-two";
+@import "assets/form-layout-two";
 
 .lbl {
-    color: #7b7b7b;
+  color: #7b7b7b;
 }
 
 .team-header {
@@ -273,8 +288,8 @@ export default class extends Vue {
     flex-direction: column;
 
     font-size: 18px;
-    color: #7B7B7B;
-    
+    color: #7b7b7b;
+
     :first-child {
       font-size: 12px;
     }
@@ -290,34 +305,6 @@ export default class extends Vue {
       justify-content: flex-end;
 
       width: 100px;
-    }
-  }
-}
-
-form {
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
-
-  .form-group {
-    grid-column: 1 / span 2;
-  }
-
-  .half-width {
-    grid-column: 1;
-  }
-
-  .right {
-    grid-column: 2;
-  }
-
-  .save-buttons {    
-    display: flex;
-    justify-self: flex-end;
-
-    button {
-      margin-left: 20px;
-      width: 200px;
     }
   }
 }
@@ -346,33 +333,61 @@ form {
       margin-left: 10px;
     }
   }
-
-  // button {
-  //   width: 200px;
-  //   height: 60px;
-  //   padding: 20px;
-  //   margin-top: 10px;
-  //   border: 2px solid $uiComponentHighlighted;
-
-  //   img {
-  //     display: inline;
-  //     margin-left: 10px;
-  //   }
-  // }
 }
 
-// @media only screen and (max-width: 765px) {
-//   form {
-//     grid-template-columns: 1fr 0 !important;
-//     column-gap: 0 !important;
+@media only screen and (max-width: 580px) {
+  .display {
+    flex-direction: column;
 
-//     .head {
-//       justify-content: space-around !important;
-//     }
+    min-width: 100vw;
+    max-width: 100vw;
 
-//     .right {
-//       grid-column: 1 !important;
-//     }
-//   }
-// }
+    .row {
+      flex: 1;
+      padding-bottom: 10px;
+
+      min-width: 100vw;
+      max-width: 100vw;
+
+      flex-direction: row;
+
+      :first-child {
+        width: 120px;
+      }
+    }
+
+    .nobr {
+      min-width: 100vw;
+      max-width: 100vw;
+
+      align-items: baseline;
+      justify-content: flex-end;
+      font-size: 12px;
+      flex-direction: row-reverse;
+
+      .switch {
+        margin-left: 20px;
+      }
+
+      .lbl {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  .save-buttons {
+    margin-top: 0px;
+    flex-direction: column;
+
+    button {
+      margin-top: 21px;
+      min-width: 100%;
+    }
+  }
+
+  .skills {
+    // correct the margin given by the formgroup
+    margin-bottom: -20px;
+  }
+}
 </style>

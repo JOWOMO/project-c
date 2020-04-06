@@ -70,7 +70,4 @@ export default class Auth extends Vue {
 </script>
 
 <style lang="scss" scoped>
-* /deep/ {
-  @import '@/assets/form-layout-single';
-}
 </style>

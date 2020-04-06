@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <h1>{{ workflow().displayName }}</h1>
-      <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
+      <p>Details helfen uns dir Suchvorschläge anzuzeigen</p>
 
       <div v-for="(team, idx) in supplies" :key="idx">
         <div class="team-container">
@@ -265,7 +265,6 @@ export default class extends Vue {
   h1 {
     text-align: left;
     padding-bottom: 14px;
-    margin-top: 50px;
   }
 
   p {
@@ -294,9 +293,39 @@ export default class extends Vue {
     border-top: 1px solid $border;
   }
 
-  width: 640px;
-  height: 100vh;
+  max-width: 800px;
+  min-width: 800px;
 }
+
+@media only screen and (max-width: 1150px) {
+  // we first make the grid smaller
+  .container {
+    min-width: 550px;
+    max-width: 550px;
+  }
+}
+
+
+@media only screen and (max-width: 580px) {
+  .container {
+    min-width: 100vw;  
+    max-width: 100vw;  
+
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    .buttons {
+      margin-top: 0px;
+      flex-direction: column;
+      
+      button {
+        margin-top: 21px;
+        min-width: 100%;
+      }
+    }
+  }
+}
+
 
 .team-container {
   position: relative;
@@ -321,6 +350,22 @@ export default class extends Vue {
     img {
       width: 15px;
       height: 15px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1321px) {
+  .team-container {
+    .edit {
+        transform: translate(+150px, -6px);
+    }
+  }
+}
+
+@media only screen and (max-width: 1090px) {
+  .team-container {
+    .edit {
+        transform: translate(+150px, -6px);
     }
   }
 }
