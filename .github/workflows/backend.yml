@@ -31,7 +31,7 @@ jobs:
         python-version: 3.7
         
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v1.4.1
       with:
         node-version: 12.x
 
