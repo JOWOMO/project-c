@@ -287,6 +287,18 @@ export type AddCompanyMutation = (
   )> }
 );
 
+export type UserAddMutationVariables = {
+  first: Scalars['String'];
+  last: Scalars['String'];
+  email: Scalars['String'];
+};
+
+
+export type UserAddMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateUser'>
+);
+
 export type UpdateDemandMutationVariables = {
   id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];
@@ -309,18 +321,6 @@ export type UpdateDemandMutation = (
       & Pick<Skill, 'id' | 'name' | 'group'>
     )> }
   )> }
-);
-
-export type UserAddMutationVariables = {
-  first: Scalars['String'];
-  last: Scalars['String'];
-  email: Scalars['String'];
-};
-
-
-export type UserAddMutation = (
-  { __typename?: 'Mutation' }
-  & Pick<Mutation, 'updateUser'>
 );
 
 export type UpdateSupplyMutationVariables = {
