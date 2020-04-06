@@ -54,7 +54,8 @@ import { CognitoUser } from "@aws-amplify/auth";
 import {
   AddCompanyMutation,
   AddCompanyMutationVariables,
-  RegistrationCompanyQuery
+  RegistrationCompanyQuery,
+  RegistrationCompanyQueryVariables,
 } from "@/apollo/schema";
 
 import addCompany from "@/apollo/mutations/add_company.gql";
@@ -101,8 +102,8 @@ export default class extends Vue {
   async created() {
     this.workflow().setStage(1);
 
-    const result = await this.$apollo.query<RegistrationCompanyQuery>({
-      query: userQuery
+    const result = await this.$apollo.query<RegistrationCompanyQuery, RegistrationCompanyQueryVariables>({
+      query: userQuery,
     });
 
     if (result.data && result.data.industries) {

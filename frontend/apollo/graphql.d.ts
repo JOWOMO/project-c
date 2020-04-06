@@ -8,19 +8,19 @@ declare module '*/add_company.gql' {
 }
     
 
-declare module '*/add_demand.gql' {
+declare module '*/add_user.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const updateDemand: DocumentNode;
+  export const userAdd: DocumentNode;
 
   export default defaultDocument;
 }
     
 
-declare module '*/add_user.gql' {
+declare module '*/update_demand.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
-  export const userAdd: DocumentNode;
+  export const updateDemand: DocumentNode;
 
   export default defaultDocument;
 }
