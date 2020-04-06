@@ -156,10 +156,12 @@ export default {
           return token;
         },
 
-        // optional
         // See https://www.apollographql.com/docs/link/links/http.html#options
         httpLinkOptions: {
-          credentials: 'same-origin'
+          fetchOptions: {
+            mode: 'cors'
+          },
+          credentials: "omit",
         },
 
         // Enable Automatic Query persisting with Apollo Engine
