@@ -16,7 +16,7 @@ function findAWSExport(setting) {
   // can be overriden for local development
   if (setting === 'ApiGatewayRestApiId') {
     return process.env.API_URL ||
-      `https://${setting}.execute-api.eu-west-1.amazonaws.com/dev/graphql`;
+      `https://${node.OutputValue}.execute-api.eu-west-1.amazonaws.com/dev/graphql`;
   }
 
   return node.OutputValue;
