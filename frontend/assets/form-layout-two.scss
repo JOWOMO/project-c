@@ -6,7 +6,6 @@
 
   p {
     padding-bottom: 75px;
-    color: #7B7B7B;
   }
 
   .buttons {
@@ -24,9 +23,6 @@
     display: grid;
     grid-gap: 20px;
     grid-template-columns: repeat(2, 1fr);
-
-    // need to touch this again, 
-    // min-width: 640px;
 
     .form-group {
       grid-column: 1 / span 2;

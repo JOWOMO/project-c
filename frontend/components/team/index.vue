@@ -252,9 +252,11 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "assets/form-layout-two";
+@import "assets/colors";
+@import "assets/scales";
 
 .lbl {
-  color: #7b7b7b;
+  color: $inputlabelcolor;
 }
 
 .team-header {
@@ -268,7 +270,7 @@ export default class extends Vue {
 
   .lbl {
     margin-left: 19px;
-    font-size: 18px;
+    font-size: $textsize;
   }
 
   margin-bottom: 20px;
@@ -287,8 +289,8 @@ export default class extends Vue {
     display: flex;
     flex-direction: column;
 
-    font-size: 18px;
-    color: #7b7b7b;
+    font-size: $textsize;
+    color: $inputlabelcolor;
 
     :first-child {
       font-size: 12px;

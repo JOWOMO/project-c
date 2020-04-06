@@ -28,6 +28,8 @@ export default class Sidebar extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/colors';
+
 .register-sidebar {
   display: flex;
 
@@ -36,7 +38,7 @@ export default class Sidebar extends Vue {
   align-content: flex-start;
 
   min-width: 366px;
-  background: #fff;
+  background: $uiComponent;
 }
 
 a {
@@ -48,13 +50,10 @@ a {
 
 p {
   margin-left: 20px;
-  color: #7b7b7b;
-  font-size: 18px;
-  font-weight: normal;
 }
 
 .selected p {
-  color: #484848;
+  color: $inputtextcolor;
   font-weight: 500;
 }
 
