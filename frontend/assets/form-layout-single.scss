@@ -1,0 +1,51 @@
+@import './colors.scss';
+
+.container {
+  h1 {
+    text-align: left;
+    padding-bottom: 24px;
+  }
+
+  .buttons {
+    margin-top: 21px;
+
+    display: grid;
+    grid-gap: 24px;
+    grid-auto-flow: column;
+    
+    button {
+      width: 100%;
+    }
+  }
+
+  form {
+    display: grid;
+    grid-gap: 11px;
+  }
+}
+
+// @media only screen and (max-width: 765px) {
+//   .container {
+//     justify-content: center;
+//     grid-template-rows: auto 1fr;
+//     grid-template-columns: 80vw;
+
+//     h1 {
+//       margin: 50px 0 0 0;
+//     }
+
+//     #error {
+//       grid-column: 1;
+//       grid-row: 4;
+//       text-align: center;
+//     }
+
+//     .form-group {
+//       width: 80vw;
+
+//       input, label, .error {
+//         width: 100%;
+//       }
+//     }
+//   }
+// }

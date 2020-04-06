@@ -1,0 +1,59 @@
+<template>
+  <div 
+    @click="update" 
+    :class="{ 'not-clickable': !clickable, primary: clickable && selected, secondary: clickable && !selected }" 
+    class="tag"
+  >
+    <span>{{ name }}</span>
+  </div>
+</template>
+
+<script lang="ts">
+import { Vue, Component, Prop, Emit } from "nuxt-property-decorator";
+
+type KeyValuePair = {
+  id: string;
+  name: string;
+  active: boolean;
+};
+
+@Component
+export default class extends Vue {
+  @Prop({ required: true }) name!: string;
+
+  @Prop({ required: false, default: false }) selected!: boolean;
+  @Prop({ required: false, default: false }) clickable!: boolean;
+
+  @Emit("input")
+  update() {
+    return !this.selected;
+  }
+}
+</script>
+
+<style scoped lang="scss">
+@import "assets/colors";
+
+.not-clickable {
+  pointer-events:none;
+}
+
+.tag {
+  border-radius: 90px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid $border;
+
+  display: flex;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  font-size: 18px;
+  color: #484848;
+
+  span {
+    padding: 10px;
+    user-select: none;
+  }
+}
+</style>

@@ -10,11 +10,14 @@ class CompanyInput(graphene.InputObjectType):
     id = graphene.ID(required=False)
     name = graphene.String(required=True)
     logo_url = graphene.String()
+    
     address_line1 = graphene.String(required=True)
     address_line2 = graphene.String()
     address_line3 = graphene.String()
+
     postal_code = graphene.String(required=True)
     city = graphene.String(required=True)
+    industry = graphene.ID(required=True)
 
 
 class UpdateCompany(graphene.Mutation):
@@ -25,13 +28,13 @@ class UpdateCompany(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, company):
-        current_app.logger.debug("UpdateCompany", company)
+        current_app.logger.debug("UpdateCompany %s", company)
 
         with db.engine.begin() as conn:
             sql = text(
                 """
-insert into btb.company (id, name, logo_url, address_line1, address_line2, address_line3, postal_code, city)
-values (coalesce(:id, nextval('btb.company_id_seq')), :name, :logo_url, :address_line1, :address_line2, :address_line3, :postal_code, :city)
+insert into btb.company (id, name, logo_url, address_line1, address_line2, address_line3, postal_code, city, industry_id)
+values (coalesce(:id, nextval('btb.company_id_seq')), :name, :logo_url, :address_line1, :address_line2, :address_line3, :postal_code, :city, :industry)
 on conflict (id) 
 do update set 
     name = excluded.name, 
@@ -40,7 +43,8 @@ do update set
     address_line2 = excluded.address_line2, 
     address_line3 = excluded.address_line3, 
     postal_code = excluded.postal_code,
-    city = excluded.city
+    city = excluded.city,
+    industry_id = excluded.industry_id
 returning id
             """
             )

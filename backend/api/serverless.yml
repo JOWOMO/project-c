@@ -8,7 +8,13 @@ provider:
   name: aws
   stage: dev
   runtime: python3.7
+  
   region: eu-west-1   # eu-central-1
+  deploymentBucket:
+    name: bee-to-bee-deployment
+    blockPublicAccess: true
+    maxPreviousDeploymentArtifacts: 5 
+    serverSideEncryption: AES256
 
   memorySize: 256
   timeout: 20
@@ -82,20 +88,62 @@ resources:
       Properties:
         MfaConfiguration: OFF
         AdminCreateUserConfig:
-          UnusedAccountValidityDays: 7
           AllowAdminCreateUserOnly: false
+
+        AutoVerifiedAttributes:
+          - email
           
         UserPoolName: ${self:service}-${self:custom.stage}-pool
         UsernameAttributes:
           - email
 
+        EmailConfiguration:
+          SourceArn: ${ssm:/btb/prod/cognitosender}
+
+        VerificationMessageTemplate:
+          DefaultEmailOption: CONFIRM_WITH_CODE
+          EmailSubject: Bestätigen Sie Ihre E-Mail-Adresse
+          EmailMessage: |
+            Bee-to-Bee Konto
+            <h1>Bestätigen Sie Ihre E-Mail-Adresse</h1>
+
+            <p>Um die Einrichtung dieses Bee-to-Bee-Kontos abzuschließen, müssen wir nur noch sicherstellen, dass diese E-Mail-Adresse Ihnen gehört.</p>
+
+            <p>
+            Verwenden Sie zum Bestätigen Ihrer E-Mail-Adresse den folgenden Sicherheitscode: <b>{####}</b>
+            </p>
+
+            <p>
+            Wenn Sie diesen Code nicht angefordert haben, können Sie diese E-Mail ignorieren, da Ihre E-Mail-Adresse u. U. versehentlich von einer anderen Person eingegeben wurde.
+            </p>
+
+            <p>
+            Mit freundlichen Grüßen<br/>
+            Ihr Bee-to-Bee-Team
+            </p>
+
         Policies:
           PasswordPolicy:
             MinimumLength: 6
             RequireLowercase: False
-            RequireNumbers: True
+            RequireNumbers: False
             RequireSymbols: False
             RequireUppercase: True
+            TemporaryPasswordValidityDays: 1
+
+    CognitoIdentityPool:
+      Type: AWS::Cognito::IdentityPool
+      Properties:
+        IdentityPoolName: ${self:service}-${self:custom.stage}-identity-pool
+        AllowUnauthenticatedIdentities: true
+
+        CognitoIdentityProviders:
+          - ClientId:
+              Ref: CognitoUserPoolClient
+            ProviderName:
+              Fn::GetAtt:
+                - CognitoUserPool
+                - ProviderName
 
     CognitoUserPoolDomain:
       Type: AWS::Cognito::UserPoolDomain
@@ -109,6 +157,19 @@ resources:
       Properties:
         ClientName: ${self:service}-${self:custom.stage}-pool-client
         GenerateSecret: False
+        
+        CallbackURLs:
+          - http://localhost:3000
+        LogoutURLs:
+          - http://localhost:3000
+
+        AllowedOAuthFlows: 
+          - implicit
+        AllowedOAuthScopes: 
+          - email
+          - openid
+        SupportedIdentityProviders: 
+          - COGNITO
         UserPoolId:
           Ref: CognitoUserPool
         
@@ -128,3 +189,28 @@ resources:
           - Fn::GetAtt:
               - CognitoUserPool
               - Arn
+
+  Outputs:
+    UserPoolOutput:
+      Value:
+        Ref: CognitoUserPool
+      Export:
+        Name: CognitoUserPool-${self:custom.stage}
+
+    CognitoUserPoolClientOutput:
+      Value:
+        Ref: CognitoUserPoolClient
+      Export:
+        Name: CognitoUserPoolClient-${self:custom.stage}
+
+    IdentityPoolOutput:
+      Value:
+        Ref: CognitoIdentityPool
+      Export:
+        Name: CognitoIdentityPool-${self:custom.stage}
+
+    ApiGatewayRestApiOutput:
+      Value:
+        Ref: ApiGatewayRestApi
+      Export:
+        Name: ApiGatewayRestApiId-${self:custom.stage}

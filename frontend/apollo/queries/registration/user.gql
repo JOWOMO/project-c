@@ -1,0 +1,8 @@
+query RegistrationUser {  
+    me{
+        id,
+        firstName,
+        lastName,    
+        email
+    }
+}

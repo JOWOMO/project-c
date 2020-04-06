@@ -9,13 +9,14 @@ from flask import g, current_app
 class SupplyInput(graphene.InputObjectType):
     id = graphene.ID(required=False)
     company_id = graphene.ID(required=True)
+    is_active = graphene.Boolean(required=True)
 
     name = graphene.String(required=True)
     description_int = graphene.String()
     description_ext = graphene.String()
 
     quantity = graphene.Int(required=True)
-    skills = graphene.List(graphene.Int)
+    skills = graphene.List(graphene.ID)
     hourly_salary = graphene.Float()
 
 
@@ -27,16 +28,19 @@ class UpdateSupply(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, supply):
-        current_app.logger.debug("UpdateSupply", supply)
+        current_app.logger.debug("UpdateSupply %s", supply)
+
+        supply.skills 
 
         with db.engine.begin() as conn:
             sql = text(
                 """
-insert into btb.team_supply (id, company_id, name, description_int, description_ext, quantity, skills, hourly_salary)
-values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :name, :description_int, :description_ext, :quantity, :skills, :hourly_salary)
+insert into btb.team_supply (id, company_id, is_active, name, description_int, description_ext, quantity, skills, hourly_salary)
+values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :is_active, :name, :description_int, :description_ext, :quantity, (:skills)::int[], :hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 
+    is_active = excluded.is_active,
     name = excluded.name, 
     description_int = excluded.description_int, 
     description_ext = excluded.description_ext, 
@@ -60,7 +64,7 @@ class RemoveSupply(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, id):
-        current_app.logger.debug("RemoveSupply", id)
+        current_app.logger.debug("RemoveSupply %s", id)
 
         with db.engine.begin() as conn:
             sql = text(

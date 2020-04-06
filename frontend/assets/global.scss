@@ -1,0 +1,131 @@
+// Global
+@import './colors';
+
+$h1FontSize: 36px;
+$h2FontSize: 24px;
+$h3FontSize: 20px;
+
+$buttonFormText: 18px;
+$input-width: 100%;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  background: $background;
+  margin: 0;
+  padding: 0;
+}
+
+// #__layout > :first-child {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100vh;
+// }
+
+h1 {
+  font-size: $h1FontSize;
+  color: $fontColor;
+//   position: absolute;
+//   left: 50%;
+//   transform: translate(-50%, 0);
+  // text-align: center;
+  font-weight: bold;
+  line-height: 42px;
+}
+
+h2 {
+  font-size: $h2FontSize;
+  color: $fontColor;
+}
+
+h3 {
+  font-size: $h3FontSize;
+  color: $fontColor;
+}
+
+button {
+  border-radius: 90px;
+
+  min-width: 200px;
+  height: 50px;
+
+  background: $uiComponent;
+  font-size: $buttonFormText;
+  font-weight: 500;
+  
+  transition: all .5s ease;
+  border: none;
+  outline: none;
+  color: $fontColor;
+
+  // &:hover {
+  //     background: $uiComponentHighlighted;
+  // }
+}
+
+a {
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  color: $primary;
+  transition: all .3s ease;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.profile_img {
+  object-fit: cover;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.primary {
+  background-color: $primary;
+  color: #fff;
+
+  &:hover {
+    background-color: darken($primary, 10%);
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  border: 1px solid $primary;
+  color: $primary;
+
+  &:hover {
+    color: #ffffff;
+    background-color: darken($primary, 10%);
+  }
+}
+
+.third {
+  background-color: white;
+  border: 1px solid $border;
+  color: #484848;
+
+  &:hover {
+    color: #ffffff;
+    background-color: darken($primary, 10%);
+  }
+}
+
+// .cta {
+//   background-color: $secondary;
+//   color: #fff;
+
+//   &:hover {
+//     background-color: darken($secondary, 10%);
+//   }
+// }
+
+@import './form';

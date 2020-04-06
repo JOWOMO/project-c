@@ -1,4 +1,4 @@
-
+  
 # BeeToBee Backend Api
 
 ## Setup
@@ -8,6 +8,10 @@
 * [Python 3.7 64bit](https://realpython.com/installing-python/) 
 * [Poetry](https://python-poetry.org/docs/) for Python depency management
 * [npm](https://www.npmjs.com/get-npm) for serverless framework
+
+### Preconfiguration
+
+`poetry config virtualenvs.in-project true`
 
 ### Dev Environment
 

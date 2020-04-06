@@ -17,7 +17,39 @@ class SupplyQuery(MatchQuery):
         return self.map_default_result("supply", g.supply_loader, record)
 
 
-def match_supplies(root, info, query, cursor=None):
+def match_supply(supply, cursor = None):
+    match_query = SupplyQuery(supply['skills'], supply.postal_code)
+    # match_query.set_radius(demand.radius)
+
+    if cursor is not None:
+        match_query.set_offset(cursor.offset)
+
+    if "hourly_salary" in supply:
+        match_query.match_salary(supply["hourly_salary"])
+
+    if "quantity" in supply:
+        match_query.match_quantity(supply["quantity"])
+
+    return match_query.execute()
+
+
+def match_supply_by_id(root, info, id, cursor=None):
+    with db.engine.begin() as conn:
+        sql = text("select s.*, c.postal_code from btb.team_supply s, btb.company c where s.company_id = c.id and s.id = :id")
+        data = conn.execute(sql, id=id).fetchone()
+
+        for row in data:
+            return match_supply(data, cursor)
+
+        return {
+            "page_info": {
+                "has_next_page": False,
+            },
+            "matches": [],
+        }
+
+
+def match_supplies_by_query(root, info, query, cursor=None):
     match_query = SupplyQuery(query.skills, query.postal_code,)
 
     match_query.set_radius(query.radius)

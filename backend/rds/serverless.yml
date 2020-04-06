@@ -2,8 +2,14 @@ service: bee-to-bee-rds
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
+
   region: eu-west-1
+  deploymentBucket:
+    name: bee-to-bee-deployment
+    blockPublicAccess: true
+    maxPreviousDeploymentArtifacts: 5 
+    serverSideEncryption: AES256
 
   # we don't want new stacks for different environments, only one db
   stackName: ${self:service}

@@ -1,0 +1,20 @@
+query RegistrationCompany {
+  industries {
+    id
+    name
+  }
+  
+  me {
+    id
+    companies {
+      id
+      name
+      addressLine1
+      postalCode
+      city
+      industry {
+        id
+      }
+    }
+  }
+}

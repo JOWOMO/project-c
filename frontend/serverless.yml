@@ -1,0 +1,183 @@
+service: bee-to-bee-client
+
+plugins:
+  - serverless-finch
+  - serverless-cloudfront-distribution-certificate
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  
+  region: eu-west-1
+  deploymentBucket:
+    name: bee-to-bee-deployment
+    blockPublicAccess: true
+    maxPreviousDeploymentArtifacts: 5 
+    serverSideEncryption: AES256
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  s3Bucket: ${self:service}-app-${self:custom.stage}
+
+  client:
+    bucketName: ${self:custom.s3Bucket}
+    distributionFolder: dist 
+    indexDocument: index.html
+    errorDocument: index.html
+
+    objectHeaders:
+       ALL_OBJECTS:
+        - name: Cache-Control
+          value: no-cache
+
+  publicurls: 
+    ${ssm:/btb/${self:custom.stage}/cloudfronturl~split}
+
+  cfdDomain:
+    domainNames:
+      ${self:custom.publicurls}
+
+    cloudFront: WebAppCloudFrontDistribution
+    retries: 15
+    minimumProtocolVersion: TLSv1.2_2018
+
+resources:
+  Resources:
+    WebAppS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.s3Bucket}
+        AccessControl: Private
+
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+
+        PublicAccessBlockConfiguration: 
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+
+    # restrict access to cloudfront identity
+    WebAppS3BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: WebAppS3Bucket
+        PolicyDocument:
+          Statement:
+            - Effect: Allow
+              Principal:
+                CanonicalUser:
+                  Fn::GetAtt: [ CloudFrontOriginAccessIdentity, S3CanonicalUserId ]
+              Action: 
+                - "s3:GetObject"
+              Resource: 
+                - "arn:aws:s3:::${self:custom.s3Bucket}/*"
+
+    # the identity to use when accessing s3
+    CloudFrontOriginAccessIdentity: 
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: "origin identity"
+
+    # the cloud front distribution
+    WebAppCloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName: 
+                Fn::GetAtt: [ WebAppS3Bucket, DomainName ]
+              
+              Id: WebApp
+
+              ## In case you want to restrict the bucket access use S3OriginConfig and remove CustomOriginConfig
+              S3OriginConfig:
+                OriginAccessIdentity: 
+                  Fn::Join:
+                    - ''
+                    -
+                      - 'origin-access-identity/cloudfront/'
+                      - Ref: CloudFrontOriginAccessIdentity
+
+          Enabled: 'true'
+          Aliases: 
+            ${self:custom.publicurls}
+
+          DefaultRootObject: index.html
+
+          ## Since the Single Page App is taking care of the routing we need to make sure ever path is served with index.html
+          ## The only exception are files that actually exist e.h. app.js, reset.css
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+              
+            - ErrorCode: 403
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+
+          DefaultCacheBehavior:
+            Compress: True
+            AllowedMethods:
+              # - DELETE
+              - GET
+              - HEAD
+              - OPTIONS
+              # - PATCH
+              # - POST
+              # - PUT
+            
+            ## The origin id defined above
+            TargetOriginId: WebApp
+
+            ## Defining if and how the QueryString and Cookies are forwarded to the origin which in this case is S3
+            ForwardedValues:
+              QueryString: 'false'
+              Cookies:
+                Forward: none
+
+            ## The protocol that users can use to access the files in the origin. To allow HTTP use `allow-all`
+            ViewerProtocolPolicy: redirect-to-https
+
+          HttpVersion: http2
+
+          ## The certificate to use when viewers use HTTPS to request objects.
+          ViewerCertificate:
+            CloudFrontDefaultCertificate: 'true'
+
+          ## Uncomment the following section in case you want to enable logging for CloudFront requests
+          # Logging:
+          #   IncludeCookies: 'false'
+          #   Bucket: mylogs.s3.amazonaws.com
+          #   Prefix: myprefix
+  
+    # '.' at the end is required
+    DnsRecord:
+      Type: AWS::Route53::RecordSet
+      DependsOn: WebAppCloudFrontDistribution
+      Properties:
+        AliasTarget:
+          DNSName:
+            Fn::GetAtt:
+              - WebAppCloudFrontDistribution
+              - DomainName
+          HostedZoneId: Z2FDTNDATAQYW2 # cloudfront
+
+        HostedZoneId: ${ssm:/btb/dnszone}
+        # HostedZoneName: ${ssm:/btb/dnszonename}.
+
+        # we only take the first element as A, the rest must be configured in 53 directly
+        Name: 
+           Fn::Select:
+            - 0
+            - ${self:custom.publicurls}
+        Type: 'A'
+
+  Outputs:
+    WebAppCloudFrontDistributionOutput:
+      Value:
+        'Fn::GetAtt': [ WebAppCloudFrontDistribution, DomainName ]
+      Export:
+         Name: WebAppCloudFrontDomain-${self:custom.stage}

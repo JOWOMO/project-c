@@ -11,6 +11,7 @@ def handler(event, context):
     # connection = engine.connect()
 
     files = [
+        "../../pgsql/clean.pgsql",
         "../../pgsql/schema.pgsql",
         "../../pgsql/postalcodes.pgsql",
         "../../pgsql/real-data.pgsql",

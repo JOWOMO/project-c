@@ -1,0 +1,15 @@
+query user {  
+    me{
+        id,
+        firstName,
+        lastName,    
+        email,
+        companies{
+            id,
+            name,
+            addressLine1,
+            postalCode,
+            city,
+        }
+    }
+}

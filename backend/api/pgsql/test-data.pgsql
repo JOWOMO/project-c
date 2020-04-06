@@ -1,8 +1,8 @@
 insert into btb.customer
     values 
-    (1, 'DebugUserId', 'email@email.com', 'name'),
-    (2, 'DebugUserId2', 'email2@email.com', 'name'),
-    (3, 'DebugUserId3', 'email3@email.com', 'name')
+    (1, 'DebugUserId', 'email@email.com', 'first', 'last'),
+    (2, 'DebugUserId2', 'email2@email.com', 'first', 'last'),
+    (3, 'DebugUserId3', 'email3@email.com', 'first', 'last')
 ;
      
 insert into btb.company
@@ -11,7 +11,8 @@ insert into btb.company
         name,
         address_line1,
         postal_code,
-        city
+        city,
+        industry_id
     )
 select
     id, 
@@ -23,7 +24,8 @@ select
             btb.postalcodes OFFSET id
         LIMIT 1
     ),
-    'City ' || id
+    'City ' || id,
+    1
 from 
     generate_series(1,100000) id
 ;

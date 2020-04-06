@@ -1,0 +1,33 @@
+query getTeams{
+  skills {
+    id
+    name
+  }
+
+  companies{
+    id
+
+    demands{
+      id
+      name
+      isActive
+      description
+      skills{
+        id 
+      }
+      quantity
+      
+    }
+
+    supplies{
+      id
+      name
+      isActive
+      description
+      skills{
+        id 
+      }
+      quantity
+    }
+  }
+}

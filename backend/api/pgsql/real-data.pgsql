@@ -1,3 +1,17 @@
+insert into btb.industry (id, name)
+    values 
+        (1, 'Unbekannt'),
+        (2, 'Energie'),
+        (3, 'Wasser & Entsorgung'),
+        (4, 'Ernährung & Hygiene'),
+        (5, 'Informationstechnik & Telekommunikation'),
+        (6, 'Finanz- & Wirtschaftswesen'),
+        (7, 'Transport & Verkehr'),
+        (8, 'Medien'),
+        (9, 'Staatliche Verwaltung'),
+        (10, 'Schulen, Kinder- & Jugendhilfe, Behindertenhilfe')
+on conflict do nothing;
+
 insert into btb.skillgroup (id, name)
     values 
         (1, 'Sprachen'),

@@ -1,0 +1,21 @@
+mutation addCompany(
+  $id: ID,
+  $name:String!, 
+  $addressLine1:String!,
+  $postalCode:String!,
+  $city:String!
+  $industry: ID!
+){
+  updateCompany(
+    company:{
+      id: $id,
+      name:$name,
+      addressLine1:$addressLine1,
+      postalCode:$postalCode,
+      city:$city,
+      industry: $industry
+    }
+  ){
+    id
+  }
+}
