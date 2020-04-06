@@ -26,12 +26,14 @@ class UpdateUser(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-update btb.customer
-set     
-    first_name = :first_name, 
-    last_name = :last_name, 
-    email = :email
-where external_id = :id
+insert into btb.customer (external_id, first_name, last_name, email)
+values (:id, :first_name, :last_name, :email)
+on conflict (external_id)
+do update set    
+    first_name = excluded.first_name, 
+    last_name = excluded.last_name, 
+    email = excluded.email
+returning id
             """
             )
 

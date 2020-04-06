@@ -24,9 +24,20 @@ def me(root, info):
     current_app.logger.debug("me")
 
     meRecord = g.me_loader.load(g.principal.get_id())
+
+    def resolve_user(user):
+        if user is None:
+            return {
+                "id": "-1",
+                "first_name": g.principal.get_first_name(),
+                "last_name": g.principal.get_last_name(),
+            }
+
+        return user
+
     return meRecord.then(
         lambda m: {
-            **m,
+            ** resolve_user(m),
             "external_id": g.principal.get_id(),
             "email": g.principal.get_email(),
         }
