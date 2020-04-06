@@ -148,7 +148,7 @@ export default class extends Vue {
         lastName: this.lastName
       });
 
-      this.$emit("change-state", "validate");
+      this.$emit("change-state", "validate",user.email);
     } catch (err) {
       console.log("err: ", err);
       if (err.code === "UsernameExistsException") {
