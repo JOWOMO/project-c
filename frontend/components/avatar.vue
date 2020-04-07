@@ -80,7 +80,7 @@ export default class extends Vue {
   }
 
   // expanded dropdown
-  expanded: boolean = true;
+  expanded: boolean = false;
 
   @auth.Action('logout')
   logout(): void {

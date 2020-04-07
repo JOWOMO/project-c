@@ -4,34 +4,18 @@
       <img src="/images/logo.svg" alt="Logo" class="logo" />
     </nuxt-link>
 
-    <div v-if="!$store.state.auth.isAuthenticated" class="links">
-      <nuxt-link to="/info" class="link">FAQ</nuxt-link>
-      <button class="primary" @click="$router.push('/login')">Login</button>
-    </div>
-
-    <avatar v-else />
-
-    <!-- <div v-else class="profile" @click="active = !active">
-      <div class="nameImg">
-        <span>{{ title }}</span>
-        TODO: Add img from database
-        <img src="/images/profile.jpg" alt class="profile_img" />
+    <div class="right">
+      <div class="links">
+        <nuxt-link to="/dashboard" class="link" :class="{ active: search }">Meine Suchergebnisse</nuxt-link>
+        <nuxt-link to="/info" class="link" :class="{ active: faq }">FAQ</nuxt-link>
       </div>
-      <div class="dropdown" :class="{expanded: active}">
-        <div class="options">
-          <button @click="new_password">Passwort ändern</button>
-          <button class="red" @click="warning = !warning">Benutzer löschen</button>
-        </div>
-        <button class="blue" @click="logout">Logout</button>
+
+      <avatar v-if="this.$store.state.auth.user" />
+
+      <div class="login" v-if="!this.$store.state.auth.user">
+        <button class="primary" @click="$router.push('/login')">Login</button>
       </div>
     </div>
-
-    <div class="warning" :class="{expanded: warning}">
-      <h2>Möchtest du deinen Account Löschen?</h2>
-      <p>Alle Daten werden gelöscht</p>
-      <button @click="warning = !warning">Abbrechen</button>
-      <button class="red" @click="deleteUser">Löschen</button>
-    </div> -->
   </nav>
 </template>
 
@@ -56,7 +40,8 @@ export default {
       login: false,
       title: "",
       active: false,
-      warning: false
+      search: false,
+      faq: false
     };
   },
 
@@ -76,6 +61,16 @@ export default {
         console.error(e);
         this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`
       }
+    }
+    if(this.$route.path == '/dashboard') {
+      this.search = true
+      this.faq = false
+    } else if (this.$route.path == '/info') {
+      this.search = false
+      this.faq = true
+    } else {
+      this.search = true
+      this. faq = false
     }
   },
   methods: {
@@ -119,98 +114,83 @@ nav {
 
   background-color: #FFFFFF;
 
-  .profile, .links {
-    display: inline-block;
-  }
-
-  .links {
-    justify-self: right !important;
-
-    .link {
-      color: $fontColor;
-      margin: 10px!important;
-    }
-  }
-
-  .profile {
-    align-self: flex-start;
-    margin-top: 15px;
-    position: relative;
+  .right {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
-    .nameImg {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-end;
-
-      span {
-        margin-right: 20px;
-        font-weight: bold;
-      }
+    .profile, .links {
+      display: inline-block;
     }
 
-    .dropdown {
-      margin-top: 10px;
-      background: #fff;
-      border-radius: 8px;
-      border: 2px solid #00000010;
-      z-index: 5;
-      padding: 10px;
-      display: none;
-      // width: 200px;
+    .links {
+      margin-right: 40px;
 
-      &.expanded {
+      .link {
         display: inline-block;
+        color: $fontColor;
+        font-size: 18px;
+        margin: 10px;
+        height: 40px;
+
+        &.active {
+          border-bottom: 4px solid $primary;
+        }
+      }
+    }
+
+    .profile {
+      align-self: flex-start;
+      margin-top: 15px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: auto;
+
+      .nameImg {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+
+        span {
+          margin-right: 20px;
+          font-weight: bold;
+        }
       }
 
-      .red:hover {
-        background: #EE0000;
-        color: #fff;
-      }
-      .blue {
-        background: #25A6DA;
-        color: #fff;
-        width: 100%;
+      .dropdown {
+        margin-top: 10px;
+        background: #fff;
+        border-radius: 8px;
+        border: 2px solid #00000010;
+        z-index: 5;
+        padding: 10px;
+        display: none;
+        // width: 200px;
+
+        &.expanded {
+          display: inline-block;
+        }
+
+        .red:hover {
+          background: #EE0000;
+          color: #fff;
+        }
+        .blue {
+          background: #25A6DA;
+          color: #fff;
+          width: 100%;
+        }
       }
     }
   }
 
-  .links {
+  .login {
     .link {
-      margin-right: 88px;
-    }
-
-    a {
-          font-size: 18px !important;
-    }
-  }
-
-  .warning {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 800px;
-    max-height: 500px;
-    border-radius: 8px;
-    border: 2px solid #00000010;
-    background: #fff;
-    padding: 20px;
-    z-index: 10;
-    text-align: center;
-    display: none;
-
-    &.expanded {
-      display: block;
-    }
-
-    .red {
-      background: #EE0000;
-      color: #fff;
+      font-size: 18px !important;
     }
   }
 }
