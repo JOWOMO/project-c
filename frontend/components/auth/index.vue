@@ -12,9 +12,6 @@
     <div v-if="state == 'validate'">
       <validate @change-state="handleStateChange" />
     </div>
-    <div v-if="state == 'register-validate'">
-      <regValidate @change-state="handleStateChange" />
-    </div>
     <div v-if="state == 'reset'">
       <reset @change-state="handleStateChange" />
     </div>
@@ -31,7 +28,6 @@ import { Vue, Prop } from "nuxt-property-decorator";
 import login from "./login.vue";
 import register from "./register.vue";
 import validate from "./validate.vue";
-import regValidate from "./register-validate.vue";
 import reset from "./reset.vue";
 import newpassword from "./new.vue";
 
@@ -41,22 +37,17 @@ import newpassword from "./new.vue";
     register,
     validate,
     reset,
-    newpassword,
-    regValidate,
+    newpassword
   }
 })
 export default class Auth extends Vue {
-  @Prop({ type: String, required: false, default: "login" })
+  @Prop({ type: String, required: false, default: "Login" })
   readonly start_component!: String;
 
   @Prop({ type: String, required: false }) 
   readonly target_route!: any;
 
-  state: String = '';
-
-  mounted() {
-    this.state = this.start_component;
-  }
+  state: String = this.start_component;
 
   handleStateChange(event: string, value?: string) {
     console.debug("handleStateChange", event);
@@ -79,4 +70,7 @@ export default class Auth extends Vue {
 </script>
 
 <style lang="scss" scoped>
+* /deep/ {
+  @import '@/assets/form-layout-single';
+}
 </style>

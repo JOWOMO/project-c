@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Bestätige deine Email Adresse</h1>
-    <p>Wir haben dir eine Email geschickt. Bitte füge den Verifizierungs-Code hier ein:</p>
+    <h1>Bestätige deine Email adresse</h1>
+    <p>Wir haben dir eine Email geschickt. Bitte fügen Sie den verifizierungs Code hier ein</p>
 
     <form method="POST" @submit.prevent="confirm" novalidate>
       <div class="form-group">
@@ -16,7 +16,8 @@
         <a @click="resend" class="link">E-Mail kam nicht an?</a>
       </div>
 
-      <span id="error" v-if="error">{{ error }}</span>
+      <span v-if="error" id="error">{{ error }}</span>
+
       <div class="buttons">
         <button class="primary">Weiter</button>
       </div>
@@ -109,11 +110,3 @@ export default class extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import "@/assets/form-layout-single";
-
-.link-wrapper {
-  padding-top: 10px;
-}
-</style>
