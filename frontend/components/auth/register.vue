@@ -136,8 +136,7 @@ export default class extends Vue {
   async createUser() {
     console.debug("createUser");
 
-    // we need to clone the object
-    this.$store.commit("register_user_state", {
+    this.$store.commit("register/user", {
       email: this.email,
       password: this.password,
       firstName: this.firstName,
