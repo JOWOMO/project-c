@@ -8,7 +8,7 @@ if (!fs.existsSync('aws.json')) {
 // reads the dependencies from the cloudformation stack
 const awsConfig = JSON.parse(fs.readFileSync('aws.json'));
 function findAWSExport(setting) {
-  const node = awsConfig.find((n) => n.ExportName === `${setting}-${process.env.STAGE || 'dev'}`);
+  const node = awsConfig.find((n) => n.ExportName === `${setting}-${process.env.NUXT_ENV_STAGE || 'dev'}`);
   if (!node) throw `Setting ${setting} is not known`;
 
   console.log(setting, ':', node.OutputValue)
