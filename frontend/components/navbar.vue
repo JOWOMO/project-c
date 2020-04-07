@@ -62,19 +62,19 @@ export default {
 
   async created() {
     if (this.$store.state.auth.user) {
-      console.log("user is empty");
+      console.log("user is empty")
       try {
         // we need to find out where we stand
         const result = await this.$apollo.query({
           query: me
         });
-        console.log("me", result);
-        this.$store.commit("updateUser", result.data.me);
+        console.log("me",result)
+        this.$store.commit('updateUser',result.data.me)
         console.log(result.data);
         this.title = result.data.me.name || result.data.me.email;
       } catch (e) {
         console.error(e);
-        this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`;
+        this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`
       }
     }
   },
@@ -88,7 +88,7 @@ export default {
       this.$router.push("/");
     },
     async deleteUser() {
-      this.$store.dispatch("auth/delete");
+      this.$store.dispatch('auth/delete')
       this.$router.push("/");
     },
     async new_password() {
@@ -117,10 +117,9 @@ nav {
   align-items: center;
   padding: 0 48px;
 
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 
-  .profile,
-  .links {
+  .profile, .links {
     display: inline-block;
   }
 
@@ -169,11 +168,11 @@ nav {
       }
 
       .red:hover {
-        background: #ee0000;
+        background: #EE0000;
         color: #fff;
       }
       .blue {
-        background: #25a6da;
+        background: #25A6DA;
         color: #fff;
         width: 100%;
       }
@@ -186,7 +185,7 @@ nav {
     }
 
     a {
-      font-size: 18px !important;
+          font-size: 18px !important;
     }
   }
 
@@ -210,7 +209,7 @@ nav {
     }
 
     .red {
-      background: #ee0000;
+      background: #EE0000;
       color: #fff;
     }
   }

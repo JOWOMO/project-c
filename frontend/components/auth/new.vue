@@ -19,7 +19,7 @@
         <formInput :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
       </div>
 
-      <span id="error" v-if="error">{{ error }}</span>
+      <span id="error">{{ error }}</span>
 
       <div class="buttons">
         <button class="secondary" @click.prevent="$router.push('/')">Zurück</button>

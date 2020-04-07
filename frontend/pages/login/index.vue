@@ -14,8 +14,7 @@ import checkState from "@/apollo/queries/check_state.gql";
 @Component({
   components: {
     auth
-  },
-  layout: 'login',
+  }
 })
 export default class extends Vue {
   @Meta
@@ -56,4 +55,8 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
+    /deep/ .container {
+      width: 500px;
+      margin: 20px;
+    }
 </style>

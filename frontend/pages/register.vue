@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="screen-with-nav">
     <keep-alive>
       <sidebar :labels="labels" :selectedElement="selectedElement" class="sidebar" />
     </keep-alive>
@@ -17,7 +17,7 @@ import auth from "@/components/auth/index.vue";
 
 export enum RegistrationFlow {
   demand = "demand",
-  supply = "supply"
+  supply = "supply",
 }
 
 export type WorkflowProvider = () => Workflow;
@@ -25,7 +25,7 @@ type Workflow = {
   type: RegistrationFlow;
   displayName: string;
   setStage: (nbr: number) => void;
-};
+}
 
 @Component({
   components: {
@@ -50,8 +50,8 @@ export default class extends Vue {
     return {
       type: this.flowType,
       displayName: this.actionName,
-      setStage: this.setState.bind(this)
-    };
+      setStage: this.setState.bind(this),
+    }
   }
 
   @Meta
@@ -63,63 +63,60 @@ export default class extends Vue {
   }
 
   mounted() {
-    this.flowType =
-      this.$route.query.flow === "demand"
-        ? RegistrationFlow.demand
-        : RegistrationFlow.supply;
+    this.flowType = this.$route.query.flow === "demand"
+      ? RegistrationFlow.demand
+      : RegistrationFlow.supply;
 
-    this.actionName =
-      this.flowType === RegistrationFlow.demand ? "Ich suche" : "Ich biete";
+    this.actionName = this.flowType === RegistrationFlow.demand ? "Ich suche" : "Ich biete";
     this.labels.push(this.actionName);
   }
 }
 </script>
 
 <style scoped lang="scss">
-.page {
+.screen-with-nav {
   display: flex;
-  flex-direction: row;
+  flex-direction: row !important;
+  height: 100vh;
 }
 
 .sidebar {
   display: flex;
-  min-width: 336px;
 }
 
 .screen-right {
   display: flex;
+  flex-grow: 1;
 
-  width: 100vw;
-  min-height: 100vh;
-
-  padding-top: 150px;
-  padding-bottom: 44px;
-
+  align-items: center;
   justify-content: center;
-  // overflow-y: scroll;
+
+  overflow-y: scroll;
+
+  // margin-top: 50px;
+  // margin-bottom: 50px;
 }
 
-@media only screen and (max-width: 890px) {
-  .page {
-    flex-direction: column;
-  }
-
-  .screen-right {
-    padding-top: 44px;
-    padding-bottom: 44px;
-
-    flex-shrink: 0;
+@media only screen and (max-width: 950px) {
+  .sidebar {
+    display: none;
   }
 }
 
-@media only screen and (max-height: 600px) {
-  // .page {
-  //   display: block;
-  // }
-
+// this is required for the scrollbars to appear
+// this is a fix for the centering viewport that cannot live
+// with /deep/ .container 100vh; need to check
+@media only screen and (max-height: 780px) {
   .screen-right {
-    padding-bottom: 44px;
-    padding-top: 44px;
+    display: block !important;
+    margin: 20px;
+  }
+}
+
+// we need to collapse the margin to allow resizing in block mode
+@media only screen and (max-width: 950px) and (max-height: 780px) {
+  .screen-right {
+    margin: 0px;
   }
 }
 </style>

@@ -26,4 +26,15 @@ export default class extends Vue {}
   flex-direction: column;
   height: 100vh;
 }
+
+// collapse the navbar
+@media only screen and (max-height: 460px) {
+  // .navbar {
+  //   display: none;
+  // }
+
+  .center {
+    display: block;
+  }
+}
 </style>
