@@ -5,6 +5,7 @@
     </nuxt-link>
 
     <div v-if="!$store.state.auth.isAuthenticated" class="links">
+      <nuxt-link to="/info" class="link">FAQ</nuxt-link>
       <button class="primary" @click="$router.push('/login')">Login</button>
     </div>
 
