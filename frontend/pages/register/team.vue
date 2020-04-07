@@ -86,7 +86,8 @@ import {
 import { WorkflowProvider, RegistrationFlow } from "../register.vue";
 
 @Component({
-  components: { team }
+  components: { team },
+  middleware: 'authenticated',
 })
 export default class extends Vue {
   @Inject("workflow") workflow!: WorkflowProvider;

@@ -12,6 +12,10 @@ export default async function ({
         ]);
     } catch (e) {
         console.error('no current user', e);
+
+        try { await this.$apolloHelpers.onLogout(); }
+        catch { }
+        
         redirect(200, '/login', { return_url: route.path });
     }
 }

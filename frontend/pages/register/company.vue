@@ -67,7 +67,8 @@ import { WorkflowProvider } from "../register.vue";
   components: {
     formInput,
     formSelect
-  }
+  },
+  middleware: 'authenticated'
 })
 export default class extends Vue {
   @Inject("workflow") workflow!: WorkflowProvider;

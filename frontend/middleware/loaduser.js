@@ -11,6 +11,9 @@ export default async function ({
       app.$apolloHelpers.onLogin(token),
     ]);
   } catch (e) {
+    try { await this.$apolloHelpers.onLogout(); }
+    catch { }
+
     console.error('failed to load', e);
   }
 }
