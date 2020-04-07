@@ -1,11 +1,19 @@
 .container {
   h1 {
     text-align: left;
-    padding-bottom: 24px;
+    padding-bottom: 14px;
+  }
+
+  h1 + p {
+    padding-bottom: 75px;
+  }
+
+  h1 + form {
+    padding-top: 61px;
   }
 
   .buttons {
-    margin-top: 21px;
+    margin-top: 44px;
 
     display: grid;
     grid-gap: 24px;
@@ -25,17 +33,18 @@
   max-width: 800px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 805px) {
   .container {
-    max-width: 500;
+    min-width: 550px !important;
+    max-width: 500 !important;
   }
 }
 
 @media only screen and (max-width: 505px) {
   .container {
     // make container stretch whole page
-    max-width: auto;
-    min-width: 100vw;
+    max-width: auto !important;
+    min-width: 100vw !important;
 
     padding-left: 20px;
     padding-right: 20px;
