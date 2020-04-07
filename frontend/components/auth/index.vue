@@ -10,7 +10,7 @@
       <newPassword @change-state="handleStateChange" />
     </div>
     <div v-if="state == 'validate'">
-      <validate :email="user.email" @change-state="handleStateChange" /> <!--    -->
+      <validate @change-state="handleStateChange" />
     </div>
     <div v-if="state == 'reset'">
       <reset @change-state="handleStateChange" />
@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import Component from "nuxt-class-component";
-import { Vue, Prop ,Provide} from "nuxt-property-decorator";
+import { Vue, Prop } from "nuxt-property-decorator";
 
 import login from "./login.vue";
 import register from "./register.vue";
@@ -41,23 +41,17 @@ import newpassword from "./new.vue";
   }
 })
 export default class Auth extends Vue {
-
-  @Prop({ type: String, required: false, default: "Login",})
+  @Prop({ type: String, required: false, default: "Login" })
   readonly start_component!: String;
 
-  @Prop({ type: String, required: false })
+  @Prop({ type: String, required: false }) 
   readonly target_route!: any;
-  state: String = this.start_component;
-  
-  user:{email:String} = {
-    email: ""
-  };
-  
-  handleStateChange(event: string, value?: string, user?:{email:String}) {
-    console.debug("handleStateChange", event);
-    console.log(value)
-    console.log("Object user: ", user)
 
+  state: String = this.start_component;
+
+  handleStateChange(event: string, value?: string) {
+    console.debug("handleStateChange", event);
+    
     if (event === "redirect") {
       console.log("target route", this.target_route);
 
@@ -70,11 +64,6 @@ export default class Auth extends Vue {
         this.$emit("back");
     } else {
       this.state = event;
-      console.log(user)
-
-      if(user != undefined) {
-        this.user.email = user.email
-      }
     }
   }
 }

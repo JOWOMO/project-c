@@ -18,17 +18,19 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide } from "nuxt-property-decorator";
+import { Vue, Component, Provide, State } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
 import formInput from "@/components/forms/input.vue";
+import { IState } from "@/store";
 
 @Component({
   components: { formInput }
 })
 export default class extends Vue {
+  @State((s: IState) => s.register.user.email)
   @Validate({ required, email })
   email: string = "";
 
@@ -57,7 +59,7 @@ export default class extends Vue {
         email: this.email
       });
 
-      this.$store.commit("register_user_state", { email: this.email });
+      this.$store.commit("register/user", { email: this.email });
       this.$emit("change-state", "new");
     } catch (err) {
       this.error = err.message;
