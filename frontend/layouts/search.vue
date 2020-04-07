@@ -1,9 +1,13 @@
 <template>
+<div>
+  <navbar />
   <nuxt class="screen-top" />
+</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
+import navbar from '@/components/navbar.vue';
 
 @Component({
   components: {
