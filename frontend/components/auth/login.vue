@@ -32,7 +32,7 @@ import { required, email } from "vuelidate/lib/validators";
 import formInput from "@/components/forms/input.vue";
 
 @Component({
-  components: { formInput }
+  components: { formInput },
 })
 export default class extends Vue {
   @Validate({ required, email })
@@ -67,11 +67,11 @@ export default class extends Vue {
     try {
       const user = {
         email: this.email,
-        password: this.password
+        password: this.password,
       };
 
       // we need to clone the object
-      this.$store.commit("register_user_state", user);
+      this.$store.commit("register/user", user);
 
       await this.$store.dispatch("auth/login", user);
       this.$emit("change-state", "redirect");
@@ -87,3 +87,7 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/form-layout-single';
+</style>

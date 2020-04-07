@@ -19,7 +19,7 @@
         <formInput :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
       </div>
 
-      <span id="error">{{ error }}</span>
+      <span id="error" v-if="error">{{ error }}</span>
 
       <div class="buttons">
         <button class="secondary" @click.prevent="$router.push('/')">Zurück</button>
@@ -30,17 +30,19 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide } from "nuxt-property-decorator";
+import { Vue, Component, Provide, State } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
+import { IState } from '@/store'
 import formInput from "@/components/forms/input.vue";
 
 @Component({
   components: { formInput }
 })
 export default class extends Vue {
+  @State((s: IState) => s.register.user.email)
   @Validate({ required, email })
   email: string = "";
 

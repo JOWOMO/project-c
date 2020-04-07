@@ -1,13 +1,19 @@
-@import './colors.scss';
-
 .container {
   h1 {
     text-align: left;
-    padding-bottom: 24px;
+    padding-bottom: 14px;
+  }
+
+  h1 + p {
+    padding-bottom: 75px;
+  }
+
+  h1 + form {
+    padding-top: 61px;
   }
 
   .buttons {
-    margin-top: 21px;
+    margin-top: 44px;
 
     display: grid;
     grid-gap: 24px;
@@ -22,30 +28,34 @@
     display: grid;
     grid-gap: 11px;
   }
+
+  min-width: 500px;
+  max-width: 800px;
 }
 
-// @media only screen and (max-width: 765px) {
-//   .container {
-//     justify-content: center;
-//     grid-template-rows: auto 1fr;
-//     grid-template-columns: 80vw;
+@media only screen and (max-width: 805px) {
+  .container {
+    min-width: 550px !important;
+    max-width: 500 !important;
+  }
+}
 
-//     h1 {
-//       margin: 50px 0 0 0;
-//     }
+@media only screen and (max-width: 505px) {
+  .container {
+    // make container stretch whole page
+    max-width: auto !important;
+    min-width: 100vw !important;
 
-//     #error {
-//       grid-column: 1;
-//       grid-row: 4;
-//       text-align: center;
-//     }
+    padding-left: 20px;
+    padding-right: 20px;
 
-//     .form-group {
-//       width: 80vw;
+    // move buttons downwards
+    .buttons {
+      display: block;
 
-//       input, label, .error {
-//         width: 100%;
-//       }
-//     }
-//   }
-// }
+      button {
+        margin-bottom: 22px;
+      }
+    }
+  }
+}

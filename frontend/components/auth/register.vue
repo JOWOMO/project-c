@@ -33,14 +33,13 @@
         <formCheckbox :id="'agb'" :label="'Bitte akzeptiere unsere AGB'" v-model="agb">
           <template>
             Bitte Akzeptiere unsere
-              <nuxt-link to="/agb">AGB</nuxt-link>
-            um fortzufahren
+            <nuxt-link to="/agb">AGB</nuxt-link>um fortzufahren
           </template>
         </formCheckbox>
       </div>
     </form>
 
-    <span id="error">{{ error }}</span>
+    <span id="error" v-if="error">{{ error }}</span>
 
     <div class="buttons">
       <button class="secondary" @click.prevent="back">Zurück</button>
@@ -115,7 +114,7 @@ export default class extends Vue {
     };
   }
 
-  async created() {
+  async mounted() {
     console.log("created");
 
     if (this.authenticatedUser) {
@@ -137,8 +136,12 @@ export default class extends Vue {
   async createUser() {
     console.debug("createUser");
 
-    // we need to clone the object
-    // this.$store.commit("register_user_state", { ...this.user });
+    this.$store.commit("register/user", {
+      email: this.email,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName
+    });
 
     try {
       const user = await this.$store.dispatch("auth/register", {
@@ -148,7 +151,7 @@ export default class extends Vue {
         lastName: this.lastName
       });
 
-      this.$emit("change-state", "validate");
+      this.$emit("change-state", "register-validate");
     } catch (err) {
       console.log("err: ", err);
       if (err.code === "UsernameExistsException") {
@@ -193,7 +196,7 @@ export default class extends Vue {
     this.$emit("validate");
 
     if (this.$v.$invalid) {
-      console.debug('invalid form', this.$v);
+      console.debug("invalid form", this.$v);
       return;
     }
 
