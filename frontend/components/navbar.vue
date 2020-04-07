@@ -69,7 +69,7 @@ export default {
       this.search = false
       this.faq = true
     } else {
-      this.search = true
+      this.search = false
       this. faq = false
     }
   },
@@ -111,7 +111,6 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 48px;
-
   background-color: #FFFFFF;
 
   .right {
