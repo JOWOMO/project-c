@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
+import { Vue, Component, Prop, State, Provide ,Emit } from "nuxt-property-decorator";
 
 import { Validations } from "vuelidate-property-decorators";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
@@ -147,8 +147,7 @@ export default class extends Vue {
         firstName: this.firstName,
         lastName: this.lastName
       });
-
-      this.$emit("change-state", "validate",user.email);
+      this.$emit("change-state", "validate"," ",{email:this.email});
     } catch (err) {
       console.log("err: ", err);
       if (err.code === "UsernameExistsException") {

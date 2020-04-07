@@ -10,7 +10,7 @@
       <newPassword @change-state="handleStateChange" />
     </div>
     <div v-if="state == 'validate'">
-      <validate @change-state="handleStateChange" /> <!-- :email="user.email" -->
+      <validate :email="user.email" @change-state="handleStateChange" /> <!--    -->
     </div>
     <div v-if="state == 'reset'">
       <reset @change-state="handleStateChange" />
@@ -42,21 +42,21 @@ import newpassword from "./new.vue";
 })
 export default class Auth extends Vue {
 
-  @Prop({ type: String, required: false, default: "Login" })
+  @Prop({ type: String, required: false, default: "Login",})
   readonly start_component!: String;
 
   @Prop({ type: String, required: false })
   readonly target_route!: any;
-  state: String = 'validate';// this.start_component
-  // user: Object;
-  // @Provide("email")
-  // provideEmail():String{
-  // return this.user.email
-  // }
-
-  handleStateChange(event: string, value?: string) {
+  state: String = this.start_component;
+  
+  user:{email:String} = {
+    email: ""
+  };
+  
+  handleStateChange(event: string, value?: string, user?:{email:String}) {
     console.debug("handleStateChange", event);
     console.log(value)
+    console.log("Object user: ", user)
 
     if (event === "redirect") {
       console.log("target route", this.target_route);
@@ -70,6 +70,11 @@ export default class Auth extends Vue {
         this.$emit("back");
     } else {
       this.state = event;
+      console.log(user)
+
+      if(user != undefined) {
+        this.user.email = user.email
+      }
     }
   }
 }
