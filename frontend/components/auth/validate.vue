@@ -5,43 +5,19 @@
 
     <form method="POST" @submit.prevent="confirm" novalidate>
       <div class="form-group">
-        <input
-          type="email"
-          v-model="user.email"
-          id="email"
-          name="email"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.email.$error }"
-          required
-        />
-        <label for="email">Email</label>
-        <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
-          <span v-if="!$v.user.email.required">Email is required</span>
-          <span v-if="!$v.user.email.email">Email is invalid</span>
-        </div>
+        <formInput :id="'email'" :label="'E-Mail'" v-model="email" />
       </div>
 
       <div class="form-group">
-        <input
-          type="text"
-          v-model="user.code"
-          id="code"
-          name="code"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && $v.user.code.$error }"
-          required
-        />
-        <label for="code">Code</label>
-        <div v-if="submitted && $v.user.code.$error" class="invalid-feedback">
-          <span v-if="!$v.user.code.required">Code is required</span>
-        </div>
+        <formInput :id="'code'" :label="'Code'" v-model="code" />
       </div>
 
       <div class="link-wrapper">
         <a @click="resend" class="link">E-Mail kam nicht an?</a>
       </div>
 
-      <span id="error">{{ error }}</span>
+      <span v-if="error" id="error">{{ error }}</span>
+
       <div class="buttons">
         <button class="primary">Weiter</button>
       </div>
@@ -49,89 +25,88 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Inject, Prop, State, Provide } from "nuxt-property-decorator";
+import { Validate } from "vuelidate-property-decorators";
+
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-import addUser from "@/apollo/mutations/add_user";
+import formInput from "@/components/forms/input.vue";
 
-export default {
-  components: {},
+import { UserAddMutation, UserAddMutationVariables } from "@/apollo/schema";
+import addUser from "@/apollo/mutations/add_user.gql";
+import { IState } from "@/store";
 
-  data() {
-    return {
-      user: {
-        email: this.$store.state.register_state.user.email,
-        code: ""
-      },
-      submitted: false,
-      error: ""
-    };
-  },
+@Component({
+  components: { formInput }
+})
+export default class extends Vue {
+  @Provide("validation")
+  validation() {
+    return this.$v;
+  }
 
-  validations: {
-    user: {
-      email: { required, email },
-      code: { required }
+  @Validate({ required, email })
+  @State((s: IState) => s.register.user.email)
+  email!: string;
+
+  @State((s: IState) => s.register.user.password)
+  password!: string;
+
+  @Validate({ required })
+  code: string = '';
+
+  error: String = "";
+
+  async resend() {
+    this.$store.dispatch("auth/resendcode", {
+      email: this.email
+    });
+  }
+
+  async confirm() {
+    // stop here if form is invalid
+    this.$v.$touch();
+    this.$emit("validate");
+
+    if (this.$v.$invalid) {
+      return;
     }
-  },
 
-  methods: {
-    async resend() {
-      this.$store.dispatch("auth/resendcode", this.user);
-    },
+    try {
+      let user: any = {};
 
-    async confirm() {
-      this.submitted = true;
+      await this.$store.dispatch("auth/confirm", {
+        email: this.email,
+        code: this.code
+      });
 
-      // stop here if form is invalid
-      this.$v.$touch();
-      if (this.$v.$invalid) {
+      // https://github.com/amazon-archives/amazon-cognito-identity-js/issues/186#issuecomment-335690410
+      if (this.password) {
+        user = await this.$store.dispatch("auth/login", {
+          email: this.email,
+          password: this.password
+        });
+      } else {
+        this.$emit("change-state", "login");
         return;
       }
 
-      try {
-        let user;
+      await this.$apollo.mutate<UserAddMutation, UserAddMutationVariables>({
+        mutation: addUser,
+        variables: {
+          email: this.email,
 
-        await this.$store.dispatch("auth/confirm", {
-          email: this.user.email,
-          code: this.user.code
-        });
-
-        // https://github.com/amazon-archives/amazon-cognito-identity-js/issues/186#issuecomment-335690410
-        if (this.$store.state.register_state.user.password) {
-          user = await this.$store.dispatch(
-            "auth/login",
-            this.$store.state.register_state.user
-          );
-        } else {
-          this.$emit("change-state", "login");
-          return;
+          // they have been stored during the register procedure
+          first: user.attributes.given_name,
+          last: user.attributes.family_name
         }
+      });
 
-        await this.$apollo.mutate({
-          mutation: addUser,
-          variables: {
-            email: this.user.email,
-
-            // they have been stored during the register procedure
-            first: user.attributes.given_name,
-            last: user.attributes.family_name
-          }
-        });
-
-        this.$emit("change-state", "redirect");
-      } catch (err) {
-        console.error("err: ", err);
-        // if (err.code === "UsernameExistsException") {
-        //   this.error =
-        //     "Das hat leider nicht geklappt. Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?";
-        // } else if (err.code === "InvalidPasswordException") {
-        //   this.error =
-        //     "Das Passwort entspricht nicht den Komplexitätsanforderungen. Bitte gib mindestens 6 Zeichen bestehend aus Groß- und Kleinbuchstaben ein.";
-        // } else {
-        this.error = err.message;
-        // }
-      }
+      this.$emit("change-state", "redirect");
+    } catch (err) {
+      console.error("err: ", err);
+      this.error = err.message;
     }
   }
-};
+}
 </script>
