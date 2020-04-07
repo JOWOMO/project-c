@@ -5,17 +5,15 @@ export default async function ({
         console.debug('[Authenticated Guard] checking');
 
         const load = store.dispatch('auth/load');
-        const token = await store.dispatch('auth/token');
-        await Promise.all([
-            load,
-            app.$apolloHelpers.onLogin(token),
-        ]);
+        if (!load) {
+            redirect(200, '/login', { return_url: route.path });
+        }
     } catch (e) {
         console.error('no current user', e);
 
         try { await app.$apolloHelpers.onLogout(); }
         catch { }
-        
+
         redirect(200, '/login', { return_url: route.path });
     }
 }
