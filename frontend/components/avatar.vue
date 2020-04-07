@@ -1,10 +1,11 @@
 <template>
   <div class="avatar" @click="expanded = !expanded">
     <div class="profile" v-if="user">
-      <img v-if="user.pictureUrl != null" :src="user.pictureUrl" />
+      <img v-if="user.pictureUrl != null" src="/images/profile.jpg" />
       <div
         class="textImg"
         :style="color"
+        v-else
       >
         <span>{{ initials }}</span>
       </div>
