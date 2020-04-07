@@ -55,6 +55,7 @@ export default {
   */
   plugins: [
     '@/plugins/vuelidate.js',
+    '@/plugins/swal.js',
   ],
   /*
   ** Nuxt.js dev-modules

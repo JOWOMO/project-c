@@ -100,13 +100,19 @@ export default class extends Vue {
   topics: any[] = [];
 
   addTeam() {
-    this.supplies.push({
+    const record = {
       number: ++this.counter,
       quantity: 0,
       skills: [],
       isActive: true,
       expanded: true
-    });
+    };
+
+    if (this.workflow().type === RegistrationFlow.demand) {
+      this.demands.push(record);
+    } else {
+      this.supplies.push(record);
+    }
   }
 
   toggleVisibilitySupply(idx: number) {
@@ -146,45 +152,50 @@ export default class extends Vue {
   }
 
   async save() {
-    for (const supply of this.supplies.filter(s => s.modified)) {
-      console.log("Saving", supply);
-      await this.$apollo.mutate<
-        UpdateSupplyMutation,
-        UpdateSupplyMutationVariables
-      >({
-        mutation: updateSupply,
-        variables: {
-          companyId: this.company.id,
-          name: supply.name!,
-          quantity: supply.quantity,
-          skills: supply.skills,
-          id: supply.id,
-          active: supply.isActive!,
-          descriptionExt: supply.description
-        }
-      });
-    }
+    try {
+      for (const supply of this.supplies.filter(s => s.modified)) {
+        console.log("Saving", supply);
+        await this.$apollo.mutate<
+          UpdateSupplyMutation,
+          UpdateSupplyMutationVariables
+        >({
+          mutation: updateSupply,
+          variables: {
+            companyId: this.company.id,
+            name: supply.name!,
+            quantity: supply.quantity,
+            skills: supply.skills,
+            id: supply.id,
+            active: supply.isActive!,
+            descriptionExt: supply.description
+          }
+        });
+      }
 
-    for (const supply of this.demands.filter(s => s.modified)) {
-      console.log("Saving", supply);
-      await this.$apollo.mutate<
-        UpdateDemandMutation,
-        UpdateDemandMutationVariables
-      >({
-        mutation: updateDemand,
-        variables: {
-          companyId: this.company.id,
-          name: supply.name!,
-          quantity: supply.quantity,
-          skills: supply.skills,
-          id: supply.id,
-          active: supply.isActive!,
-          descriptionExt: supply.description
-        }
-      });
-    }
+      for (const supply of this.demands.filter(s => s.modified)) {
+        console.log("Saving", supply);
+        await this.$apollo.mutate<
+          UpdateDemandMutation,
+          UpdateDemandMutationVariables
+        >({
+          mutation: updateDemand,
+          variables: {
+            companyId: this.company.id,
+            name: supply.name!,
+            quantity: supply.quantity,
+            skills: supply.skills,
+            id: supply.id,
+            active: supply.isActive!,
+            descriptionExt: supply.description
+          }
+        });
+      }
 
-    this.$router.push(`/welcome`);
+      this.$router.push(`/welcome`);
+    } catch (err) {
+      console.error(err);
+      this.$swal("Das hat nicht geklappt", err.message, "error");
+    }
   }
 
   counter = 0;
@@ -234,10 +245,18 @@ export default class extends Vue {
         this.counter = 0;
         //@ts-ignore
         this.demands = (this.company.demands || []).map(this.map.bind(this));
+
+        if (this.demands.length === 0) {
+          this.addTeam();
+        }
       } else {
         this.counter = 0;
         //@ts-ignore
         this.supplies = (this.company.supplies || []).map(this.map.bind(this));
+
+        if (this.supplies.length === 0) {
+          this.addTeam();
+        }
       }
     } catch (e) {
       console.error(e);
@@ -302,7 +321,7 @@ export default class extends Vue {
 
     .buttons {
       margin-top: 0px;
-      flex-direction: column;
+      flex-direction: column-reverse;
 
       button {
         margin-top: 21px;
@@ -396,15 +415,4 @@ export default class extends Vue {
     display: inline-block;
   }
 }
-
-// @media only screen and (max-width: 950px) {
-//   .team-form {
-//     width: 100%;
-//     margin: 30px 0 0 0;
-//   }
-
-//   // .buttons {
-//   //   justify-self: center !important;
-//   // }
-// }
 </style>

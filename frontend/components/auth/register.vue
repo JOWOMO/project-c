@@ -39,7 +39,7 @@
       </div>
     </form>
 
-    <span id="error" v-if="error">{{ error }}</span>
+    <!-- <span id="error" v-if="error">{{ error }}</span> -->
 
     <div class="buttons">
       <button class="secondary" @click.prevent="back">Zurück</button>
@@ -64,6 +64,7 @@ import addUser from "@/apollo/mutations/add_user.gql";
 
 import formInput from "@/components/forms/input.vue";
 import formCheckbox from "@/components/forms/checkbox.vue";
+import { formatMessage } from "./messages";
 
 @Component({
   components: { formInput, formCheckbox }
@@ -154,15 +155,8 @@ export default class extends Vue {
       this.$emit("change-state", "register-validate");
     } catch (err) {
       console.log("err: ", err);
-      if (err.code === "UsernameExistsException") {
-        this.error =
-          "Das hat leider nicht geklappt. Es scheint sich schon jemand mit derselben E-Mail Adresse registriert zu haben. Vielleicht kannst Du versuchen Dich anzumelden?";
-      } else if (err.code === "InvalidPasswordException") {
-        this.error =
-          "Das Passwort entspricht nicht den Komplexitätsanforderungen. Bitte gib mindestens 6 Zeichen bestehend aus Groß- und Kleinbuchstaben ein.";
-      } else {
-        this.error = err.message;
-      }
+      this.error = formatMessage(err);
+      this.$swal("Das hat nicht geklappt", this.error, "error");
     }
   }
 
@@ -186,6 +180,7 @@ export default class extends Vue {
     } catch (err) {
       console.error(err);
       this.error = err.message;
+      this.$swal("Das hat nicht geklappt", this.error, "error");
     }
   }
 

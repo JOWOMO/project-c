@@ -7,7 +7,7 @@
         <formInput :id="'email'" :label="'E-Mail'" v-model="email" />
       </div>
 
-      <span id="error" v-if="error">{{ error }}</span>
+      <!-- <span id="error" v-if="error">{{ error }}</span> -->
 
       <div class="buttons">
         <button class="secondary" @click.prevent="back">Zurück</button>
@@ -25,6 +25,7 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
 import formInput from "@/components/forms/input.vue";
 import { IState } from "@/store";
+import { formatMessage } from "./messages";
 
 @Component({
   components: { formInput }
@@ -63,20 +64,13 @@ export default class extends Vue {
       this.$emit("change-state", "new");
     } catch (err) {
       console.error(err);
-
-      if (err.code === "UserNotFoundException") {
-        this.error = 'Deine E-Mail ist uns nicht bekannt.'
-      } 
-      else if (err.code === "LimitExceededException") {
-        this.error = 'Du hast zu oft versucht Dein Passwort zurückzusetzen. Bitte warte etwas ab, bis Du es erneut versuchst.'
-      } else {
-        this.error = err.message;
-      }
+      this.error = formatMessage(err);
+      this.$swal("Das hat nicht geklappt", this.error, "error");
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/form-layout-single';
+@import "@/assets/form-layout-single";
 </style>

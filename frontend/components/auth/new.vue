@@ -37,6 +37,7 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
 import { IState } from '@/store'
 import formInput from "@/components/forms/input.vue";
+import { formatMessage } from "./messages";
 
 @Component({
   components: { formInput }
@@ -98,15 +99,7 @@ export default class extends Vue {
       }
     } catch (err) {
       console.error(err);
-
-      if (err.code === "CodeMismatchException") {
-        this.error = 'Der Code stimmt leider nicht. Bitte versuche es erneut.'
-      }
-      else if (err.code === "LimitExceededException") {
-        this.error = 'Du hast zu oft versucht Dein Passwort ändern. Bitte warte etwas ab, bis Du es erneut versuchst.'
-      } else {
-        this.error = err.message;
-      }
+      this.error = formatMessage(err);
     }
   }
 }

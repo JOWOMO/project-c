@@ -379,7 +379,8 @@ export default class extends Vue {
 
   .save-buttons {
     margin-top: 0px;
-    flex-direction: column;
+    display: flex;
+    flex-direction: column-reverse;
 
     button {
       margin-top: 21px;

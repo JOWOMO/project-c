@@ -10,6 +10,7 @@
       :value="value"
       @input="update"
       :required="true"
+      :disabled="disabled"
       class="form-control"
       :class="{ 'is-invalid': submitted && validation.$error }"
     />
@@ -22,6 +23,7 @@
       :autocomplete="id"
       :checked="value"
       @input="update"
+      :disabled="disabled"
       class="form-control"
       :class="{ 'is-invalid': submitted && validation.$error }"
     />
@@ -69,6 +71,9 @@ export default class extends Vue {
 
   @Prop({ type: String, required: false, default: "text" })
   type!: string;
+
+  @Prop({ type: Boolean, required: false, default: false })
+  disabled!: string;
 
   @Prop({ type: String, required: true })
   label!: string;

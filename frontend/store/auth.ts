@@ -30,6 +30,7 @@ declare module "vuex" {
     (arg: 'auth/startResetPassword', payload: Required<Pick<User, 'email'>>): Promise<void>;
     (arg: 'auth/resetPassword', payload: Required<Pick<User, 'email' | 'password'>> & { code: string }): Promise<boolean>;
     (arg: 'auth/resentCode'): Promise<void>;
+    (arg: 'auth/resendcode'): Promise<void>;
     (arg: 'auth/login', payload: Required<Pick<User, 'email' | 'password'>>): Promise<void>;
     (arg: 'auth/logout'): Promise<void>;
   }

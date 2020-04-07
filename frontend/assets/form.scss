@@ -71,8 +71,13 @@ input:-webkit-autofill {
         padding: 20px 20px 0px 21px;
       }
   
-      &:valid {
+      &:valid, &:disabled {
         padding: 20px 20px 0px 21px;
+      }
+
+      &:disabled {
+        color: lighten($color: $inputtextcolor, $amount: 10);
+        border: 1px solid lighten($color: $border, $amount: 5);
       }
   
       &:valid + label {
@@ -87,6 +92,13 @@ input:-webkit-autofill {
         font-size: 12px;
         color: $primary;
         font-weight: bold;
+      }
+
+      &:disabled + label {
+        top: 11px;
+        font-size: 12px;
+        font-weight: normal;
+        color: lighten($color: $inputtextcolor, $amount: 30);
       }
   
       &[type=number]::-webkit-inner-spin-button,

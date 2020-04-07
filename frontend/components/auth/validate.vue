@@ -5,18 +5,18 @@
 
     <form method="POST" @submit.prevent="confirm" novalidate>
       <div class="form-group">
-        <formInput :id="'email'" :label="'E-Mail'" v-model="email" />
+        <formInput :disabled="true" :id="'email'" :label="'E-Mail'" v-model="email" />
       </div>
 
       <div class="form-group">
         <formInput :id="'code'" :label="'Code'" v-model="code" />
       </div>
 
-      <div class="link-wrapper">
+      <div v-if="email" class="link-wrapper">
         <a @click="resend" class="link">E-Mail kam nicht an?</a>
       </div>
 
-      <span id="error" v-if="error">{{ error }}</span>
+      <!-- <span id="error" v-if="error">{{ error }}</span> -->
       <div class="buttons">
         <button class="primary">Weiter</button>
       </div>
@@ -25,7 +25,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Inject, Prop, State, Provide } from "nuxt-property-decorator";
+import {
+  Component,
+  Vue,
+  Inject,
+  Prop,
+  State,
+  Provide
+} from "nuxt-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
@@ -34,6 +41,7 @@ import formInput from "@/components/forms/input.vue";
 import { UserAddMutation, UserAddMutationVariables } from "@/apollo/schema";
 import addUser from "@/apollo/mutations/add_user.gql";
 import { IState } from "@/store";
+import { formatMessage } from "./messages";
 
 @Component({
   components: { formInput }
@@ -45,21 +53,33 @@ export default class extends Vue {
   }
 
   @Validate({ required, email })
-  @State((s: IState) => s.register.user.email)
+  @State((s: IState) => s.register.user.email || "test@email.de")
   email!: string;
 
   @State((s: IState) => s.register.user.password)
   password!: string;
 
   @Validate({ required })
-  code: string = '';
+  code: string = "";
 
-  error: String = "";
+  error: string = "";
 
   async resend() {
-    this.$store.dispatch("auth/resendcode", {
-      email: this.email
-    });
+    try {
+      await this.$store.dispatch("auth/resendcode", {
+        email: this.email
+      });
+
+      this.$swal(
+        "Das hat geklappt",
+        "Du solltes eine E-Mail in Deinem Posteingang haben.",
+        "success"
+      );
+    } catch (e) {
+      console.error(e);
+
+      this.$swal("Das hat nicht geklappt", formatMessage(e), "error");
+    }
   }
 
   async confirm() {
@@ -104,7 +124,9 @@ export default class extends Vue {
       this.$emit("change-state", "redirect");
     } catch (err) {
       console.error("err: ", err);
-      this.error = err.message;
+      this.error = formatMessage(err);
+
+      this.$swal("Das hat nicht geklappt", this.error, "error");
     }
   }
 }
@@ -115,5 +137,11 @@ export default class extends Vue {
 
 .link-wrapper {
   padding-top: 10px;
+}
+
+.container {
+  .buttons {
+    margin-top: 22px;
+  }
 }
 </style>

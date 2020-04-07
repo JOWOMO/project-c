@@ -1,0 +1,27 @@
+// Global
+@import './colors';
+@import './scales';
+
+.swal-title {
+  font-size: $h1FontSize;
+  color: $headercolor;
+  font-weight: bold;
+  line-height: 42px;
+}
+
+.swal-subtitle {
+  font-size: $textsize;
+  color: $textcolor;
+}
+
+.swal-button {
+  border-radius: 90px  !important;
+  min-width: 200px  !important;
+  height: 50px  !important;
+  
+  border: none;
+  outline: none;
+
+  font-size: $buttonFormText !important;
+  font-weight: 500;
+}

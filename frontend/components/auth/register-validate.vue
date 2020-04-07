@@ -20,19 +20,21 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// we normally come from the register flow. we make the container
+// we normally come from the register flow. we make the container 
 // the same size
-/deep/ .container {
+
+.container {
   min-width: 800px;
+}
 
-  .buttons {
-    display: flex;
-    justify-content: flex-end;
+@import '@/assets/form-layout-responsive';
 
-    button {
-      max-width: 200px;
-      width: auto;
-    }
+/deep/ .buttons {
+  display: flex;
+  justify-content: flex-end !important;
+
+  button {
+    max-width: 200px !important;
   }
 }
 </style>
