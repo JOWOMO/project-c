@@ -62,7 +62,16 @@ export default class extends Vue {
       this.$store.commit("register/user", { email: this.email });
       this.$emit("change-state", "new");
     } catch (err) {
-      this.error = err.message;
+      console.error(err);
+
+      if (err.code === "UserNotFoundException") {
+        this.error = 'Deine E-Mail ist uns nicht bekannt.'
+      } 
+      else if (err.code === "LimitExceededException") {
+        this.error = 'Du hast zu oft versucht Dein Passwort zurückzusetzen. Bitte warte etwas ab, bis Du es erneut versuchst.'
+      } else {
+        this.error = err.message;
+      }
     }
   }
 }

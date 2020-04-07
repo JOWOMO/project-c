@@ -1,21 +1,27 @@
+@import '@/assets/colors';
+
 .container {
   h1 {
     text-align: left;
     padding-bottom: 14px;
   }
 
-  p {
+  h1 + p {
     padding-bottom: 75px;
   }
 
+  h1 + form {
+    padding-top: 61px;
+  }
+
   .buttons {
-    padding-top: 44px;
+    margin-top: 44px;
+
     display: flex;
     justify-content: space-between;
 
     button {
       max-width: 200px;
-      width: auto;
     }
   }
 
@@ -37,43 +43,13 @@
     }
   }
 
+  #error {
+    grid-column: 1 / span 2;
+    color: $error;
+  }
+
   max-width: 800px;
   min-width: 800px;
 }
 
-@media only screen and (max-width: 1150px) {
-  // we first make the grid smaller
-  .container {
-    min-width: 550px;
-    max-width: 550px;
-  }
-}
-
-@media only screen and (max-width: 580px) {
-  .container {
-    min-width: 100vw;  
-    max-width: 100vw;  
-
-    padding-left: 20px;
-    padding-right: 20px;
-    
-    form {
-      display: flex;
-      flex-direction: column;
-  
-      .form-group {
-        padding-bottom: 20px;
-      }
-    }
-
-    .buttons {
-      margin-top: 0px;
-      flex-direction: column;
-      
-      button {
-        margin-top: 21px;
-        min-width: 100%;
-      }
-    }
-  }
-}
+@import './form-layout-responsive';

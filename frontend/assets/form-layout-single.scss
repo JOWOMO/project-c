@@ -1,61 +1,28 @@
+@import './form-layout-two';
+
 .container {
-  h1 {
-    text-align: left;
-    padding-bottom: 14px;
-  }
-
-  h1 + p {
-    padding-bottom: 75px;
-  }
-
-  h1 + form {
-    padding-top: 61px;
-  }
-
+  // buttons are stretched in this case
   .buttons {
-    margin-top: 44px;
+    // form-group is missing
+    grid-column: 1 / span 2;
 
-    display: grid;
-    grid-gap: 24px;
-    grid-auto-flow: column;
-    
+    display: flex;
+    justify-content: space-between;
+
     button {
-      width: 100%;
+      flex-grow: 1;
+      max-width: none;
+    }
+    
+    // spacing between equal elements
+    button + button {
+      margin-left: 44px;
     }
   }
 
-  form {
-    display: grid;
-    grid-gap: 11px;
-  }
-
-  min-width: 500px;
   max-width: 800px;
+  min-width: 500px;
 }
 
-@media only screen and (max-width: 805px) {
-  .container {
-    min-width: 550px !important;
-    max-width: 500 !important;
-  }
-}
-
-@media only screen and (max-width: 505px) {
-  .container {
-    // make container stretch whole page
-    max-width: auto !important;
-    min-width: 100vw !important;
-
-    padding-left: 20px;
-    padding-right: 20px;
-
-    // move buttons downwards
-    .buttons {
-      display: block;
-
-      button {
-        margin-bottom: 22px;
-      }
-    }
-  }
-}
+// need to redeclare that
+@import './form-layout-responsive';

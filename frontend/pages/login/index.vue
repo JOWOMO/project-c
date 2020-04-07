@@ -1,5 +1,5 @@
 <template>
-  <auth :start_component="'login'" @back="back" @user-authenticated="userAuthenticated" />
+  <auth @user-authenticated="userAuthenticated" />
 </template>
 
 <script lang="ts">
@@ -27,10 +27,6 @@ export default class extends Vue {
         { hid: "description", name: "description", content: "Willkommen zurück. Logge dich ein und suche nach matches." }
       ]
     };
-  }
-
-  back() {
-    this.$router.push("/");
   }
 
   async userAuthenticated() {

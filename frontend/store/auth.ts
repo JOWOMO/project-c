@@ -28,7 +28,7 @@ declare module "vuex" {
     (arg: 'auth/token'): Promise<string>;
     (arg: 'auth/confirm', payload: Required<Pick<User, 'email'>> & { code: string }): Promise<void>;
     (arg: 'auth/startResetPassword', payload: Required<Pick<User, 'email'>>): Promise<void>;
-    (arg: 'auth/resetPassword', payload: Required<Pick<User, 'email' | 'password'>> & { code: string }): Promise<void>;
+    (arg: 'auth/resetPassword', payload: Required<Pick<User, 'email' | 'password'>> & { code: string }): Promise<boolean>;
     (arg: 'auth/resentCode'): Promise<void>;
     (arg: 'auth/login', payload: Required<Pick<User, 'email' | 'password'>>): Promise<void>;
     (arg: 'auth/logout'): Promise<void>;
@@ -119,10 +119,27 @@ export const actions = {
   },
 
   async resetPassword(
-    { }: ActionContext<IAuthState, IState>,
+    { commit }: ActionContext<IAuthState, IState>,
     { email, code, password }: Required<Pick<User, 'email' | 'password'>> & { code: string }
-  ) {
+  ): Promise<boolean> {
     await Auth.forgotPasswordSubmit(email, code, password);
+
+    // login the user directly
+    try {
+      const user = await Auth.signIn(
+        email,
+        password,
+      );
+  
+      // safety check
+      await Auth.currentSession();  
+      commit('set', user);
+
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   },
 
   async resendcode({ commit }: ActionContext<IAuthState, IState>, { email }: Required<Pick<User, 'email'>>) {
