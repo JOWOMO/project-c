@@ -142,7 +142,7 @@ nav {
 
     .link {
       display: inline-block;
-      color: $fontColor;
+      color: $textcolor;
       margin: 5px;
       font-size: 18px;
       height: 40px;
@@ -200,15 +200,10 @@ nav {
     }
   }
 
-  // .links {
-  //   .link {
-  //     margin-right: 88px;
-  //   }
-
-    a {
-      font-size: 18px !important;
-    }
+  a {
+    font-size: 18px !important;
   }
+
 
   .warning {
     position: absolute;
