@@ -14,7 +14,7 @@
         <a @click="resetPassword" class="link">Passwort vergessen?</a>
       </div>
 
-      <span id="error">{{error}}</span>
+      <!-- <span id="error">{{error}}</span> -->
 
       <div class="buttons">
         <button class="primary">Login</button>
@@ -30,6 +30,7 @@ import { Validate } from "vuelidate-property-decorators";
 import { required, email } from "vuelidate/lib/validators";
 
 import formInput from "@/components/forms/input.vue";
+import { AuthErrorCodes, formatMessage } from "./messages";
 
 @Component({
   components: { formInput },
@@ -77,13 +78,23 @@ export default class extends Vue {
       this.$emit("change-state", "redirect");
     } catch (err) {
       console.log("err: ", err);
-      this.error = err.message;
+      this.error = formatMessage(err);
 
       // we need to verify him
-      if (err.code === "UserNotConfirmedException") {
+      if (err.code === AuthErrorCodes.NotConfirmed) {
         this.$emit("change-state", "validate");
       }
+
+      this.$swal( 
+        "Das hat nicht geklappt", 
+        this.error, 
+        "error"
+      );
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/form-layout-single';
+</style>

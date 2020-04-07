@@ -1,5 +1,5 @@
 <template>
-  <auth :start_component="'login'" @back="back" @user-authenticated="userAuthenticated" />
+  <auth @user-authenticated="userAuthenticated" />
 </template>
 
 <script lang="ts">
@@ -14,7 +14,8 @@ import checkState from "@/apollo/queries/check_state.gql";
 @Component({
   components: {
     auth
-  }
+  },
+  layout: 'login',
 })
 export default class extends Vue {
   @Meta
@@ -26,10 +27,6 @@ export default class extends Vue {
         { hid: "description", name: "description", content: "Willkommen zurück. Logge dich ein und suche nach matches." }
       ]
     };
-  }
-
-  back() {
-    this.$router.push("/");
   }
 
   async userAuthenticated() {
@@ -55,8 +52,4 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-    /deep/ .container {
-      width: 500px;
-      margin: 20px;
-    }
 </style>

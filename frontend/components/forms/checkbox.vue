@@ -87,6 +87,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .outer {
   height: 44px;
@@ -256,7 +257,7 @@ label {
   margin-bottom: 12px;
 
   cursor: pointer;
-  font-size: 18px;
+  font-size: $textsize;
   padding-top: 10px;
 
   -webkit-user-select: none;

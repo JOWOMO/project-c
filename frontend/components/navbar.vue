@@ -62,19 +62,19 @@ export default {
 
   async created() {
     if (this.$store.state.auth.user) {
-      console.log("user is empty")
+      console.log("user is empty");
       try {
         // we need to find out where we stand
         const result = await this.$apollo.query({
           query: me
         });
-        console.log("me",result)
-        this.$store.commit('updateUser',result.data.me)
+        console.log("me", result);
+        this.$store.commit("updateUser", result.data.me);
         console.log(result.data);
         this.title = result.data.me.name || result.data.me.email;
       } catch (e) {
         console.error(e);
-        this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`
+        this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`;
       }
     }
   },
@@ -88,7 +88,7 @@ export default {
       this.$router.push("/");
     },
     async deleteUser() {
-      this.$store.dispatch('auth/delete')
+      this.$store.dispatch("auth/delete");
       this.$router.push("/");
     },
     async new_password() {
@@ -130,9 +130,10 @@ nav {
   align-items: center;
   padding: 0 48px;
 
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
-  .profile, .links {
+  .profile,
+  .links {
     display: inline-block;
   }
 
@@ -188,11 +189,11 @@ nav {
       }
 
       .red:hover {
-        background: #EE0000;
+        background: #ee0000;
         color: #fff;
       }
       .blue {
-        background: #25A6DA;
+        background: #25a6da;
         color: #fff;
         width: 100%;
       }
@@ -204,10 +205,10 @@ nav {
   //     margin-right: 88px;
   //   }
 
-  //   a {
-  //         font-size: 18px !important;
-  //   }
-  // }
+    a {
+      font-size: 18px !important;
+    }
+  }
 
   .warning {
     position: absolute;
@@ -229,21 +230,24 @@ nav {
     }
 
     .red {
-      background: #EE0000;
+      background: #ee0000;
       color: #fff;
     }
   }
 }
 
-// @media only screen and (max-width: 765px) {
-//   .logo {
-//     display: none;
-//   }
+@media only screen and (max-width: 765px) {
+  // .logo {
+  //   display: none;
+  // }
+  nav {
+    .links {
+      display: none;
+    }
 
-//   .profile {
-//     span {
-//       display: none;
-//     }
-//   }
-// }
+    .profile {
+      display: none;
+    }
+  }
+}
 </style>
