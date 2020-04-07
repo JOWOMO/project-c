@@ -4,6 +4,11 @@
       <img src="/images/logo.svg" alt="Logo" class="logo" />
     </nuxt-link>
 
+    <div class="links">
+      <nuxt-link to="/dashboard" class="link">Meine Suchergebnisse</nuxt-link>
+      <nuxt-link to="/info" class="link">FAQ</nuxt-link>
+    </div>
+
     <div v-if="!$store.state.auth.isAuthenticated" class="links">
       <nuxt-link to="/info" class="link">FAQ</nuxt-link>
       <button class="primary" @click="$router.push('/login')">Login</button>
