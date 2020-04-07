@@ -91,11 +91,12 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/colors";
+@import "assets/global";
 
 .taglist {
   display: flex;
   flex-direction: row;
+  // align-items: center;
   flex-wrap: wrap;
   justify-content: flex-start;
 
@@ -135,6 +136,7 @@ export default class extends Vue {
 
     display: flex;
     flex-direction: column;
+    // justify-content: space-between;
 
     .head {
       display: flex;
@@ -143,6 +145,11 @@ export default class extends Vue {
       h3 {
         width: 100%;
       }
+    }
+
+    span {
+      display: block;
+      color: lighten(#000, 20);
     }
 
     .button {

@@ -6,10 +6,11 @@
 
   p {
     padding-bottom: 75px;
+    color: #7B7B7B;
   }
 
   .buttons {
-    padding-top: 44px;
+    padding-top: 21px;
     display: flex;
     justify-content: space-between;
 
@@ -24,6 +25,9 @@
     grid-gap: 20px;
     grid-template-columns: repeat(2, 1fr);
 
+    // need to touch this again, 
+    // min-width: 640px;
+
     .form-group {
       grid-column: 1 / span 2;
     }
@@ -36,44 +40,45 @@
       grid-column: 2;
     }
   }
-
-  max-width: 800px;
-  min-width: 800px;
 }
 
-@media only screen and (max-width: 1150px) {
-  // we first make the grid smaller
+@media only screen and (max-width: 950px) {
   .container {
-    min-width: 550px;
-    max-width: 550px;
-  }
-}
-
-@media only screen and (max-width: 580px) {
-  .container {
-    min-width: 100vw;  
-    max-width: 100vw;  
-
-    padding-left: 20px;
-    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    padding: 20px;
     
     form {
       display: flex;
       flex-direction: column;
+      grid-template-columns: 1fr;
   
       .form-group {
+        grid-column: auto;
         padding-bottom: 20px;
       }
-    }
-
-    .buttons {
-      margin-top: 0px;
-      flex-direction: column;
-      
-      button {
-        margin-top: 21px;
-        min-width: 100%;
+  
+      .half-width {
+        grid-column: auto;
       }
-    }
+  
+      .right {
+        grid-column: auto;
+      }
+
+      .buttons {
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        // grid-gap: 24px;
+        // grid-auto-flow: row;
+        
+        button {
+          margin-top: 21px;
+          width: 100%;
+        }
+      }
+    } 
   }
 }

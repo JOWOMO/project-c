@@ -25,7 +25,7 @@
           <formInput :id="'city'" :label="'Ort'" v-model="city" />
         </div>
 
-        <span v-if="error" id="error">{{ error }}</span>
+        <span id="error">{{ error }}</span>
       </form>
 
         <div class="buttons">
