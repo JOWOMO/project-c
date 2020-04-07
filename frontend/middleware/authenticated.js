@@ -1,5 +1,5 @@
 export default async function ({
-    store, redirect, route
+    store, redirect, route, app
 }) {
     try {
         console.debug('[Authenticated Guard] checking');
@@ -13,7 +13,7 @@ export default async function ({
     } catch (e) {
         console.error('no current user', e);
 
-        try { await this.$apolloHelpers.onLogout(); }
+        try { await app.$apolloHelpers.onLogout(); }
         catch { }
         
         redirect(200, '/login', { return_url: route.path });
