@@ -2,12 +2,12 @@
   <div>
     <div class="container">
       <h1>{{ workflow().displayName }}</h1>
-      <p>Details helfen uns dir Suchvorschäge anzuzeigen</p>
+      <p>Details helfen uns dir Suchvorschläge anzuzeigen</p>
 
       <div v-for="(team, idx) in supplies" :key="idx">
         <div class="team-container">
-          <div v-if="!team.expanded" class="edit secondary" @click="toggleVisibilitySupply(idx)">
-            <img src="/icons/edit.svg" />
+          <div v-if="!team.expanded" class="edit" @click="toggleVisibilitySupply(idx)">
+            <div class="img" />
           </div>
           <team
             class="team-form"
@@ -22,8 +22,8 @@
 
       <div v-for="(team, idx) in demands" :key="idx">
         <div class="team-container">
-          <div v-if="!team.expanded" class="edit secondary" @click="toggleVisibilityDemand(idx)">
-            <img src="/icons/edit.svg" />
+          <div v-if="!team.expanded" class="edit" @click="toggleVisibilityDemand(idx)">
+            <div class="img" />
           </div>
           <team
             class="team-form"
@@ -38,19 +38,7 @@
 
       <button class="add" @click.prevent="addTeam">
         <div class="circle">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M4.84615 0H9.15385V14H4.84615V0Z" fill="white" />
-            <path
-              d="M1.88295e-07 9.15385L0 4.84615L14 4.84615V9.15385L1.88295e-07 9.15385Z"
-              fill="white"
-            />
-          </svg>
+          <img src="/icons/circle.svg" />
         </div>
 
         <span>Weiteres Team hinzufügen</span>
@@ -122,11 +110,11 @@ export default class extends Vue {
   }
 
   toggleVisibilitySupply(idx: number) {
-    this.$set(this.supplies[idx], 'expanded',  true);
+    this.$set(this.supplies[idx], "expanded", true);
   }
 
   toggleVisibilityDemand(idx: number) {
-    this.$set(this.demands[idx], 'expanded',  true);
+    this.$set(this.demands[idx], "expanded", true);
   }
 
   updateSupply(idx: number, value: TeamDetails) {
@@ -212,7 +200,7 @@ export default class extends Vue {
     };
   }
 
-  async created() {
+  async mounted() {
     this.workflow().setStage(2);
 
     this.topics = [
@@ -265,12 +253,10 @@ export default class extends Vue {
   h1 {
     text-align: left;
     padding-bottom: 14px;
-    margin-top: 50px;
   }
 
   p {
     padding-bottom: 75px;
-    color: #7b7b7b;
   }
 
   .buttons {
@@ -294,8 +280,36 @@ export default class extends Vue {
     border-top: 1px solid $border;
   }
 
-  width: 640px;
-  height: 100vh;
+  max-width: 800px;
+  min-width: 800px;
+}
+
+@media only screen and (max-width: 1150px) {
+  // we first make the grid smaller
+  .container {
+    min-width: 550px;
+    max-width: 550px;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .container {
+    min-width: 100vw;
+    max-width: 100vw;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .buttons {
+      margin-top: 0px;
+      flex-direction: column;
+
+      button {
+        margin-top: 21px;
+        min-width: 100%;
+      }
+    }
+  }
 }
 
 .team-container {
@@ -309,8 +323,8 @@ export default class extends Vue {
     height: 44px;
     border-radius: 22px;
 
-    background-color: white;
-    border: 1px solid $border;
+    background-color: white !important;
+    border: 1px solid $border !important;
 
     display: flex;
     justify-content: center;
@@ -318,9 +332,38 @@ export default class extends Vue {
 
     transform: translateX(-88px);
 
-    img {
-      width: 15px;
-      height: 15px;
+    .img {
+      width: 22px;
+      height: 22px;
+
+      background-color: $textcolor;
+      -webkit-mask: url(/icons/edit.svg) no-repeat center;
+      mask: url(/icons/edit.svg) no-repeat center;
+    }
+
+    &:hover {
+      color: #ffffff !important;
+      background-color: darken($primary, 10%) !important;
+
+      .img {
+        background-color: white;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1321px) {
+  .team-container {
+    .edit {
+      transform: translate(+150px, -6px);
+    }
+  }
+}
+
+@media only screen and (max-width: 1090px) {
+  .team-container {
+    .edit {
+      transform: translate(+150px, -6px);
     }
   }
 }
@@ -339,8 +382,10 @@ export default class extends Vue {
     border-radius: 50%;
     background: #25a6da;
 
-    svg {
-      margin-top: 13px;
+    img {
+      width: 20px;
+      height: 20px;
+      margin-top: 10px;
     }
   }
 

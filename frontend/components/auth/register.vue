@@ -39,7 +39,7 @@
       </div>
     </form>
 
-    <span id="error">{{ error }}</span>
+    <span id="error" v-if="error">{{ error }}</span>
 
     <div class="buttons">
       <button class="secondary" @click.prevent="back">Zurück</button>
@@ -114,7 +114,7 @@ export default class extends Vue {
     };
   }
 
-  async created() {
+  async mounted() {
     console.log("created");
 
     if (this.authenticatedUser) {
@@ -151,7 +151,7 @@ export default class extends Vue {
         lastName: this.lastName
       });
 
-      this.$emit("change-state", "validate");
+      this.$emit("change-state", "register-validate");
     } catch (err) {
       console.log("err: ", err);
       if (err.code === "UsernameExistsException") {

@@ -3,9 +3,13 @@ export default async function ({
 }) {
   try {
     console.debug('[Loaduser Guard] checking');
-    
+
+    const load = store.dispatch('auth/load');
     const token = await store.dispatch('auth/token');
-    await app.$apolloHelpers.onLogin(token);
+    await Promise.all([
+      load,
+      app.$apolloHelpers.onLogin(token),
+    ]);
   } catch (e) {
     console.error('failed to load', e);
   }
