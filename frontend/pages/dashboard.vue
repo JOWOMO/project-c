@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <sidebar @handel-state="handelState" :flow="flow" :demand="teams.demands" :supply="teams.supplies" class="sidebar" :class="{expand: sidebar}" />
+    <sidebar @handel-state="handelState" :handel-state="handelState" :flow="flow" :demand="teams.demands" :supply="teams.supplies" class="sidebar" :class="{expand: sidebar}" />
     <div class="burger-menu" @click="sidebar =! sidebar" :class="{expand: sidebar}" />
 
     <h1>Finde Personal-Partner</h1>
-    <!-- <div class="distance">
+    <div class="distance">
       <span>{{ location }}</span>
       <div class="form-group half-width dropdown" id="dropdown">
         <div class="select-box">
@@ -42,7 +42,7 @@
           <div class="selected" ref="selected" @click="isActive = !isActive">{{ selectedDistance }}</div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div class="matches" v-if="flow === 'DemandMatch'">
       <companyCard
@@ -75,49 +75,41 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import companyCard from "@/components/company-card.vue";
 import sidebar from "@/components/sidebars/sidebar_dashboard.vue";
-import getTeams from "@/apollo/queries/teams";
-import demandMatches from "@/apollo/queries/demand_matches";
-import supplyMatches from "@/apollo/queries/supply_matches"
+import { GetTeamsQuery,DemandMatchesQuery,DemandMatchesQueryVariables, SupplyMatchesQuery,SupplyMatchesQueryVariables} from "@/apollo/schema";
+import getTeams from "@/apollo/queries/teams.gql"
+import getDemandMatch from "@/apollo/queries/demand_matches.gql"
+import getSupplyMatch from "@/apollo/queries/supply_matches.gql"
+import { Vue, Prop, Emit,Getter, Component } from "nuxt-property-decorator";
+import { Object } from "lodash";
+@Component({
+  components: { sidebar, companyCard  }
+})
+export default class extends Vue {
+  teams:any = {};
+  flow:String = "Suche"
+  matches:any;
+  sidebar:boolean = false;
+  selectedDistance:String = "";
+  isActive:Boolean = false;
 
-export default {
-  layout: "search",
-  head() {
-    return {
-      title: "Dashboard",
-      meta: [{ hid: "description", name: "description", content: "Auf dem Dashboard siehst du deine Matches und kannst deine Teams bearbeiten." }]
-    };
-  },
-  components: {
-    companyCard,
-    sidebar
-  },
-  data() {
-    return {
-      sidebar: false,
-      map: false,
-      isActive: false,
-      location: "601234 Köln",
-      bestmatches: [],
-      lessmatches: [],
-      matches: [],
-      demands: [],
-      supplies: [],
-      selectedDistance: "entfernung Wählen",
-      flow: "",
-      teams:[]
-    };
-  },
-  methods: {
-    // handel which matches should be displayed
-    async handelState(team,index) {
-      // getting matches for other team
-      if(team.__typename == "Demand"){
+ async beforeCreate(){
+    console.log("created in dashbaord")
+      const result:any =(await this.$apollo.query<GetTeamsQuery>({
+        query: getTeams
+      }))
+      this.teams = result.data.companies[0]
+      this.handelState(this.teams.demands[0],0)
+      console.log(result)
+
+  }
+  async handelState(team:any,index:Number) {
+     if(team.__typename == "Demand"){
         console.log("calling hadel state",team);
-      this.matches = (await this.$apollo.query({
-        query: demandMatches,
+      this.matches = (await this.$apollo.query<DemandMatchesQuery,DemandMatchesQueryVariables>({
+        query: getDemandMatch,
         variables: {
           id: team.id
         }
@@ -125,8 +117,8 @@ export default {
       this.flow = "DemandMatch"
       console.log("matches: ",this.matches)
       }else{
-        this.matches = (await this.$apollo.query({
-          query: supplyMatches,
+        this.matches = (await this.$apollo.query<SupplyMatchesQuery,SupplyMatchesQueryVariables>({
+          query: getSupplyMatch,
         variables: {
           id: team.id
         }
@@ -136,33 +128,11 @@ export default {
       }
       // closing sidebar for mobile when selecting the team
       this.sidebar = false
-    },
-    selected_distance(number) {
+    }
+selected_distance(number:number) {
       this.selectedDistance = number.toString();
       this.isActive = false;
-    },
-    print() {
-      console.log(this.demands);
-    }
-  },
-
-  async beforeCreate() {
-    try {
-      // route for demand TODO: need to know demand or supply
-      const client = this.$apollo.getClient();
-      this.teams = (
-        await this.$apollo.query({ query: getTeams })
-      ).data.companies[1];
-      // this.flow = "suche";
-      this.handelState(this.teams.demands[0],0)
-      console.log("log teams",this.teams)
-      // console.log("all demands: ",this.demands)
-      // // setting first team in sidebar to active
-      // this.demands[0].active = true
-    } catch (err) {
-      console.log(err)
-    }
-  }
+    };
 };
 </script>
 
