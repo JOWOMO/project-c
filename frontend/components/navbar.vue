@@ -12,8 +12,28 @@
 
       <avatar v-if="this.$store.state.auth.user" />
 
-      <div class="login" v-if="!this.$store.state.auth.user">
+      <div class="links">
+        <nuxt-link to="/dashboard" class="link" :class="{active: search}">Meine Suchergebnisse</nuxt-link>
+        <nuxt-link to="/info" class="link" :class="{active: faq}">FAQ</nuxt-link>
+      </div>
+
+      <div v-if="!$store.state.auth.isAuthenticated" class="login">
         <button class="primary" @click="$router.push('/login')">Login</button>
+      </div>
+
+      <div v-else class="profile" @click="active = !active">
+        <div class="nameImg">
+          <span>{{ title }}</span>
+          <!-- TODO: Add img from database -->
+          <img src="/images/profile.jpg" alt class="profile_img" />
+        </div>
+        <div class="dropdown" :class="{expanded: active}">
+          <div class="options">
+            <button @click="new_password">Passwort ändern</button>
+            <button class="red" @click="warning = !warning">Benutzer löschen</button>
+          </div>
+          <button class="blue" @click="logout">Logout</button>
+        </div>
       </div>
     </div>
   </nav>
@@ -41,25 +61,25 @@ export default {
       title: "",
       active: false,
       search: false,
-      faq: false
+      faq: false,
     };
   },
 
   async created() {
     if (this.$store.state.auth.user) {
-      console.log("user is empty")
+      console.log("user is empty");
       try {
         // we need to find out where we stand
         const result = await this.$apollo.query({
           query: me
         });
-        console.log("me",result)
-        this.$store.commit('updateUser',result.data.me)
+        console.log("me", result);
+        this.$store.commit("updateUser", result.data.me);
         console.log(result.data);
         this.title = result.data.me.name || result.data.me.email;
       } catch (e) {
         console.error(e);
-        this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`
+        this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`;
       }
     }
     if(this.$route.path == '/dashboard') {
@@ -83,11 +103,24 @@ export default {
       this.$router.push("/");
     },
     async deleteUser() {
-      this.$store.dispatch('auth/delete')
+      this.$store.dispatch("auth/delete");
       this.$router.push("/");
     },
     async new_password() {
       // add password reset page
+    }
+  },
+
+  created() {
+    if(this.$route.path == '/dashboard') {
+      this.search = true
+      this.faq = false
+    } else if (this.$route.path == '/info') {
+      this.faq = true
+      this.search = false
+    } else {
+      this.search = false
+      this.faq = false
     }
   },
 
@@ -118,26 +151,28 @@ nav {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    
+  .profile,
+  .links {
+    display: inline-block;
+  }
 
-    .profile, .links {
+  .links {
+    margin-right: 20px;
+
+    .link {
       display: inline-block;
-    }
+      color: $textcolor;
+      margin: 5px;
+      font-size: 18px;
+      height: 40px;
 
-    .links {
-      margin-right: 40px;
-
-      .link {
-        display: inline-block;
-        color: $fontColor;
-        font-size: 18px;
-        margin: 10px;
-        height: 40px;
-
-        &.active {
-          border-bottom: 4px solid $primary;
-        }
+      &.active {
+        border-bottom: 4px solid $primary;
       }
     }
+  }
+
 
     .profile {
       align-self: flex-start;
@@ -193,6 +228,7 @@ nav {
     }
   }
 }
+
 
 @media only screen and (max-width: 765px) {
   .logo {

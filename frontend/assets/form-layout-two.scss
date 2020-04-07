@@ -1,22 +1,27 @@
+@import '@/assets/colors';
+
 .container {
   h1 {
     text-align: left;
     padding-bottom: 14px;
   }
 
-  p {
+  h1 + p {
     padding-bottom: 75px;
-    color: #7B7B7B;
+  }
+
+  h1 + form {
+    padding-top: 61px;
   }
 
   .buttons {
-    padding-top: 21px;
+    margin-top: 44px;
+
     display: flex;
     justify-content: space-between;
 
     button {
       max-width: 200px;
-      width: auto;
     }
   }
 
@@ -24,9 +29,6 @@
     display: grid;
     grid-gap: 20px;
     grid-template-columns: repeat(2, 1fr);
-
-    // need to touch this again, 
-    // min-width: 640px;
 
     .form-group {
       grid-column: 1 / span 2;
@@ -40,45 +42,14 @@
       grid-column: 2;
     }
   }
-}
 
-@media only screen and (max-width: 950px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    padding: 20px;
-    
-    form {
-      display: flex;
-      flex-direction: column;
-      grid-template-columns: 1fr;
-  
-      .form-group {
-        grid-column: auto;
-        padding-bottom: 20px;
-      }
-  
-      .half-width {
-        grid-column: auto;
-      }
-  
-      .right {
-        grid-column: auto;
-      }
-
-      .buttons {
-        margin-top: 0px;
-        display: flex;
-        flex-direction: column;
-        // grid-gap: 24px;
-        // grid-auto-flow: row;
-        
-        button {
-          margin-top: 21px;
-          width: 100%;
-        }
-      }
-    } 
+  #error {
+    grid-column: 1 / span 2;
+    color: $error;
   }
+
+  max-width: 800px;
+  min-width: 800px;
 }
+
+@import './form-layout-responsive';

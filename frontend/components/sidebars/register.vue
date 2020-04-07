@@ -28,17 +28,17 @@ export default class Sidebar extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/colors';
+
 .register-sidebar {
   display: flex;
-  flex-direction: column;
 
+  flex-direction: column;
   align-items: flex-start;
   align-content: flex-start;
 
-  height: 100vh;
-  width: 330px;
-
-  background: #fff;
+  min-width: 366px;
+  background: $uiComponent;
 }
 
 a {
@@ -50,34 +50,50 @@ a {
 
 p {
   margin-left: 20px;
-  color: #7b7b7b;
-  font-size: 18px;
-  font-weight: normal;
 }
 
 .selected p {
-  color: #484848;
+  color: $inputtextcolor;
   font-weight: 500;
 }
 
 .menu {
-  padding-left: 58px;
   display: flex;
+  width: 100%;
+ 
   flex-direction: column;
-  // height: 100vh;
   justify-content: center;
-  padding-top: 120px;
 
-  // margin-top: -130px;
+  padding-top: 209px;
 }
 
 .sidebar-element {
   display: flex;
   flex-direction: row;
   margin: 16px 0;
+  margin-left: 44px;
 
   img {
     margin: 0 10px;
+  }
+}
+
+
+@media only screen and (max-width: 890px) {
+  .register-sidebar {
+    height: 120px;
+    width: 100vw;
+
+    flex-shrink: 0;
+  }
+
+  a {
+    width: auto;
+    padding-left: 44px;
+  }
+
+  .menu {
+    display: none;
   }
 }
 </style>

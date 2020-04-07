@@ -1,8 +1,8 @@
 <template>
   <div 
     @click="update" 
-    :class="{ 'not-clickable': !clickable, primary: clickable && selected, secondary: clickable && !selected }" 
     class="tag"
+    :class="{ 'not-clickable': !clickable, primary: clickable && selected, secondary: clickable && !selected }" 
   >
     <span>{{ name }}</span>
   </div>
@@ -33,6 +33,7 @@ export default class extends Vue {
 
 <style scoped lang="scss">
 @import "assets/colors";
+@import "assets/scales";
 
 .not-clickable {
   pointer-events:none;
@@ -41,15 +42,15 @@ export default class extends Vue {
 .tag {
   border-radius: 90px;
   height: 50px;
-  background-color: white;
+  background-color: $uiComponent;
   border: 1px solid $border;
 
   display: flex;
   padding-left: 10px;
   padding-right: 10px;
 
-  font-size: 18px;
-  color: #484848;
+  font-size: $textsize;
+  color: $inputtextcolor;
 
   span {
     padding: 10px;

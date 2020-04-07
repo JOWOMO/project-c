@@ -1,5 +1,6 @@
 // Global
 @import './colors';
+@import './scales';
 
 $h1FontSize: 36px;
 $h2FontSize: 24px;
@@ -20,33 +21,28 @@ html, body {
   background: $background;
   margin: 0;
   padding: 0;
-}
-
-// #__layout > :first-child {
-//   display: flex;
-//   flex-direction: column;
-//   height: 100vh;
-// }
+} 
 
 h1 {
   font-size: $h1FontSize;
-  color: $fontColor;
-//   position: absolute;
-//   left: 50%;
-//   transform: translate(-50%, 0);
-  // text-align: center;
+  color: $headercolor;
   font-weight: bold;
   line-height: 42px;
 }
 
 h2 {
   font-size: $h2FontSize;
-  color: $fontColor;
+  color: $headercolor;
 }
 
 h3 {
   font-size: $h3FontSize;
-  color: $fontColor;
+  color: $headercolor;
+}
+
+p {
+  font-size: $textsize;
+  color: $textcolor;
 }
 
 button {
@@ -65,18 +61,50 @@ button {
   color: $fontColor;
 
   cursor: pointer;
-
 }
 
 a {
-  font-size: 14px;
+  font-size: $textsize;
   font-weight: bold;
   text-decoration: none;
   color: $primary;
   transition: all .3s ease;
+  cursor: pointer;
 
   &:hover {
-    color: $primary;
+    color: darken($primary, 10%) !important;;
+  }
+}
+
+.primary {
+  background-color: $primary !important;
+  color: #fff !important;
+
+  &:hover {
+    background-color: darken($primary, 10%) !important;
+  }
+}
+
+.secondary {
+  background-color: transparent !important;
+  border: 1px solid $primary !important;
+  color: $primary !important;
+
+  &:hover {
+    color: #ffffff !important;
+    background-color: darken($primary, 10%) !important;
+  }
+}
+
+.third {
+  background-color: white !important;
+  border: 1px solid $border !important;
+  color: #484848 !important;
+
+  &:hover {
+    color: #ffffff !important;
+    border: 1px solid darken($primary, 10%) !important;
+    background-color: darken($primary, 10%) !important;
   }
 }
 
@@ -87,44 +115,5 @@ a {
   height: 50px;
 }
 
-.primary {
-  background-color: $primary;
-  color: #fff;
-
-  &:hover {
-    background-color: darken($primary, 10%);
-  }
-}
-
-.secondary {
-  background-color: transparent;
-  border: 1px solid $primary;
-  color: $primary;
-
-  &:hover {
-    color: #ffffff;
-    background-color: darken($primary, 10%);
-  }
-}
-
-.third {
-  background-color: white;
-  border: 1px solid $border;
-  color: #484848;
-
-  &:hover {
-    color: #ffffff;
-    background-color: darken($primary, 10%);
-  }
-}
-
-// .cta {
-//   background-color: $secondary;
-//   color: #fff;
-
-//   &:hover {
-//     background-color: darken($secondary, 10%);
-//   }
-// }
-
 @import './form';
+@import './swal';

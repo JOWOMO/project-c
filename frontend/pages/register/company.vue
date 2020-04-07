@@ -24,14 +24,12 @@
         <div class="form-group half-width right">
           <formInput :id="'city'" :label="'Ort'" v-model="city" />
         </div>
-
-        <span id="error">{{ error }}</span>
       </form>
 
-        <div class="buttons">
-          <button class="secondary" @click.prevent="back">Zurück</button>
-          <button class="primary" @click.prevent="updateCompany">Weiter</button>
-        </div>
+      <div class="buttons">
+        <button class="secondary" @click.prevent="back">Zurück</button>
+        <button class="primary" @click.prevent="updateCompany">Weiter</button>
+      </div>
     </div>
   </div>
 </template>
@@ -55,7 +53,7 @@ import {
   AddCompanyMutation,
   AddCompanyMutationVariables,
   RegistrationCompanyQuery,
-  RegistrationCompanyQueryVariables,
+  RegistrationCompanyQueryVariables
 } from "@/apollo/schema";
 
 import addCompany from "@/apollo/mutations/add_company.gql";
@@ -69,13 +67,13 @@ import { WorkflowProvider } from "../register.vue";
   components: {
     formInput,
     formSelect
-  }
+  },
+  middleware: 'authenticated'
 })
 export default class extends Vue {
   @Inject("workflow") workflow!: WorkflowProvider;
 
   industries?: { id: string; name: string }[] = [];
-  error = "";
 
   id?: string;
 
@@ -102,8 +100,11 @@ export default class extends Vue {
   async created() {
     this.workflow().setStage(1);
 
-    const result = await this.$apollo.query<RegistrationCompanyQuery, RegistrationCompanyQueryVariables>({
-      query: userQuery,
+    const result = await this.$apollo.query<
+      RegistrationCompanyQuery,
+      RegistrationCompanyQueryVariables
+    >({
+      query: userQuery
     });
 
     if (result.data && result.data.industries) {
@@ -160,7 +161,11 @@ export default class extends Vue {
       this.$router.push(`/register/team`);
     } catch (err) {
       console.error(err);
-      this.error = err.message;
+      this.$swal( 
+        "Das hat nicht geklappt", 
+        err.message, 
+        "error"
+      );
     }
   }
 }
