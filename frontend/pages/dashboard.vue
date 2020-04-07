@@ -84,8 +84,10 @@ import getDemandMatch from "@/apollo/queries/demand_matches.gql"
 import getSupplyMatch from "@/apollo/queries/supply_matches.gql"
 import { Vue, Prop, Emit,Getter, Component } from "nuxt-property-decorator";
 import { Object } from "lodash";
+
 @Component({
-  components: { sidebar, companyCard  }
+  components: { sidebar, companyCard },
+  middleware: 'authenticated'
 })
 export default class extends Vue {
   teams:any = {};
@@ -103,7 +105,6 @@ export default class extends Vue {
       this.teams = result.data.companies[0]
       this.handelState(this.teams.demands[0],0)
       console.log(result)
-
   }
   async handelState(team:any,index:Number) {
      if(team.__typename == "Demand"){
@@ -130,9 +131,9 @@ export default class extends Vue {
       this.sidebar = false
     }
 selected_distance(number:number) {
-      this.selectedDistance = number.toString();
-      this.isActive = false;
-    };
+    this.selectedDistance = number.toString();
+    this.isActive = false;
+  };
 };
 </script>
 

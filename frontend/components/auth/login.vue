@@ -34,6 +34,7 @@ import { AuthErrorCodes, formatMessage } from "./messages";
 
 @Component({
   components: { formInput },
+  
 })
 export default class extends Vue {
   @Validate({ required, email })
