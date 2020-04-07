@@ -1,5 +1,5 @@
 <template>
-  <validate class="cnt" @change-state="handleStateChange" />
+  <validate @change-state="handleStateChange" />
 </template>
 
 <script lang="ts">
@@ -22,10 +22,10 @@ export default class extends Vue {
 <style lang="scss" scoped>
 // we normally come from the register flow. we make the container
 // the same size
-.cnt {
+/deep/ .container {
   min-width: 800px;
 
-  /deep/ .buttons {
+  .buttons {
     display: flex;
     justify-content: flex-end;
 
