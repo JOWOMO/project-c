@@ -1,9 +1,10 @@
-query user {  
+query user {
     me{
         id,
         firstName,
-        lastName,    
+        lastName,
         email,
+        pictureUrl,
         companies{
             id,
             name,

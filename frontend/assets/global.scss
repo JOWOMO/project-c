@@ -58,11 +58,13 @@ button {
   background: $uiComponent;
   font-size: $buttonFormText;
   font-weight: 500;
-  
+
   transition: all .5s ease;
   border: none;
   outline: none;
   color: $fontColor;
+
+  cursor: pointer;
 
   // &:hover {
   //     background: $uiComponentHighlighted;

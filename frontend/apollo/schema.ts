@@ -516,7 +516,7 @@ export type UserQuery = (
   { __typename?: 'Query' }
   & { me: (
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'pictureUrl'>
     & { companies?: Maybe<Array<(
       { __typename?: 'Company' }
       & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>

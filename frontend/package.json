@@ -13,7 +13,7 @@
     "generate": "nuxt generate --spa",
     "config:aws": "source ~/.bashrc && aws cloudformation describe-stacks --stack-name bee-to-bee-api-dev --query \"Stacks[0].Outputs\"> aws.json",
     "json-server": "json-server --watch db.json --port 5000",
-    "generate-types": "graphql-codegen --config codegen.yml"
+    "generate-types": "graphql-codegen --config codegen.yml --watch"
   },
   "dependencies": {
     "@aws-amplify/auth": "^2.1.8",

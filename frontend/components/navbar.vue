@@ -5,14 +5,15 @@
     </nuxt-link>
 
     <div v-if="!$store.state.auth.isAuthenticated" class="links">
-      <nuxt-link to="/info" class="link">FAQ</nuxt-link>
       <button class="primary" @click="$router.push('/login')">Login</button>
     </div>
 
-    <div v-else class="profile" @click="active = !active">
+    <avatar v-else />
+
+    <!-- <div v-else class="profile" @click="active = !active">
       <div class="nameImg">
         <span>{{ title }}</span>
-        <!-- TODO: Add img from database -->
+        TODO: Add img from database
         <img src="/images/profile.jpg" alt class="profile_img" />
       </div>
       <div class="dropdown" :class="{expanded: active}">
@@ -29,18 +30,24 @@
       <p>Alle Daten werden gelöscht</p>
       <button @click="warning = !warning">Abbrechen</button>
       <button class="red" @click="deleteUser">Löschen</button>
-    </div>
+    </div> -->
   </nav>
 </template>
 
 <script>
 import me from "@/apollo/queries/user";
+import avatar from '@/components/avatar'
 
 export default {
   name: "Navbar",
 
   props: {
-    auth: Boolean
+    auth: Boolean,
+    dashboard: Boolean
+  },
+
+  components: {
+    avatar
   },
 
   data() {
@@ -79,7 +86,7 @@ export default {
       this.$store.dispatch("auth/logout");
       this.$router.push("/");
     },
-    async deleteUser() {
+    deleteUser() {
       this.$store.dispatch('auth/delete')
       this.$router.push("/");
     },
@@ -98,6 +105,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/colors';
+
 nav {
   width: 100vw;
   height: 120px;
@@ -111,6 +120,15 @@ nav {
 
   .profile, .links {
     display: inline-block;
+  }
+
+  .links {
+    justify-self: right !important;
+
+    .link {
+      color: $fontColor;
+      margin: 10px!important;
+    }
   }
 
   .profile {
@@ -196,15 +214,9 @@ nav {
   }
 }
 
-// @media only screen and (max-width: 765px) {
-//   .logo {
-//     display: none;
-//   }
-
-//   .profile {
-//     span {
-//       display: none;
-//     }
-//   }
-// }
+@media only screen and (max-width: 765px) {
+  .logo {
+    width: 60%;
+  }
+}
 </style>
