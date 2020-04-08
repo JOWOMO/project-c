@@ -35,6 +35,7 @@ import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput },
+  
 })
 export default class extends Vue {
   @Validate({ required, email })

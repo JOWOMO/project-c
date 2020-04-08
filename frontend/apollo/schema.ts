@@ -503,7 +503,7 @@ export type GetTeamsQuery = (
     & Pick<Skill, 'id' | 'name'>
   )>, companies?: Maybe<Array<(
     { __typename?: 'Company' }
-    & Pick<Company, 'id'>
+    & Pick<Company, 'id' | 'addressLine1' | 'addressLine2' | 'addressLine3'>
     & { demands?: Maybe<Array<(
       { __typename?: 'Demand' }
       & Pick<Demand, 'id' | 'name' | 'isActive' | 'description' | 'quantity'>

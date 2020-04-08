@@ -1,47 +1,25 @@
 <template>
   <div class="container">
-    <sidebar @handel-state="handelState" :handel-state="handelState" :flow="flow" :demand="teams.demands" :supply="teams.supplies" class="sidebar" :class="{expand: sidebar}" />
+    <sidebar
+      @handel-state="handelState"
+      :handel-state="handelState"
+      :flow="flow"
+      :demand="teams.demands"
+      :supply="teams.supplies"
+      class="sidebar"
+      :class="{expand: sidebar}"
+    />
     <div class="burger-menu" @click="sidebar =! sidebar" :class="{expand: sidebar}" />
 
     <h1>Finde Personal-Partner</h1>
     <div class="distance">
       <span>{{ location }}</span>
-      <div class="form-group half-width dropdown" id="dropdown">
-        <div class="select-box">
-          <div class="options-container" ref="optionsContainer" :class="{active: isActive}">
-            <div class="option" ref="option" @click="selected_distance(5)">
-              <input type="radio" class="radio" name="category" id="five" />
-              <label for="five">5km</label>
-            </div>
-            <div class="option" ref="option" @click="selected_distance(10)">
-              <input type="radio" class="radio" name="category" id="ten" />
-              <label for="ten">10km</label>
-            </div>
-            <div class="option" ref="option" @click="selected_distance(15)">
-              <input type="radio" class="radio" name="category" id="fifteen" />
-              <label for="fifteen">15km</label>
-            </div>
-            <div class="option" ref="option" @click="selected_distance(20)">
-              <input type="radio" class="radio" name="category" id="twenty" />
-              <label for="twenty">20km</label>
-            </div>
-            <div class="option" ref="option" @click="selected_distance(30)">
-              <input type="radio" class="radio" name="category" id="thirty" />
-              <label for="thirty">30km</label>
-            </div>
-            <div class="option" ref="option" @click="selected_distance(40)">
-              <input type="radio" class="radio" name="category" id="fourty" />
-              <label for="fourty">40km</label>
-            </div>
-            <div class="option" ref="option" @click="selected_distance(50)">
-              <input type="radio" class="radio" name="category" id="fift" />
-              <label for="fift">50km +</label>
-            </div>
-          </div>
-
-          <div class="selected" ref="selected" @click="isActive = !isActive">{{ selectedDistance }}</div>
-        </div>
-      </div>
+      <formSelect
+        id="distance"
+        label="Entfernung"
+        :values="distances"
+        v-model="distance"
+      />
     </div>
 
     <div class="matches" v-if="flow === 'DemandMatch'">
@@ -58,7 +36,7 @@
         :adress="{street:match.demand.company.street1,city:match.demand.company.city,number:match.demand.company.postalCode}"
       />
     </div>
-     <div class="matches" v-else>
+    <div class="matches" v-else>
       <companyCard
         v-for="match in matches"
         :key="match.name"
@@ -78,62 +56,122 @@
 <script lang="ts">
 import companyCard from "@/components/company-card.vue";
 import sidebar from "@/components/sidebars/sidebar_dashboard.vue";
-import { GetTeamsQuery,DemandMatchesQuery,DemandMatchesQueryVariables, SupplyMatchesQuery,SupplyMatchesQueryVariables} from "@/apollo/schema";
-import getTeams from "@/apollo/queries/teams.gql"
-import getDemandMatch from "@/apollo/queries/demand_matches.gql"
-import getSupplyMatch from "@/apollo/queries/supply_matches.gql"
-import { Vue, Prop, Emit,Getter, Component } from "nuxt-property-decorator";
+import formSelect from "@/components/forms/select.vue";
+
+import {
+  GetTeamsQuery,
+  DemandMatchesQuery,
+  DemandMatchesQueryVariables,
+  SupplyMatchesQuery,
+  SupplyMatchesQueryVariables
+} from "@/apollo/schema";
+
+import getTeams from "@/apollo/queries/teams.gql";
+import getDemandMatch from "@/apollo/queries/demand_matches.gql";
+import getSupplyMatch from "@/apollo/queries/supply_matches.gql";
+
+import { Vue, Prop, Emit, Getter, Component, Provide } from "nuxt-property-decorator";
 import { Object } from "lodash";
+
+import { Validate } from "vuelidate-property-decorators";
+import { required, numeric, minValue } from "vuelidate/lib/validators";
+
 @Component({
-  components: { sidebar, companyCard  }
+  components: { sidebar, companyCard, formSelect },
+  middleware: "authenticated"
 })
 export default class extends Vue {
-  teams:any = {};
-  flow:String = "Suche"
-  matches:any;
-  sidebar:boolean = false;
-  selectedDistance:String = "";
-  isActive:Boolean = false;
+  teams: any = {};
+  flow: String = "Suche";
+  matches: any[] = [];
+  sidebar: boolean = false;
+  selectedDistance: String = "";
+  isActive: Boolean = false;
+  location: String = "";
+  distance: string = '0';
+  distances: {id: string, name: string}[] = [
+    { 
+      id: '1', 
+      name: '5'
+    },
+    {
+      id: '2', 
+      name: '10'
+    },
+    {
+      id:'3', 
+      name: '15'
+    },
+    {
+      id: '4',
+      name: "20"
+    },
+    {
+      id: '5',
+      name:'30'
+    },
+    {
+      id:'6',
+      name:'40'
+    },
+    {
+      id:'7',
+      name:'50'
+    }
+  ];
 
- async beforeCreate(){
-    console.log("created in dashbaord")
-      const result:any =(await this.$apollo.query<GetTeamsQuery>({
-        query: getTeams
-      }))
-      this.teams = result.data.companies[0]
-      this.handelState(this.teams.demands[0],0)
-      console.log(result)
+  @Provide("validation")
+  validation() {
+    return this.$v;
+  }
+
+  async beforeCreate() {
+    const result: any = await this.$apollo.query<GetTeamsQuery>({
+      query: getTeams
+    });
+    this.teams = result.data.companies[0];
+    // Trying to get adress from backe nd
+    this.location = result.data.companies[0].addressLine1;
+    // trying to show the first matches of either demands or supllies
+    if(this.teams.demands.length >= 1){
+      this.handelState(this.teams.demands[0], 0);
+    }
+    //if demands is empty show first result of supplies
+    else{
+      this.handelState(this.teams.supplies[0], 1);
+    }
 
   }
-  async handelState(team:any,index:Number) {
-     if(team.__typename == "Demand"){
-        console.log("calling hadel state",team);
-      this.matches = (await this.$apollo.query<DemandMatchesQuery,DemandMatchesQueryVariables>({
-        query: getDemandMatch,
-        variables: {
-          id: team.id
-        }
-      })).data.matchDemand.matches;
-      this.flow = "DemandMatch"
-      console.log("matches: ",this.matches)
-      }else{
-        this.matches = (await this.$apollo.query<SupplyMatchesQuery,SupplyMatchesQueryVariables>({
+  async handelState(team: any, index: Number) {
+    if (team.__typename == "Demand") {
+      this.matches = (
+        await this.$apollo.query<DemandMatchesQuery,DemandMatchesQueryVariables>({
+          query: getDemandMatch,
+          variables: {
+            id: team.id
+          }
+        })
+      ).data.matchDemand.matches;
+      this.flow = "DemandMatch";
+    } else {
+      this.matches = (
+        await this.$apollo.query<SupplyMatchesQuery,SupplyMatchesQueryVariables>({
           query: getSupplyMatch,
-        variables: {
-          id: team.id
-        }
-      })).data.matchSupply.matches;
-        this.flow = "SupplyMatch"
-      console.log("matches: ",this.matches)
-      }
-      // closing sidebar for mobile when selecting the team
-      this.sidebar = false
+          variables: {
+            id: team.id
+          }
+        })
+      ).data.matchSupply.matches;
+      this.flow = "SupplyMatch";
     }
-selected_distance(number:number) {
-      this.selectedDistance = number.toString();
-      this.isActive = false;
-    };
-};
+    // closing sidebar for mobile when selecting the team
+    this.sidebar = false;
+  }
+  selected_distance(number: number) {
+    this.selectedDistance = number.toString();
+    this.isActive = false;
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -145,6 +183,11 @@ selected_distance(number:number) {
   grid-template-rows: 1fr 1fr 10fr;
   height: 100vh;
   padding: 0;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .burger-menu {
     display: none;

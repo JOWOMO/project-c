@@ -6,6 +6,9 @@ query getTeams{
 
   companies{
     id
+    addressLine1
+    addressLine2
+    addressLine3
 
     demands{
       id
@@ -13,10 +16,10 @@ query getTeams{
       isActive
       description
       skills{
-        id 
+        id
       }
       quantity
-      
+
     }
 
     supplies{
@@ -25,7 +28,7 @@ query getTeams{
       isActive
       description
       skills{
-        id 
+        id
       }
       quantity
     }

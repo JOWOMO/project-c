@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-     //  this.$router.push('/')
+      // this.$router.push('/')
     }, 5000)
     setInterval(() => {
       this.counter--
