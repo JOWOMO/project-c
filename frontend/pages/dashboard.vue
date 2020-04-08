@@ -14,6 +14,12 @@
     <h1>Finde Personal-Partner</h1>
     <div class="distance">
       <span>{{ location }}</span>
+      <formSelect
+        id="distance"
+        label="Entfernung"
+        :values="distances"
+        v-model="distance"
+      />
     </div>
 
     <div class="matches" v-if="flow === 'DemandMatch'">
@@ -50,6 +56,8 @@
 <script lang="ts">
 import companyCard from "@/components/company-card.vue";
 import sidebar from "@/components/sidebars/sidebar_dashboard.vue";
+import formSelect from "@/components/forms/select.vue";
+
 import {
   GetTeamsQuery,
   DemandMatchesQuery,
@@ -57,26 +65,44 @@ import {
   SupplyMatchesQuery,
   SupplyMatchesQueryVariables
 } from "@/apollo/schema";
+
 import getTeams from "@/apollo/queries/teams.gql";
 import getDemandMatch from "@/apollo/queries/demand_matches.gql";
 import getSupplyMatch from "@/apollo/queries/supply_matches.gql";
-import { Vue, Prop, Emit, Getter, Component } from "nuxt-property-decorator";
+
+import { Vue, Prop, Emit, Getter, Component, Provide } from "nuxt-property-decorator";
 import { Object } from "lodash";
-import gql from 'graphql-tag';
-import { SmartQuery } from 'vue-apollo-decorator';
+
+import { Validate } from "vuelidate-property-decorators";
+import { required, numeric, minValue } from "vuelidate/lib/validators";
 
 @Component({
-  components: { sidebar, companyCard },
+  components: { sidebar, companyCard, formSelect },
   middleware: "authenticated"
 })
 export default class extends Vue {
   teams: any = {};
   flow: String = "Suche";
-  matches: any;
+  matches: any[] = [];
   sidebar: boolean = false;
   selectedDistance: String = "";
   isActive: Boolean = false;
   location: String = "";
+  distance: Number = null;
+  distances: number[] = [
+    5,
+    10,
+    15,
+    20,
+    30,
+    40,
+    50
+  ];
+
+  @Provide("validation")
+  validation() {
+    return this.$v;
+  }
 
   async beforeCreate() {
     console.log("created in dashbaord");
@@ -85,9 +111,10 @@ export default class extends Vue {
     });
     this.teams = result.data.companies[0];
     this.teams.demands = [];
+
     // Trying to get adress from backend
-    this.location = result.data.companies[0].adressLine1
-    console.log("location",  result.data.companies[0].adressLine1);
+    this.location = result.data.companies[0].addressLine1
+    console.log("location",  result.data.companies[0].addressLine1);
 
     this.handelState(this.teams.demands[0], 0);
     console.log("result", result);
