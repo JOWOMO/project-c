@@ -145,6 +145,7 @@ select
     ) 
     as contact
     ,u.id as owner_id
+    ,u.external_id as owner_external_id
 from 
     -- currently there is only a one to one realationship such this doesn't hurt
     btb.company co,
@@ -195,6 +196,7 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
     id integer NOT NULL DEFAULT nextval('btb.team_supply_id_seq'::regclass),
     company_id integer NOT NULL,
     is_active boolean default true,
+
     name text NOT NULL,
     description_int text,
     description_ext text,
@@ -312,7 +314,6 @@ where
     and co.postal_code = p.postalcode
 ;
 
-
 drop function if exists btb.get_postalcode_position(text);
 CREATE FUNCTION btb.get_postalcode_position(text) RETURNS geography
     AS '
@@ -325,4 +326,53 @@ where
     LANGUAGE SQL
     IMMUTABLE
     RETURNS NULL ON NULL INPUT
+;
+
+-- drop table if exists btb.contact_request;
+CREATE TABLE IF NOT EXISTS btb.contact_request
+(
+    external_id text not null,
+    date timestamp with time zone not null default now(),
+    
+    distance integer,
+    match_type text not null,
+
+    request_id integer not null,
+    request jsonb not null,
+
+    response_id integer not null,
+    response jsonb not null
+);
+
+drop view if exists btb.contact_requests_today;
+create or replace view btb.contact_requests_today as
+select * from btb.contact_request
+where 
+    date_trunc('day', date at time zone 'Europe/Paris') = date_trunc('day', now() at time zone 'Europe/Paris')
+;
+
+drop view if exists btb.contact_requests_week;
+create or replace view btb.contact_requests_week as
+select * 
+from btb.contact_request
+where 
+    date_trunc('day', date at time zone 'Europe/Paris') >= date_trunc('day', now() at time zone 'Europe/Paris' - INTERVAL '6 DAY' ) 
+;
+
+-- drop index btb.idx_contact_request_query;
+-- CREATE INDEX IF NOT EXISTS idx_contact_request_query 
+--     on btb.contact_request (
+--         external_id,
+--         match_type,
+--         request_id,
+--         response_id
+--     )
+-- ;
+
+CREATE INDEX IF NOT EXISTS idx_contact_request_throttle
+    on btb.contact_request (
+        external_id,
+        date_trunc('day', date at time zone 'Europe/Paris'),
+        response_id
+    )
 ;

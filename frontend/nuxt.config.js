@@ -152,6 +152,20 @@ export default {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }
       transpile: [/^vue2-google-maps($|\/)/]
-    }
+    },
+    optimizeCSS: {
+    },
+  },
+  generate: {
+    routes: [
+      '/register/demand',
+      '/register/demand/company',
+      '/register/demand/team',
+      '/register/demand/validate',
+      '/register/supply',
+      '/register/supply/company',
+      '/register/supply/team',
+      '/register/supply/validate',
+    ],
   }
 }

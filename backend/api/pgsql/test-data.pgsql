@@ -1,8 +1,8 @@
-insert into btb.customer
+insert into btb.customer (id, external_id, email, first_name, last_name)
     values 
     (1, 'DebugUserId', 'email@email.com', 'first', 'last'),
-    (2, 'DebugUserId2', 'email2@email.com', 'first', 'last'),
-    (3, 'DebugUserId3', 'email3@email.com', 'first', 'last')
+    (2, 'DebugUserId2', 'email2@email.com', 'first 2', 'last 2'),
+    (3, 'DebugUserId3', 'email3@email.com', 'first 3', 'last 3')
 ;
      
 insert into btb.company

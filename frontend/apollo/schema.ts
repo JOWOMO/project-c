@@ -105,6 +105,11 @@ export type MatchSupplyResult = {
   pageInfo: PageInfo;
 };
 
+export enum MatchType {
+  Supply = 'Supply',
+  Demand = 'Demand'
+}
+
 export type Mutation = {
    __typename?: 'Mutation';
   updateUser?: Maybe<Scalars['String']>;
@@ -114,6 +119,7 @@ export type Mutation = {
   updateSupply?: Maybe<Supply>;
   removeSupply?: Maybe<Scalars['String']>;
   startUploadPicture?: Maybe<S3UploadGrant>;
+  contactMatch?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -144,6 +150,13 @@ export type MutationUpdateSupplyArgs = {
 
 export type MutationRemoveSupplyArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationContactMatchArgs = {
+  id: Scalars['ID'];
+  matchType: MatchType;
+  originId: Scalars['ID'];
 };
 
 export type PageInfo = {

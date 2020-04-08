@@ -62,7 +62,7 @@ jobs:
 
     - name: Generate 
       run: |
-        NUXT_ENV_STAGE=${{ env.STAGE }} npx nuxt generate --spa 
+        NUXT_ENV_STAGE=${{ env.STAGE }} npx nuxt build
       working-directory: frontend
 
     - uses: actions/upload-artifact@v1
