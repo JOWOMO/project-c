@@ -49,6 +49,9 @@
 </template>
 
 <script lang="ts">
+import { WorkflowProvider } from "../../register.vue";
+import { InjectReactive } from "vue-property-decorator";
+
 import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
 
 import { Validations } from "vuelidate-property-decorators";
@@ -64,14 +67,21 @@ import addUser from "@/apollo/mutations/add_user.gql";
 
 import formInput from "@/components/forms/input.vue";
 import formCheckbox from "@/components/forms/checkbox.vue";
-import { formatMessage } from "./messages";
+import { formatMessage } from "@/components/auth/messages";
+import { Context } from "@nuxt/types";
+import { IState } from "@/store";
+import { LoadingAnimation } from '@/components/loadinganimation';
 
 @Component({
-  components: { formInput, formCheckbox }
+  components: {
+    formInput,
+    formCheckbox
+  }
 })
 export default class extends Vue {
-  userExists = false;
+  @InjectReactive("workflow") workflow!: WorkflowProvider;
 
+  userExists = false;
   firstName: string = "";
   lastName: string = "";
   email: string = "";
@@ -90,7 +100,7 @@ export default class extends Vue {
   error = "";
 
   back() {
-    this.$emit("change-state", "back");
+    this.$router.push("/");
   }
 
   @Validations()
@@ -115,22 +125,39 @@ export default class extends Vue {
     };
   }
 
-  async mounted() {
-    console.log("created");
+  async asyncData(context: Context) {
+    let data: Partial<Pick<
+      this,
+      "userExists" | "firstName" | "lastName" | "email"
+    >> = {};
 
-    if (this.authenticatedUser) {
-      const result = await this.$apollo.query<RegistrationUserQuery>({
-        query: userQuery
-      });
+    // NO ACCESS to this context here
+    try {
+      if ((context.store.state as IState).auth.isAuthenticated) {
+        const client = context.app.apolloProvider!.defaultClient;
+        const result = await client.query<RegistrationUserQuery>({
+          query: userQuery,
+          fetchPolicy: "network-only"
+        });
 
-      if (result.data && result.data.me) {
-        const me = result.data.me;
+        console.log("received", result);
 
-        this.userExists = true;
-        this.firstName = me.firstName;
-        this.lastName = me.lastName;
-        this.email = me.email;
+        if (result.data && result.data.me) {
+          const me = result.data.me;
+
+          data.userExists = true;
+          data.firstName = me.firstName;
+          data.lastName = me.lastName;
+          data.email = me.email;
+        }
+      } else {
+        data.userExists = false;
       }
+
+      return data;
+    } catch (e) {
+      console.error(e);
+      context.error({ statusCode: 500, message: e.message });
     }
   }
 
@@ -152,7 +179,7 @@ export default class extends Vue {
         lastName: this.lastName
       });
 
-      this.$emit("change-state", "register-validate");
+      this.$router.push(`/register/${this.workflow.type}/validate`);
     } catch (err) {
       console.log("err: ", err);
       this.error = formatMessage(err);
@@ -164,6 +191,8 @@ export default class extends Vue {
     console.debug("updateUser");
 
     try {
+      console.debug("Updating with", this.firstName, this.lastName, this.email);
+
       const result = await this.$apollo.mutate<
         UserAddMutation,
         UserAddMutationVariables
@@ -176,7 +205,7 @@ export default class extends Vue {
         }
       });
 
-      this.$emit("change-state", "redirect");
+      this.$router.push(`/register/${this.workflow.type}/company`);
     } catch (err) {
       console.error(err);
       this.error = err.message;
@@ -184,6 +213,7 @@ export default class extends Vue {
     }
   }
 
+  @LoadingAnimation
   register() {
     console.log("register");
 
@@ -201,9 +231,13 @@ export default class extends Vue {
       this.updateUser();
     }
   }
+
+  mounted() {
+    this.workflow.setStage(0);
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "@/assets/form-layout-two";
 </style>

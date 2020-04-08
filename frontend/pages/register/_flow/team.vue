@@ -1,53 +1,51 @@
 <template>
-  <div>
-    <div class="container">
-      <h1>{{ workflow().displayName }}</h1>
-      <p>Details helfen uns dir Suchvorschläge anzuzeigen</p>
+  <div class="container">
+    <h1>{{ workflow.displayName }}</h1>
+    <p>Details helfen uns dir Suchvorschläge anzuzeigen</p>
 
-      <div v-for="(team, idx) in supplies" :key="idx">
-        <div class="team-container">
-          <div v-if="!team.expanded" class="edit" @click="toggleVisibilitySupply(idx)">
-            <div class="img" />
-          </div>
-          <team
-            class="team-form"
-            v-bind:value="team"
-            @input="updateSupply(idx, $event)"
-            :topics="topics"
-            :skills="skills"
-          />
+    <div v-for="(team, idx) in supplies" :key="idx">
+      <div class="team-container">
+        <div v-if="!team.expanded" class="edit" @click="toggleVisibilitySupply(idx)">
+          <div class="img" />
         </div>
-        <hr />
+        <team
+          class="team-form"
+          v-bind:value="team"
+          @input="updateSupply(idx, $event)"
+          :topics="topics"
+          :skills="skills"
+        />
+      </div>
+      <hr />
+    </div>
+
+    <div v-for="(team, idx) in demands" :key="idx">
+      <div class="team-container">
+        <div v-if="!team.expanded" class="edit" @click="toggleVisibilityDemand(idx)">
+          <div class="img" />
+        </div>
+        <team
+          class="team-form"
+          v-bind:value="team"
+          @input="updateDemand(idx, $event)"
+          :topics="topics"
+          :skills="skills"
+        />
+      </div>
+      <hr />
+    </div>
+
+    <button class="add" @click.prevent="addTeam">
+      <div class="circle">
+        <img src="/icons/circle.svg" />
       </div>
 
-      <div v-for="(team, idx) in demands" :key="idx">
-        <div class="team-container">
-          <div v-if="!team.expanded" class="edit" @click="toggleVisibilityDemand(idx)">
-            <div class="img" />
-          </div>
-          <team
-            class="team-form"
-            v-bind:value="team"
-            @input="updateDemand(idx, $event)"
-            :topics="topics"
-            :skills="skills"
-          />
-        </div>
-        <hr />
-      </div>
+      <span>Weiteres Team hinzufügen</span>
+    </button>
 
-      <button class="add" @click.prevent="addTeam">
-        <div class="circle">
-          <img src="/icons/circle.svg" />
-        </div>
-
-        <span>Weiteres Team hinzufügen</span>
-      </button>
-
-      <div class="buttons">
-        <button class="secondary" @click.prevent="back">Zurück</button>
-        <button class="primary" @click.prevent="save">Abschließen</button>
-      </div>
+    <div class="buttons">
+      <button class="secondary" @click.prevent="back">Zurück</button>
+      <button class="primary" @click.prevent="save">Abschließen</button>
     </div>
   </div>
 </template>
@@ -82,15 +80,26 @@ import {
   UpdateDemandMutation,
   UpdateDemandMutationVariables
 } from "@/apollo/schema";
+import { InjectReactive } from "vue-property-decorator";
 
-import { WorkflowProvider, RegistrationFlow } from "../register.vue";
+import { WorkflowProvider, RegistrationFlow } from "../../register.vue";
+import { Context } from "@nuxt/types";
+import { LoadingAnimation } from "@/components/loadinganimation";
+
+const EMPTY_TEAM: TeamDetails = {
+  number: 1,
+  quantity: 0,
+  skills: [],
+  isActive: true,
+  expanded: true
+};
 
 @Component({
   components: { team },
-  middleware: 'authenticated',
+  middleware: "authenticated"
 })
 export default class extends Vue {
-  @Inject("workflow") workflow!: WorkflowProvider;
+  @InjectReactive("workflow") workflow!: WorkflowProvider;
 
   company!: Pick<Company, "id">;
 
@@ -98,18 +107,28 @@ export default class extends Vue {
   supplies: TeamDetails[] = [];
 
   skills: Pick<Skill, "id" | "name">[] = [];
-  topics: any[] = [];
+  topics: any[];
 
+  constructor() {
+    super();
+
+    this.topics = [
+      "Demand Team 2",
+      "Handwerker",
+      "Verköufer",
+      "Lagerarbeiter",
+      "Krankenpfleger"
+    ].map(e => ({ id: e, name: e }));
+  }
+
+  counter = 0;
   addTeam() {
     const record = {
-      number: ++this.counter,
-      quantity: 0,
-      skills: [],
-      isActive: true,
-      expanded: true
+      ...EMPTY_TEAM,
+      number: ++this.counter
     };
 
-    if (this.workflow().type === RegistrationFlow.demand) {
+    if (this.workflow.type === RegistrationFlow.demand) {
       this.demands.push(record);
     } else {
       this.supplies.push(record);
@@ -149,9 +168,10 @@ export default class extends Vue {
   }
 
   back() {
-    this.$router.push(`/register/company`);
+    this.$router.push(`/register/${this.workflow.type}/company`);
   }
 
+  @LoadingAnimation
   async save() {
     try {
       for (const supply of this.supplies.filter(s => s.modified)) {
@@ -199,37 +219,30 @@ export default class extends Vue {
     }
   }
 
-  counter = 0;
-  map(r: Demand | Supply): TeamDetails {
-    return {
-      number: ++this.counter,
-      id: r.id,
-      isActive: r.isActive,
-      name: r.name,
-      quantity: r.quantity,
-      skills: r.skills.map(s => s.id),
-      description: r.description || undefined
+  async asyncData(context: Context) {
+    let data: Pick<
+      this,
+      | "counter"
+      | "demands"
+      | "supplies"
+      | "skills"
+      | "company"
+    > = {
+      counter: 0,
+      demands: [],
+      supplies: [],
+      skills: [],
+      company: {} as Company
     };
-  }
 
-  async mounted() {
-    this.workflow().setStage(2);
-
-    this.topics = [
-      "Demand Team 2",
-      "Handwerker",
-      "Verköufer",
-      "Lagerarbeiter",
-      "Krankenpfleger"
-    ].map(e => ({ id: e, name: e }));
-
+    // NO ACCESS to this context here
     try {
-      const client = this.$apollo.getClient();
-      const result = await this.$apollo.query<
-        GetTeamsQuery,
-        GetTeamsQueryVariables
-      >({
-        query: getTeams
+      const flow: RegistrationFlow = context.params.flow as RegistrationFlow;
+
+      const client = context.app.apolloProvider!.defaultClient;
+      const result = await client.query<GetTeamsQuery, GetTeamsQueryVariables>({
+        query: getTeams,
+        fetchPolicy: "network-only"
       });
 
       const companies = result?.data?.companies;
@@ -237,31 +250,46 @@ export default class extends Vue {
         throw new Error("we can't be here.");
       }
 
-      this.skills = result.data?.skills;
-      this.company = companies[0]!;
+      data.skills = result.data?.skills;
+      data.company = companies[0]!;
 
-      // other code does work for both arrays
-      // by just leaving one unfilled we achieve what we want
-      if (this.workflow().type === RegistrationFlow.demand) {
-        this.counter = 0;
-        //@ts-ignore
-        this.demands = (this.company.demands || []).map(this.map.bind(this));
+      const map = (r: Demand | Supply): TeamDetails => {
+        return {
+          number: ++data.counter,
+          id: r.id,
+          isActive: r.isActive,
+          name: r.name,
+          quantity: r.quantity,
+          skills: r.skills.map(s => s.id),
+          description: r.description || undefined
+        } as TeamDetails;
+      };
 
-        if (this.demands.length === 0) {
-          this.addTeam();
+      if (flow === RegistrationFlow.demand) {
+        // @ts-ignore
+        data.demands = (data.company.demands || []).map(map);
+
+        if (data.demands.length === 0) {
+          data.demands.push(EMPTY_TEAM);
         }
       } else {
-        this.counter = 0;
-        //@ts-ignore
-        this.supplies = (this.company.supplies || []).map(this.map.bind(this));
+        // @ts-ignore
+        data.supplies = (data.company.supplies || []).map(map);
 
-        if (this.supplies.length === 0) {
-          this.addTeam();
+        if (data.supplies.length === 0) {
+          data.supplies.push(EMPTY_TEAM);
         }
       }
+
+      return data;
     } catch (e) {
       console.error(e);
+      context.error({ statusCode: 500, message: e.message });
     }
+  }
+
+  created() {
+    this.workflow.setStage(2);
   }
 }
 </script>

@@ -44,7 +44,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#25A6DA' },
+  loading: { color: '#25A6DA', height: '5px' },
   /*
   ** Global SCSS
   */
@@ -101,12 +101,6 @@ export default {
   apollo: {
     includeNodeModules: true,
     authenticationType: '', 
-    defaultOptions: {
-      $query: {
-        loadingKey: 'loading',
-        fetchPolicy: 'cache-and-network',
-      },
-    },
     // optional
     watchLoading: '~/plugins/apollo-watch-loading-handler.js',
     // optional

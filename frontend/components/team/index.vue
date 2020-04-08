@@ -224,7 +224,7 @@ export default class extends Vue {
     this.editTeam = JSON.parse(JSON.stringify(this.value));
   }
 
-  mounted() {
+  created() {
     // make deep copy
     this.editTeam = JSON.parse(JSON.stringify(this.value));
   }

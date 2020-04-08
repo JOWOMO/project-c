@@ -9,7 +9,7 @@
     <p>Du bist ab jetzt in der Suche auffindbar. Entdecke passende Personal Partner, die deinem Profil entsprechen. Deine Kriterien kannst du jederzeit anpassen.</p>
 
     <div class="buttons">
-      <button class="secondary" @click.prevent="profile">Profil ansehen</button>
+      <!-- <button class="secondary" @click.prevent="profile">Profil ansehen</button> -->
       <button class="primary" @click.prevent="dashboard">Personalpartner anzeigen</button>
     </div>
   </div>
@@ -29,9 +29,9 @@ export default class extends Vue {
     };
   }
 
-  profile() {
-    this.$router.push("/register/team");
-  }
+  // profile() {
+  //   this.$router.push("/register/team");
+  // }
 
   dashboard() {
     this.$router.push("/dashboard");

@@ -42,6 +42,7 @@ import { UserAddMutation, UserAddMutationVariables } from "@/apollo/schema";
 import addUser from "@/apollo/mutations/add_user.gql";
 import { IState } from "@/store";
 import { formatMessage } from "./messages";
+import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput }
@@ -53,7 +54,7 @@ export default class extends Vue {
   }
 
   @Validate({ required, email })
-  @State((s: IState) => s.register.user.email || "test@email.de")
+  @State((s: IState) => s.register.user.email)
   email!: string;
 
   @State((s: IState) => s.register.user.password)
@@ -64,6 +65,7 @@ export default class extends Vue {
 
   error: string = "";
 
+  @LoadingAnimation
   async resend() {
     try {
       await this.$store.dispatch("auth/resendcode", {
@@ -81,7 +83,8 @@ export default class extends Vue {
       this.$swal("Das hat nicht geklappt", formatMessage(e), "error");
     }
   }
-
+  
+  @LoadingAnimation
   async confirm() {
     // stop here if form is invalid
     this.$v.$touch();

@@ -3,17 +3,11 @@
     <div v-if="state == 'login'">
       <login @change-state="handleStateChange" />
     </div>
-    <div v-if="state == 'register'">
-      <register @change-state="handleStateChange" />
-    </div>
     <div v-if="state == 'newPassword'">
       <newPassword @change-state="handleStateChange" />
     </div>
     <div v-if="state == 'validate'">
       <validate @change-state="handleStateChange" />
-    </div>
-    <div v-if="state == 'register-validate'">
-      <regValidate @change-state="handleStateChange" />
     </div>
     <div v-if="state == 'reset'">
       <reset @change-state="handleStateChange" />
@@ -29,20 +23,16 @@ import Component from "nuxt-class-component";
 import { Vue, Prop } from "nuxt-property-decorator";
 
 import login from "./login.vue";
-import register from "./register.vue";
 import validate from "./validate.vue";
-import regValidate from "./register-validate.vue";
 import reset from "./reset.vue";
 import newpassword from "./new.vue";
 
 @Component({
   components: {
     login,
-    register,
     validate,
     reset,
     newpassword,
-    regValidate,
   }
 })
 export default class Auth extends Vue {
@@ -51,6 +41,9 @@ export default class Auth extends Vue {
 
   @Prop({ type: String, required: false }) 
   readonly target_route!: any;
+
+  @Prop({ type: Object, required: false }) 
+  readonly registration!: any;
 
   state: String = '';
 
