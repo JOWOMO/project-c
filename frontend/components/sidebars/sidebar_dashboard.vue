@@ -4,21 +4,26 @@
       <img src="/images/logo.svg" />
     </nuxt-link>
     <div class="wrapper-content">
-      <p>Ich {{ flow }}</p>
-      <div v-for="(element,index) in demand" :key="element.id" class="sidebar-element-wrapper">
-        <div @click="changeTeam(element,index)" class="sidebar-element">
-          <img v-if="pointerDemands[index]" src="/icons/arrow-left.svg" />
-          <p>{{ element.name }}</p>
+      <div @click="print" v-if="demand">
+        <p v-if="demand.length >= 1">Ich suche</p>
+        <div v-for="(element,index) in demand" :key="element.id" class="sidebar-element-wrapper">
+          <div @click="changeTeam(element,index)" class="sidebar-element">
+            <img v-if="pointerDemands[index]" src="/icons/arrow-left.svg" />
+            <p>{{ element.name }}</p>
+          </div>
         </div>
       </div>
-      <div v-for="(element,index) in supply" :key="element.name" class="sidebar-element-wrapper">
-        <div @click="changeTeam(element,index)" class="sidebar-element">
-          <img v-if="pointerSupplies[index]" src="/icons/arrow-left.svg" />
-          <p>{{ element.name }}</p>
+
+      <div @click="print" v-if="supply">
+        <p v-if="supply.length >= 1">Ich biete</p>
+        <div v-for="(element,index) in supply" :key="element.name" class="sidebar-element-wrapper">
+          <div @click="changeTeam(element,index)" class="sidebar-element">
+            <img v-if="pointerSupplies[index]" src="/icons/arrow-left.svg" />
+            <p>{{ element.name }}</p>
+          </div>
         </div>
       </div>
     </div>
-
     <nuxt-link to="/edit/team?flow=search">Teams verwalten</nuxt-link>
   </aside>
 </template>
@@ -48,9 +53,13 @@ export default {
     };
   },
   updated() {
+    this.print();
     console.log("demand/supply", this.demand, this.supply);
   },
   methods: {
+    print() {
+      console.log("demands", this.demand);
+    },
     changeTeam(team, index) {
       this.pointerDemands = [];
       this.pointerSupplies = [];

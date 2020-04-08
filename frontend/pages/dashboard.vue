@@ -62,6 +62,8 @@ import getDemandMatch from "@/apollo/queries/demand_matches.gql";
 import getSupplyMatch from "@/apollo/queries/supply_matches.gql";
 import { Vue, Prop, Emit, Getter, Component } from "nuxt-property-decorator";
 import { Object } from "lodash";
+import gql from 'graphql-tag';
+import { SmartQuery } from 'vue-apollo-decorator';
 
 @Component({
   components: { sidebar, companyCard },
@@ -82,6 +84,7 @@ export default class extends Vue {
       query: getTeams
     });
     this.teams = result.data.companies[0];
+    this.teams.demands = [];
     // Trying to get adress from backend
     this.location = result.data.companies[0].adressLine1
     console.log("location",  result.data.companies[0].adressLine1);
@@ -93,10 +96,7 @@ export default class extends Vue {
     if (team.__typename == "Demand") {
       console.log("calling hadel state", team);
       this.matches = (
-        await this.$apollo.query<
-          DemandMatchesQuery,
-          DemandMatchesQueryVariables
-        >({
+        await this.$apollo.query<DemandMatchesQuery,DemandMatchesQueryVariables>({
           query: getDemandMatch,
           variables: {
             id: team.id
@@ -107,10 +107,7 @@ export default class extends Vue {
       console.log("matches: ", this.matches);
     } else {
       this.matches = (
-        await this.$apollo.query<
-          SupplyMatchesQuery,
-          SupplyMatchesQueryVariables
-        >({
+        await this.$apollo.query<SupplyMatchesQuery,SupplyMatchesQueryVariables>({
           query: getSupplyMatch,
           variables: {
             id: team.id
@@ -139,6 +136,11 @@ export default class extends Vue {
   grid-template-rows: 1fr 1fr 10fr;
   height: 100vh;
   padding: 0;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .burger-menu {
     display: none;
