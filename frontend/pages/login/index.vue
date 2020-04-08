@@ -34,7 +34,8 @@ export default class extends Vue {
 
     // we need to find out where we stand
     const result = await this.$apollo.query<Check_StateQuery>({
-      query: checkState
+      query: checkState,
+      fetchPolicy: 'network-only',
     });
 
     const me = result?.data?.me;

@@ -53,7 +53,7 @@ export default class extends Vue {
   }
 
   @Validate({ required, email })
-  @State((s: IState) => s.register.user.email || "test@email.de")
+  @State((s: IState) => s.register.user.email)
   email!: string;
 
   @State((s: IState) => s.register.user.password)

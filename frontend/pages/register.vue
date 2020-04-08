@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
+import { ProvideReactive } from "vue-property-decorator";
 import { Meta } from "@/components/decorator";
 
 import sidebar from "@/components/sidebars/register.vue";
@@ -20,7 +21,7 @@ export enum RegistrationFlow {
   supply = "supply"
 }
 
-export type WorkflowProvider = () => Workflow;
+export type WorkflowProvider = Workflow;
 type Workflow = {
   type: RegistrationFlow;
   displayName: string;
@@ -38,39 +39,41 @@ export default class extends Vue {
   labels = ["Persönliche Daten", "Dein Unternehmen"];
   selectedElement: number = 0;
 
-  flowType!: RegistrationFlow;
-  actionName!: string;
+  constructor() {
+    super();
+
+    this.provideWorkflow = {
+      type: RegistrationFlow.demand,
+      displayName: "",
+      setStage: this.setState.bind(this),
+    };
+  }
 
   setState(num: number) {
     this.selectedElement = num;
   }
 
-  @Provide("workflow")
-  provideWorkflow(): Workflow {
-    return {
-      type: this.flowType,
-      displayName: this.actionName,
-      setStage: this.setState.bind(this)
-    };
-  }
+  @ProvideReactive("workflow")
+  provideWorkflow: Workflow;
 
   @Meta
   head() {
     return {
-      title: this.actionName,
+      title: this.provideWorkflow.displayName,
       meta: [{ hid: "description", name: "description", content: "" }]
     };
   }
 
-  mounted() {
-    this.flowType =
-      this.$route.query.flow === "demand"
+  created() {
+    this.provideWorkflow.type =
+      this.$route.params.flow === "demand"
         ? RegistrationFlow.demand
         : RegistrationFlow.supply;
 
-    this.actionName =
-      this.flowType === RegistrationFlow.demand ? "Ich suche" : "Ich biete";
-    this.labels.push(this.actionName);
+    this.provideWorkflow.displayName =
+      this.provideWorkflow.type === RegistrationFlow.demand ? "Ich suche" : "Ich biete";
+
+    this.labels.push(this.provideWorkflow.displayName);
   }
 }
 </script>

@@ -45,11 +45,11 @@ export default class extends Vue {
   }
 
   demand_register() {
-    this.$router.push({ path: "/register", query: { flow: "demand" } });
+    this.$router.push({ path: "/register/demand" });
   }
 
   supply_register() {
-    this.$router.push({ path: "/register", query: { flow: "supply" } });
+    this.$router.push({ path: "/register/supply" });
   }
 
   @Meta
