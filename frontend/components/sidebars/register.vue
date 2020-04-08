@@ -17,8 +17,7 @@
 </template>
 
 <script lang="ts">
-import Component from "nuxt-class-component";
-import { Vue, Prop } from "nuxt-property-decorator";
+import { Component, Vue, Prop } from "nuxt-property-decorator";
 
 @Component
 export default class Sidebar extends Vue {

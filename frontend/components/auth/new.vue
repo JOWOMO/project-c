@@ -71,7 +71,7 @@ export default class extends Vue {
   }
 
   @Emit('change-state')
-  cancel() {
+  back() {
     return 'cancel';
   }
 
