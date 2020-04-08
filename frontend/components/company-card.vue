@@ -12,6 +12,7 @@
           v-for="skill in skills"
           :key="skill.id"
           :skill="skill"
+          :name="skill.name"
           class="tag"
         />
       </div>

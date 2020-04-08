@@ -88,15 +88,36 @@ export default class extends Vue {
   selectedDistance: String = "";
   isActive: Boolean = false;
   location: String = "";
-  distance: Number = null;
-  distances: number[] = [
-    5,
-    10,
-    15,
-    20,
-    30,
-    40,
-    50
+  distance: string = '0';
+  distances: {id: string, name: string}[] = [
+    { 
+      id: '1', 
+      name: '5'
+    },
+    {
+      id: '2', 
+      name: '10'
+    },
+    {
+      id:'3', 
+      name: '15'
+    },
+    {
+      id: '4',
+      name: "20"
+    },
+    {
+      id: '5',
+      name:'30'
+    },
+    {
+      id:'6',
+      name:'40'
+    },
+    {
+      id:'7',
+      name:'50'
+    }
   ];
 
   @Provide("validation")
@@ -105,23 +126,24 @@ export default class extends Vue {
   }
 
   async beforeCreate() {
-    console.log("created in dashbaord");
     const result: any = await this.$apollo.query<GetTeamsQuery>({
       query: getTeams
     });
     this.teams = result.data.companies[0];
-    this.teams.demands = [];
+    // Trying to get adress from backe nd
+    this.location = result.data.companies[0].addressLine1;
+    // trying to show the first matches of either demands or supllies
+    if(this.teams.demands.length >= 1){
+      this.handelState(this.teams.demands[0], 0);
+    }
+    //if demands is empty show first result of supplies
+    else{
+      this.handelState(this.teams.supplies[0], 1);
+    }
 
-    // Trying to get adress from backend
-    this.location = result.data.companies[0].addressLine1
-    console.log("location",  result.data.companies[0].addressLine1);
-
-    this.handelState(this.teams.demands[0], 0);
-    console.log("result", result);
   }
   async handelState(team: any, index: Number) {
     if (team.__typename == "Demand") {
-      console.log("calling hadel state", team);
       this.matches = (
         await this.$apollo.query<DemandMatchesQuery,DemandMatchesQueryVariables>({
           query: getDemandMatch,
@@ -131,7 +153,6 @@ export default class extends Vue {
         })
       ).data.matchDemand.matches;
       this.flow = "DemandMatch";
-      console.log("matches: ", this.matches);
     } else {
       this.matches = (
         await this.$apollo.query<SupplyMatchesQuery,SupplyMatchesQueryVariables>({
@@ -142,7 +163,6 @@ export default class extends Vue {
         })
       ).data.matchSupply.matches;
       this.flow = "SupplyMatch";
-      console.log("matches: ", this.matches);
     }
     // closing sidebar for mobile when selecting the team
     this.sidebar = false;
