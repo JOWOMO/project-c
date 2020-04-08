@@ -38,6 +38,7 @@ import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import { IState } from '@/store'
 import formInput from "@/components/forms/input.vue";
 import { formatMessage } from "./messages";
+import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput }
@@ -74,6 +75,7 @@ export default class extends Vue {
     return 'cancel';
   }
 
+  @LoadingAnimation
   async resetPassword() {
     this.$v.$touch();
     this.$emit("validate");

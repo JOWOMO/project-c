@@ -62,6 +62,7 @@ import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
 import { WorkflowProvider } from "../../register.vue";
 import { Context } from "@nuxt/types";
+import { LoadingAnimation } from "~/components/loadinganimation";
 
 @Component({
   components: {
@@ -159,6 +160,7 @@ export default class extends Vue {
     this.$router.push(`/register/${this.workflow.type}`);
   }
 
+  @LoadingAnimation
   async updateCompany() {
     this.$v.$touch();
     this.$emit("validate");

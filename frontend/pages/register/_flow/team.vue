@@ -84,6 +84,7 @@ import { InjectReactive } from "vue-property-decorator";
 
 import { WorkflowProvider, RegistrationFlow } from "../../register.vue";
 import { Context } from "@nuxt/types";
+import { LoadingAnimation } from "@/components/loadinganimation";
 
 const EMPTY_TEAM: TeamDetails = {
   number: 1,
@@ -170,6 +171,7 @@ export default class extends Vue {
     this.$router.push(`/register/${this.workflow.type}/company`);
   }
 
+  @LoadingAnimation
   async save() {
     try {
       for (const supply of this.supplies.filter(s => s.modified)) {

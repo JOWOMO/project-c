@@ -31,6 +31,7 @@ import { required, email } from "vuelidate/lib/validators";
 
 import formInput from "@/components/forms/input.vue";
 import { AuthErrorCodes, formatMessage } from "./messages";
+import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput },
@@ -57,6 +58,7 @@ export default class extends Vue {
     this.$emit("change-state", "reset");
   }
 
+  @LoadingAnimation
   async login() {
     this.$v.$touch();
     this.$emit("validate");

@@ -69,7 +69,8 @@ import formInput from "@/components/forms/input.vue";
 import formCheckbox from "@/components/forms/checkbox.vue";
 import { formatMessage } from "@/components/auth/messages";
 import { Context } from "@nuxt/types";
-import { IState } from "~/store";
+import { IState } from "@/store";
+import { LoadingAnimation } from '@/components/loadinganimation';
 
 @Component({
   components: {
@@ -212,6 +213,7 @@ export default class extends Vue {
     }
   }
 
+  @LoadingAnimation
   register() {
     console.log("register");
 
