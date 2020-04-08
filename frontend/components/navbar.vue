@@ -12,28 +12,8 @@
 
       <avatar v-if="this.$store.state.auth.user" />
 
-      <div class="links">
-        <nuxt-link to="/dashboard" class="link" :class="{active: search}">Meine Suchergebnisse</nuxt-link>
-        <nuxt-link to="/info" class="link" :class="{active: faq}">FAQ</nuxt-link>
-      </div>
-
-      <div v-if="!$store.state.auth.isAuthenticated" class="login">
-        <button class="primary" @click="$router.push('/login')">Login</button>
-      </div>
-
-      <div v-else class="profile" @click="active = !active">
-        <div class="nameImg">
-          <span>{{ title }}</span>
-          <!-- TODO: Add img from database -->
-          <img src="/images/profile.jpg" alt class="profile_img" />
-        </div>
-        <div class="dropdown" :class="{expanded: active}">
-          <div class="options">
-            <button @click="new_password">Passwort ändern</button>
-            <button class="red" @click="warning = !warning">Benutzer löschen</button>
-          </div>
-          <button class="blue" @click="logout">Logout</button>
-        </div>
+      <div class="login" v-else>
+        <button @click="$router.push('/login')" class="primary">Login</button>
       </div>
     </div>
   </nav>
@@ -82,16 +62,6 @@ export default {
         this.title = `${this.$store.state.auth.user.attributes.given_name} ${this.$store.state.auth.user.attributes.family_name}`;
       }
     }
-    if(this.$route.path == '/dashboard') {
-      this.search = true
-      this.faq = false
-    } else if (this.$route.path == '/info') {
-      this.search = false
-      this.faq = true
-    } else {
-      this.search = false
-      this. faq = false
-    }
   },
   methods: {
     print: function() {
@@ -111,23 +81,26 @@ export default {
     }
   },
 
-  created() {
-    if(this.$route.path == '/dashboard') {
-      this.search = true
-      this.faq = false
-    } else if (this.$route.path == '/info') {
-      this.faq = true
-      this.search = false
-    } else {
-      this.search = false
-      this.faq = false
-    }
-  },
-
   computed: {
     isAuthenticated() {
       // console.log(this.$store.state.auth.isAuthenticated);
       return this.$store.state.auth.isAuthenticated;
+    },
+  },
+
+  watch: {
+    $route(to, from) {
+      // react to route changes...
+      if(this.$route.path == '/dashboard') {
+        this.search = true
+        this.faq = false
+      } else if (this.$route.path == '/info') {
+        this.search = false
+        this.faq = true
+      } else {
+        this.search = false
+        this.faq = false
+      }
     }
   }
 };
@@ -151,7 +124,7 @@ nav {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
+
   .profile,
   .links {
     display: inline-block;
@@ -159,6 +132,7 @@ nav {
 
   .links {
     margin-right: 20px;
+    transform: translateY(10px);
 
     .link {
       display: inline-block;

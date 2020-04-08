@@ -21,7 +21,7 @@ html, body {
   background: $background;
   margin: 0;
   padding: 0;
-} 
+}
 
 h1 {
   font-size: $h1FontSize;
@@ -58,7 +58,7 @@ button {
   transition: all .5s ease;
   border: none;
   outline: none;
-  color: $fontColor;
+  color: $headercolor;
 
   cursor: pointer;
 }
