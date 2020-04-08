@@ -110,11 +110,6 @@ export default class extends Vue {
         return;
       }
 
-      // we must force the token update
-      const token = await this.$store.dispatch('auth/token');
-      // @ts-ignore
-      await this.$apolloHelpers.onLogin(token);
-
       await this.$apollo.mutate<UserAddMutation, UserAddMutationVariables>({
         mutation: addUser,
         variables: {

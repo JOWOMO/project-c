@@ -52,6 +52,27 @@ export const mutations = {
 export const getters = {
 }
 
+async function getIdToken(): Promise<string> {
+  const currentSession = await Auth.currentSession();
+  return currentSession.getIdToken().getJwtToken();
+}
+
+async function signInAndToken(email: string, password: string): Promise<string> {
+  const user = await Auth.signIn(
+    email,
+    password,
+  );
+
+  // safety check
+  await Auth.currentSession();
+  
+  // @ts-ignore
+  await this.$apolloHelpers.onLogin(await getIdToken());
+
+  return user;
+}
+
+
 export const actions = {
   async load({ commit, rootState }: ActionContext<IAuthState, IState>) {
     if (rootState.auth.user) {
@@ -62,9 +83,13 @@ export const actions = {
       const user = await Auth.currentAuthenticatedUser();
       commit('set', user);
 
+      // @ts-ignore
+      await this.$apolloHelpers.onLogin(await getIdToken());
+
       return user;
     } catch (e) {
-      commit('set', null)
+      commit('set', null);
+      return null;
     }
   },
 
@@ -90,9 +115,8 @@ export const actions = {
     return user.user;
   },
 
-  async token() {
-    const currentSession = await Auth.currentSession();
-    return currentSession.getIdToken().getJwtToken();
+  token() {
+    return getIdToken();
   },
 
   async confirm(
@@ -127,13 +151,7 @@ export const actions = {
 
     // login the user directly
     try {
-      const user = await Auth.signIn(
-        email,
-        password,
-      );
-  
-      // safety check
-      await Auth.currentSession();  
+      const user = await signInAndToken.call(this, email, password);
       commit('set', user);
 
       return true;
@@ -151,16 +169,10 @@ export const actions = {
     { commit }: ActionContext<IAuthState, IState>,
     { email, password }: Required<Pick<User, 'email' | 'password'>>
   ) {
-    // there is a mismatch in naming
-    const user = await Auth.signIn(
-      email,
-      password,
-    );
 
-    // safety check
-    await Auth.currentSession();
-
+    const user = await signInAndToken.call(this, email, password);
     commit('set', user);
+
     return user;
   },
 
@@ -168,6 +180,10 @@ export const actions = {
     { commit }: ActionContext<IAuthState, IState>
   ) {
     await Auth.signOut();
+
+    // @ts-ignore
+    await this.$apolloHelpers.onLogout();
+
     commit('set', null);
   },
 }
