@@ -74,6 +74,8 @@ export default {
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt-community/gtm-module
     '@nuxtjs/gtm',
+    // Doc: https://github.com/microcipcip/cookie-universal/tree/master/packages/cookie-universal-nuxt#readme
+    'cookie-universal-nuxt',
     // Doc: https://github.com/nuxt-community/nuxt-i18n
     [
       'nuxt-i18n',

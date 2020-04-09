@@ -1,5 +1,6 @@
 query company($id:ID!) {
   company(id:$id) {
+    id
     name
     demands {
       id
@@ -14,6 +15,7 @@ query company($id:ID!) {
       quantity
       maxHourlySalary
       company {
+        id
         addressLine1
         postalCode
         city

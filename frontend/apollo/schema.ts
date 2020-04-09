@@ -373,7 +373,7 @@ export type CompanyQuery = (
   { __typename?: 'Query' }
   & { company?: Maybe<(
     { __typename?: 'Company' }
-    & Pick<Company, 'name'>
+    & Pick<Company, 'id' | 'name'>
     & { demands?: Maybe<Array<(
       { __typename?: 'Demand' }
       & Pick<Demand, 'id' | 'isActive' | 'name' | 'description' | 'quantity' | 'maxHourlySalary'>
@@ -382,7 +382,7 @@ export type CompanyQuery = (
         & Pick<Skill, 'id' | 'group' | 'name'>
       )>, company: (
         { __typename?: 'Company' }
-        & Pick<Company, 'addressLine1' | 'postalCode' | 'city'>
+        & Pick<Company, 'id' | 'addressLine1' | 'postalCode' | 'city'>
       ) }
     )>> }
   )> }

@@ -75,7 +75,7 @@ export default {
   .accept {
     background: #fff;
     color: #25A6DA;
-    border-radius: 20px;
+    border-radius: 25px;
   }
 }
 
