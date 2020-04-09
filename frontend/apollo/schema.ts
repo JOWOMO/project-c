@@ -364,6 +364,30 @@ export type Check_StateQuery = (
   ) }
 );
 
+export type CompanyQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type CompanyQuery = (
+  { __typename?: 'Query' }
+  & { company?: Maybe<(
+    { __typename?: 'Company' }
+    & Pick<Company, 'name'>
+    & { demands?: Maybe<Array<(
+      { __typename?: 'Demand' }
+      & Pick<Demand, 'id' | 'isActive' | 'name' | 'description' | 'quantity' | 'maxHourlySalary'>
+      & { skills: Array<(
+        { __typename?: 'Skill' }
+        & Pick<Skill, 'id' | 'group' | 'name'>
+      )>, company: (
+        { __typename?: 'Company' }
+        & Pick<Company, 'addressLine1' | 'postalCode' | 'city'>
+      ) }
+    )>> }
+  )> }
+);
+
 export type DemandMatchesQueryVariables = {
   id: Scalars['ID'];
 };

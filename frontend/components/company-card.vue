@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="left">
+    <div class="left" :class="{fullWidth: !match}">
       <h3>{{ company_name }}</h3>
       <div class="location">
         <img src="/icons/pin.svg" alt="">
@@ -38,7 +38,7 @@
         <span>{{ adress.number }}</span> <br>
         <span>{{ adress.city }}</span>
       </div>
-      <nuxt-link to="/" class="link">
+      <nuxt-link :to="`/dashboard/${id}`" class="link" v-if="match">
         <span>Alle Teams anzeigen</span>
         <img src="/icons/arrow-left.svg">
       </nuxt-link>
@@ -60,6 +60,15 @@ export default {
     tag
   },
   props: {
+    id: {
+      type: String,
+      required: true
+    },
+    match: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     company_name: {
       type: String,
       required: false,
@@ -126,7 +135,7 @@ export default {
         required: false,
         default:80
     }
-  },  
+  },
   computed: {
     bestMatch() {
       return (this.percentage >= 70) ? true : false
@@ -140,6 +149,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/colors';
+
 .card {
   max-width: 1000px;
   margin: 30px;
@@ -175,7 +186,7 @@ export default {
     }
 
     .highlighted {
-      color: #25A6DA;
+      color: $primary;
       font-weight: bold;
       margin-top: 20px;
     }
@@ -207,7 +218,7 @@ export default {
         margin: 3px 0 0 0;
         padding: 0;
         background: none;
-        color: #25A6DA;
+        color: $primary;
         width: auto;
         height: auto;
         cursor: pointer;
@@ -215,12 +226,12 @@ export default {
     }
 
     .percent {
-      color: #EDBA38;
+      color: $warning;
       margin-top: 30px;
     }
 
     .green {
-      color: #00DE3E;
+      color: $success;
     }
   }
 
@@ -236,7 +247,7 @@ export default {
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      border: 2px solid #00000010;
+      border: 2px solid $border;
       object-fit: cover;
       margin-top: 10px;
     }
@@ -273,6 +284,8 @@ export default {
       height: 40px;
       margin: 20px 0 0 0;
       justify-self: center;
+      background: $secondary;
+      color: #fff;
     }
   }
 
@@ -328,6 +341,6 @@ export default {
 }
 
 @media only screen and (max-width: 765px) {
-  
+
 }
 </style>

@@ -1,26 +1,28 @@
 <template>
-  <div class="container">
-    <sidebar
-      @handel-state="handelState"
-      :handel-state="handelState"
-      :flow="flow"
-      :demand="teams.demands"
-      :supply="teams.supplies"
-      class="sidebar"
-      :class="{expand: sidebar}"
-    />
-    <div class="burger-menu" @click="sidebar =! sidebar" :class="{expand: sidebar}" />
-
-    <div class="content">
-      <nuxt-child></nuxt-child>
-    </div>
+  <div>
+    <GmapMap
+      :center="{lat:10, lng:10}"
+      :zoom="7"
+      map-type-id="terrain"
+      style="width: 100%; height: 70vh"
+    >
+      <GmapMarker
+        :key="index"
+        v-for="(m, index) in markers"
+        :position="m.position"
+        :clickable="true"
+        :draggable="true"
+        @click="center=m.position"
+      />
+    </GmapMap>
   </div>
 </template>
 
 <script lang="ts">
-import companyCard from "@/components/company-card.vue";
-import sidebar from "@/components/sidebars/sidebar_dashboard.vue";
 import formSelect from "@/components/forms/select.vue";
+import companyCard from "@/components/company-card.vue";
+
+import { Vue, Component } from "nuxt-property-decorator";
 
 import {
   GetTeamsQuery,
@@ -34,23 +36,10 @@ import getTeams from "@/apollo/queries/teams.gql";
 import getDemandMatch from "@/apollo/queries/demand_matches.gql";
 import getSupplyMatch from "@/apollo/queries/supply_matches.gql";
 
-import { Vue, Prop, Emit, Getter, Component, Provide } from "nuxt-property-decorator";
-import { Object } from "lodash";
-
-import { Validate } from "vuelidate-property-decorators";
-import { required, numeric, minValue } from "vuelidate/lib/validators";
-
 @Component({
-  components: { sidebar },
-  middleware: "authenticated"
+  components: { companyCard, formSelect }
 })
 export default class extends Vue {
-  teams: any = {};
-  flow: String = "Suche";
-  matches: any[] = [];
-  sidebar: boolean = false;
-  selectedDistance: String = "";
-  isActive: Boolean = false;
   location: String = "";
   distance: string = '0';
   distances: {id: string, name: string}[] = [
@@ -82,14 +71,14 @@ export default class extends Vue {
       id:'7',
       name:'50'
     }
-  ];
+  ]
+  teams: any = {};
+  flow: String = "Suche";
+  matches: any[] = [];
+  selectedDistance: String = "";
 
-  @Provide("validation")
-  validation() {
-    return this.$v;
-  }
 
-  async beforeCreate() {
+  async beforeCreate(){
     const result: any = await this.$apollo.query<GetTeamsQuery>({
       query: getTeams
     });
@@ -104,8 +93,8 @@ export default class extends Vue {
     else{
       this.handelState(this.teams.supplies[0], 1);
     }
-
   }
+
   async handelState(team: any, index: Number) {
     if (team.__typename == "Demand") {
       this.matches = (
@@ -128,43 +117,78 @@ export default class extends Vue {
       ).data.matchSupply.matches;
       this.flow = "SupplyMatch";
     }
-    // closing sidebar for mobile when selecting the team
-    this.sidebar = false;
-  }
-  selected_distance(number: number) {
-    this.selectedDistance = number.toString();
-    this.isActive = false;
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "~assets/global.scss";
+@import "~assets/colors.scss";
 
-.container {
-  display: grid;
-  grid-template-columns: 400px minmax(400px, 800px) auto;
-  grid-template-rows: 1fr 1fr 10fr;
-  height: 100vh;
-  padding: 0;
-  -ms-overflow-style: none;
+h1 {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: left;
+  margin: 50px 0 0 10px;
+}
 
-  &::-webkit-scrollbar {
-    display: none;
+.distance {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  span {
+    margin: 5px 10px 0 10px;
   }
 
-  .burger-menu {
-    display: none;
-  }
+  #dropdown {
+    width: 200px;
 
-  .sidebar {
-    grid-column: 1;
-    grid-row: 1 / span 3;
-  }
+    .selected {
+      border-radius: 30px;
+      border-color: $primary;
+      padding: 5px 15px;
 
-  .content {
-    grid-column: 2;
-    grid-row: 1;
+      &::after {
+        top: 12px;
+      }
+    }
+
+    .options-container.active + .selected::after {
+      top: -12px;
+    }
   }
+}
+
+.radio {
+  width: 100%;
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  justify-self: center;
+  align-items: center;
+  margin-top: 50px;
+
+  button {
+    border-radius: 0;
+    width: 90px;
+
+    &:nth-of-type(even) {
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    &:nth-of-type(odd) {
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+    }
+  }
+}
+
+.matches {
+  grid-column: 2 / span 3;
 }
 </style>

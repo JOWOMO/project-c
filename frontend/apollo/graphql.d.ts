@@ -44,6 +44,16 @@ declare module '*/check_state.gql' {
 }
     
 
+declare module '*/company.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const company: DocumentNode;
+export const RegistrationCompany: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/demand_matches.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -57,15 +67,6 @@ declare module '*/demands.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
   export const getDemands: DocumentNode;
-
-  export default defaultDocument;
-}
-    
-
-declare module '*/company.gql' {
-  import { DocumentNode } from 'graphql';
-  const defaultDocument: DocumentNode;
-  export const RegistrationCompany: DocumentNode;
 
   export default defaultDocument;
 }

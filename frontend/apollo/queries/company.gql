@@ -1,0 +1,23 @@
+query company($id:ID!) {
+  company(id:$id) {
+    name
+    demands {
+      id
+      isActive
+      name
+      description
+      skills {
+        id
+        group
+        name
+      }
+      quantity
+      maxHourlySalary
+      company {
+        addressLine1
+        postalCode
+        city
+      }
+    }
+  }
+}

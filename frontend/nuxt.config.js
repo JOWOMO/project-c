@@ -40,7 +40,7 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,700&display=swap' },
     ]
   },
-  
+
   /*
   ** Customize the progress-bar color
   */
@@ -57,6 +57,7 @@ export default {
   plugins: [
     '@/plugins/vuelidate.js',
     '@/plugins/swal.js',
+    '@/plugins/google-maps.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -100,7 +101,7 @@ export default {
   */
   apollo: {
     includeNodeModules: true,
-    authenticationType: '', 
+    authenticationType: '',
     defaultOptions: {
       $query: {
         loadingKey: 'loading',
@@ -120,7 +121,7 @@ export default {
                 mode: 'cors'
             },
         },
-        persisting: false, 
+        persisting: false,
       }
     },
   },
@@ -154,10 +155,10 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+      transpile: [/^vue2-google-maps($|\/)/]
       if (ctx.isDev) {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
       }
-      transpile: [/^vue2-google-maps($|\/)/]
     }
   }
 }

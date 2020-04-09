@@ -1,8 +1,8 @@
 <template>
-  <div 
-    @click="update" 
+  <div
+    @click="update"
     class="tag"
-    :class="{ 'not-clickable': !clickable, primary: clickable && selected, secondary: clickable && !selected }" 
+    :class="{ 'not-clickable': !clickable, primary: clickable && selected, secondary: clickable && !selected }"
   >
     <span>{{ name }}</span>
   </div>
@@ -46,6 +46,7 @@ export default class extends Vue {
   border: 1px solid $border;
 
   display: flex;
+  justify-content: center;
   padding-left: 10px;
   padding-right: 10px;
 
