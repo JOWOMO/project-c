@@ -1,7 +1,7 @@
 <template>
   <div class="register-sidebar">
     <nuxt-link to="/">
-      <img src="/images/logo.svg" />
+      <img width="234px" height="37px" src="/images/logo.svg" />
     </nuxt-link>
 
     <div class="menu">

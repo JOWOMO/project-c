@@ -44,10 +44,29 @@ declare module '*/check_state.gql' {
 }
     
 
-declare module '*/demand_matches.gql' {
+declare module '*/demand.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
   export const demandMatches: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/supply.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const supplyMatches: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/teams.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const DasboardTeams: DocumentNode;
+export const getTeams: DocumentNode;
 
   export default defaultDocument;
 }
@@ -85,24 +104,6 @@ declare module '*/skills.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
   export const getSkills: DocumentNode;
-
-  export default defaultDocument;
-}
-    
-
-declare module '*/supply_matches.gql' {
-  import { DocumentNode } from 'graphql';
-  const defaultDocument: DocumentNode;
-  export const supplyMatches: DocumentNode;
-
-  export default defaultDocument;
-}
-    
-
-declare module '*/teams.gql' {
-  import { DocumentNode } from 'graphql';
-  const defaultDocument: DocumentNode;
-  export const getTeams: DocumentNode;
 
   export default defaultDocument;
 }

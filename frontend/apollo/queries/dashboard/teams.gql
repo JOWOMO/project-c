@@ -1,0 +1,15 @@
+query DasboardTeams {
+  companies{
+    id
+
+    demands {
+      id
+      name
+    }
+
+    supplies {
+      id
+      name
+    }
+  }
+}

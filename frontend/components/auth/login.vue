@@ -86,6 +86,7 @@ export default class extends Vue {
       // we need to verify him
       if (err.code === AuthErrorCodes.NotConfirmed) {
         this.$emit("change-state", "validate");
+        return;
       }
 
       this.$swal( 

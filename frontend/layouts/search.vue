@@ -1,22 +1,20 @@
 <template>
-<div>
-  <navbar />
-  <nuxt class="screen-top" />
-</div>
+  <nuxt class="overflow" />
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
-import navbar from '@/components/navbar.vue';
+import { Component, Vue } from "nuxt-property-decorator";
 
 @Component({
-  components: {
-  },
-  middleware: "loaduser"
+  middleware: "authenticated"
 })
 export default class extends Vue {}
 </script>
 
-<style lang="scss" scoped>
-@import '@/assets/screen';
+<style lang="scss">
+.overflow {
+  overflow: hidden;
+  max-width: 100vw;
+  max-height: 100vh;
+}
 </style>

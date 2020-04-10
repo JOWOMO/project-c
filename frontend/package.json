@@ -12,7 +12,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate --spa",
     "config:aws": "source ~/.bashrc && aws cloudformation describe-stacks --stack-name bee-to-bee-api-dev --query \"Stacks[0].Outputs\"> aws.json",
-    "generate-types": "graphql-codegen --config codegen.yml --watch"
+    "generate-types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@aws-amplify/auth": "^2.1.8",
@@ -29,6 +29,7 @@
     "sweetalert2": "^9.10.9",
     "typescript": "^3.8.3",
     "vue-apollo-decorator": "^0.11.3",
+    "vue-infinite-loading": "^2.4.5",
     "vue-property-decorator": "^8.4.1",
     "vuelidate": "^0.7.5",
     "vuelidate-property-decorators": "^1.0.28"

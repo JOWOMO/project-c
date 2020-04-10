@@ -72,7 +72,7 @@ export default class extends Vue {
 
   @Emit('change-state')
   back() {
-    return 'cancel';
+    return 'reset';
   }
 
   @LoadingAnimation

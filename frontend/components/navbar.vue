@@ -1,7 +1,7 @@
 <template>
   <nav>
     <nuxt-link to="/">
-      <img src="/images/logo.svg" alt="Logo" class="logo" />
+      <img width="234px" height="37px" src="/images/logo.svg" alt="Logo" class="logo" />
     </nuxt-link>
 
     <div class="right">
@@ -37,7 +37,8 @@
       </div>
     </div>
   </nav>
-</template>
+</template>cancel
+z
 
 <script>
 import me from "@/apollo/queries/user";

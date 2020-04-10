@@ -76,7 +76,7 @@ async function signInAndToken(email: string, password: string): Promise<string> 
 export const actions = {
   async load({ commit, rootState }: ActionContext<IAuthState, IState>) {
     if (rootState.auth.user) {
-      return;
+      return rootState.auth.user;
     }
 
     try {

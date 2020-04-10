@@ -35,8 +35,8 @@ class PageInfo(ObjectType):
 
 
 class SupplyMatch(ObjectType):
-    distance = Int()
-    percentage = Int()
+    distance = Int(required=True)
+    percentage = Int(required=True)
     supply = Field(Supply, required=True)
 
 
@@ -46,8 +46,8 @@ class MatchSupplyResult(ObjectType):
 
 
 class DemandMatch(ObjectType):
-    distance = Int()
-    percentage = Int()
+    distance = Int(required=True)
+    percentage = Int(required=True)
     demand = Field(Demand, required=True)
 
 
