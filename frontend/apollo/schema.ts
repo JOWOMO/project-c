@@ -64,8 +64,7 @@ export type DemandInput = {
   companyId: Scalars['ID'];
   isActive: Scalars['Boolean'];
   name: Scalars['String'];
-  descriptionInt?: Maybe<Scalars['String']>;
-  descriptionExt?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxHourlySalary?: Maybe<Scalars['Float']>;
@@ -250,8 +249,7 @@ export type SupplyInput = {
   companyId: Scalars['ID'];
   isActive: Scalars['Boolean'];
   name: Scalars['String'];
-  descriptionInt?: Maybe<Scalars['String']>;
-  descriptionExt?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Maybe<Scalars['ID']>>>;
   hourlySalary?: Maybe<Scalars['Float']>;
@@ -312,13 +310,24 @@ export type UserAddMutation = (
   & Pick<Mutation, 'updateUser'>
 );
 
+export type ConnectMutationVariables = {
+  id: Scalars['ID'];
+  origin: Scalars['ID'];
+  type: MatchType;
+};
+
+
+export type ConnectMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'contactMatch'>
+);
+
 export type UpdateDemandMutationVariables = {
   id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];
   name: Scalars['String'];
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Scalars['ID']>>;
-  descriptionInt?: Maybe<Scalars['String']>;
   descriptionExt?: Maybe<Scalars['String']>;
   active: Scalars['Boolean'];
 };
@@ -343,7 +352,6 @@ export type UpdateSupplyMutationVariables = {
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Scalars['ID']>>;
   active: Scalars['Boolean'];
-  descriptionInt?: Maybe<Scalars['String']>;
   descriptionExt?: Maybe<Scalars['String']>;
 };
 

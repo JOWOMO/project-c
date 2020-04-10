@@ -15,16 +15,16 @@ export default class extends Vue {
 
   created() {
     if (this.dem.length > 0) {
-      this.$router.push(`/dashboard/demand/${this.dem[0].id}`);
+      this.$router.replace(`/dashboard/demand/${this.dem[0].id}`);
       return;
     }
 
     if (this.sup.length > 0) {
-      this.$router.push(`/dashboard/supply/${this.sup[0].id}`);
+      this.$router.replace(`/dashboard/supply/${this.sup[0].id}`);
       return;
     }
 
-    this.$router.push(`/register/demand/team`);
+    this.$router.replace(`/register/demand/team`);
   }
 }
 </script>

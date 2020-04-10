@@ -1,23 +1,18 @@
 <template>
   <layout :columns="true">
     <column :order="2">
-      <layout :columns="false">
-        <row :height="100">
-          Ich bin ein riesen Header!
+      <layout :columns="false" class="main">
+        <row :height="100" class="header">Ich bin ein riesen Header!</row>
+        <row :height="'calc(100vh - 100px)'" class="scroller">
+          <nuxt-child />
+          <top />
         </row>
-        <row :height="'calc(100vh - 100px)'" :style="{overflow: 'auto'}">
-          <nuxt-child  />
-        </row>
+        <top />
       </layout>
     </column>
-    <column :width="336" :order="1">
+    <column :width="336" :order="1" class="nav">
       <keep-alive>
-        <sidebar 
-          :demands="demands" 
-          :supplies="supplies" 
-          :flow="'demand'"
-          :selected="0"
-        />
+        <sidebar :demands="demands" :supplies="supplies" :flow="'demand'" :selected="0" />
       </keep-alive>
     </column>
   </layout>
@@ -29,6 +24,7 @@ import sidebar from "@/components/sidebars/dashboard.vue";
 import layout from "@/components/layout/layout.vue";
 import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
+import top from "@/components/goto-top.vue";
 
 import {
   DasboardTeamsQuery,
@@ -38,12 +34,12 @@ import {
 
 import getTeams from "@/apollo/queries/dashboard/teams.gql";
 
-import { Vue, Component } from "nuxt-property-decorator";
+import { Vue, Component, Ref } from "nuxt-property-decorator";
 import { ProvideReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
 
 @Component({
-  components: { sidebar, layout, column, row },
+  components: { sidebar, layout, column, row, top },
   layout: "search"
 })
 export default class extends Vue {
@@ -82,3 +78,24 @@ export default class extends Vue {
   }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.scroller {
+  overflow-y: scroll;
+}
+
+@media only screen and (max-width: 800px) {
+  .nav {
+    display: none;
+  }
+
+  .scroller {
+    overflow: unset;
+  }
+
+  .main {
+    overflow-y: scroll;
+  }
+}
+</style>

@@ -17,6 +17,15 @@ declare module '*/add_user.gql' {
 }
     
 
+declare module '*/connect.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const Connect: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/update_demand.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;

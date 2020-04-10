@@ -155,6 +155,7 @@ export default {
     },
     optimizeCSS: {
     },
+    transpile: ['vue-clamp', 'resize-detector'],
   },
   generate: {
     routes: [

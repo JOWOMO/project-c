@@ -1,13 +1,15 @@
 <template>
-  <div class='container'>
+  <div class="container">
     <companyCard
       v-for="result in matches"
       :key="result.match.id"
-
+      :flow="$route.params.flow"
       :company="result.match.company"
       :contact="result.match.company.contact"
       :match="result.match"
       :classification="result"
+      @showall="onShowAll"
+      @connect="onConnect"
     />
 
     <infinite @infinite="loadMore" :distance="500"></infinite>
@@ -34,6 +36,7 @@ import {
 } from "../../../apollo/schema";
 
 import infinite, { StateChanger } from "vue-infinite-loading";
+import { ConnectParams } from "@/pages/connect/_.vue";
 
 @Component({
   components: { companyCard, infinite }
@@ -48,22 +51,21 @@ export default class extends Vue {
     return this.feed && this.feed.data ? this.feed.data.matches : [];
   }
 
-  // // detect scroll position
-  // scroll() {
-  //   window.onscroll = () => {
-  //     let bottomOfWindow =
-  //       document.documentElement.scrollTop + window.innerHeight ===
-  //       document.documentElement.offsetHeight;
+  onShowAll(company: string) {
+    // this.$router.push(`/dashboard/demand/${this.dem[0].id}`);
+  }
 
-  //     if (bottomOfWindow) {
-  //       this.fetchMore();
-  //     }
-  //   };
-  // }
+  onConnect(party: any) {
+    const params: ConnectParams = {
+      flow: this.$route.params.flow,
+      origin: this.$route.params.id,
+      match: party.id,
+      name: party.name,
+      pictureUrl: party.pictureUrl,
+    };
 
-  // mounted() {
-  //   this.scroll();
-  // }
+    this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
+  }
 
   loadMore($state: StateChanger) {
     if (!this.feed.data!.pageInfo.hasNextPage) {
@@ -151,7 +153,6 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-
 .container {
   padding: 20px;
   padding-top: 0px;

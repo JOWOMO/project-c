@@ -53,6 +53,13 @@ class Demand(ObjectType):
     max_hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True, resolver=company_by_id)
 
+    # we only have this for now
+    def resolve_description(root, info):
+        if root.description_ext is None:
+            return None
+
+        return root.description_ext
+
     def resolve_skills(root, info):
         if root.skills is None:
             return []
@@ -71,6 +78,13 @@ class Supply(ObjectType):
     quantity = Int(required=True)
     hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True, resolver=company_by_id)
+
+    # we only have this for now
+    def resolve_description(root, info):
+        if root.description_ext is None:
+            return None
+
+        return root.description_ext
 
     def resolve_skills(root, info):
         if root.skills is None:

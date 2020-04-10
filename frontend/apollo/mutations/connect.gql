@@ -1,0 +1,4 @@
+mutation Connect($id: ID!, $origin: ID!, $type: MatchType!) {
+  contactMatch(id: $id, originId: $origin, matchType: $type)
+} 
+ 

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="login-scale">
       <div class="left" />
-      <div class="cta">
+      <div class="index-cta">
         <h1>
           Ich
           <span>biete</span>
@@ -17,7 +17,7 @@
 
     <div class="login-scale">
       <div class="right" />
-      <div class="cta">
+      <div class="index-cta">
         <h1>
           Ich
           <span>suche</span>
@@ -112,7 +112,7 @@ h1 {
   padding-bottom: 44px;
 }
 
-.cta {
+.index-cta {
   position: absolute;
 }
 

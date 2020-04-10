@@ -168,6 +168,8 @@ CREATE TABLE IF NOT EXISTS btb.team_demand
     id integer NOT NULL DEFAULT nextval('btb.team_demand_id_seq'::regclass),
     company_id integer NOT NULL,
     is_active boolean default true,
+    created_on timestamp with time zone not null default now(),
+    modified_on timestamp with time zone not null default now(),
 
     name text NOT NULL,
     description_int text,
@@ -196,6 +198,8 @@ CREATE TABLE IF NOT EXISTS btb.team_supply
     id integer NOT NULL DEFAULT nextval('btb.team_supply_id_seq'::regclass),
     company_id integer NOT NULL,
     is_active boolean default true,
+    created_on timestamp with time zone not null default now(),
+    modified_on timestamp with time zone not null default now(),
 
     name text NOT NULL,
     description_int text,

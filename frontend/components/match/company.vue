@@ -3,11 +3,11 @@
     <div class="left">
       <h2>{{ company.name }}</h2>
       <div class="location">
-        <img src="/icons/pin.svg" alt />
+        <img height="10px" width="10px" src="/icons/pin.svg" alt />
         <span>{{ distance }} entfernt</span>
       </div>
 
-      <p class="highlighted">{{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
+      <p class="highlighted">{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
 
       <div class="tags">
         <tag
@@ -19,50 +19,69 @@
         />
       </div>
 
-      <div v-if="description" class="description">
+      <div v-if="match.description" class="description">
         <h4>Beschreibung</h4>
-        <div class="expansionWrapper" :class="{expanded: expanded}">
-          <p>{{ match.description }}</p>
-        </div>
-        <button class="link" @click="expanded = !expanded">{{ moreLess }}</button>
+
+        <v-clamp autoresize :max-lines="3">
+          {{ match.description }}
+          <template v-slot:after="section">
+            <a v-if="section.clamped" @click="section.expand">
+              <div class="text">
+                <span>mehr</span>
+                <div class="down" />
+              </div>
+            </a>
+
+            <a v-if="section.expanded" @click="section.collapse">
+              <div class="text">
+                <span>weniger</span>
+                <div class="down up" />
+              </div>
+            </a>
+          </template>
+        </v-clamp>
       </div>
 
       <div class="bottom">
-        <div :class="{green: bestMatch}">{{ percentage }}% passent zu deiner Suche</div>
+        <div
+          :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
+        >{{ percentage }}% passend zu deiner Suche</div>
       </div>
     </div>
 
-    <div class="line" />
+    <div class="middle">
+      <div class="line" />
+    </div>
 
     <div class="right">
-      <span class="contact">Deine Kontaktperson</span>
+      <div class="contact">Deine Kontaktperson</div>
 
-      <img v-if="contact.pictureUrl" :src="contact.pictureUrl" />
+      <img class="contact-image" v-if="contact.pictureUrl" :src="contact.pictureUrl" />
 
       <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
       <h4>{{ (company.industry || {}).name }}</h4>
 
       <div class="address">
         <span>{{ company.addressLine1 }}</span>
-        <span>{{ company.postalCode }}</span>
         <br />
+        <span>{{ company.postalCode }}</span>
         <span>{{ company.city }}</span>
       </div>
 
-      <nuxt-link to="/" class="link">
-        <span>Alle Teams anzeigen</span>
-        <img src="/icons/arrow-left.svg" />
-      </nuxt-link>
+      <a class="all" @click.prevent="showAllTeams">
+        <span>Alle {{ teaserAll }} anzeigen</span>
+        <img width="14px" height="14px" src="/icons/arrow-right.svg" />
+      </a>
 
       <div class="bottom">
-        <button class="cta">Jetzt verbinden</button>
+        <button class="cta" @click.prevent="connect">Jetzt verbinden</button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide, Prop } from "nuxt-property-decorator";
+import { Vue, Component, Provide, Prop, Emit } from "nuxt-property-decorator";
 import tag from "./skill.vue";
 import {
   Company,
@@ -70,7 +89,8 @@ import {
   DemandMatch,
   Demand,
   Skill
-} from "~/apollo/schema";
+} from "@/apollo/schema";
+import VClamp from "vue-clamp";
 
 type MatchSkill = Pick<Skill, "name" | "id">;
 
@@ -81,25 +101,23 @@ type MatchContact = Pick<
 
 type MatchCompany = Pick<
   Company,
-  "name" | "addressLine1" | "postalCode" | "city"
+  "name" | "addressLine1" | "postalCode" | "city" | "id"
 >;
 
 type MatchClassification = Pick<DemandMatch, "distance" | "percentage">;
-type MatchDetails = Pick<Demand, "name" | "description" | "quantity"> & {
+type MatchDetails = Pick<Demand, "name" | "description" | "quantity" | "id"> & {
   salary: Demand["maxHourlySalary"];
 } & {
   skills: MatchSkill[];
 };
 
-@Component({ components: { tag } })
+@Component({ components: { tag, VClamp } })
 export default class extends Vue {
-  // @Prop() mode!: string;
+  @Prop() flow!: string;
   @Prop() company!: MatchCompany;
   @Prop() contact!: MatchContact;
   @Prop() match!: MatchDetails;
   @Prop() classification!: MatchClassification;
-
-  expanded = false;
 
   get percentage() {
     return Math.round(this.classification.percentage);
@@ -115,14 +133,29 @@ export default class extends Vue {
     return this.classification.percentage >= 70 ? true : false;
   }
 
-  get moreLess() {
-    return this.expanded == false ? "mehr Anzeigen" : "weniger Anzeigen";
+  get teaserAll() {
+    return this.flow === "demand" ? "Gesuche" : "Verfügbarkeiten";
+  }
+
+  get teaser() {
+    return this.flow === "demand" ? "Sucht" : "Bietet";
+  }
+
+  @Emit("showall")
+  showAllTeams() {
+    return this.company.id;
+  }
+
+  @Emit("connect")
+  connect() {
+    return { id: this.match.id, name: this.contact.firstName, pictureUrl: this.contact.pictureUrl };
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .card {
   margin-top: 30px;
@@ -134,7 +167,7 @@ export default class extends Vue {
   border-radius: 8px;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 64px 1fr;
   grid-template-rows: auto;
 }
 
@@ -186,6 +219,40 @@ export default class extends Vue {
 
   .description {
     padding-top: 24px;
+    font-size: 14px;
+
+    h4 {
+      padding-bottom: 14px;
+      font-size: $textsize;
+    }
+
+    a {
+      font-weight: normal;
+      font-size: 14px;
+      margin-left: 18px;
+
+      display: inline-block;
+
+      .text {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+
+    .down {
+      margin-top: 4px;
+      margin-left: 4px;
+      width: 12px;
+      height: 12px;
+
+      background-color: $primary;
+      -webkit-mask: url(/icons/dropdown.svg) no-repeat center;
+      mask: url(/icons/dropdown.svg) no-repeat center;
+    }
+
+    .up {
+      transform: rotate(180deg);
+    }
   }
 }
 
@@ -193,29 +260,40 @@ export default class extends Vue {
   display: flex;
   flex: 1;
   align-items: flex-end;
+  margin-top: 24px;
 }
 
-.line {
-  grid-column: 1;
-  grid-row: 1;
-  justify-self: end;
-  width: 1px;
-  height: 100%;
-  background: $border;
+.middle {
+  grid-column: 2;
 
-  margin-left: 64px;
-  margin-right: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .line {
+    height: 100%;
+    width: 1px;
+    background: $border;
+  }
+}
+
+.full-match {
+  color: $success;
+}
+
+.partial-match {
+  color: $warning;
 }
 
 .right {
-  grid-column: 2;
+  grid-column: 3;
 
   .contact {
     color: $textcolor;
-    font-size: 14px;
+    font-size: 12px;
   }
 
-  img {
+  .contact-image {
     padding-top: 24px;
   }
 
@@ -237,57 +315,84 @@ export default class extends Vue {
 
   a {
     font-size: 14px;
+
+    img {
+      padding-top: 4px;
+      margin-left: 16px;
+    }
+  }
+
+  .all {
+    padding-top: 20px;
   }
 
   button {
     margin-top: 24px;
-    
+
     min-width: 250px;
     max-width: 250px;
   }
 }
 
-// @media only screen and (max-width: 1150px) {
-//   .card {
-//     grid-template-columns: 1fr 0fr;
-//     grid-template-rows: 1fr 1fr;
+@media only screen and (max-width: 1100px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
 
-//     .left, .right {
-//       align-items: center;
-//       text-align: center;
-//     }
+  .left {
+    grid-column: 1;
+    grid-row: 1;
+  }
 
-//     .left {
-//       grid-column: 1;
-//       grid-row: 1;
+  .middle {
+    grid-column: 1;
+    grid-row: 2;
 
-//       .percent {
-//         margin: 20px 0;
-//       }
-//     }
+    // display: none;
+    height: 64px;
 
-//     .right {
-//       grid-column: 1;
-//       grid-row: 2;
-//       margin: 0;
+    .line {
+      height: 1px;
+      width: 100%;
+    }
+  }
 
-//       .contact {
-//         margin-top: 20px;
-//       }
+  .right {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
 
-//     }
+@media only screen and (max-width: 800px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
 
-//     .line {
-//       grid-column: 1;
-//       grid-row: 1;
-//       align-self: end;
-//       height: 2px;
-//       width: 100%;
-//     }
-//   }
-// }
+  .left {
+    grid-column: 1;
+    grid-row: 1;
+  }
 
-// @media only screen and (max-width: 765px) {
+  .middle {
+    grid-column: 1;
+    grid-row: 2;
 
-// }
+    // display: none;
+    height: 64px;
+
+    .line {
+      height: 1px;
+      width: 100%;
+    }
+  }
+
+  .right {
+    grid-column: 1;
+    grid-row: 3;
+
+    button {
+      min-width: 100%;
+    }
+  }
+}
 </style>
