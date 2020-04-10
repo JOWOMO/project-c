@@ -17,10 +17,10 @@ body {
     height: 37px;
     width: 500px;
 
-    background: url('{#url#}/images/logo.svg');
+    background: url('#url#/images/logo.svg');
     background-repeat: no-repeat;
 
-    box-sizing: border-box;
+    box-sizing:w border-box;
     margin-bottom: 19px;
     margin-top: 19px;
 }
@@ -30,7 +30,12 @@ body {
     padding: 20px;
 }
 
-.template a,
+.template a {
+    font-weight: normal;
+    color: #25A6DA;
+    text-decoration: none;
+}
+
 .template a:visited {
     font-weight: normal;
     color: #25A6DA;

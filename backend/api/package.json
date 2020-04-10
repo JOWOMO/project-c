@@ -4,8 +4,9 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "serverless deploy --stage dev --force",
+    "deploy": "npm run templates && serverless deploy --stage dev --force",
     "remove": "serverless remove --stage dev",
+    "templates": "source .venv/bin/activate && python3 -m btb.templates",
     "dev": "SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@localhost/dev FLASK_ENV=development FLASK_APP=btb.api poetry run flask run",
     "db-update": "SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@localhost/dev poetry run python3 -m btb.update"
   },

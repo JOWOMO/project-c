@@ -1,4 +1,3 @@
-from sqlalchemy import create_engine, text
 from os import environ
 from enum import Enum
 from btb.templates import code_template, reset_template
@@ -34,7 +33,7 @@ def handler(event, context):
         code = request["codeParameter"]
         template = reset_template(code)
 
-        print ('template {}'.format(template))
+        # print ('template {} {}'.format(template.subject, template.body))
 
         set_parameters(event, template.subject, template.body)
         return event
@@ -45,7 +44,7 @@ def handler(event, context):
         code = request["codeParameter"]
         template = code_template(code)
 
-        print ('template {}'.format(template))
+        # print ('template {} {}'.format(template.subject, template.body))
         
         set_parameters(event, template.subject, template.body)
         return event

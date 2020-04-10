@@ -61,6 +61,10 @@ jobs:
     - name: Deploy to stage
       run: |
         source $HOME/.poetry/env
+        
+        poetry install
+        python3 -m btb.templates
+        
         npx serverless deploy --stage $STAGE
       working-directory: backend/api
       env:
