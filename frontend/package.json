@@ -19,6 +19,7 @@
     "@nuxtjs/apollo": "^4.0.0-rc19",
     "@nuxtjs/gtm": "^2.2.3",
     "core-js": "^2.6.11",
+    "frontmatter-markdown-loader": "^3.3.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "lodash": "^4.17.15",

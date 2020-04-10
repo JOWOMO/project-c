@@ -1,4 +1,7 @@
 const fs = require('fs');
+const path = require('path');
+var glob = require('glob');
+var Mode = require('frontmatter-markdown-loader/mode');
 
 if (!fs.existsSync('aws.json')) {
   console.error(`please run: npm run config:aws`);
@@ -23,6 +26,17 @@ function findAWSExport(setting) {
   return node.OutputValue;
 }
 
+async function getDynamicPaths(urlFilepathTable) {
+  return [].concat(
+    ...Object.keys(urlFilepathTable).map(url => {
+      var filepathGlob = urlFilepathTable[url];
+      return glob
+        .sync(filepathGlob, { cwd: 'content' })
+        .map(filepath => `${url}/${path.basename(filepath, '.md')}`);
+    })
+  );
+}
+
 export default {
   mode: 'spa',
   /*
@@ -40,7 +54,7 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,700&display=swap' },
     ]
   },
-  
+
   /*
   ** Customize the progress-bar color
   */
@@ -100,7 +114,7 @@ export default {
   */
   apollo: {
     includeNodeModules: true,
-    authenticationType: '', 
+    authenticationType: '',
     // optional
     watchLoading: '~/plugins/apollo-watch-loading-handler.js',
     // optional
@@ -110,11 +124,11 @@ export default {
       default: {
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
         httpLinkOptions: {
-            fetchOptions: {
-                mode: 'cors'
-            },
+          fetchOptions: {
+            mode: 'cors'
+          },
         },
-        persisting: false, 
+        persisting: false,
       }
     },
   },
@@ -149,24 +163,42 @@ export default {
     */
     extend(config, ctx) {
       if (ctx.isDev) {
-        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map';
       }
-      transpile: [/^vue2-google-maps($|\/)/]
+
+      // add frontmatter-markdown-loader
+      config.module.rules.push({
+        test: /\.md$/,
+        include: path.resolve(__dirname, "content"),
+        loader: "frontmatter-markdown-loader",
+        options: {
+          mode: [Mode.VUE_COMPONENT, Mode.META]
+        }
+      });
     },
+    // transpile: [/^vue2-google-maps($|\/)/],
     optimizeCSS: {
     },
     transpile: ['vue-clamp', 'resize-detector'],
   },
   generate: {
-    routes: [
-      '/register/demand',
-      '/register/demand/company',
-      '/register/demand/team',
-      '/register/demand/validate',
-      '/register/supply',
-      '/register/supply/company',
-      '/register/supply/team',
-      '/register/supply/validate',
-    ],
+    routes: async () => {
+      const info = await getDynamicPaths({
+        '/info': '*.md'
+      });
+
+      const register = [
+        '/register/demand',
+        '/register/demand/company',
+        '/register/demand/team',
+        '/register/demand/validate',
+        '/register/supply',
+        '/register/supply/company',
+        '/register/supply/team',
+        '/register/supply/validate',
+      ];
+
+      return [...info, ...register];
+    },
   }
 }

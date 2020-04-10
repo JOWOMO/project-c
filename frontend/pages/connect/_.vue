@@ -40,7 +40,9 @@ export type ConnectParams = {
   origin: string;
 };
 
-@Component
+@Component({
+  middleware: 'authenticated'
+})
 export default class extends Vue {
   name: string = "";
   error: string = "";

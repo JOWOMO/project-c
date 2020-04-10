@@ -16,11 +16,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Provide } from "nuxt-property-decorator";
+import { Component, Vue, Provide, State } from "nuxt-property-decorator";
 import { Meta } from "@/components/decorator";
+import { IState } from "../store";
+import { CognitoUser } from "@aws-amplify/auth";
+import { Context } from "@nuxt/types";
+import { RegistrationCompanyQuery, RegistrationCompanyQueryVariables, RegistrationUserQuery } from "~/apollo/schema";
+import userQuery from "@/apollo/queries/registration/user.gql";
 
-@Component
+@Component({
+  middleware: 'authenticated'
+})
 export default class extends Vue {
+  name!: string;
+
   @Meta
   head() {
     return {
@@ -29,12 +38,38 @@ export default class extends Vue {
     };
   }
 
-  // profile() {
-  //   this.$router.push("/register/team");
-  // }
-
   dashboard() {
     this.$router.push("/dashboard");
+  }
+
+  async asyncData(context: Context) {
+     let data: Partial<Pick<
+      this,
+      "name"
+    >> = {};
+
+    // NO ACCESS to this context here
+    try {
+      if ((context.store.state as IState).auth.isAuthenticated) {
+        const client = context.app.apolloProvider!.defaultClient;
+        const result = await client.query<RegistrationUserQuery>({
+          query: userQuery,
+          fetchPolicy: "network-only"
+        });
+
+        if (result.data && result.data.me) {
+          const me = result.data.me;
+
+          data.name = me.firstName;
+        }
+      }
+
+      return data;
+    } catch (e) {
+      console.error(e);
+      // we keep going here, no problem (most likely later)
+      // context.error({ statusCode: 500, message: e.message });
+    }
   }
 }
 </script>

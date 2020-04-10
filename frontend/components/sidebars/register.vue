@@ -7,7 +7,7 @@
     <div class="menu">
       <div v-for="(label, index) in labels" :key="label" class="sidebar-element-wrapper">
         <div :class="['sidebar-element', index === selectedElement ? 'selected': '']">
-          <img v-if="index === selectedElement" height="18" width="18" src="/icons/arrow-left.svg" />          
+          <img v-if="index === selectedElement" height="18" width="18" src="/icons/arrow-right.svg" />          
           <p>{{ label }}</p>
           <img v-if="index < selectedElement" height="18" width="18" src="/icons/checkmark.svg" />
         </div>
