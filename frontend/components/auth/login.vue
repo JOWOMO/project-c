@@ -68,6 +68,8 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('authentication', 'login');
+
     try {
       const user = {
         email: this.email,

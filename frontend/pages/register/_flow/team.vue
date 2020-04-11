@@ -173,6 +173,8 @@ export default class extends Vue {
 
   @LoadingAnimation
   async save() {
+    this.$track('registration', 'team');
+
     try {
       for (const supply of this.supplies.filter(s => s.modified)) {
         console.log("Saving", supply);

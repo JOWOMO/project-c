@@ -1,88 +1,91 @@
 <template>
-  <div class="cookies" v-if="show">
-    <p>Wir nutzen Cookies um ihnen die bestmögliche Erfahrung auf unserer Webseite zu liefern.</p>
-    <button @click="decline" class="decline">Ablehnen</button>
-    <button class="accept" @click="accept">Ak­zep­tie­ren</button>
-  </div>
+  <keep-alive>
+    <div v-if="visible" class="footer">
+      <div class="text">
+        Diese Website verwendet Cookies für Analysen, personalisierte Inhalte und Werbung.
+        Indem Sie diese Website nutzen, erklären Sie sich mit dieser Verwendung einverstanden.
+        <nuxt-link to="/info/datenschutz">Weitere Informationen</nuxt-link>
+      </div>
+      <button class="primary" @click.prevent="accept">Verstanden</button>
+    </div>
+  </keep-alive>
 </template>
 
-<script>
-export default {
-  name: 'Cookie',
-  data() {
-    return {
-      show: true
+<script lang="ts">
+import { Component, Vue } from "nuxt-property-decorator";
+import Cookies from "universal-cookie";
+
+@Component
+export default class extends Vue {
+  visible = false;
+
+  accept() {
+    const cookies = new Cookies();
+
+    let date = new Date();
+    date.setFullYear(date.getFullYear() + 10);
+
+    cookies.set("tracking-consent", true, {
+        path: "/",
+        expires: date
+    });
+  }
+
+  created() {
+    const cookies = new Cookies();
+    if (!cookies.get("tracking-consent")) {      
+        this.visible = true;
     }
-  },
-  methods: {
-    accept() {
-      this.$gtm.init(process.env.gtmId)
-      this.$cookies.set('_bee2beeCookieBanner', true)
-      this.show = false
-    },
-    decline() {
-      this.$cookies.set('_bee2beeCookieBanner', false)
-      this.show = false
-    }
-  },
-  mounted() {
-    const accepted = this.$cookies.get('_bee2beeCookieBanner')
-    if(accepted === true) {
-      this.$gtm.init(process.env.gtmId)
-      this.show = false
-    } else if (accepted != undefined || null) {
-      this.show = false
-    }
-    console.log(accepted)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.cookies {
-  z-index:10;
-  width: 400px;
-  background: #25A6DA;
-  border-radius: 10px;
-  text-align: center;
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 20px;
-  padding: 20px;
-  z-index: 20;
-  margin: 0 auto;
+@import "@/assets/colors";
+@import "@/assets/scales";
 
-  p {
-    color: white;
+.footer {
+  background-color: $border;
+  padding: 20px;
+  color: $textcolor;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: row;
+
+  .text {
+    font-size: 14px;
+    margin-right: 20px;
+
+    a {
+      font-size: 14px;
+      font-weight: 500;
+    }
   }
 
   button {
-    color: #fff;
-    background: none;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding: 5px 10px;
-    margin: 10px;
-    width: 200px;
-  }
-
-  .decline {
-    height: 20px;
-  }
-
-  .accept {
-    background: #fff;
-    color: #25A6DA;
-    border-radius: 20px;
+      font-size: 14px;
+      height: 40px;
+      min-width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
   }
 }
 
-@media only screen and (max-width: 765px) {
-  .cookies {
-    width: 90%;
+@media only screen and (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
 
+    .text {
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

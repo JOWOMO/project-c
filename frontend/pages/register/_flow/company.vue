@@ -169,6 +169,8 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('registration', 'company');
+
     try {
       const client = this.$apollo.getClient();
 

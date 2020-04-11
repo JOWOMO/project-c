@@ -220,6 +220,8 @@ export default class extends Vue {
     this.$v.$touch();
     this.$emit("validate");
 
+    this.$track('registration', 'user');
+
     if (this.$v.$invalid) {
       console.debug("invalid form", this.$v);
       return;

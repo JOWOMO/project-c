@@ -1,12 +1,17 @@
 <template>
-  <nuxt class="overflow" />
+  <div>
+    <nuxt class="overflow" />
+    <cookies />
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
+import cookies from "@/components/cookies.vue";
 
 @Component({
-  middleware: "authenticated"
+  middleware: "authenticated",
+  components: {cookies}
 })
 export default class extends Vue {}
 </script>

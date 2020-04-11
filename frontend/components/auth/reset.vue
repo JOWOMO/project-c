@@ -58,6 +58,8 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('authentication', 'start-reset-password');
+
     try {
       await this.$store.dispatch("auth/startResetPassword", {
         email: this.email

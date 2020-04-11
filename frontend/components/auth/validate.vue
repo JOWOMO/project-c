@@ -94,6 +94,8 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('authentication', 'confirm');
+
     try {
       let user: any = {};
 

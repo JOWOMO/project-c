@@ -2,16 +2,18 @@
   <div class="center">
     <navbar class="navbar" />
     <nuxt class="screen-center" />
+    <cookies />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import navbar from "@/components/navbar.vue";
+import cookies from "@/components/cookies.vue";
 
 @Component({
   components: {
-    navbar
+    navbar, cookies
   },
   middleware: "loaduser"
 })

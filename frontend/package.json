@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "deploy": "serverless deploy && serverless client deploy --no-confirm --no-policy-change",
-    "dev": "nuxt dev --spa",
-    "dev-local": "API_URL=http://localhost:5000/graphql nuxt dev --spa",
+    "dev": "npx forever --minUptime 1000 --spinSleepTime 1000 node_modules/.bin/nuxt dev --spa",
+    "dev-local": "API_URL=http://localhost:5000/graphql npm run dev",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate --spa",
@@ -28,7 +28,6 @@
     "nuxt-i18n": "^6.8.1",
     "nuxt-property-decorator": "^2.5.1",
     "sweetalert2": "^9.10.9",
-    "typescript": "^3.8.3",
     "vue-apollo-decorator": "^0.11.3",
     "vue-clamp": "^0.3.0",
     "vue-infinite-loading": "^2.4.5",
@@ -37,6 +36,8 @@
     "vuelidate-property-decorators": "^1.0.28"
   },
   "devDependencies": {
+    "forever": "^2.0.0",
+    "typescript": "^3.8.3",
     "@types/lodash": "^4.14.149",
     "@graphql-codegen/cli": "^1.13.1",
     "@graphql-codegen/typescript": "^1.13.1",

@@ -71,6 +71,7 @@ export default {
   plugins: [
     '@/plugins/vuelidate.js',
     '@/plugins/swal.js',
+    '@/plugins/tracking.ts',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -91,14 +92,21 @@ export default {
     [
       'nuxt-i18n',
       {
-        locales: ['de'],
+        seo: true,
+        locales: [
+          {
+            code: 'de',
+            iso: 'de',
+            isCatchallLocale: true // This one will be used as catchall locale
+          },
+        ],
         defaultLocale: 'de',
         vueI18n: {
           fallbackLocale: 'de',
           messages: {}
         }
       }
-    ]
+    ],
   ],
 
   env: {
@@ -134,15 +142,13 @@ export default {
   },
   gtm: {
     // Set to false to disable module in development mode
-    dev: true,
+    dev: false,
 
-    id: null,
+    id: process.env.NUXT_GTM_ID,
     layer: 'dataLayer',
     variables: {},
 
-    pageTracking: true,
-    pageViewEventName: 'nuxtRoute',
-
+    pageTracking: false,
     autoInit: true,
     respectDoNotTrack: true,
 
@@ -150,7 +156,7 @@ export default {
     scriptDefer: false,
     scriptURL: 'https://www.googletagmanager.com/gtm.js',
 
-    noscript: true,
+    noscript: false,
     noscriptId: 'gtm-noscript',
     noscriptURL: 'https://www.googletagmanager.com/ns.html'
   },

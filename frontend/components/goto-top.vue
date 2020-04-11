@@ -30,13 +30,13 @@ export default class extends Vue {
 
   mounted(el: any) {
     this.scroller = this.$parent.$el;
-    console.debug("mounted", this.scroller);
+    // console.debug("mounted", this.scroller);
     this.scroller.addEventListener("scroll", this.scrolled);
   }
 
   destroyed() {
     if (this.scroller) {
-      console.debug("destroyed");
+      // console.debug("destroyed");
       this.scroller.removeEventListener("scroll", this.scrolled);
     }
   }
