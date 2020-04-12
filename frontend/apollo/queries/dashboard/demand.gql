@@ -1,5 +1,5 @@
-query demandMatches($id: ID!, $cursor: CursorInput) {
-  result: matchDemand(cursor: $cursor, id: $id) {
+query demandMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
+  result: matchDemand(cursor: $cursor, id: $id, radius: $radius) {
     pageInfo {
       offset
       pageSize

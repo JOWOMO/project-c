@@ -1,7 +1,0 @@
----
-title: Datenschutzerklärung
-description: 
----
-
-# Datenschutzerklärung
-

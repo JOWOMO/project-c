@@ -7,19 +7,27 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 
 @Component
 export default class extends Vue {
-  @Prop({required: true}) text!: string;
-  @Prop({required: true}) target!: string;
-
-  @Prop({default: false}) selected!: boolean;
+  @Prop({ required: true }) text!: string;
+  @Prop() target!: string;
+  @Prop({ default: false }) selected!: boolean;
 
   navigate() {
-    this.$router.push(this.target);
+    if (this.target) {
+      this.$router.push(this.target);
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/colors";
+
+.link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 
 .link:hover {
   color: darken($primary, 10);

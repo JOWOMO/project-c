@@ -17,9 +17,9 @@ class DemandQuery(MatchQuery):
         return self.map_default_result("demand", g.demand_loader, record)
 
 
-def match_demand(demand, cursor = None):
+def match_demand(demand, radius=None, cursor = None):
     match_query = DemandQuery(demand.skills, demand.postal_code)
-    # match_query.set_radius(demand.radius)
+    match_query.set_radius(radius)
 
     if cursor is not None:
         match_query.set_offset(cursor.offset)
@@ -33,13 +33,13 @@ def match_demand(demand, cursor = None):
     return match_query.execute()
 
 
-def match_demand_by_id(root, info, id, cursor=None):
+def match_demand_by_id(root, info, id, radius=None, cursor=None):
     with db.engine.begin() as conn:
         sql = text("select d.*, c.postal_code from btb.team_demand d, btb.company c where d.company_id = c.id and d.id = :id")
         data = conn.execute(sql, id=id).fetchone()
 
         for row in data:
-            return match_demand(data, cursor)
+            return match_demand(data, radius, cursor)
 
         return {
             "page_info": {

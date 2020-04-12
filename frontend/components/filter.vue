@@ -7,7 +7,12 @@
       <div class="subline">
         <div>{{ me.postalCode }} {{ me.city }}</div>
         <div class="km">
-          <dropdown class="dropdown" :options="['+ 5 Kilometer', '+ 10 Kilometer', '+ 20 Kilometer', '+30 Kilometer', '+ 50 Kilometer', '+ 70 Kilometer', '+ 100 Kilometer']" />
+          <dropdown 
+            class="dropdown" 
+            :options="['+5 Kilometer', '+10 Kilometer', '+20 Kilometer', '+30 Kilometer', '+50 Kilometer', '+70 Kilometer', '+100 Kilometer']"
+            :selected="'+30 Kilometer'"
+            @input="changeRange"
+          />
         </div>
       </div>
     </div>
@@ -24,10 +29,26 @@ import { Company } from "@/apollo/schema";
 import { InjectReactive, Emit } from "vue-property-decorator";
 import dropdown from "@/components/dropdown.vue";
 
+export type Filter = {
+  range: number;
+}
+
+export const DEFAULT_FILTER: Filter = {
+  range: 30,
+}
+
 @Component({ components: { dropdown } })
 export default class extends Vue {
   @Prop({ required: true })
   me!: Pick<Company, "id" | "postalCode" | "city">;
+
+  filter: Filter = DEFAULT_FILTER;
+
+  @Emit('change-filter')
+  changeRange(option: string) {
+    this.filter.range = parseInt(option.replace(/[^\d]/ig, ''), 10);
+    return this.filter;
+  }
 
   @Emit("viewtype")
   listview() {
@@ -92,4 +113,10 @@ export default class extends Vue {
     border-bottom-left-radius: 0;
   }
 }
+
+// @media only screen and (max-width: 800px) {
+  .right {
+    display: none;
+  }
+// }
 </style>

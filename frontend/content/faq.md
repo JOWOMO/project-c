@@ -1,6 +1,6 @@
 ---
 title: Fragen & Antworten
-description: 
+description: Fragen zur Nutzung
 ---
 
 # Fragen und Antworten

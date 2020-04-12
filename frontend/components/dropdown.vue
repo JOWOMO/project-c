@@ -1,13 +1,13 @@
 <template>
   <div class="custom-select" :tabindex="tabindex" @blur="open = false">
-    <div class="selected" :class="{open: open}" @click="open = !open">{{ selected }}</div>
+    <div class="selected" :class="{open: open}" @click="open = !open">{{ currentSelected.label || currentSelected }}</div>
     <div class="items" :class="{selectHide: !open}">
       <div
         class="item"
         v-for="(option, i) of options"
         :key="i"
-        @click="selected=option; open=false; $emit('input', option)"
-      >{{ option }}</div>
+        @click="selectedItem=option; open=false; $emit('input', option)"
+      >{{ option.label || option }}</div>
     </div>
   </div>
 </template>
@@ -19,14 +19,21 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 export default class extends Vue {
   @Prop({ required: true }) options!: any[];
   @Prop({ default: 0 }) tabindex!: number;
-  open = false;
+  @Prop() selected: any;
 
-  get selected() {
-    return this.options.length > 0 ? this.options[0] : null;
+  open = false;
+  selectedItem: any = null;
+
+  get currentSelected() {
+    if (this.selectedItem) { return this.selectedItem; }
+
+    return this.options.length > 0 
+      ? this.options[0] 
+      : this.selectedItem;
   }
 
   mounted() {
-    this.$emit("input", this.selected);
+    this.selectedItem = this.selected;
   }
 }
 </script>

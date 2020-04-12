@@ -1,4 +1,4 @@
-from graphene import ObjectType, Field, Schema, ID, List, NonNull, Argument
+from graphene import ObjectType, Field, Schema, ID, Int, List, NonNull, Argument
 from btb.api.schema.types import (
     User,
     Demand,
@@ -52,6 +52,7 @@ class Query(ObjectType):
         MatchDemandResult,
         cursor=Argument(CursorInput),
         id=Argument(ID, required=True),
+        radius = Argument(Int),
         required=True,
         resolver=match_demand_by_id,
     )
@@ -60,6 +61,7 @@ class Query(ObjectType):
         MatchSupplyResult,
         cursor=Argument(CursorInput),
         id=Argument(ID, required=True),
+        radius = Argument(Int),
         required=True,
         resolver=match_supply_by_id,
     )

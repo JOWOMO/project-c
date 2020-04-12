@@ -1,5 +1,12 @@
 <template>
   <div class="nav">
+    <div class="burger">
+      <burger>
+        <navbar v-if="!authenticated" :horizontal="false" />
+        <authenticated v-else :horizontal="false" :name="name" />
+      </burger>
+    </div>
+
     <div class="logo">
       <nuxt-link to="/">
         <img width="234px" height="37px" src="/images/logo.svg" alt="Logo" class="logo" />
@@ -17,11 +24,13 @@ import navbar from "@/components/navbar/default.vue";
 import authenticated from "@/components/navbar/authenticated.vue";
 import { IState } from "@/store/index";
 import { CognitoUser } from "@aws-amplify/auth";
+import burger from "@/components/menu/burger.vue";
 
 @Component({
   components: {
     navbar,
-    authenticated
+    authenticated,
+    burger
   }
 })
 export default class extends Vue {
@@ -29,19 +38,27 @@ export default class extends Vue {
   authenticated!: boolean;
 
   @State((s: IState) => s.auth.user)
-  user!: CognitoUser;
+  user!: any;
 
   get name() {
     return (
       //@ts-ignore
-      this.user?.attributes?.given_name + " " + this.user?.attributes?.family_name
-    ).trim();
+      (
+        this.user?.attributes?.given_name +
+        " " +
+        this.user?.attributes?.family_name
+      ).trim()
+    );
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/screen";
+
+.burger {
+  display: none;
+}
 
 .nav {
   height: 120px;
@@ -58,5 +75,26 @@ export default class extends Vue {
 
 .navbar {
   padding-top: 18px;
+}
+
+@media only screen and (max-width: 850px) {
+  .burger {
+    display: block;
+  }
+
+  .nav {
+    justify-content: center;
+    padding: 0 20px;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .logo {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
 }
 </style>

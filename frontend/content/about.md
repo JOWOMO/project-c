@@ -1,6 +1,6 @@
 ---
 title: Über uns
-description: 
+description: GemeinsamArbeitSchützen - Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. s
 ---
 
 # #GemeinsamArbeitSchützen

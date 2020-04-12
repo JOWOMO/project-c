@@ -90,7 +90,7 @@ export default class extends Vue {
 @import "@/assets/scales";
 
 .outer {
-  height: 44px;
+  min-height: 44px;
 }
 
 // need to reset all styles coming from form
@@ -254,11 +254,11 @@ label {
   position: relative !important;
 
   padding-left: 52px;
-  margin-bottom: 12px;
+  // margin-bottom: 12px;
 
   cursor: pointer;
   font-size: $textsize;
-  padding-top: 10px;
+  // padding-top: 10px;
 
   -webkit-user-select: none;
   -moz-user-select: none;
