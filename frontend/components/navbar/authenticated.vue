@@ -9,10 +9,10 @@
     <item :selected="isPath('/info/faq')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'FAQ'" :target="'/info/faq'" />
     </item>
-    <item v-if="!horizontal">
+    <item>
       <lnk @click.native="click({id: 'logout'})" :text="'Ausloggen'" />
     </item>
-    <item v-else>
+    <!-- <item v-else>
       <avatar
         ref="avatar"
         size="48"
@@ -21,7 +21,7 @@
         :menu="options"
         @menu-click="click"
       />
-    </item>
+    </item> -->
   </navBar>
 </template>
 
