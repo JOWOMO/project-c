@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from "nuxt-property-decorator";
 import validate from "@/components/auth/validate.vue";
-import { WorkflowProvider } from "../../register.vue";
+import { Workflow } from "../../register.vue";
 import { InjectReactive } from "vue-property-decorator";
 
 @Component({
@@ -14,7 +14,16 @@ import { InjectReactive } from "vue-property-decorator";
   }
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: WorkflowProvider;
+  @InjectReactive("workflow") workflow!: Workflow;
+
+  @Emit('selectelement')
+  setElement() {
+    return 0;
+  }
+
+  mounted() {
+   this.setElement();
+  }
 
   @Emit("change-state")
   handleStateChange(event: string, value: any) {

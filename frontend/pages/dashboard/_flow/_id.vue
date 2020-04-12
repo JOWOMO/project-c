@@ -154,7 +154,5 @@ export default class extends Vue {
 
 <style scoped lang="scss">
 .container {
-  padding: 20px;
-  padding-top: 0px;
 }
 </style>

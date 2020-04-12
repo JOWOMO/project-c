@@ -303,7 +303,7 @@ export default class extends Vue {
 
   h4 {
     padding-top: 4px;
-    color: $textcolor;
+    // color: $textcolor;
     font-weight: 500;
   }
 

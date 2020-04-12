@@ -49,8 +49,8 @@
 </template>
 
 <script lang="ts">
-import { WorkflowProvider } from "../../register.vue";
-import { InjectReactive } from "vue-property-decorator";
+import { Workflow } from "../../register.vue";
+import { InjectReactive, Emit } from "vue-property-decorator";
 
 import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
 
@@ -79,7 +79,7 @@ import { LoadingAnimation } from '@/components/loadinganimation';
   }
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: WorkflowProvider;
+  @InjectReactive("workflow") workflow!: Workflow;
 
   userExists = false;
   firstName: string = "";
@@ -234,8 +234,13 @@ export default class extends Vue {
     }
   }
 
+  @Emit('selectelement')
+  setElement() {
+    return 0;
+  }
+
   mounted() {
-    this.workflow.setStage(0);
+   this.setElement();
   }
 }
 </script>

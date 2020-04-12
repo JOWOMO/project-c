@@ -1,6 +1,15 @@
 query DasboardTeams {
+  me {
+    id
+    firstName
+    lastName
+    pictureUrl
+  }
+
   companies{
     id
+    postalCode
+    city
 
     demands {
       id

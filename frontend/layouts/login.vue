@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <navbar class="navbar" />
+    <navbar />
     <nuxt class="screen-center" />
     <cookies />
   </div>
@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import navbar from "@/components/navbar.vue";
+import navbar from "@/components/topbar.vue";
 import cookies from "@/components/cookies.vue";
 
 @Component({

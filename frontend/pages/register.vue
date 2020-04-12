@@ -1,16 +1,13 @@
 <template>
   <div class="page">
-    <keep-alive>
-      <sidebar :labels="labels" :selectedElement="selectedElement" class="sidebar" />
-    </keep-alive>
-
-    <nuxt-child class="screen-right" />
+    <sidebar :labels="labels" :selectedElement="selectedIndex" class="sidebar" />
+    <nuxt-child @selectelement="selectElement" class="screen-right" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { ProvideReactive } from "vue-property-decorator";
+import { ProvideReactive, Watch } from "vue-property-decorator";
 import { Meta } from "@/components/decorator";
 
 import sidebar from "@/components/sidebars/register.vue";
@@ -21,11 +18,9 @@ export enum RegistrationFlow {
   supply = "supply"
 }
 
-export type WorkflowProvider = Workflow;
-type Workflow = {
+export type Workflow = {
   type: RegistrationFlow;
   displayName: string;
-  setStage: (nbr: number) => void;
 };
 
 @Component({
@@ -37,43 +32,33 @@ type Workflow = {
 })
 export default class extends Vue {
   labels = ["Persönliche Daten", "Dein Unternehmen"];
-  selectedElement: number = 0;
-
-  constructor() {
-    super();
-
-    this.provideWorkflow = {
-      type: RegistrationFlow.demand,
-      displayName: "",
-      setStage: this.setState.bind(this),
-    };
-  }
-
-  setState(num: number) {
-    this.selectedElement = num;
-  }
+  selectedIndex = 0;
 
   @ProvideReactive("workflow")
-  provideWorkflow: Workflow;
+  providedWorfklow: Workflow | null = null;
 
   @Meta
   head() {
     return {
-      title: this.provideWorkflow.displayName,
+      title: this.providedWorfklow?.displayName,
       meta: [{ hid: "description", name: "description", content: "" }]
     };
   }
 
+  selectElement(value: any) {
+    console.debug("register", "selectElement", value);
+    this.selectedIndex = value;
+  }
+
   created() {
-    this.provideWorkflow.type =
-      this.$route.params.flow === "demand"
-        ? RegistrationFlow.demand
-        : RegistrationFlow.supply;
+    console.debug("register", "created");
 
-    this.provideWorkflow.displayName =
-      this.provideWorkflow.type === RegistrationFlow.demand ? "Ich suche" : "Ich biete";
+    this.providedWorfklow = {
+      type: this.$route.params.flow as RegistrationFlow,
+      displayName: this.$route.params.flow == "demand" ? "Ich suche" : "Ich biete"
+    };
 
-    this.labels.push(this.provideWorkflow.displayName);
+    this.labels.push(this.providedWorfklow.displayName);
   }
 }
 </script>
@@ -86,7 +71,7 @@ export default class extends Vue {
 
 .sidebar {
   display: flex;
-  min-width: 336px;
+  min-width: 330px;
 }
 
 .screen-right {

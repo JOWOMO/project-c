@@ -34,16 +34,18 @@ const trackPlugin: Plugin = (context, inject) => {
                 );
             }
 
-            setTimeout(() =>
-                context.$gtm.push({
-                    routeName: name,
-                    pageType: 'PageView',
-                    pageUrl: to.fullPath,
-                    pageTitle: (typeof document !== 'undefined' && document.title) || '',
-                    event: 'nuxtRoute',
-                }),
-                250,
-            );
+            if (context.$gtm) {
+                setTimeout(() =>
+                    context.$gtm.push({
+                        routeName: name,
+                        pageType: 'PageView',
+                        pageUrl: to.fullPath,
+                        pageTitle: (typeof document !== 'undefined' && document.title) || '',
+                        event: 'nuxtRoute',
+                    }),
+                    250,
+                );
+            }
         });
     }
 
@@ -52,13 +54,15 @@ const trackPlugin: Plugin = (context, inject) => {
             console.debug('[Event Tracking]', category, action, label, value);
         }
 
-        context.$gtm.push({
-            'event': 'GAEvent',
-            'eventCategory': category,
-            'eventAction': action,
-            'eventLabel': label || '',
-            'eventValue': value || ''
-        });
+        if (context.$gtm) {
+            context.$gtm.push({
+                'event': 'GAEvent',
+                'eventCategory': category,
+                'eventAction': action,
+                'eventLabel': label || '',
+                'eventValue': value || ''
+            });
+        }
     });
 }
 

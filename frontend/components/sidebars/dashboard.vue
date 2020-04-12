@@ -1,26 +1,50 @@
 <template>
-  <layout :columns="false">
-    <row :height="200">
+  <layout class="dashboard-sidebar" :columns="false">
+    <row :height="216">
       <nuxt-link to="/" class="logo">
         <img width="234px" height="37px" src="/images/logo.svg" />
       </nuxt-link>
     </row>
-    <row>
-      <div v-if="demands && demands.length >= 1">
-        <div v-for="(element,index) in demands" :key="element.id" class="sidebar-element-wrapper">
-          <div @click="changeTeam(element)" class="sidebar-element">
-            <img v-if="selected == index && flow == 'demand'" src="/icons/arrow-left.svg" />
+    <row class="menu">
+      <div class="section">
+        <h4>Mein Bedarf</h4>
+        <div v-for="(element) in demands" :key="'d_' + element.id">
+          <div
+            @click="changeTeam(element)"
+            :class="{'element': true, 'selected': element.id == selected && flow == 'demand'}"
+          >
+            <img
+              v-if="selected == element.id && flow == 'demand'"
+              height="16"
+              width="16"
+              src="/icons/arrow-right.svg"
+            />
             <p>{{ element.name }}</p>
           </div>
         </div>
+        <div class="link">
+          <nuxt-link to="/register/demand/team">Teams verwalten</nuxt-link>
+        </div>
       </div>
 
-      <div v-if="supplies && supplies.length >= 1">
-        <div v-for="(element,index) in supplies" :key="element.id" class="sidebar-element-wrapper">
-          <div @click="changeTeam(element)" class="sidebar-element">
-            <img v-if="selected == index && flow == 'supply'" src="/icons/arrow-left.svg" />
+      <div class="section">
+        <h4>Meine Gesuche</h4>
+        <div v-for="(element) in supplies" :key="'s_' + element.id">
+          <div
+            @click="changeTeam(element)"
+            :class="{'element': true, 'selected': element.id == selected && flow == 'supply'}"
+          >
+            <img
+              v-if="selected == element.id && flow == 'supply'"
+              height="16"
+              width="16"
+              src="/icons/arrow-right.svg"
+            />
             <p>{{ element.name }}</p>
           </div>
+        </div>
+        <div class="link">
+          <nuxt-link to="/register/supply/team">Teams verwalten</nuxt-link>
         </div>
       </div>
     </row>
@@ -52,75 +76,77 @@ export default class extends Vue {
       this.$router.push(`/dashboard/supply/${team.id}`);
     }
   }
+
+  created() {
+    console.log("navbar", this.flow, this.selected);
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-// @import "~assets/global.scss";
+@import "@/assets/colors";
 
-// aside {
-//   width: 350px;
-//   height: 100vh;
-//   background: #fff;
-//   padding: 20px;
-//   position: fixed;
-//   left: 0;
-//   top: 0;
+.dashboard-sidebar {
+  background: $uiComponent;
+  min-height: 100vh;
 
-//   .sidebar-element-wrapper {
-//     cursor: pointer;
-//   }
+  .logo {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 39px;
+  }
+}
 
-//   .wrapper-content {
-//     margin-top: 50px;
-//     .sidebar-element-wrapper {
-//       position: relative;
-//       transform: translate(5%, -50%);
+.menu {
+  display: flex;
+  width: 100%;
 
-//       .sidebar-element {
-//         display: flex;
-//         flex-direction: row;
-//         img {
-//           margin-right: 10px;
-//         }
-//         margin: 20px 0;
-//         .circle {
-//           width: 30px;
-//           height: 30px;
-//           border-radius: 50%;
-//           background: #da2566;
-//           display: flex;
-//           flex-direction: column;
-//           justify-content: center;
-//           align-items: center;
+  margin-left: 48px;
 
-//           p {
-//             color: #fff;
-//             font-size: 18px;
-//             font-weight: normal;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
+  flex-direction: column;
+  justify-content: center;
 
-// @media only screen and (max-width: 1150px) {
-//   aside {
-//     width: 40vw;
-//     z-index: 5;
+  .section + .section {
+    padding-top: 44px;
+  }
 
-//     .logo {
-//       img {
-//         width: 80%;
-//       }
-//     }
-//   }
-// }
-// @media only screen and (max-width: 550px) {
-//   aside {
-//     width: 100vw;
-//     z-index: 5;
-//   }
-// }
+  .element {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+
+    margin-top: 16px;
+
+    img {
+      margin: 4px 0;
+    }
+
+    p {
+      margin-left: 20px;
+    }
+
+    p:hover {
+      color: $primary;
+    }
+  }
+
+  .selected p {
+    margin-left: 10px;
+    color: $inputtextcolor;
+    font-weight: 500;
+
+    &:hover {
+      color: $inputtextcolor;
+    }
+  }
+
+  .link {
+    padding-top: 24px;
+  }
+
+  a {
+    font-size: 14px;
+  }
+}
 </style>

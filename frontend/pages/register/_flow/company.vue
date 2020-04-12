@@ -41,7 +41,7 @@ import {
   State,
   Provide
 } from "nuxt-property-decorator";
-import { InjectReactive } from "vue-property-decorator";
+import { InjectReactive, Emit } from "vue-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, numeric, minValue } from "vuelidate/lib/validators";
@@ -60,7 +60,7 @@ import userQuery from "@/apollo/queries/registration/company.gql";
 
 import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
-import { WorkflowProvider } from "../../register.vue";
+import { Workflow } from "../../register.vue";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "~/components/loadinganimation";
 
@@ -72,7 +72,7 @@ import { LoadingAnimation } from "~/components/loadinganimation";
   middleware: "authenticated"
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: WorkflowProvider;
+  @InjectReactive("workflow") workflow!: Workflow;
 
   industries?: { id: string; name: string }[] = [];
 
@@ -152,10 +152,6 @@ export default class extends Vue {
     }
   }
 
-  created() {
-    this.workflow.setStage(1);
-  }
-
   back() {
     this.$router.push(`/register/${this.workflow.type}`);
   }
@@ -204,6 +200,15 @@ export default class extends Vue {
       console.error(err);
       this.$swal("Das hat nicht geklappt", err.message, "error");
     }
+  }
+
+  @Emit('selectelement')
+  setElement() {
+    return 1;
+  }
+
+  mounted() {
+   this.setElement();
   }
 }
 </script>

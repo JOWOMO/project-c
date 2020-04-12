@@ -468,9 +468,12 @@ export type DasboardTeamsQueryVariables = {};
 
 export type DasboardTeamsQuery = (
   { __typename?: 'Query' }
-  & { companies?: Maybe<Array<(
+  & { me: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'pictureUrl'>
+  ), companies?: Maybe<Array<(
     { __typename?: 'Company' }
-    & Pick<Company, 'id'>
+    & Pick<Company, 'id' | 'postalCode' | 'city'>
     & { demands?: Maybe<Array<(
       { __typename?: 'Demand' }
       & Pick<Demand, 'id' | 'name'>

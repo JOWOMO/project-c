@@ -32,6 +32,7 @@ export default class extends Vue {
   border: 1px solid $border;
 
   display: flex;
+  align-items: center;
   padding-left: 10px;
   padding-right: 10px;
 
