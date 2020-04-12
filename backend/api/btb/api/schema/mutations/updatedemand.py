@@ -40,7 +40,7 @@ do update set
     company_id = excluded.company_id, 
     is_active = excluded.is_active,
     name = excluded.name, 
-    description_ext = excluded.description, 
+    description_ext = excluded.description_ext, 
     quantity = excluded.quantity, 
     skills = excluded.skills,
     max_hourly_salary = excluded.max_hourly_salary,
