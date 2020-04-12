@@ -62,6 +62,7 @@ jobs:
       run: |
         source $HOME/.poetry/env
         
+        poetry env use python3.7
         poetry install
         python3 -m btb.templates
         
