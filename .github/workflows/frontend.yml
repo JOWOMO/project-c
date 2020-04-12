@@ -62,8 +62,11 @@ jobs:
 
     - name: Generate 
       run: |
-        NUXT_ENV_STAGE=${{ env.STAGE }} npx nuxt generate --spa 
+        npx nuxt build
       working-directory: frontend
+      env:
+        NUXT_GTM_ID: ${{ secrets.GTM_ID }}
+        NUXT_ENV_STAGE: ${{ env.STAGE }}
 
     - uses: actions/upload-artifact@v1
       with:

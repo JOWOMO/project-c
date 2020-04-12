@@ -4,7 +4,7 @@ export default async function ({
     try {
         console.debug('[Authenticated Guard] checking');
 
-        const load = store.dispatch('auth/load');
+        const load = await store.dispatch('auth/load');
         if (!load) {
             redirect(200, '/login', { return_url: route.path });
         }

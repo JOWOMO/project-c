@@ -40,6 +40,12 @@ h3 {
   color: $headercolor;
 }
 
+h4 {
+  font-size: $textsize;
+  color: $headercolor;
+  font-weight: 500;
+}
+
 p {
   font-size: $textsize;
   color: $textcolor;
@@ -58,11 +64,13 @@ button {
   transition: all .5s ease;
   border: none;
   outline: none;
+
+  cursor: pointer;
 }
 
 a {
   font-size: $textsize;
-  font-weight: bold;
+  font-weight: 500;
   text-decoration: none;
   color: $primary;
   transition: all .3s ease;
@@ -102,6 +110,17 @@ a {
     color: #ffffff !important;
     border: 1px solid darken($primary, 10%) !important;
     background-color: darken($primary, 10%) !important;
+  }
+}
+
+.cta {
+  background-color: $secondary !important;
+  border: 1px solid $border !important;
+  color: #ffffff !important;
+
+  &:hover {
+    border: 1px solid darken($secondary, 10%) !important;
+    background-color: darken($secondary, 10%) !important;
   }
 }
 

@@ -4,30 +4,37 @@
       <h1>404</h1>
       <div class="message">
         <h2>Hier ist nichts</h2>
-        <nuxt-link to="/">Zurück nach Hause in <span>{{ counter }}</span></nuxt-link>
+        <nuxt-link to="/">
+          Zurück nach Hause in
+          <span>{{ counter }}</span>
+        </nuxt-link>
       </div>
     </div>
     <div class="background">
-      <img src="/images/ship.svg">
+      <img src="/images/ship.svg" />
     </div>
+    <cookies />
   </div>
 </template>
 
 <script>
+import cookies from "@/components/cookies.vue";
+
 export default {
+  components: {cookies},
   props: ["error"],
   data() {
     return {
       counter: 5
-    }
+    };
   },
   mounted() {
     setTimeout(() => {
-     //  this.$router.push('/')
-    }, 5000)
+      // this.$router.push('/')
+    }, 5000);
     setInterval(() => {
-      this.counter--
-    }, 1000)
+      this.counter--;
+    }, 1000);
   }
 };
 </script>
@@ -65,7 +72,7 @@ export default {
 
     h1 {
       grid-column: 1;
-      color: #DA2566;
+      color: #da2566;
       font-size: 120px;
       justify-self: flex-start !important;
     }
@@ -75,15 +82,15 @@ export default {
       text-align: left;
 
       h2 {
-        font-size: 40px
+        font-size: 40px;
       }
 
       a {
         font-weight: normal;
 
-        span{
+        span {
           font-weight: bold;
-          color: #25A6DA;
+          color: #25a6da;
         }
       }
     }
@@ -91,10 +98,10 @@ export default {
 }
 
 @keyframes moveShip {
-  0%{
+  0% {
     transform: translateX(0);
   }
-  100%{
+  100% {
     transform: translateX(200px);
   }
 }

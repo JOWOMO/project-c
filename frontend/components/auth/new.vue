@@ -71,8 +71,8 @@ export default class extends Vue {
   }
 
   @Emit('change-state')
-  cancel() {
-    return 'cancel';
+  back() {
+    return 'reset';
   }
 
   @LoadingAnimation
@@ -83,6 +83,8 @@ export default class extends Vue {
     if (this.$v.$invalid) {
       return;
     }
+
+    this.$track('authentication', 'reset-password');
 
     try {
       const user = {

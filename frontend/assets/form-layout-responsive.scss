@@ -27,6 +27,10 @@
       margin-top: 0px;
       flex-direction: column-reverse;
       
+      button + button {
+        margin-left: 0;
+      }
+      
       button {
         margin-top: 21px;
         min-width: 100%;

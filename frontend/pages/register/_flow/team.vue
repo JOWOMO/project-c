@@ -82,7 +82,7 @@ import {
 } from "@/apollo/schema";
 import { InjectReactive } from "vue-property-decorator";
 
-import { WorkflowProvider, RegistrationFlow } from "../../register.vue";
+import { RegistrationFlow, Workflow } from "../../register.vue";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "@/components/loadinganimation";
 
@@ -99,7 +99,7 @@ const EMPTY_TEAM: TeamDetails = {
   middleware: "authenticated"
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: WorkflowProvider;
+  @InjectReactive("workflow") workflow!: Workflow;
 
   company!: Pick<Company, "id">;
 
@@ -173,6 +173,8 @@ export default class extends Vue {
 
   @LoadingAnimation
   async save() {
+    this.$track('registration', 'team');
+
     try {
       for (const supply of this.supplies.filter(s => s.modified)) {
         console.log("Saving", supply);
@@ -288,8 +290,13 @@ export default class extends Vue {
     }
   }
 
-  created() {
-    this.workflow.setStage(2);
+  @Emit('selectelement')
+  setElement() {
+    return 2;
+  }
+
+  mounted() {
+   this.setElement();
   }
 }
 </script>

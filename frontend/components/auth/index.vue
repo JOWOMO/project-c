@@ -35,7 +35,7 @@ import newpassword from "./new.vue";
     newpassword,
   }
 })
-export default class Auth extends Vue {
+export default class extends Vue {
   @Prop({ type: String, required: false, default: "login" })
   readonly start_component!: String;
 
@@ -53,7 +53,9 @@ export default class Auth extends Vue {
 
   handleStateChange(event: string, value?: string) {
     console.debug("handleStateChange", event);
-    
+
+    this.$track('authentication', event, value);
+
     if (event === "redirect") {
       console.log("target route", this.target_route);
 

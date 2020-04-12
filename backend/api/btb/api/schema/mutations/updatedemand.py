@@ -12,8 +12,8 @@ class DemandInput(graphene.InputObjectType):
     is_active = graphene.Boolean(required=True)
 
     name = graphene.String(required=True)
-    description_int = graphene.String()
-    description_ext = graphene.String()
+    # description_int = graphene.String()
+    description = graphene.String()
 
     quantity = graphene.Int(required=True)
     skills = graphene.List(graphene.ID)
@@ -33,18 +33,18 @@ class UpdateDemand(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-insert into btb.team_demand (id, company_id, is_active, name, description_int, description_ext, quantity, skills, max_hourly_salary)
-values (coalesce(:id, nextval('btb.team_demand_id_seq')), :company_id, :is_active, :name, :description_int, :description_ext, :quantity, (:skills)::int[], :max_hourly_salary)
+insert into btb.team_demand (id, company_id, is_active, name, description_ext, quantity, skills, max_hourly_salary)
+values (coalesce(:id, nextval('btb.team_demand_id_seq')), :company_id, :is_active, :name, :description_int, :description, :quantity, (:skills)::int[], :max_hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 
     is_active = excluded.is_active,
     name = excluded.name, 
-    description_int = excluded.description_int, 
-    description_ext = excluded.description_ext, 
+    description_ext = excluded.description, 
     quantity = excluded.quantity, 
     skills = excluded.skills,
-    max_hourly_salary = excluded.max_hourly_salary
+    max_hourly_salary = excluded.max_hourly_salary,
+    modified_on = now()
 returning id
             """
             )

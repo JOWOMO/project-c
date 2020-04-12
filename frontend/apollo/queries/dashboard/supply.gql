@@ -1,0 +1,39 @@
+query supplyMatches($id: ID!, $cursor: CursorInput) {
+  result: matchSupply(cursor: $cursor, id: $id) {    
+    pageInfo {
+      offset
+      pageSize
+      hasNextPage
+    }
+    
+    matches {
+      distance
+      percentage
+      match: supply {
+        id
+        name
+        description
+        skills {
+          name
+        }
+        quantity
+        salary: hourlySalary
+        company {
+          id
+          name
+          addressLine1
+          postalCode
+          city
+          contact {
+            firstName
+            lastName
+            pictureUrl
+          }
+          industry {
+            name
+          }
+        }
+      }
+    }
+  }
+}

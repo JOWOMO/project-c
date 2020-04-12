@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide, State } from "nuxt-property-decorator";
+import { Vue, Emit, Component, Provide, State } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
@@ -43,8 +43,9 @@ export default class extends Vue {
     return this.$v;
   }
 
+  @Emit('change-state')
   back() {
-    this.$emit("change-state", "login");
+    return 'login';
   }
 
   @LoadingAnimation
@@ -56,6 +57,8 @@ export default class extends Vue {
     if (this.$v.$invalid) {
       return;
     }
+
+    this.$track('authentication', 'start-reset-password');
 
     try {
       await this.$store.dispatch("auth/startResetPassword", {

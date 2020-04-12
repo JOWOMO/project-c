@@ -35,6 +35,7 @@ import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput },
+  
 })
 export default class extends Vue {
   @Validate({ required, email })
@@ -67,6 +68,8 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('authentication', 'login');
+
     try {
       const user = {
         email: this.email,
@@ -85,6 +88,7 @@ export default class extends Vue {
       // we need to verify him
       if (err.code === AuthErrorCodes.NotConfirmed) {
         this.$emit("change-state", "validate");
+        return;
       }
 
       this.$swal( 
