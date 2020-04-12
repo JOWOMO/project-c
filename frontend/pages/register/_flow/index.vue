@@ -32,8 +32,7 @@
       <div v-if="!userExists" class="form-group">
         <formCheckbox :id="'agb'" :label="'Bitte akzeptiere unsere AGB'" v-model="agb">
           <template>
-            Bitte Akzeptiere unsere
-            <nuxt-link to="/agb">AGB</nuxt-link>um fortzufahren
+            Ja, ich habe die <nuxt-link to="/info/agb">Nutzungsbedingungen</nuxt-link> und die <nuxt-link to="/info/privacy">Datenschutzerklärung</nuxt-link> gelesen und akzeptiert.
           </template>
         </formCheckbox>
       </div>

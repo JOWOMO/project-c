@@ -3,11 +3,22 @@
     <column :order="2">
       <layout :columns="false" class="main">
         <row :height="TOPHEIGHT" class="header">
-          <navbar :name="name" />
+          <div class="narrow-navbar">
+            <burger>
+              <navbar :horizontal="false" :name="name" />
+            </burger>
+
+            <div class="logo">
+              <nuxt-link to="/">
+                <img width="234px" height="37px" src="/images/logo.svg" alt="Logo" class="logo" />
+              </nuxt-link>
+            </div>
+          </div>
+          <navbar class="wide-navbar" :name="name" />
         </row>
         <row :height="'calc(100vh - ' + TOPHEIGHT + 'px)'" class="scroller">
-          <filterElement v-if="company" class="filter" :me="company" />
-          <nuxt-child />
+          <filterElement v-if="company" class="filter" :me="company" @change-filter="changeFilter" />
+          <nuxt-child :filter="filter" />
           <top />
         </row>
         <top />
@@ -32,8 +43,9 @@ import layout from "@/components/layout/layout.vue";
 import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
 import top from "@/components/goto-top.vue";
-import filterElement from "@/components/filter.vue";
+import filterElement, { Filter, DEFAULT_FILTER } from "@/components/filter.vue";
 import navbar from "@/components/navbar/authenticated.vue";
+import burger from "@/components/menu/burger.vue";
 
 import {
   DasboardTeamsQuery,
@@ -49,15 +61,23 @@ import { Vue, Component, Ref } from "nuxt-property-decorator";
 import { ProvideReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
 
-
 @Component({
-  components: { sidebar, layout, column, row, top, filterElement, navbar },
+  components: {
+    sidebar,
+    layout,
+    column,
+    row,
+    top,
+    filterElement,
+    navbar,
+    burger
+  },
   layout: "search"
 })
 export default class extends Vue {
   TOPHEIGHT = 148;
 
-  me: Pick<User, "firstName" | 'lastName'> | null = null;
+  me: Pick<User, "firstName" | "lastName"> | null = null;
   company: Pick<Company, "id" | "postalCode" | "city"> | null = null;
 
   @ProvideReactive("all-demands")
@@ -66,8 +86,15 @@ export default class extends Vue {
   @ProvideReactive("all-supplies")
   supplies: any[] = [];
 
-  get name()  {
-    return this.me?.firstName + ' ' + this.me?.lastName;
+  filter: Filter = DEFAULT_FILTER;
+
+  changeFilter(filter: Filter) {
+    console.debug('Filter changed dashboard', filter);
+    this.$set(this.filter, 'range', filter.range);
+  }
+
+  get name() {
+    return this.me?.firstName + " " + this.me?.lastName;
   }
 
   get selectedId() {
@@ -98,7 +125,7 @@ export default class extends Vue {
         demands: company.demands,
         supplies: company.supplies,
         company,
-        me: result.data.me,
+        me: result.data.me
       };
 
       return data;
@@ -128,13 +155,55 @@ export default class extends Vue {
   margin-bottom: 40px;
 }
 
+.narrow-navbar {
+  display: none;
+  flex: 1;
+}
+
 @media only screen and (max-width: 800px) {
   .nav {
     display: none;
   }
 
+  .narrow-navbar {
+    display: flex;
+  }
+
+  .wide-navbar {
+    display: none;
+  }
+
+  .header {
+    width: 100vw;
+    background-color: white;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 120px !important;
+
+    padding-right: 0px;
+    padding-top: 0;
+    padding-left: 20px;
+    padding-right: 48px;
+  }
+
+  .logo {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
   .scroller {
     overflow: unset;
+    width: 100vw;
+
+    padding-top: 20px;
+    padding-right: 20px;
+
+    height: calc(100vh - 120px) !important;
   }
 
   .main {

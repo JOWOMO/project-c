@@ -34,7 +34,7 @@ class UpdateDemand(graphene.Mutation):
             sql = text(
                 """
 insert into btb.team_demand (id, company_id, is_active, name, description_ext, quantity, skills, max_hourly_salary)
-values (coalesce(:id, nextval('btb.team_demand_id_seq')), :company_id, :is_active, :name, :description_int, :description, :quantity, (:skills)::int[], :max_hourly_salary)
+values (coalesce(:id, nextval('btb.team_demand_id_seq')), :company_id, :is_active, :name, :description, :quantity, (:skills)::int[], :max_hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 

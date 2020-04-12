@@ -12,12 +12,18 @@
       @connect="onConnect"
     />
 
-    <infinite @infinite="loadMore" :distance="500"></infinite>
+    <infinite :identifier="spinnerid" spinner="waveDots" @infinite="loadMore" :distance="500">
+      <div slot="no-more"></div>
+      <div slot="no-results"></div>
+    </infinite>
+
+    <div v-if="noRecords" class="no-records">Es wurden leider keine passenden Einträge gefunden.</div>
+    <hr class="eof" v-if="endOfRecords" />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "nuxt-property-decorator";
+import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 
 import getDemandMatch from "@/apollo/queries/dashboard/demand.gql";
@@ -37,6 +43,8 @@ import {
 
 import infinite, { StateChanger } from "vue-infinite-loading";
 import { ConnectParams } from "@/pages/connect/_.vue";
+import { Filter, DEFAULT_FILTER } from "~/components/filter.vue";
+import { LoadingAnimation } from "../../../components/loadinganimation";
 
 @Component({
   components: { companyCard, infinite }
@@ -47,8 +55,24 @@ export default class extends Vue {
     data?: MatchDemandResult; // other type is equal
   } = {};
 
+  @Prop({ required: true }) filter!: Filter;
+  spinnerid = 1;
+  
+  get noRecords() {
+    return !this.feed.data || this.feed.data.matches.length === 0;
+  }
+
+  get endOfRecords() {
+    return !this.noRecords && this.feed.data && !this.feed.data.pageInfo.hasNextPage;
+  }
+
   get matches() {
     return this.feed && this.feed.data ? this.feed.data.matches : [];
+  }
+
+  @Watch("filter", { deep: true })
+  filterChanged(filter: Filter) {
+    this.reload(filter);
   }
 
   onShowAll(company: string) {
@@ -61,10 +85,28 @@ export default class extends Vue {
       origin: this.$route.params.id,
       match: party.id,
       name: party.name,
-      pictureUrl: party.pictureUrl,
+      pictureUrl: party.pictureUrl
     };
 
     this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
+  }
+
+  @LoadingAnimation
+  async reload(filter: Filter) {
+    return new Promise(resolve =>
+      this.feed
+        .query!.refetch({
+          id: this.$route.params.id,
+          cursor: undefined,
+          radius: this.filter.range
+        })
+        .then(data => {
+          this.spinnerid += 1;
+          this.$set(this.feed, "data", data.data.result);
+          resolve();
+        })
+        .catch(resolve)
+    );
   }
 
   loadMore($state: StateChanger) {
@@ -78,7 +120,8 @@ export default class extends Vue {
         id: this.$route.params.id,
         cursor: {
           offset: this.feed.data!.pageInfo.offset
-        }
+        },
+        radius: DEFAULT_FILTER.range
       },
 
       updateQuery: (prev, { fetchMoreResult }) => {
@@ -153,6 +196,15 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-.container {
+@import '@/assets/colors';
+
+.eof {
+  margin-left: 25%;
+  width: 50%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  height: 2px;
+  border: 0;
+  background-color: $primary;
 }
 </style>

@@ -1,8 +1,11 @@
 <template>
-  <div class="center">
-    <topbar />
-    <nuxt class="screen-center" />
-    <cookies />
+  <div>
+    <div class="center">
+      <topbar />
+      <nuxt class="screen-center" />
+      <cookies />
+    </div>
+    <imprint />
   </div>
 </template>
 
@@ -10,11 +13,13 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import topbar from "@/components/topbar.vue";
 import cookies from "@/components/cookies.vue";
+import imprint from "@/components/imprint.vue";
 
 @Component({
   components: {
     topbar,
-    cookies
+    cookies,
+    imprint
   },
   middleware: "loaduser"
 })
@@ -23,10 +28,12 @@ export default class extends Vue {}
 
 <style lang="scss" scoped>
 @import "@/assets/screen";
+@import "@/assets/colors";
 
 .center {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
+
 </style>

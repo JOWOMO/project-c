@@ -1,5 +1,5 @@
-query supplyMatches($id: ID!, $cursor: CursorInput) {
-  result: matchSupply(cursor: $cursor, id: $id) {    
+query supplyMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
+  result: matchSupply(cursor: $cursor, id: $id, radius: $radius) {    
     pageInfo {
       offset
       pageSize

@@ -1,12 +1,18 @@
 <template>
-  <navBar :key="$route.path">
-    <item :selected="isSelected('/dashboard')" v-slot:default="is">
+  <navBar :key="$route.path" :horizontal="horizontal">
+    <item v-if="!horizontal" :selected="is('/')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
+    </item>
+    <item :selected="isPath('/dashboard')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Meine Suchergebnisse'" :target="'/dashboard'" />
     </item>
-    <item :selected="isSelected('/info/faq')" v-slot:default="is">
+    <item :selected="isPath('/info/faq')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'FAQ'" :target="'/info/faq'" />
     </item>
-    <item>
+    <item v-if="!horizontal">
+      <lnk @click.native="click({id: 'logout'})" :text="'Ausloggen'" />
+    </item>
+    <item v-else>
       <avatar
         ref="avatar"
         size="48"
@@ -36,12 +42,18 @@ import avatar from "./avatar.vue";
 @Component({ components: { navBar, lnk, item, avatar } })
 export default class extends Vue {
   @Prop() name!: string;
+  @Prop({ default: true }) horizontal!: boolean;
 
   get options() {
     return [{ name: "Ausloggen", id:"logout" }];
   }
 
-  isSelected(l: string) {
+  is(l: string) {
+    const prefix = this.$route.fullPath.toLowerCase();
+    return prefix == '/';
+  }
+
+  isPath(l: string) {
     const prefix = this.$route.fullPath.toLowerCase();
     return prefix.startsWith(l);
   }

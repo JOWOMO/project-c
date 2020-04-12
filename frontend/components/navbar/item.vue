@@ -1,14 +1,15 @@
 <template>
   <div :class="{'item': true, 'selected': selected}">
-    <slot v-bind:selected="selected" />
+    <slot v-bind:selected="selected" v-bind:horizontal="horizontal" />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide, Prop, Emit } from "nuxt-property-decorator";
+import { Vue, Component, Provide, Prop, Emit, Ref } from "nuxt-property-decorator";
 
 @Component
 export default class extends Vue {
+  @Prop() horizontal!: boolean;
   @Prop() selected!: boolean;
 }
 </script>

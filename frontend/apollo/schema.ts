@@ -199,12 +199,14 @@ export type QueryCompanyArgs = {
 export type QueryMatchDemandArgs = {
   cursor?: Maybe<CursorInput>;
   id: Scalars['ID'];
+  radius?: Maybe<Scalars['Int']>;
 };
 
 
 export type QueryMatchSupplyArgs = {
   cursor?: Maybe<CursorInput>;
   id: Scalars['ID'];
+  radius?: Maybe<Scalars['Int']>;
 };
 
 
@@ -387,6 +389,7 @@ export type Check_StateQuery = (
 
 export type DemandMatchesQueryVariables = {
   id: Scalars['ID'];
+  radius?: Maybe<Scalars['Int']>;
   cursor?: Maybe<CursorInput>;
 };
 
@@ -426,6 +429,7 @@ export type DemandMatchesQuery = (
 
 export type SupplyMatchesQueryVariables = {
   id: Scalars['ID'];
+  radius?: Maybe<Scalars['Int']>;
   cursor?: Maybe<CursorInput>;
 };
 
