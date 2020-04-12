@@ -29,6 +29,8 @@ export default class extends Vue {
         path: "/",
         expires: date
     });
+
+    this.visible = false;
   }
 
   created() {
