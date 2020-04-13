@@ -52,7 +52,9 @@ import {
   DasboardTeamsQueryVariables,
   DemandMatchesQuery,
   Company,
-  User
+  User,
+  Demand,
+  Supply
 } from "@/apollo/schema";
 
 import getTeams from "@/apollo/queries/dashboard/teams.gql";
@@ -78,19 +80,32 @@ export default class extends Vue {
   TOPHEIGHT = 148;
 
   me: Pick<User, "firstName" | "lastName"> | null = null;
-  company: Pick<Company, "id" | "postalCode" | "city"> | null = null;
 
   @ProvideReactive("all-demands")
-  demands: any[] = [];
+  demands: Demand[] = [];
 
   @ProvideReactive("all-supplies")
-  supplies: any[] = [];
+  supplies: Supply[] = [];
 
   filter: Filter = DEFAULT_FILTER;
 
   changeFilter(filter: Filter) {
-    console.debug('Filter changed dashboard', filter);
-    this.$set(this.filter, 'range', filter.range);
+    console.debug("Filter changed dashboard", filter);
+    this.$set(this.filter, "range", filter.range);
+  }
+
+  get company() {
+    const { flow, id } = this.$route.params;
+
+    if (this.flow  === 'demand' && this.supplies) {
+      return this.supplies.find((f) => f.id);
+    }
+
+    if (this.flow  === 'demand' && this.supplies) {
+      return this.demands.find((f) => f.id);
+    }
+
+    return null;
   }
 
   get name() {
@@ -106,7 +121,7 @@ export default class extends Vue {
   }
 
   async asyncData(context: Context) {
-    let data: Pick<this, "demands" | "supplies" | "company" | "me">;
+    let data: Pick<this, "demands" | "supplies" | "me">;
 
     try {
       const client = context.app.apolloProvider!.defaultClient;
@@ -118,13 +133,10 @@ export default class extends Vue {
         fetchPolicy: "network-only"
       });
 
-      const company = result.data.companies![0];
-
       // @ts-ignore
       data = {
-        demands: company.demands,
-        supplies: company.supplies,
-        company,
+        demands: result.data.activeDemands,
+        supplies: result.data.activeSupplies,
         me: result.data.me
       };
 

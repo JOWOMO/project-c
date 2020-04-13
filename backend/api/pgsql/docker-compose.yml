@@ -10,8 +10,9 @@ postgres:
     POSTGRES_DBNAME: dev
   
   volumes:
-    - ./db-create.pgsql:/docker-entrypoint-initdb.d/1-db.sql
-    - ./schema.pgsql:/docker-entrypoint-initdb.d/2-schema.sql
-    - ./postalcodes.pgsql:/docker-entrypoint-initdb.d/3-postalcodes.sql
-    - ./real-data.pgsql:/docker-entrypoint-initdb.d/4-real.sql
-    - ./test-data.pgsql:/docker-entrypoint-initdb.d/5-test.sql
+    - ./00 db-create.pgsql:/docker-entrypoint-initdb.d/00-db.sql
+    - ./10 tables.pgsql:/docker-entrypoint-initdb.d/10-db.sql
+    - ./20 views.pgsql:/docker-entrypoint-initdb.d/20-db.sql
+    - ./30 postalcodes.pgsql:/docker-entrypoint-initdb.d/30-db.sql
+    - ./31 real-data.pgsql:/docker-entrypoint-initdb.d/40-db.sql
+    - ./80 test-data.pgsql:/docker-entrypoint-initdb.d/55-db.sql

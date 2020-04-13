@@ -33,8 +33,8 @@ class UpdateCompany(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-insert into btb.company (id, name, logo_url, address_line1, address_line2, address_line3, postal_code, city, industry_id)
-values (coalesce(:id, nextval('btb.company_id_seq')), :name, :logo_url, :address_line1, :address_line2, :address_line3, :postal_code, :city, :industry)
+insert into btb_data.company (id, name, logo_url, address_line1, address_line2, address_line3, postal_code, city, industry_id)
+values (coalesce(:id, nextval('btb_data.company_id_seq')), :name, :logo_url, :address_line1, :address_line2, :address_line3, :postal_code, :city, :industry)
 on conflict (id) 
 do update set 
     name = excluded.name, 
@@ -53,7 +53,7 @@ returning id
 
             sql = text(
                 """
-insert into btb.company_customer(customer_id, company_id)
+insert into btb_data.company_customer(customer_id, company_id)
     select id, :company
     from btb.customer
     where external_id = :user

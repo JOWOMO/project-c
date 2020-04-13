@@ -33,8 +33,8 @@ class UpdateDemand(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-insert into btb.team_demand (id, company_id, is_active, name, description_ext, quantity, skills, max_hourly_salary)
-values (coalesce(:id, nextval('btb.team_demand_id_seq')), :company_id, :is_active, :name, :description, :quantity, (:skills)::int[], :max_hourly_salary)
+insert into btb_data.team_demand (id, company_id, is_active, name, description_ext, quantity, skills, max_hourly_salary)
+values (coalesce(:id, nextval('btb_data.team_demand_id_seq')), :company_id, :is_active, :name, :description, :quantity, (:skills)::int[], :max_hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 
@@ -67,7 +67,7 @@ class RemoveDemand(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-delete from btb.team_demand where id = :id
+delete from btb_data.team_demand where id = :id
             """
             )
             data = conn.execute(sql, id=id)

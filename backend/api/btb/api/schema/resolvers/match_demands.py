@@ -13,8 +13,8 @@ class DemandQuery(MatchQuery):
     def __init__(self, skills, location):
         super().__init__("btb.match_team_demand", skills, location)
 
-    def map_result(self, record):
-        return self.map_default_result("demand", g.demand_loader, record)
+    def map_result(self, record, orderby):
+        return self.map_default_result("demand", g.demand_loader, record, orderby)
 
 
 def match_demand(demand, radius=None, cursor = None):
@@ -35,7 +35,7 @@ def match_demand(demand, radius=None, cursor = None):
 
 def match_demand_by_id(root, info, id, radius=None, cursor=None):
     with db.engine.begin() as conn:
-        sql = text("select d.*, c.postal_code from btb.team_demand d, btb.company c where d.company_id = c.id and d.id = :id")
+        sql = text("select d.*, c.postal_code from btb_data.team_demand d, btb_data.company c where d.company_id = c.id and d.id = :id")
         data = conn.execute(sql, id=id).fetchone()
 
         for row in data:

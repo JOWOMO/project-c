@@ -16,7 +16,7 @@ class IndustryLoader(DataLoader):
 select 
     *
 from 
-    btb.industry
+    btb_data.industry
 where 
     id = any(:keys)
 """
@@ -38,7 +38,7 @@ def industries(root, info):
 select 
     *
 from 
-    btb.industry
+    btb_data.industry
 """
         )
         result = conn.execute(sql)

@@ -11,7 +11,7 @@ class MeLoader(DataLoader):
         current_app.logger.debug("load %s", keys)
 
         with db.engine.begin() as conn:
-            sql = text("select * from btb.customer where external_id = any(:keys)")
+            sql = text("select * from btb_data.customer where external_id = any(:keys)")
             data = conn.execute(sql, keys=keys)
 
             d = {str(i["external_id"]): i for i in data}

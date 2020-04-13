@@ -13,8 +13,8 @@ class SupplyQuery(MatchQuery):
     def __init__(self, skills, location):
         super().__init__("btb.match_team_supply", skills, location)
 
-    def map_result(self, record):
-        return self.map_default_result("supply", g.supply_loader, record)
+    def map_result(self, record, orderby):
+        return self.map_default_result("supply", g.supply_loader, record, orderby)
 
 
 def match_supply(supply, radius=None, cursor = None):
@@ -35,7 +35,7 @@ def match_supply(supply, radius=None, cursor = None):
 
 def match_supply_by_id(root, info, id, radius=None, cursor=None):
     with db.engine.begin() as conn:
-        sql = text("select s.*, c.postal_code from btb.team_supply s, btb.company c where s.company_id = c.id and s.id = :id")
+        sql = text("select s.*, c.postal_code from btb_data.team_supply s, btb_data.company c where s.company_id = c.id and s.id = :id")
         data = conn.execute(sql, id=id).fetchone()
 
         for row in data:

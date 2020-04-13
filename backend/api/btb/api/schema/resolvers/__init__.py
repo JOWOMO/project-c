@@ -14,3 +14,5 @@ from .match_supplies import match_supplies_by_query, match_supply_by_id
 from .match_demands import match_demands_by_query, match_demand_by_id
 
 from .industries import industries, IndustryLoader
+from .active_demands_by_principal import active_demands_by_principal
+from .active_supplies_by_principal import active_supplies_by_principal

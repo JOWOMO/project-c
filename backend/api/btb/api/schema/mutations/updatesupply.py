@@ -35,8 +35,8 @@ class UpdateSupply(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-insert into btb.team_supply (id, company_id, is_active, name, description_ext, quantity, skills, hourly_salary)
-values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :is_active, :name, :description, :quantity, (:skills)::int[], :hourly_salary)
+insert into btb_data.team_supply (id, company_id, is_active, name, description_ext, quantity, skills, hourly_salary)
+values (coalesce(:id, nextval('btb_data.team_supply_id_seq')), :company_id, :is_active, :name, :description, :quantity, (:skills)::int[], :hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 
@@ -69,7 +69,7 @@ class RemoveSupply(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-delete from btb.team_supply where id = :id
+delete from btb_data.team_supply where id = :id
             """
             )
             data = conn.execute(sql, id=id)

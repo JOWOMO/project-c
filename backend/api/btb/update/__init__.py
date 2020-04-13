@@ -11,10 +11,11 @@ def handler(event, context):
     # connection = engine.connect()
 
     files = [
-        "../../pgsql/clean.pgsql",
-        "../../pgsql/schema.pgsql",
-        "../../pgsql/postalcodes.pgsql",
-        "../../pgsql/real-data.pgsql",
+        "../../pgsql/01 clean.pgsql",
+        "../../pgsql/10 tables.pgsql",
+        "../../pgsql/20 tables.pgsql",
+        "../../pgsql/30 postalcodes.pgsql",
+        "../../pgsql/41 real-data.pgsql",
     ]
 
     with engine.begin() as conn:

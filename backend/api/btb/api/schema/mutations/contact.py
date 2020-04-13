@@ -122,7 +122,7 @@ select st_distance(btb.get_postalcode_position(:fr), btb.get_postalcode_position
 
         insert_sql = text(
             """
-insert into btb.contact_request (external_id, request_id, response_id, match_type, request, response, distance)
+insert into btb_data.contact_request (external_id, request_id, response_id, match_type, request, response, distance)
 values (:external_id, :request_id, :response_id, :match_type, :request, :response, :distance)
         """
         )
@@ -153,7 +153,7 @@ values (:external_id, :request_id, :response_id, :match_type, :request, :respons
             """
 select r.id as id, r.name as name, c.owner_external_id as external_id, c.contact as contact, c.postal_code as postal_code, r.name, row_to_json(r) as record
 from
-    btb.{} r, 
+    btb_data.{} r, 
     btb.company_with_contact c
 where
     r.company_id = c.id
@@ -178,7 +178,7 @@ and c.owner_external_id <> :external_id
             """
 select r.id as id, r.name as name, c.owner_external_id as external_id, c.contact as contact, c.postal_code as postal_code, r.name, row_to_json(r) as record
 from
-    btb.{} r, 
+    btb_data.{} r, 
     btb.company_with_contact c
 where
     r.company_id = c.id

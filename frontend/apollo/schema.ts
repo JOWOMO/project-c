@@ -169,6 +169,8 @@ export type Query = {
    __typename?: 'Query';
   me: User;
   companies?: Maybe<Array<Company>>;
+  activeDemands?: Maybe<Array<Maybe<Demand>>>;
+  activeSupplies?: Maybe<Array<Maybe<Supply>>>;
   demand?: Maybe<Demand>;
   supply?: Maybe<Supply>;
   company?: Maybe<Company>;
@@ -475,17 +477,21 @@ export type DasboardTeamsQuery = (
   & { me: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName' | 'pictureUrl'>
-  ), companies?: Maybe<Array<(
-    { __typename?: 'Company' }
-    & Pick<Company, 'id' | 'postalCode' | 'city'>
-    & { demands?: Maybe<Array<(
-      { __typename?: 'Demand' }
-      & Pick<Demand, 'id' | 'name'>
-    )>>, supplies?: Maybe<Array<(
-      { __typename?: 'Supply' }
-      & Pick<Supply, 'id' | 'name'>
-    )>> }
-  )>> }
+  ), activeDemands?: Maybe<Array<Maybe<(
+    { __typename?: 'Demand' }
+    & Pick<Demand, 'id' | 'name'>
+    & { company: (
+      { __typename?: 'Company' }
+      & Pick<Company, 'id' | 'postalCode' | 'city'>
+    ) }
+  )>>>, activeSupplies?: Maybe<Array<Maybe<(
+    { __typename?: 'Supply' }
+    & Pick<Supply, 'id' | 'name'>
+    & { company: (
+      { __typename?: 'Company' }
+      & Pick<Company, 'id' | 'postalCode' | 'city'>
+    ) }
+  )>>> }
 );
 
 export type GetDemandsQueryVariables = {};

@@ -18,7 +18,7 @@ select
     s.name as name,
     g.name as group
 from 
-    btb.skill s, btb.skillgroup g
+    btb_data.skill s, btb_data.skillgroup g
 where 
         s.skillgroup_id = g.id
     and s.id = any(:keys)
@@ -43,7 +43,7 @@ select
     s.name as name,
     g.name as group
 from 
-    btb.skill s, btb.skillgroup g
+    btb_data.skill s, btb_data.skillgroup g
 where 
     s.skillgroup_id = g.id
 """
