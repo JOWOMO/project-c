@@ -15,21 +15,30 @@ class SkillLoader(DataLoader):
                 """
 select 
     s.id as id,
+    s.match_id as match_id,
     s.name as name,
     g.name as group
 from 
-    btb_data.skill s, btb_data.skillgroup g
+    btb_data.skill s, btb_data.skill_group g
 where 
-        s.skillgroup_id = g.id
-    and s.id = any(:keys)
+        s.skill_group_id = g.id
+    and s.match_id = any(:keys)
+    and s.is_active = True
+    and g.is_active = True
 """
             )
             data = conn.execute(sql, keys=list(map(lambda k: int(k), keys)))
 
-            d = {str(i["id"]): i for i in data}
+            d = {str(i["match_id"]): i for i in data}
 
             # must return result in same order
             return Promise.resolve([d.get(str(id), None) for id in keys])
+
+def map_skills(conn, ids):
+    sql = text("""select array_agg(match_id) as ids from btb_data.skill where id = any(cast(:ids as uuid[]))""")
+
+    data = conn.execute(sql, ids=ids)
+    return next(data).ids
 
 
 def skills(root, info):
@@ -43,9 +52,11 @@ select
     s.name as name,
     g.name as group
 from 
-    btb_data.skill s, btb_data.skillgroup g
+    btb_data.skill s, btb_data.skill_group g
 where 
-    s.skillgroup_id = g.id
+    s.skill_group_id = g.id
+and s.is_active = True
+and g.is_active = True
 """
         )
         result = conn.execute(sql)

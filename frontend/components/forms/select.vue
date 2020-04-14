@@ -7,6 +7,7 @@
       :name="id"
       :value="value"
       @input="update"
+      @keypress.enter.prevent
     >
       <option hidden disabled value>- Bitte auswählen -</option>
       <option

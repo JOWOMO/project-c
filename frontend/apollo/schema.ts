@@ -92,7 +92,7 @@ export type MatchDemandResult = {
 
 export type MatchQueryInput = {
   radius?: Maybe<Scalars['Int']>;
-  skills: Array<Scalars['Int']>;
+  skills: Array<Scalars['ID']>;
   postalCode: Scalars['String'];
   maxSalary?: Maybe<Scalars['Float']>;
   minQuantity?: Maybe<Scalars['Int']>;
@@ -176,8 +176,9 @@ export type Query = {
   company?: Maybe<Company>;
   skills: Array<Skill>;
   industries: Array<Industry>;
-  matchDemand: MatchDemandResult;
-  matchSupply: MatchSupplyResult;
+  teamNames: Array<Scalars['String']>;
+  matchDemand: MatchSupplyResult;
+  matchSupply: MatchDemandResult;
   matchSupplies: MatchSupplyResult;
   matchDemands: MatchDemandResult;
 };
@@ -399,17 +400,17 @@ export type DemandMatchesQueryVariables = {
 export type DemandMatchesQuery = (
   { __typename?: 'Query' }
   & { result: (
-    { __typename?: 'MatchDemandResult' }
+    { __typename?: 'MatchSupplyResult' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'offset' | 'pageSize' | 'hasNextPage'>
     ), matches: Array<(
-      { __typename?: 'DemandMatch' }
-      & Pick<DemandMatch, 'distance' | 'percentage'>
+      { __typename?: 'SupplyMatch' }
+      & Pick<SupplyMatch, 'distance' | 'percentage'>
       & { match: (
-        { __typename?: 'Demand' }
-        & Pick<Demand, 'id' | 'name' | 'description' | 'quantity'>
-        & { salary: Demand['maxHourlySalary'] }
+        { __typename?: 'Supply' }
+        & Pick<Supply, 'id' | 'name' | 'description' | 'quantity'>
+        & { salary: Supply['hourlySalary'] }
         & { skills: Array<(
           { __typename?: 'Skill' }
           & Pick<Skill, 'name'>
@@ -439,17 +440,17 @@ export type SupplyMatchesQueryVariables = {
 export type SupplyMatchesQuery = (
   { __typename?: 'Query' }
   & { result: (
-    { __typename?: 'MatchSupplyResult' }
+    { __typename?: 'MatchDemandResult' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'offset' | 'pageSize' | 'hasNextPage'>
     ), matches: Array<(
-      { __typename?: 'SupplyMatch' }
-      & Pick<SupplyMatch, 'distance' | 'percentage'>
+      { __typename?: 'DemandMatch' }
+      & Pick<DemandMatch, 'distance' | 'percentage'>
       & { match: (
-        { __typename?: 'Supply' }
-        & Pick<Supply, 'id' | 'name' | 'description' | 'quantity'>
-        & { salary: Supply['hourlySalary'] }
+        { __typename?: 'Demand' }
+        & Pick<Demand, 'id' | 'name' | 'description' | 'quantity'>
+        & { salary: Demand['maxHourlySalary'] }
         & { skills: Array<(
           { __typename?: 'Skill' }
           & Pick<Skill, 'name'>
@@ -534,33 +535,12 @@ export type RegistrationCompanyQuery = (
   ) }
 );
 
-export type RegistrationUserQueryVariables = {};
-
-
-export type RegistrationUserQuery = (
-  { __typename?: 'Query' }
-  & { me: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
-  ) }
-);
-
-export type GetSkillsQueryVariables = {};
-
-
-export type GetSkillsQuery = (
-  { __typename?: 'Query' }
-  & { skills: Array<(
-    { __typename?: 'Skill' }
-    & Pick<Skill, 'id' | 'name' | 'group'>
-  )> }
-);
-
 export type GetTeamsQueryVariables = {};
 
 
 export type GetTeamsQuery = (
   { __typename?: 'Query' }
+  & Pick<Query, 'teamNames'>
   & { skills: Array<(
     { __typename?: 'Skill' }
     & Pick<Skill, 'id' | 'name'>
@@ -583,6 +563,28 @@ export type GetTeamsQuery = (
       )> }
     )>> }
   )>> }
+);
+
+export type RegistrationUserQueryVariables = {};
+
+
+export type RegistrationUserQuery = (
+  { __typename?: 'Query' }
+  & { me: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
+  ) }
+);
+
+export type GetSkillsQueryVariables = {};
+
+
+export type GetSkillsQuery = (
+  { __typename?: 'Query' }
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & Pick<Skill, 'id' | 'name' | 'group'>
+  )> }
 );
 
 export type UserQueryVariables = {};

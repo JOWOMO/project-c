@@ -4,6 +4,8 @@ query getTeams{
     name
   }
 
+  teamNames
+
   companies{
     id
     addressLine1

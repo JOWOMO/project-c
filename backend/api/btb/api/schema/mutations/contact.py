@@ -122,8 +122,24 @@ select st_distance(btb.get_postalcode_position(:fr), btb.get_postalcode_position
 
         insert_sql = text(
             """
-insert into btb_data.contact_request (external_id, request_id, response_id, match_type, request, response, distance)
-values (:external_id, :request_id, :response_id, :match_type, :request, :response, :distance)
+insert into btb_data.contact_request (
+    external_id, 
+    request_id, 
+    response_id, 
+    match_type, 
+    request, 
+    response, 
+    distance
+)
+values (
+    :external_id, 
+    :request_id, 
+    :response_id, 
+    :match_type, 
+    :request, 
+    :response, 
+    :distance
+)
         """
         )
 
@@ -132,13 +148,13 @@ values (:external_id, :request_id, :response_id, :match_type, :request, :respons
             external_id=g.principal.get_id(),
 
             distance=distance,
-            match_type=match_type,
+            match_type='demand' if match_type == 2 else 'supply',
 
-            request_id=int(origin["id"]),
+            request_id=origin["id"],
             request=json.dumps(
                 ContactMatch.filter_record(origin["record"])),
 
-            response_id=int(match["id"]),
+            response_id=match["id"],
             response=json.dumps(
                 ContactMatch.filter_record(match["record"])),
         )
@@ -146,7 +162,7 @@ values (:external_id, :request_id, :response_id, :match_type, :request, :respons
 
     @staticmethod
     def find_match(conn, match_type, id):
-        table_name = 'team_demand' if match_type == 1 else 'team_supply'
+        table_name = 'team_supply' if match_type == 2 else 'team_demand'
 
         # match must not be us
         match_sql = text(
@@ -157,7 +173,7 @@ from
     btb.company_with_contact c
 where
     r.company_id = c.id
-and r.id = :id
+and r.id = cast(:id as uuid)
 and c.owner_external_id <> :external_id
         """.format(table_name)
         )
@@ -171,7 +187,7 @@ and c.owner_external_id <> :external_id
 
     @staticmethod
     def find_origin(conn, match_type, origin_id):
-        inverted_table_name = 'team_demand' if match_type != 1 else 'team_supply'
+        inverted_table_name = 'team_demand' if match_type == 2 else 'team_supply'
 
         # request must be from us
         origin_sql = text(
@@ -182,7 +198,7 @@ from
     btb.company_with_contact c
 where
     r.company_id = c.id
-and r.id = :id
+and r.id = cast(:id as uuid)
 and c.owner_external_id = :external_id
             """.format(inverted_table_name)
         )
@@ -235,7 +251,6 @@ and c.owner_external_id = :external_id
         origin = None
 
         with db.engine.begin() as conn:
-
             match = ContactMatch.find_match(conn, match_type, id)
             origin = ContactMatch.find_origin(conn, match_type, origin_id)
 

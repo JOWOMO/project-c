@@ -1,6 +1,6 @@
 import { Plugin } from '@nuxt/types'
 
-type Category = 'authentication' | 'registration' | 'teams' | 'dashboard';
+type Category = 'authentication' | 'registration' | 'teams' | 'dashboard' | 'connect';
 
 declare module '@nuxt/types' {
     interface Context {
@@ -21,30 +21,35 @@ const trackPlugin: Plugin = (context, inject) => {
         console.log('Registering tracking plugin');
 
         context.app.router.afterEach((to) => {
-            let name = to.name!;
-            if (name.match(/___/)) {
-                name = name.substring(0, name.indexOf('___'));
-            }
+            let name = to.name;
 
-            if (context.isDev) {
-                console.debug('[Page Tracking]',
-                    name,
-                    to.fullPath,
-                    (typeof document !== 'undefined' && document.title) || ''
-                );
-            }
+            if (name) {
+                if (name.match(/___/)) {
+                    name = name.substring(0, name.indexOf('___'));
+                }
 
-            if (context.$gtm) {
-                setTimeout(() =>
-                    context.$gtm.push({
-                        routeName: name,
-                        pageType: 'PageView',
-                        pageUrl: to.fullPath,
-                        pageTitle: (typeof document !== 'undefined' && document.title) || '',
-                        event: 'nuxtRoute',
-                    }),
-                    250,
-                );
+                if (context.isDev) {
+                    console.debug('[Page Tracking]',
+                        name,
+                        to.fullPath,
+                        (typeof document !== 'undefined' && document.title) || ''
+                    );
+                }
+
+                if (context.$gtm) {
+                    setTimeout(() =>
+                        context.$gtm.push({
+                            routeName: name,
+                            pageType: 'PageView',
+                            pageUrl: to.fullPath,
+                            pageTitle: (typeof document !== 'undefined' && document.title) || '',
+                            event: 'nuxtRoute',
+                        }),
+                        250,
+                    );
+                }
+            } else {
+                console.warn(to, 'does not exist?');
             }
         });
     }

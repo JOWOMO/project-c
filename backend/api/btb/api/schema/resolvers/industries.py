@@ -18,10 +18,11 @@ select
 from 
     btb_data.industry
 where 
-    id = any(:keys)
+    id = any(cast(:keys as uuid[]))
+and is_active = True
 """
             )
-            data = conn.execute(sql, keys=list(map(lambda k: int(k), keys)))
+            data = conn.execute(sql, keys=keys)
 
             d = {str(i["id"]): i for i in data}
 
@@ -39,6 +40,8 @@ select
     *
 from 
     btb_data.industry
+where
+    is_active = True
 """
         )
         result = conn.execute(sql)

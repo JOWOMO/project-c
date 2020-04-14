@@ -1,38 +1,110 @@
-insert into btb_data.industry (id, name)
+insert into btb_data.industry (name)
     values 
-        (1, 'Unbekannt'),
-        (2, 'Energie'),
-        (3, 'Wasser & Entsorgung'),
-        (4, 'Ernährung & Hygiene'),
-        (5, 'Informationstechnik & Telekommunikation'),
-        (6, 'Finanz- & Wirtschaftswesen'),
-        (7, 'Transport & Verkehr'),
-        (8, 'Medien'),
-        (9, 'Staatliche Verwaltung'),
-        (10, 'Schulen, Kinder- & Jugendhilfe, Behindertenhilfe')
+    ('Bau'),
+    ('Einzelhandel'),
+    ('Gastronomie'),
+    ('Gesundheitswesen'),
+    ('Handwerk'),
+    ('Industrie/Produktion'),
+    ('Informationstechnik & Telekommunikation'),
+    ('Kultur- und Kreativwirtschaft'),
+    ('Landwirtschaft'),
+    ('Logistik, Transport, Verkehr'),
+    ('Öffentliche Dienstleistungen'),
+    ('Tourismus '),
+    ('Unternehmensdienstleistungen')
 on conflict do nothing;
 
-insert into btb_data.skillgroup (id, name)
+insert into btb_data.skill_group (name)
     values 
-        (1, 'Sprachen'),
-        (2, 'Führerscheine'),
-        (3, 'Spezialfähigkeiten'),
-        (4, 'Arbeitszeit')
+    ('Arbeitszeit'),
+    ('Fachkenntnisse'),
+    ('Fachwissen'),
+    ('Führerscheine'),
+    ('Kriese'),
+    ('Spezialwissen')
 on conflict do nothing;
 
-insert into btb_data.skill (skillgroup_id, id, name)
+CREATE FUNCTION get_skill_group(text) RETURNS uuid
+    AS '
+select id
+from 
+    btb_data.skill_group
+where
+    name = $1
+'
+    LANGUAGE SQL
+    IMMUTABLE
+    RETURNS NULL ON NULL INPUT
+;
+
+insert into btb_data.skill (skill_group_id, match_id, name)
     values 
-        (1, 100, 'Deutsch'),
+    (get_skill_group('Arbeitszeit'), 100, 'Nachtschicht'),
+    (get_skill_group('Arbeitszeit'), 101, 'Teilzeit'),
+    (get_skill_group('Arbeitszeit'), 102, 'Vollzeit'),
+    (get_skill_group('Fachkenntnisse'), 200, 'Abrechnung / Kasse'),
+    (get_skill_group('Fachkenntnisse'), 201, 'Fertigung'),
+    (get_skill_group('Fachkenntnisse'), 202, 'Handwerk'),
+    (get_skill_group('Fachkenntnisse'), 203, 'Medizinisches Fachwissen '),
+    (get_skill_group('Fachkenntnisse'), 204, 'Service '),
+    (get_skill_group('Fachkenntnisse'), 205, 'Verkauf'),
+    (get_skill_group('Fachwissen'), 300, 'Microsoft Office'),
+    (get_skill_group('Führerscheine'), 400, 'LKW Führerschein'),
+    (get_skill_group('Führerscheine'), 401, 'PKW Führerschein'),
+    (get_skill_group('Führerscheine'), 402, 'Staplerführerschein'),
+    (get_skill_group('Kriese'), 500, 'Körperliche Arbeit'),
+    (get_skill_group('Kriese'), 501, 'Kundenkontakt'),
+    (get_skill_group('Spezialwissen'), 600, 'Ersthelfer'),
+    (get_skill_group('Spezialwissen'), 601, 'Hygienzertifikat'),
+    (get_skill_group('Spezialwissen')   , 602, 'Küche')
+on conflict do nothing;
 
-        (2, 201, 'PKW Führerschein'),
-        (2, 202, 'Staplerführerschein'),
+drop function get_skill_group;
 
-        (3, 301, 'Ersthelfer'),
-        (3, 302, 'Security'),
-
-        (4, 400, 'Vollzeit'),
-        (4, 401, 'Teilzeit'),
-        (4, 402, 'Nachtschicht')
+insert into btb_data.team_name (name)
+    values
+    ('Altenpfleger'),
+    ('Bäcker'),
+    ('Bauarbeiter'),
+    ('Betriebswirt/Fachkraft Buchhaltung'),
+    ('Elektroniker'),
+    ('Eventmanager'),
+    ('Fachkraft Energie, Kreislauf- & Abfallwirtschaft'),
+    ('Fachkraft Gastronomie'),
+    ('Fachkraft Gestaltung/Design'),
+    ('Fachkraft Holz- & Metallverarbeitung'),
+    ('Fachkraft Hotelgewerbe'),
+    ('Fachkraft Informationstechnik/Telekommunikation'),
+    ('Fachkraft Kosmetik'),
+    ('Fachkraft Kunststoffe & Chemie'),
+    ('Fachkraft Lebensmittelprüfung/-verarbeitung'),
+    ('Fachkraft Pflege'),
+    ('Fachkraft Postdiensleistungen'),
+    ('Fachkraft Sport/Fitnees'),
+    ('Fachkraft Sprachdienstleistungen'),
+    ('Fachkraft Versicherung'),
+    ('Fachkraft Vertrieb'),
+    ('Fachkraft Verwaltung'),
+    ('Friseur'),
+    ('Handwerker'),
+    ('Ingenieur'),
+    ('Koch'),
+    ('Konstrukteur'),
+    ('Kraftfahrer'),
+    ('Laborant'),
+    ('Lagerarbeiter'),
+    ('Logistiker'),
+    ('Mechaniker'),
+    ('Mechatroniker'),
+    ('Medizinische Assistenz'),
+    ('Pädagogische Assistenz'),
+    ('Redakteur'),
+    ('Sanitäter'),
+    ('Sicherheitspersonal'),
+    ('Techniker'),
+    ('Technische Assistenz '),
+    ('Verkäufer')
 on conflict do nothing;
 
 insert into btb_data.centered_postalcodes

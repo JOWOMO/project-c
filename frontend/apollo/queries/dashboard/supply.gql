@@ -9,7 +9,7 @@ query supplyMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
     matches {
       distance
       percentage
-      match: supply {
+      match: demand {
         id
         name
         description
@@ -17,7 +17,7 @@ query supplyMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
           name
         }
         quantity
-        salary: hourlySalary
+        salary: maxHourlySalary
         company {
           id
           name

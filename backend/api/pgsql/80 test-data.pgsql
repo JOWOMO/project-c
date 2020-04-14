@@ -16,11 +16,27 @@ create or replace function btb.lipsum( quantity_ integer ) returns character var
   end;
 $$;
 
+drop table if exists temp_uuid;
+create table temp_uuid 
+(
+    id integer,
+    uuid_key uuid
+);
+
+insert into temp_uuid
+select
+    id,
+    uuid_generate_v4()
+from 
+    generate_series(1,100000) id
+;
+
+-- select uuid_generate_v4(), uuid_generate_v4(), uuid_generate_v4()
 insert into btb_data.customer (id, external_id, email, first_name, last_name)
     values 
-    (1, 'DebugUserId', 'email@email.com', 'Entwickler', 'Vue'),
-    (2, 'DebugUserId2', 'email2@email.com', 'Max', 'Mustermann'),
-    (3, 'DebugUserId3', 'email3@email.com', 'Lisa', 'Musterfrau')
+    ('5dccd739-825b-40bb-9012-ee583de29cda', 'DebugUserId', 'email@email.com', 'Entwickler', 'Vue'),
+    ('f5040327-0a2f-4ee5-b6ee-6e3f061bed25', 'DebugUserId2', 'email2@email.com', 'Max', 'Mustermann'),
+    ('d5040327-0a2f-4ee5-b6ee-6e3f061bed26', 'DebugUserId3', 'email3@email.com', 'Lisa', 'Musterfrau')
 ;
 
 insert into btb_data.company
@@ -33,7 +49,7 @@ insert into btb_data.company
         industry_id
     )
 select
-    id, 
+    uuid_key, 
     'Mustermann ' || id || ' GmbH',  
     'Musterstraße ' || id,
     (
@@ -44,11 +60,16 @@ select
     ),
     'Ort',
     (
-        select greatest(1, floor(random() * 10)) 
-        where id = id
+        SELECT id
+        FROM btb_data.industry 
+        where uuid_key = uuid_key
+        OFFSET floor(random() * (
+                SELECT COUNT(*) FROM btb_data.industry)
+            )
+        LIMIT 1
     )
 from 
-    generate_series(1,100000) id
+    temp_uuid
 ;
 
 update btb_data.company 
@@ -62,26 +83,30 @@ set city = (
 
 insert into btb_data.company_customer (company_id, customer_id)
 select
-    id,
-    1
+    uuid_key,
+    '5dccd739-825b-40bb-9012-ee583de29cda'
 from 
-    generate_series(1, 2) id
+    temp_uuid
+limit 2
 ;
 
 insert into btb_data.company_customer(company_id, customer_id)
 select
-    id,
-    2
+    uuid_key,
+    'f5040327-0a2f-4ee5-b6ee-6e3f061bed25'
 from 
-    generate_series(3, 50000) id
+   temp_uuid
+offset 2
+limit 49997
 ;
 
 insert into btb_data.company_customer (company_id, customer_id)
 select
-    id,
-    3
+    uuid_key,
+    'd5040327-0a2f-4ee5-b6ee-6e3f061bed26'
 from 
-    generate_series(50001, 100000) id
+    temp_uuid
+offset 50000
 ;
 
 insert into btb_data.team_demand
@@ -94,20 +119,20 @@ insert into btb_data.team_demand
     description_ext
 )
 select
-    company_id,
-    'Bedarf ' || company_id,
+    uuid_key,
+    'Bedarf ' || temp_uuid.id,
     3,
     (
-        select array_agg(id)
+        select array_agg(match_id)
         from 
         (
-            SELECT id
+            SELECT match_id
             FROM btb_data.skill 
-            where company_id = company_id
+            where uuid_key = uuid_key
             OFFSET floor(random() * (
                     SELECT COUNT(*) FROM btb_data.skill)
                 )
-            LIMIT floor(random() * 5)
+            LIMIT floor(random() * 10 / 2)
         ) sk
     ),
     floor(random() * 10000),
@@ -115,7 +140,7 @@ select
         when random() * 10 <= 5 then null 
         else btb.lipsum((random() * 100)::integer)
     end
-from generate_series(1, 100000) company_id
+from temp_uuid
 ;
 
 insert into btb_data.team_supply
@@ -128,18 +153,18 @@ insert into btb_data.team_supply
     description_ext
 )
 select
-    company_id,
-    'Versorgung ' || company_id,
+    uuid_key,
+    'Versorgung ' || temp_uuid.id,
     3,
     (
-        select array_agg(id)
+        select array_agg(match_id)
         from 
         (
-            SELECT id
+            SELECT match_id
             FROM btb_data.skill 
-            where company_id = company_id
+            where uuid_key = uuid_key
             OFFSET floor(random() * (SELECT COUNT(*) FROM btb_data.skill))
-            LIMIT floor(random() * 5)
+            LIMIT floor(random() * 10 / 2)
         ) sk
     ),
     floor(random() * 10000),
@@ -148,7 +173,8 @@ select
         else btb.lipsum((random() * 100)::integer)
     end
 from 
-    generate_series(1, 100000) company_id
+    temp_uuid
 ;
 
 drop function btb.lipsum;
+drop table temp_uuid;

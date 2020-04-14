@@ -12,9 +12,9 @@ class DemandLoader(DataLoader):
         current_app.logger.debug("load %s", keys)
 
         with db.engine.begin() as conn:
-            sql = text("select * from btb_data.team_demand where id = any(:keys)")
-            data = conn.execute(sql, keys=list(map(lambda k: int(k), keys)))
-
+            sql = text("select * from btb_data.team_demand where id = any(cast(:keys as uuid[]))")
+            data = conn.execute(sql, keys=keys)
+            
             d = {str(i["id"]): i for i in data}
 
             # must return result in same order

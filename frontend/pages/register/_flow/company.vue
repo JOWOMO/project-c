@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Dein Unternehmen</h1>
-    <p>Erzähle uns mehr über dein Unternehmen</p>
+    <p>Erzähle uns mehr über Dein Unternehmen</p>
 
     <form method="POST" novalidate>
       <div class="form-group half-width">

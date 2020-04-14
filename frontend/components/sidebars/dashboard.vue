@@ -7,7 +7,7 @@
     </row>
     <row class="menu">
       <div class="section">
-        <h4>Mein Bedarf</h4>
+        <h4>Ich suche</h4>
         <div v-for="(element) in demands" :key="'d_' + element.id">
           <div
             @click="changeTeam(element)"
@@ -28,7 +28,7 @@
       </div>
 
       <div class="section">
-        <h4>Meine Gesuche</h4>
+        <h4>Ich biete</h4>
         <div v-for="(element) in supplies" :key="'s_' + element.id">
           <div
             @click="changeTeam(element)"

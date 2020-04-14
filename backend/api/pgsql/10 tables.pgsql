@@ -2,67 +2,52 @@ SET ROLE 'lambda_b2b_dev';
 
 CREATE SCHEMA IF NOT EXISTS btb_data;
 
-CREATE SEQUENCE IF NOT EXISTS btb_data.skillgroup_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
-
-CREATE TABLE IF NOT EXISTS btb_data.skillgroup
+CREATE TABLE IF NOT EXISTS btb_data.skill_group
 (
-    id integer NOT NULL DEFAULT nextval('btb_data.skillgroup_id_seq'::regclass),
+    id uuid NOT NULL default uuid_generate_v4(),
     name text NOT NULL,
-    CONSTRAINT skillgroup_pkey PRIMARY KEY (id),
-    CONSTRAINT skillgroup_name UNIQUE (name)
+    is_active boolean default true,
+    CONSTRAINT skill_group_pkey PRIMARY KEY (id),
+    CONSTRAINT skill_group_name UNIQUE (name)
 );
-
-CREATE SEQUENCE IF NOT EXISTS btb_data.industry_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
-
-CREATE TABLE IF NOT EXISTS btb_data.industry
-(
-    id integer NOT NULL DEFAULT nextval('btb_data.industry_id_seq'::regclass),
-    name text NOT NULL,
-    CONSTRAINT industry_pkey PRIMARY KEY (id),
-    CONSTRAINT industry_name UNIQUE (name)
-);
-
-CREATE SEQUENCE IF NOT EXISTS btb_data.skill_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
 
 CREATE TABLE IF NOT EXISTS btb_data.skill
 (
-    id integer NOT NULL DEFAULT nextval('btb_data.skill_id_seq'::regclass),
-    skillgroup_id integer NOT NULL,
+    id uuid NOT NULL default uuid_generate_v4(),
+    skill_group_id uuid NOT NULL,
+    match_id integer NOT NULL,
+    is_active boolean default true,
     name text NOT NULL,
     
     CONSTRAINT skill_pkey PRIMARY KEY (id),
     CONSTRAINT skill_text UNIQUE (name),
+    CONSTRAINT skill_match_id UNIQUE (match_id),
 
-    CONSTRAINT skillgroup_skillgroup_id FOREIGN KEY (skillgroup_id)
-        REFERENCES btb_data.skillgroup (id)
+    CONSTRAINT skill_group_skill_group_id FOREIGN KEY (skill_group_id)
+        REFERENCES btb_data.skill_group (id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS btb_data.customer_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
+CREATE TABLE IF NOT EXISTS btb_data.industry
+(
+    id uuid NOT NULL default uuid_generate_v4(),
+    name text NOT NULL,
+    is_active boolean default true,
+    CONSTRAINT industry_pkey PRIMARY KEY (id),
+    CONSTRAINT industry_name UNIQUE (name)
+);
+
+CREATE TABLE IF NOT EXISTS btb_data.team_name
+(
+    id uuid NOT NULL default uuid_generate_v4(),
+    name text NOT NULL,
+    is_active boolean default true,
+    CONSTRAINT team_name_pkey PRIMARY KEY (id),
+    CONSTRAINT team_name_name UNIQUE (name)
+);
 
 CREATE TABLE IF NOT EXISTS btb_data.customer
 (
-    id integer NOT NULL DEFAULT nextval('btb_data.customer_id_seq'::regclass),
-
+    id uuid not null default uuid_generate_v4(),
     external_id text NOT NULL,
     email text NOT NULL,
 
@@ -76,17 +61,10 @@ CREATE TABLE IF NOT EXISTS btb_data.customer
     CONSTRAINT customer_external_id UNIQUE (external_id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS btb_data.company_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
-
 CREATE TABLE IF NOT EXISTS btb_data.company
 (
-    id integer NOT NULL DEFAULT nextval('btb_data.company_id_seq'::regclass),
-    industry_id integer,
+    id uuid not null default uuid_generate_v4(),
+    industry_id uuid,
 
     comments_int text,
     comments_ext text,
@@ -115,8 +93,8 @@ CREATE TABLE IF NOT EXISTS btb_data.company
 
 CREATE TABLE IF NOT EXISTS btb_data.company_customer
 (
-    customer_id integer NOT NULL,
-    company_id integer NOT NULL,
+    customer_id uuid NOT NULL,
+    company_id uuid NOT NULL,
 
     CONSTRAINT company_customer_pkey PRIMARY KEY (company_id, customer_id),
 
@@ -127,17 +105,10 @@ CREATE TABLE IF NOT EXISTS btb_data.company_customer
         REFERENCES btb_data.customer (id) 
 );
 
-CREATE SEQUENCE IF NOT EXISTS btb_data.team_demand_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
-
 CREATE TABLE IF NOT EXISTS btb_data.team_demand
 (
-    id integer NOT NULL DEFAULT nextval('btb_data.team_demand_id_seq'::regclass),
-    company_id integer NOT NULL,
+    id uuid NOT NULL default uuid_generate_v4(),
+    company_id uuid NOT NULL,
     is_active boolean default true,
     created_on timestamp with time zone not null default now(),
     modified_on timestamp with time zone not null default now(),
@@ -154,17 +125,10 @@ CREATE TABLE IF NOT EXISTS btb_data.team_demand
         REFERENCES btb_data.company (id)
 );
 
-CREATE SEQUENCE IF NOT EXISTS btb_data.team_supply_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1;
-
 CREATE TABLE IF NOT EXISTS btb_data.team_supply
 (
-    id integer NOT NULL DEFAULT nextval('btb_data.team_supply_id_seq'::regclass),
-    company_id integer NOT NULL,
+    id uuid NOT NULL default uuid_generate_v4(),
+    company_id uuid NOT NULL,
     is_active boolean default true,
     created_on timestamp with time zone not null default now(),
     modified_on timestamp with time zone not null default now(),
@@ -212,10 +176,10 @@ CREATE TABLE IF NOT EXISTS btb_data.contact_request
     distance integer,
     match_type text not null,
 
-    request_id integer not null,
+    request_id uuid not null,
     request jsonb not null,
 
-    response_id integer not null,
+    response_id uuid not null,
     response jsonb not null
 );
 

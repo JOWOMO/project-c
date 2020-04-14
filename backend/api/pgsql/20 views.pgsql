@@ -2,6 +2,10 @@ SET ROLE 'lambda_b2b_dev';
 
 CREATE SCHEMA IF NOT EXISTS btb;
 
+drop index if exists btb_data.idx_skill_match_id;
+CREATE UNIQUE INDEX idx_skill_match_id on
+    btb_data.skill (match_id);
+
 create or replace view btb.company_with_contact as
 select 
     co.*

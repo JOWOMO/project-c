@@ -1,5 +1,5 @@
 <template>
-  <div class="team">
+  <div class="team">  
     <div v-if="!editTeam.expanded">
       <div class="team-header">
         <h2>Team {{ formattedNumber }}</h2>
@@ -35,13 +35,19 @@
         <div class="lbl" v-if="!editTeam.isActive">aktivieren</div>
       </div>
 
-      <form novalidate>
+      <form novalidate @submit.prevent>
         <div class="form-group half-width">
-          <formSelect
+          <!-- <formSelect
             id="editTeam.name"
             v-model="editTeam.name"
             :label="'Bezeichnung'"
             :values="topics"
+          /> -->
+          <formAutoComplete
+            id="editTeam.name"
+            v-model="editTeam.name"
+            :label="'Bezeichnung (Freitext)'"
+            :suggestions="topics"
           />
         </div>
 
@@ -120,6 +126,7 @@ import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
 import formTextArea from "@/components/forms/textarea.vue";
 import formSwitch from "@/components/forms/switch.vue";
+import formAutoComplete from "@/components/forms/autocomplete.vue";
 
 import {
   required,
@@ -156,6 +163,7 @@ export type TeamDetails = {
     formSelect,
     formTextArea,
     formSwitch,
+    formAutoComplete,
     validations
   }
 })
@@ -169,7 +177,7 @@ export default class extends Vue {
   skills!: KeyValuePair[];
 
   @Prop({ type: Array, required: true, default: () => [] })
-  topics!: KeyValuePair[];
+  topics!: string[];
 
   @Prop({ type: Object, required: true, default: {} })
   value!: TeamDetails;

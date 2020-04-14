@@ -3,6 +3,7 @@
 
 CREATE EXTENSION if not exists postgis;
 CREATE EXTENSION if not exists intarray;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE ROLE lambda_b2b_dev;
 
