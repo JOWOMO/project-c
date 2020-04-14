@@ -25,18 +25,27 @@ SCRIPTS = [
 ]
 
 STAGE_SCRIPTS = {
-    "dev": ["../../pgsql/dev/01 clean.pgsql"] + SCRIPTS + ["../../pgsql/dev/80 test-data.pgsql"],
+    "dev": ["../../pgsql/dev/01 clean.pgsql"] + SCRIPTS,
     "test": SCRIPTS,
     "prod": SCRIPTS
 }
 
+TEST_DATA = ["../../pgsql/dev/80 test-data.pgsql"]
 
 def handler(event, context):
     engine = create_engine(environ["SQLALCHEMY_DATABASE_URI"])
     stage = environ["STAGE"] if "STAGE" in environ else "dev"
 
     with engine.begin() as conn:            
-        for filename in STAGE_SCRIPTS[stage]:
-            print("Trying script {}".format(filename))
-            run_file(stage, filename, conn)
+        if "action" in event:
+            if event["action"] == "test-data":
+                for filename in TEST_DATA:
+                    run_file(stage, filename, conn)
+                    
+            else:
+                raise Exception("Unknown event")
+
+        else:
+            for filename in STAGE_SCRIPTS[stage]:
+                run_file(stage, filename, conn)
 
