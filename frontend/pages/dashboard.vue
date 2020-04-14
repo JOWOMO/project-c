@@ -98,11 +98,11 @@ export default class extends Vue {
     const { flow, id } = this.$route.params;
 
     if (this.flow  === 'supply' && this.supplies) {
-      return this.supplies.find((f) => f.id).company;
+      return this.supplies.find((f) => f.id)!.company;
     }
 
     if (this.flow  === 'demand' && this.supplies) {
-      return this.demands.find((f) => f.id).company;
+      return this.demands.find((f) => f.id)!.company;
     }
 
     return null;
