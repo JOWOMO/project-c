@@ -5,7 +5,7 @@ from btb.api.models import db
 from os import environ
 from btb.api.datasources import instanciate_datasources
 from flask_cors import CORS
-
+import logging
 
 def create_app():
     app = Flask(__name__)
@@ -19,6 +19,9 @@ def create_app():
 
     app.config["SQLALCHEMY_DATABASE_URI"] = environ["SQLALCHEMY_DATABASE_URI"]
     # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.DEBUG)
 
     db.init_app(app)
 

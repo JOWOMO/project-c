@@ -34,9 +34,9 @@ from
 -- select uuid_generate_v4(), uuid_generate_v4(), uuid_generate_v4()
 insert into btb_data.customer (id, external_id, email, first_name, last_name)
     values 
-    ('5dccd739-825b-40bb-9012-ee583de29cda', 'DebugUserId', 'email@email.com', 'Entwickler', 'Vue'),
-    ('f5040327-0a2f-4ee5-b6ee-6e3f061bed25', 'DebugUserId2', 'email2@email.com', 'Max', 'Mustermann'),
-    ('d5040327-0a2f-4ee5-b6ee-6e3f061bed26', 'DebugUserId3', 'email3@email.com', 'Lisa', 'Musterfrau')
+    ('5dccd739-825b-40bb-9012-ee583de29cda', 'DebugUserId', 'no-reply@example.com', 'Entwickler', 'Vue'),
+    ('f5040327-0a2f-4ee5-b6ee-6e3f061bed25', 'DebugUserId2', 'no-reply@example.com', 'Max', 'Mustermann'),
+    ('d5040327-0a2f-4ee5-b6ee-6e3f061bed26', 'DebugUserId3', 'no-reply@example.com', 'Lisa', 'Musterfrau')
 ;
 
 insert into btb_data.company
