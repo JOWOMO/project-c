@@ -77,10 +77,10 @@ jobs:
 
     - uses: chrislennon/action-aws-cli@v1.1
 
-    - name: Run database update
+    - name: Cleanup database
       if: contains(github.event.pull_request.labels.*.name, 'db:clean')
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload "{'action': 'clean'}" response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload '{"action": "clean"}' response.json > output.txt
         
         echo "RESPONSE"
         cat response.json
@@ -125,7 +125,7 @@ jobs:
     - name: Import test-data
       if: contains(github.event.pull_request.labels.*.name, 'db:data')
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload "{'action': 'testdata'}" response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload '{"action": "test-data"}' response.json > output.txt
         
         echo "RESPONSE"
         cat response.json
