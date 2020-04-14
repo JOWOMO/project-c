@@ -11,7 +11,7 @@ class MeLoader(DataLoader):
         current_app.logger.debug("load %s", keys)
 
         with db.engine.begin() as conn:
-            sql = text("select * from btb.customer where external_id = any(:keys)")
+            sql = text("select * from btb_data.customer where external_id = any(:keys)")
             data = conn.execute(sql, keys=keys)
 
             d = {str(i["external_id"]): i for i in data}
@@ -26,11 +26,13 @@ def me(root, info):
     meRecord = g.me_loader.load(g.principal.get_id())
 
     def resolve_user(user):
+        # authenticated but no user
         if user is None:
             return {
                 "id": "-1",
                 "first_name": g.principal.get_first_name(),
                 "last_name": g.principal.get_last_name(),
+                "companies": [],
             }
 
         return user

@@ -6,19 +6,25 @@ query DasboardTeams {
     pictureUrl
   }
 
-  companies{
+  activeDemands  {
     id
-    postalCode
-    city
+    name
 
-    demands {
+    company {
       id
-      name
+      postalCode
+      city
     }
+  }
 
-    supplies {
+  activeSupplies {
+    id
+    name
+
+    company {
       id
-      name
+      postalCode
+      city
     }
   }
 }

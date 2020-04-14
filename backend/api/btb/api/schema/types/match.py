@@ -21,7 +21,7 @@ class MatchQueryInput(InputObjectType):
     radius = Int()
 
     # must give skillset
-    skills = List(NonNull(Int), required=True)
+    skills = List(NonNull(ID), required=True)
     postal_code = String(required=True)
 
     max_salary = Float()

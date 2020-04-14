@@ -4,7 +4,7 @@
       <div class="text">
         Diese Website verwendet Cookies für Analysen, personalisierte Inhalte und Werbung.
         Indem Sie diese Website nutzen, erklären Sie sich mit dieser Verwendung einverstanden.
-        <nuxt-link to="/info/datenschutz">Weitere Informationen</nuxt-link>
+        <nuxt-link to="/info/privacy">Weitere Informationen</nuxt-link>
       </div>
       <button class="primary" @click.prevent="accept">Verstanden</button>
     </div>

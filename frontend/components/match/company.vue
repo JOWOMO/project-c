@@ -134,11 +134,11 @@ export default class extends Vue {
   }
 
   get teaserAll() {
-    return this.flow === "demand" ? "Gesuche" : "Verfügbarkeiten";
+    return this.flow !== "demand" ? "Gesuche" : "Verfügbarkeiten";
   }
 
   get teaser() {
-    return this.flow === "demand" ? "Sucht" : "Bietet";
+    return this.flow !== "demand" ? "Sucht" : "Bietet";
   }
 
   @Emit("showall")

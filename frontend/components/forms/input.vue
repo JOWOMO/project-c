@@ -12,6 +12,7 @@
       :required="true"
       :disabled="disabled"
       class="form-control"
+      @keypress.enter.prevent
       :class="{ 'is-invalid': submitted && validation.$error }"
     />
 

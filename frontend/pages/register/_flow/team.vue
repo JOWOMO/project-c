@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>{{ workflow.displayName }}</h1>
-    <p>Details helfen uns dir Suchvorschläge anzuzeigen</p>
+    <p>Details helfen uns Dir passende Suchvorschläge anzuzeigen</p>
 
     <div v-for="(team, idx) in supplies" :key="idx">
       <div class="team-container">
@@ -63,7 +63,7 @@ import {
 } from "nuxt-property-decorator";
 
 import team, { TeamDetails } from "@/components/team/index.vue";
-import getTeams from "@/apollo/queries/teams.gql";
+import getTeams from "@/apollo/queries/registration/teams.gql";
 
 import updateSupply from "@/apollo/mutations/update_supply.gql";
 import updateDemand from "@/apollo/mutations/update_demand.gql";
@@ -105,21 +105,8 @@ export default class extends Vue {
 
   demands: TeamDetails[] = [];
   supplies: TeamDetails[] = [];
-
   skills: Pick<Skill, "id" | "name">[] = [];
-  topics: any[];
-
-  constructor() {
-    super();
-
-    this.topics = [
-      "Demand Team 2",
-      "Handwerker",
-      "Verköufer",
-      "Lagerarbeiter",
-      "Krankenpfleger"
-    ].map(e => ({ id: e, name: e }));
-  }
+  topics: string[] = [];
 
   counter = 0;
   addTeam() {
@@ -229,11 +216,13 @@ export default class extends Vue {
       | "supplies"
       | "skills"
       | "company"
+      | "topics"
     > = {
       counter: 0,
       demands: [],
       supplies: [],
       skills: [],
+      topics: [],
       company: {} as Company
     };
 
@@ -253,6 +242,7 @@ export default class extends Vue {
       }
 
       data.skills = result.data?.skills;
+      data.topics = result.data?.teamNames;
       data.company = companies[0]!;
 
       const map = (r: Demand | Supply): TeamDetails => {

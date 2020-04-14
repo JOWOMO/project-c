@@ -1,5 +1,8 @@
 <template>
   <navBar :key="$route.path" :horizontal="horizontal">
+    <slot name="header"></slot>
+
+    <hdr v-if="!horizontal">Navigation</hdr>
     <item v-if="!horizontal" :selected="is('/')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
@@ -9,9 +12,12 @@
     <item :selected="isPath('/info/faq')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'FAQ'" :target="'/info/faq'" />
     </item>
+
+    <hdr v-if="!horizontal">Benutzerprofil</hdr>
     <item>
-      <lnk @click.native="click({id: 'logout'})" :text="'Ausloggen'" />
+      <lnk @click.native="click({id: 'logout'})" :text="'Abmelden'" />
     </item>
+    <slot name="footer"></slot>
     <!-- <item v-else>
       <avatar
         ref="avatar"
@@ -21,7 +27,7 @@
         :menu="options"
         @menu-click="click"
       />
-    </item> -->
+    </item>-->
   </navBar>
 </template>
 
@@ -38,19 +44,20 @@ import navBar from "./bar.vue";
 import lnk from "./link.vue";
 import item from "./item.vue";
 import avatar from "./avatar.vue";
+import hdr from "./header.vue";
 
-@Component({ components: { navBar, lnk, item, avatar } })
+@Component({ components: { navBar, lnk, item, avatar, hdr } })
 export default class extends Vue {
   @Prop() name!: string;
   @Prop({ default: true }) horizontal!: boolean;
 
   get options() {
-    return [{ name: "Ausloggen", id:"logout" }];
+    return [{ name: "Ausloggen", id: "logout" }];
   }
 
   is(l: string) {
     const prefix = this.$route.fullPath.toLowerCase();
-    return prefix == '/';
+    return prefix == "/";
   }
 
   isPath(l: string) {
@@ -58,17 +65,16 @@ export default class extends Vue {
     return prefix.startsWith(l);
   }
 
-  async click({id}: {id: string}) {
-    console.debug('click', id);
-    if (id == 'logout') {
-      await this.$store.dispatch('auth/logout');
+  async click({ id }: { id: string }) {
+    console.debug("click", id);
+    if (id == "logout") {
+      await this.$store.dispatch("auth/logout");
       this.$router.push("/");
     }
   }
 
   async created() {
     if (!this.name) {
-      
     }
   }
 }

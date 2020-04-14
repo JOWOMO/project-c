@@ -13,7 +13,7 @@
       </div>
 
       <div class="form-group">
-        <formInput :id="'email'" :label="'E-Mail'" v-model="email" />
+        <formInput :disabled="userExists" :id="'email'" :label="'E-Mail'" v-model="email" />
       </div>
 
       <div v-if="!userExists" class="form-group half-width">

@@ -1,5 +1,4 @@
-<template>
-</template>
+<template></template>
 
 <script lang="ts">
 import { Vue, Component } from "nuxt-property-decorator";
@@ -7,11 +6,11 @@ import { InjectReactive } from "vue-property-decorator";
 
 @Component
 export default class extends Vue {
-  @InjectReactive("all-demands") 
-  dem!: any[];
-  
-  @InjectReactive("all-supplies") 
-  sup!: any[];
+  @InjectReactive("all-demands")
+  dem!: { id: string }[];
+
+  @InjectReactive("all-supplies")
+  sup!: { id: string }[];
 
   created() {
     if (this.dem.length > 0) {
@@ -24,7 +23,7 @@ export default class extends Vue {
       return;
     }
 
-    this.$router.replace(`/register/demand/team`);
+    this.$router.replace(`/register`);
   }
 }
 </script>

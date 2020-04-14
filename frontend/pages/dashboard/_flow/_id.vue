@@ -57,13 +57,15 @@ export default class extends Vue {
 
   @Prop({ required: true }) filter!: Filter;
   spinnerid = 1;
-  
+
   get noRecords() {
     return !this.feed.data || this.feed.data.matches.length === 0;
   }
 
   get endOfRecords() {
-    return !this.noRecords && this.feed.data && !this.feed.data.pageInfo.hasNextPage;
+    return (
+      !this.noRecords && this.feed.data && !this.feed.data.pageInfo.hasNextPage
+    );
   }
 
   get matches() {
@@ -72,6 +74,7 @@ export default class extends Vue {
 
   @Watch("filter", { deep: true })
   filterChanged(filter: Filter) {
+    this.$track("dashboard", "filter", "KM", filter.range.toString());
     this.reload(filter);
   }
 
@@ -80,6 +83,8 @@ export default class extends Vue {
   }
 
   onConnect(party: any) {
+    this.$track("dashboard", "connect", "Jetzt Verbinden");
+
     const params: ConnectParams = {
       flow: this.$route.params.flow,
       origin: this.$route.params.id,
@@ -88,6 +93,7 @@ export default class extends Vue {
       pictureUrl: party.pictureUrl
     };
 
+    console.log("onConnect", params);
     this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
   }
 
@@ -114,6 +120,8 @@ export default class extends Vue {
       $state.complete();
       return;
     }
+
+    this.$track("dashboard", "loadmore");
 
     this.feed.query!.fetchMore({
       variables: {
@@ -173,30 +181,43 @@ export default class extends Vue {
         fetchPolicy: "network-only"
       });
 
-      return new Promise(resolve => {
+      return new Promise((resolve, fail) => {
         const feed = {
           query: matchQuery,
           data: {}
         };
 
-        matchQuery.subscribe(({ data }) => {
-          console.log("received", data);
-          feed.data = data.result;
+        matchQuery.subscribe({
+          next({ data }) {
+            console.log("received", data);
+            feed.data = data.result;
 
-          // we return first result this way
-          resolve({ feed });
+            // we return first result this way
+            resolve({ feed });
+          },
+
+          error(e) {
+            console.error(e);
+            context.error({
+              statusCode: 500,
+              message: "Leider hat das nicht geklappt"
+            });
+
+            resolve();
+          }
         });
       });
     } catch (e) {
       console.error(e);
       context.error({ statusCode: 500, message: e.message });
+      throw e;
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/colors';
+@import "@/assets/colors";
 
 .eof {
   margin-left: 25%;

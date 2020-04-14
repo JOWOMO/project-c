@@ -1,6 +1,7 @@
 import graphene
 from btb.api.schema.types import Supply
 from btb.api.models import db
+from btb.api.schema.resolvers import map_skills
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app
@@ -30,13 +31,14 @@ class UpdateSupply(graphene.Mutation):
     def mutate(root, info, supply):
         current_app.logger.debug("UpdateSupply %s", supply)
 
-        supply.skills 
-
         with db.engine.begin() as conn:
+            skills = map_skills(conn, supply.skills)
+            supply.skills = skills
+
             sql = text(
                 """
-insert into btb.team_supply (id, company_id, is_active, name, description_ext, quantity, skills, hourly_salary)
-values (coalesce(:id, nextval('btb.team_supply_id_seq')), :company_id, :is_active, :name, :description, :quantity, (:skills)::int[], :hourly_salary)
+insert into btb_data.team_supply (id, company_id, is_active, name, description_ext, quantity, skills, hourly_salary)
+values (coalesce(:id, uuid_generate_v4()), :company_id, :is_active, :name, :description, :quantity, (:skills)::int[], :hourly_salary)
 on conflict (id) 
 do update set 
     company_id = excluded.company_id, 
@@ -69,7 +71,7 @@ class RemoveSupply(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-delete from btb.team_supply where id = :id
+delete from btb_data.team_supply where id = :id
             """
             )
             data = conn.execute(sql, id=id)

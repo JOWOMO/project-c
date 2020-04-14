@@ -25,11 +25,11 @@ export default class extends Vue {
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 18px;
+
   border-bottom: 4px solid transparent;
 }
 
 .selected {
-  padding-bottom: 18px;
-  border-bottom: 4px solid $primary;
+  border-bottom: 4px solid darken($primary, 10);
 }
 </style>

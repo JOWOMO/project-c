@@ -26,7 +26,7 @@ class UpdateUser(graphene.Mutation):
         with db.engine.begin() as conn:
             sql = text(
                 """
-insert into btb.customer (external_id, first_name, last_name, email)
+insert into btb_data.customer (external_id, first_name, last_name, email)
 values (:id, :first_name, :last_name, :email)
 on conflict (external_id)
 do update set    

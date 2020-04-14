@@ -1,4 +1,4 @@
-from graphene import ObjectType, Field, Schema, ID, Int, List, NonNull, Argument
+from graphene import ObjectType, Field, Schema, ID, Int, List, String, NonNull, Argument
 from btb.api.schema.types import (
     User,
     Demand,
@@ -23,6 +23,9 @@ from btb.api.schema.resolvers import (
     match_demand_by_id,
     match_supply_by_id,
     industries as industies_resolver,
+    active_demands_by_principal,
+    active_supplies_by_principal,
+    team_names
 )
 from btb.api.schema.mutations import (
     UpdateCompany,
@@ -41,15 +44,19 @@ class Query(ObjectType):
 
     companies = List(NonNull(Company), resolver=companies_by_principal)
 
+    active_demands = List(Demand, resolver=active_demands_by_principal)
+    active_supplies = List(Supply, resolver=active_supplies_by_principal)
+
     demand = Field(Demand, id=ID(required=True), resolver=demand_by_id)
     supply = Field(Supply, id=ID(required=True), resolver=supply_by_id)
     company = Field(Company, id=ID(required=True), resolver=company_by_id)
 
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
     industries = List(NonNull(Industry), required=True, resolver=industies_resolver)
+    team_names = List(NonNull(String), required=True, resolver=team_names)
     
     match_demand = Field(
-        MatchDemandResult,
+        MatchSupplyResult,
         cursor=Argument(CursorInput),
         id=Argument(ID, required=True),
         radius = Argument(Int),
@@ -58,7 +65,7 @@ class Query(ObjectType):
     )
 
     match_supply = Field(
-        MatchSupplyResult,
+        MatchDemandResult,
         cursor=Argument(CursorInput),
         id=Argument(ID, required=True),
         radius = Argument(Int),

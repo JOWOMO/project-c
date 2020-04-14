@@ -58,6 +58,8 @@ $radius: 68px;
 
   visibility: hidden;
   transition: visibility 0.5s linear;
+
+  overflow: hidden;
 }
 
 .menu {
@@ -73,10 +75,11 @@ $radius: 68px;
   position: absolute;
   z-index: 9999;
 
-  background-color: $background;
+  background-color: $uiComponent;
   transition: left 0.5s linear;
 
   height: 100vh;
   box-shadow: 0 10px 6px 0 rgba(#000000, 0.2);
+  overflow-y: auto;
 }
 </style>
