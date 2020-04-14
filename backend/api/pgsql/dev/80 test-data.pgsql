@@ -35,8 +35,8 @@ from
 insert into btb_data.customer (id, external_id, email, first_name, last_name)
     values 
     ('5dccd739-825b-40bb-9012-ee583de29cda', 'DebugUserId', 'no-reply@example.com', 'Entwickler', 'Vue'),
-    ('f5040327-0a2f-4ee5-b6ee-6e3f061bed25', 'DebugUserId2', 'no-reply@example.com', 'Max', 'Mustermann'),
-    ('d5040327-0a2f-4ee5-b6ee-6e3f061bed26', 'DebugUserId3', 'no-reply@example.com', 'Lisa', 'Musterfrau')
+    ('f5040327-0a2f-4ee5-b6ee-6e3f061bed25', 'DebugUserId2', 'no-reply2@example.com', 'Max', 'Mustermann'),
+    ('d5040327-0a2f-4ee5-b6ee-6e3f061bed26', 'DebugUserId3', 'no-reply3@example.com', 'Lisa', 'Musterfrau')
 ;
 
 insert into btb_data.company
