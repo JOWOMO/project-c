@@ -34,18 +34,24 @@ CLEAN_DATA = ["../../pgsql/dev/01 clean.pgsql"]
 TEST_DATA  = ["../../pgsql/dev/80 test-data.pgsql"]
 
 def handler(event, context):
+    print ('event {}'.format(event))
+
     engine = create_engine(environ["SQLALCHEMY_DATABASE_URI"])
     stage = environ["STAGE"] if "STAGE" in environ else "dev"
 
     with engine.begin() as conn:            
         if "action" in event:
-            if (stage == 'dev' or stage == 'test') and event["action"] == "test-data":
+            action = event["action"]
+            print ("action {} stage {}".format(action, stage))
+
+            if (stage == 'dev' or stage == 'test') and action == "test-data":
                 for filename in CLEAN_DATA:
                     run_file(stage, filename, conn)
 
-            elif (stage == 'dev' or stage == 'test') and event["action"] == "clean":
+            elif (stage == 'dev' or stage == 'test') and action == "clean":
                 for filename in TEST_DATA:
                     run_file(stage, filename, conn)
+
             else:
                 raise Exception("Unknown event")
 
