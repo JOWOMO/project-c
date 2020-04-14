@@ -84,7 +84,7 @@ jobs:
         echo "RESPONSE"
         cat response.json
         
-        ECHOO "OUTPUT"
+        echo "OUTPUT"
         cat output.txt
 
         CONTAINS_ERROR=$(grep FunctionError output.txt)
