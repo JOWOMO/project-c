@@ -77,7 +77,30 @@ jobs:
 
     - uses: chrislennon/action-aws-cli@v1.1
 
-    - name: Run database upde
+    - name: Run database update
+      if: contains(github.event.pull_request.labels.*.name, 'db:clean')
+      run: |
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload "{'action': 'clean'}" response.json > output.txt
+        
+        echo "RESPONSE"
+        cat response.json
+        
+        echo "OUTPUT"
+        cat output.txt
+
+        CONTAINS_ERROR=$(grep FunctionError output.txt)
+
+        if [ $CONTAINS_ERROR -ne "" ]; then
+          exit 1;
+        fi
+
+      working-directory: backend/api
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: "eu-west-1"
+
+    - name: Run database update
       run: |
         aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload {} response.json > output.txt
         
@@ -89,7 +112,7 @@ jobs:
 
         CONTAINS_ERROR=$(grep FunctionError output.txt)
 
-        if [ "$CONTAINS_ERROR" -ne "" ]; then
+        if [ $CONTAINS_ERROR -ne "" ]; then
           exit 1;
         fi
 
@@ -100,7 +123,7 @@ jobs:
         AWS_DEFAULT_REGION: "eu-west-1"
 
     - name: Import test-data
-      if: endsWith(env.STAGE, 'dev')
+      if: contains(github.event.pull_request.labels.*.name, 'db:data')
       run: |
         aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload "{'action': 'testdata'}" response.json > output.txt
         
@@ -112,7 +135,7 @@ jobs:
 
         CONTAINS_ERROR=$(grep FunctionError output.txt)
 
-        if [ "$CONTAINS_ERROR" -ne "" ]; then
+        if [ $CONTAINS_ERROR -ne "" ]; then
           exit 1;
         fi
 
