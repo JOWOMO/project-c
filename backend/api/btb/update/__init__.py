@@ -45,11 +45,11 @@ def handler(event, context):
             print ("action {} stage {}".format(action, stage))
 
             if (stage == 'dev' or stage == 'test') and action == "test-data":
-                for filename in CLEAN_DATA:
+                for filename in TEST_DATA:
                     run_file(stage, filename, conn)
 
             elif (stage == 'dev' or stage == 'test') and action == "clean":
-                for filename in TEST_DATA:
+                for filename in CLEAN_DATA:
                     run_file(stage, filename, conn)
 
             else:
