@@ -26,6 +26,7 @@ provider:
 
   tracing:
     lambda: true
+    apiGateway: true
 
   environment:
     SQLALCHEMY_DATABASE_URI: ${ssm:/btb/${self:custom.stage}/dburl~true}
@@ -49,6 +50,13 @@ provider:
       - Fn::ImportValue: DatabaseSubnetAId
       - Fn::ImportValue: DatabaseSubnetBId
       - Fn::ImportValue: DatabaseSubnetCId
+
+  iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
 
 package:
   include:
@@ -100,6 +108,12 @@ functions:
         Resource:
           - "*"
           
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
+
     events:
       - http:
           method: ANY
