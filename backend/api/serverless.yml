@@ -24,6 +24,9 @@ provider:
   apiGateway:
     minimumCompressionSize: 1024
 
+  tracing:
+    lambda: true
+
   environment:
     SQLALCHEMY_DATABASE_URI: ${ssm:/btb/${self:custom.stage}/dburl~true}
     STAGE: ${self:custom.stage}
@@ -73,6 +76,7 @@ functions:
   dbupdate:
     handler: btb.update.handler
     timeout: 900
+    reservedConcurrency: 1
 
   custom-message:
     handler: btb.cognito.handler
@@ -119,6 +123,30 @@ functions:
 
 resources:
   Resources:
+    DBUpdateAsyncConfig:
+      Type: AWS::Lambda::EventInvokeConfig
+      Properties:
+        FunctionName:
+          Ref: DbupdateLambdaFunction
+        MaximumRetryAttempts: 0
+        Qualifier: $LATEST
+
+    CustomDashmessageAsyncConfig:
+      Type: AWS::Lambda::EventInvokeConfig
+      Properties:
+        FunctionName:
+          Ref: CustomDashmessageLambdaFunction
+        MaximumRetryAttempts: 0
+        Qualifier: $LATEST
+
+    GraphqlUpdateAsyncConfig:
+      Type: AWS::Lambda::EventInvokeConfig
+      Properties:
+        FunctionName:
+          Ref: GraphqlLambdaFunction
+        MaximumRetryAttempts: 0
+        Qualifier: $LATEST
+
     CognitoUserPoolMyUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
