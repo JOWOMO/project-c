@@ -89,7 +89,7 @@ jobs:
 
         CONTAINS_ERROR=$(grep FunctionError output.txt)
 
-        if [ $depth -ne "" ]; then
+        if [ $CONTAINS_ERROR -ne "" ]; then
           exit 1;
         fi
 
