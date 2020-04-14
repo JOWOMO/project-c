@@ -72,7 +72,7 @@ custom:
 functions:
   dbupdate:
     handler: btb.update.handler
-    timeout: 300
+    timeout: 900
 
   custom-message:
     handler: btb.cognito.handler
