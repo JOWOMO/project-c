@@ -92,8 +92,10 @@ jobs:
         echo $CONTAINS_ERROR
 
         if [ -z $CONTAINS_ERROR ]; then
-          exit 1;
+          exit 0;
         fi
+
+        exit 1;
 
       working-directory: backend/api
       env:
@@ -115,8 +117,10 @@ jobs:
         echo $CONTAINS_ERROR
 
         if [ -z $CONTAINS_ERROR ]; then
-          exit 1;
+          exit 0;
         fi
+
+        exit 1;
 
       working-directory: backend/api
       env:
@@ -139,8 +143,10 @@ jobs:
         echo $CONTAINS_ERROR
 
         if [ -z $CONTAINS_ERROR ]; then
-          exit 1;
+          exit 0;
         fi
+
+        exit 1;
 
       working-directory: backend/api
       env:
