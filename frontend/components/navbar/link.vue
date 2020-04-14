@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'link': !selected}" @click.prevent="navigate">{{text}}</div>
+  <div :class="{'link': true, 'link-selected': selected}" @click="navigate">{{text}}</div>
 </template>
 
 <script lang="ts">
@@ -27,10 +27,15 @@ export default class extends Vue {
   align-items: center;
   width: 100%;
   height: 100%;
+  cursor: pointer;
+}
+
+.link-selected {
+  cursor: hand;
+  color: $primary;
 }
 
 .link:hover {
   color: darken($primary, 10);
-  cursor: pointer;
 }
 </style>

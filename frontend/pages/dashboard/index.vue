@@ -23,7 +23,7 @@ export default class extends Vue {
       return;
     }
 
-    this.$router.replace(`/register/demand/team`);
+    this.$router.replace(`/register`);
   }
 }
 </script>

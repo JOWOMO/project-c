@@ -5,7 +5,17 @@
         <row :height="TOPHEIGHT" class="header">
           <div class="narrow-navbar">
             <burger>
-              <navbar :horizontal="false" :name="name" />
+              <navbar :horizontal="false" :name="name">
+                <template v-slot:header>
+                    <navbarDashboard
+                      :key="flow+selectedId"
+                      :demands="demands"
+                      :supplies="supplies"
+                      :flow="flow"
+                      :selected="selectedId"
+                    />
+                </template>
+              </navbar>
             </burger>
 
             <div class="logo">
@@ -45,7 +55,9 @@ import row from "@/components/layout/row.vue";
 import top from "@/components/goto-top.vue";
 import filterElement, { Filter, DEFAULT_FILTER } from "@/components/filter.vue";
 import navbar from "@/components/navbar/authenticated.vue";
+import item from "@/components/navbar/item.vue";
 import burger from "@/components/menu/burger.vue";
+import navbarDashboard from "@/components/navbar/dashboard.vue";
 
 import {
   DasboardTeamsQuery,
@@ -72,7 +84,8 @@ import { Context } from "@nuxt/types";
     top,
     filterElement,
     navbar,
-    burger
+    burger,
+    navbarDashboard
   },
   layout: "search"
 })

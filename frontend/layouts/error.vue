@@ -1,44 +1,46 @@
 <template>
   <div class="container">
     <div class="text">
-      <h1>404</h1>
+      <h1>{{error.statusCode}}</h1>
       <div class="message">
-        <h2>Hier ist nichts</h2>
+        <h2>{{error.message}}</h2>
         <nuxt-link to="/">
           Zurück nach Hause in
-          <span>{{ counter }}</span>
+          <!-- <span>{{ counter }}</span> -->
         </nuxt-link>
       </div>
     </div>
     <div class="background">
       <img src="/images/ship.svg" />
     </div>
-    <cookies />
   </div>
 </template>
 
 <script>
-import cookies from "@/components/cookies.vue";
+const DURATION = 10;
 
 export default {
-  components: {cookies},
   props: ["error"],
-  data() {
-    return {
-      counter: 5
-    };
-  },
+  // data() {
+  //   return {
+  //     counter: DURATION
+  //   };
+  // },
   mounted() {
-    setTimeout(() => {
-      // this.$router.push('/')
-    }, 5000);
-    setInterval(() => {
-      this.counter--;
-    }, 1000);
+    // setTimeout(() => {
+    //   this.$router.push("/");
+    // }, DURATION * 1000);
+
+    // setInterval(() => {
+    //   this.counter--;
+    // }, 1000);
   }
 };
 </script>
+
 <style lang="scss" scoped>
+@import '@/assets/colors';
+
 .container {
   height: calc(100vh - 80px);
 
@@ -47,7 +49,7 @@ export default {
     bottom: 0;
     left: 0;
     width: 100vw;
-    background: url(../static/images/ocean.svg) no-repeat bottom center;
+    background: url(/images/ocean.svg) no-repeat bottom center;
     height: 300px;
     z-index: 1;
 
@@ -72,7 +74,7 @@ export default {
 
     h1 {
       grid-column: 1;
-      color: #da2566;
+      color: $secondary;
       font-size: 120px;
       justify-self: flex-start !important;
     }
@@ -90,7 +92,7 @@ export default {
 
         span {
           font-weight: bold;
-          color: #25a6da;
+          color: $primary;
         }
       }
     }

@@ -23,7 +23,7 @@ nav {
   flex-direction: row;
   align-items: center;
 
-  .item + .item {
+  /deep/ .item + .item {
     margin-left: 50px;
   }
 }
@@ -32,7 +32,7 @@ nav {
   flex-direction: column;
   align-items: flex-start;
 
-  .item {
+  /deep/ .item {
     padding: 0 !important;
     padding-left: 24px !important;
 
@@ -48,12 +48,12 @@ nav {
       color: #fff !important;
     }
 
-    /deep/ .link:hover {
+    .link:hover {
       color: #fff !important;
     }
   }
 
-  .item + .item {
+  /deep/ .item + .item {
     margin: 0px;
     border-top: 1px solid $border;
   }

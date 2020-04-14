@@ -93,7 +93,7 @@ export default class extends Vue {
       pictureUrl: party.pictureUrl
     };
 
-    console.log('onConnect', params);
+    console.log("onConnect", params);
     this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
   }
 
@@ -181,26 +181,36 @@ export default class extends Vue {
         fetchPolicy: "network-only"
       });
 
-      return new Promise(resolve => {
+      return new Promise((resolve, fail) => {
         const feed = {
           query: matchQuery,
           data: {}
         };
 
-        matchQuery.subscribe(({ data }) => {
-          console.log("received", data);
-          feed.data = data.result;
+        matchQuery.subscribe({
+          next({ data }) {
+            console.log("received", data);
+            feed.data = data.result;
 
-          // we return first result this way
-          resolve({ feed });
+            // we return first result this way
+            resolve({ feed });
+          },
+
+          error(e) {
+            console.error(e);
+            context.error({
+              statusCode: 500,
+              message: "Leider hat das nicht geklappt"
+            });
+
+            resolve();
+          }
         });
-      }).catch(e => {
-        console.error(e);
-        context.error({ statusCode: 500, message: e.message });
       });
     } catch (e) {
       console.error(e);
       context.error({ statusCode: 500, message: e.message });
+      throw e;
     }
   }
 }

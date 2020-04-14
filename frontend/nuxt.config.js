@@ -84,6 +84,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/sentry',
     // Doc: https://github.com/nuxt-community/apollo-module
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt-community/gtm-module
@@ -159,6 +160,12 @@ export default {
     noscript: false,
     noscriptId: 'gtm-noscript',
     noscriptURL: 'https://www.googletagmanager.com/ns.html'
+  },
+  sentry: {
+    dsn: '', 
+    disabled: true,
+    disableServerSide: true,
+    config: {}, // Additional config
   },
   /*
   ** Build configuration
