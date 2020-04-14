@@ -80,7 +80,7 @@ jobs:
     - name: Cleanup database
       if: contains(github.event.pull_request.labels.*.name, 'db:clean')
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload '{"action": "clean"}' response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --payload '{"action": "clean"}' response.json > output.txt
 
         echo "RESPONSE"
         cat response.json
@@ -100,7 +100,7 @@ jobs:
 
     - name: Run database update
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload {} response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --payload '{}' response.json > output.txt
 
         echo "RESPONSE"
         cat response.json
@@ -121,7 +121,7 @@ jobs:
     - name: Import test-data
       if: contains(github.event.pull_request.labels.*.name, 'db:data')
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload '{"action": "test-data"}' response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --payload '{"action": "test-data"}' response.json > output.txt
 
         echo "RESPONSE"
         cat response.json
