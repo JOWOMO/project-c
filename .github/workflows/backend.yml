@@ -89,8 +89,9 @@ jobs:
         cat output.txt
 
         CONTAINS_ERROR=$(grep FunctionError output.txt)
+        echo $CONTAINS_ERROR
 
-        if [ $CONTAINS_ERROR -ne "" ]; then
+        if [ -z $CONTAINS_ERROR ]; then
           exit 1;
         fi
 
@@ -111,8 +112,9 @@ jobs:
         cat output.txt
 
         CONTAINS_ERROR=$(grep FunctionError output.txt)
+        echo $CONTAINS_ERROR
 
-        if [ $CONTAINS_ERROR -ne "" ]; then
+        if [ -z $CONTAINS_ERROR ]; then
           exit 1;
         fi
 
@@ -134,8 +136,9 @@ jobs:
         cat output.txt
 
         CONTAINS_ERROR=$(grep FunctionError output.txt)
+        echo $CONTAINS_ERROR
 
-        if [ $CONTAINS_ERROR -ne "" ]; then
+        if [ -z $CONTAINS_ERROR ]; then
           exit 1;
         fi
 
