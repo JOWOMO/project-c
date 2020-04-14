@@ -21,7 +21,7 @@ insert into btb_data.skill_group (name)
     ('Fachkenntnisse'),
     ('Fachwissen'),
     ('Führerscheine'),
-    ('Kriese'),
+    ('Krise'),
     ('Spezialwissen')
 on conflict do nothing;
 
@@ -53,8 +53,8 @@ insert into btb_data.skill (skill_group_id, match_id, name)
     (get_skill_group('Führerscheine'), 400, 'LKW Führerschein'),
     (get_skill_group('Führerscheine'), 401, 'PKW Führerschein'),
     (get_skill_group('Führerscheine'), 402, 'Staplerführerschein'),
-    (get_skill_group('Kriese'), 500, 'Körperliche Arbeit'),
-    (get_skill_group('Kriese'), 501, 'Kundenkontakt'),
+    (get_skill_group('Krise'), 500, 'Körperliche Arbeit'),
+    (get_skill_group('Krise'), 501, 'Kundenkontakt'),
     (get_skill_group('Spezialwissen'), 600, 'Ersthelfer'),
     (get_skill_group('Spezialwissen'), 601, 'Hygienzertifikat'),
     (get_skill_group('Spezialwissen')   , 602, 'Küche')
