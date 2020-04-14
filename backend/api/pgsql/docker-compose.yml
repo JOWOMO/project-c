@@ -15,4 +15,4 @@ postgres:
     - ./20 views.pgsql:/docker-entrypoint-initdb.d/20-db.sql
     - ./30 postalcodes.pgsql:/docker-entrypoint-initdb.d/30-db.sql
     - ./31 real-data.pgsql:/docker-entrypoint-initdb.d/40-db.sql
-    - ./80 test-data.pgsql:/docker-entrypoint-initdb.d/55-db.sql
+    - ./dev/80 test-data.pgsql:/docker-entrypoint-initdb.d/55-db.sql
