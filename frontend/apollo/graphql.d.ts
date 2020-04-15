@@ -26,6 +26,24 @@ declare module '*/connect.gql' {
 }
     
 
+declare module '*/remove_demand.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const removeDemand: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/remove_supply.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const removeSupply: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/update_demand.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;

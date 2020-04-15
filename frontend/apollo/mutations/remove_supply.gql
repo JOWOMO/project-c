@@ -1,0 +1,3 @@
+mutation removeSupply($id: ID!){
+  removeSupply(id:$id)
+}
