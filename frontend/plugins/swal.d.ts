@@ -4,7 +4,7 @@ declare module "vue/types/vue" {
   type SwalIcon = 'warning' | 'error' | 'success' | 'info' | 'question'; 
 
   interface SwalFunc {
-    (title: string, subtitle?: string, icon?: SwalIcon): void;
+    (title: string, subtitle?: string, icon?: SwalIcon,showCancelButton?:Boolean): Promise<Object>;
   }
 
   interface Vue {

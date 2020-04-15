@@ -2,11 +2,12 @@ import Vue from 'vue';
 import swal from 'sweetalert2';
 
 
-function argsToMap(title, subtitle, icon) {
+function argsToMap(title, subtitle, icon,showCancelButton) {
   return {
     title,
     html: subtitle,
     icon,
+    showCancelButton,
     customClass: {
       title:'swal-title',
       content: 'swal-subtitle',
@@ -19,7 +20,7 @@ function argsToMap(title, subtitle, icon) {
       closeButton: 'swal-button rimary',
       confirmButton: 'swal-button primary',
       cancelButton: 'swal-button secondary',
-    }
+    } 
   };
 }
 
