@@ -1,8 +1,8 @@
 <template>
-  <div 
-    @click="update" 
+  <div
+    @click="update"
     class="tag"
-    :class="{ 'not-clickable': !clickable, primary: clickable && selected, secondary: clickable && !selected }" 
+    :class="{ 'not-clickable': !clickable, primary: clickable && selected, secondary: clickable && !selected }"
   >
     <span>{{ name }}</span>
   </div>
@@ -53,7 +53,8 @@ export default class extends Vue {
   color: $inputtextcolor;
 
   span {
-    padding: 10px;
+    margin: 0 10px;
+    align-self: center;
     user-select: none;
   }
 }
