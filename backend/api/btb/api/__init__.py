@@ -1,5 +1,5 @@
 from aws_xray_sdk import global_sdk_config
-from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.core import xray_recorder, patch
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 from flask import Flask, request, g, current_app, jsonify
@@ -9,7 +9,9 @@ from btb.api.models import db
 from os import environ
 from btb.api.datasources import instanciate_datasources
 from flask_cors import CORS
+
 import logging
+
 
 def create_app():
     app = Flask(__name__)
@@ -35,12 +37,14 @@ def create_app():
     if app.debug:
         # env var AWS_XRAY_SDK_ENABLED can overwrite this
         global_sdk_config.set_sdk_enabled(False)
+    else:
+        # TODO: configure x-ray service
+        xray_recorder.configure(service="btbapi")
+        # Setup X-Ray Flask Integration
+        XRayMiddleware(app, xray_recorder)
+        # Setup psycopg2 Integration
+        patch(["psycopg2"])
 
-    # TODO: configure x-ray service
-    xray_recorder.configure(service="btbapi")
-    # Setup X-Ray Flask Integration hooks
-    XRayMiddleware(app, xray_recorder)
-    
     @app.route("/")
     def index():
         return "Server is running<br><a href='/graphql'>Server</a>"
