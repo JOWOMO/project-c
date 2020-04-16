@@ -38,11 +38,8 @@ def handler():
             exclude_pseudoclasses=True,
         )
 
-        replaced = replaced.replace('{', '{{')
-        replaced = replaced.replace('}', '}}')
-
-        replaced = re.sub(r'#([a-z_]+)#', r'{\1}', replaced)
-        replaced = re.sub(r'\u00A0', '', replaced)
+        replaced = re.sub(r"#([a-z_]+)#", r"{{\1}}", replaced)
+        replaced = re.sub(r"\u00A0", "", replaced)
 
         f = open(
             posixpath.join(out_path, file_name), 
