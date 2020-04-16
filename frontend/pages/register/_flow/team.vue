@@ -5,18 +5,19 @@
 
     <div v-for="(team, idx) in supplies" :key="idx">
       <div class="team-container">
-        <div class="action">
-          <div v-if="!team.expanded" class="edit">
-            <div @click="toggleVisibilitySupply(idx)" class="img_edit" />
+        <div class="action" v-if="!team.expanded">
+          <div class="button">
+            <div @click="toggleVisibility('supply', idx)" class="img edit" />
           </div>
-          <div v-if="!team.expanded" class="rm">
-            <div @click="removeSupply(idx,$event)" class="img_rm" />
+          <div class="button">
+            <div @click="remove('supply', idx)" class="img rm" />
           </div>
         </div>
+
         <team
           class="team-form"
           v-bind:value="team"
-          @input="updateSupply(idx, $event)"
+          @input="update('supply', idx, $event)"
           :topics="topics"
           :skills="skills"
         />
@@ -26,18 +27,19 @@
 
     <div v-for="(team, idx) in demands" :key="idx">
       <div class="team-container">
-        <div class="action">
-          <div v-if="!team.expanded" class="edit">
-            <div @click="toggleVisibilityDemand(idx)" class="img_edit" />
+        <div class="action" v-if="!team.expanded">
+          <div class="button">
+            <div @click="toggleVisibility('demand', idx)" class="img edit" />
           </div>
-          <div v-if="!team.expanded" class="rm">
-            <div @click="removeDemand(idx)" class="img_rm" />
+          <div class="button">
+            <div @click="remove('demand', idx)" class="img rm" />
           </div>
         </div>
+
         <team
           class="team-form"
           v-bind:value="team"
-          @input="updateDemand(idx, $event)"
+          @input="update('demand', idx, $event)"
           :topics="topics"
           :skills="skills"
         />
@@ -131,7 +133,9 @@ export default class extends Vue {
       ...EMPTY_TEAM,
       number: ++this.counter
     };
-    record.expanded = true
+
+    record.expanded = true;
+
     if (this.workflow.type === RegistrationFlow.demand) {
       this.demands.push(record);
     } else {
@@ -139,139 +143,101 @@ export default class extends Vue {
     }
   }
 
-  toggleVisibilitySupply(idx: number) {
-    this.$set(this.supplies[idx], "expanded", true);
+  toggleVisibility(type: "supply" | "demand", idx: number) {
+    const array = type === "supply" ? this.supplies : this.demands;
+    this.$set(array[idx], "expanded", true);
   }
 
-  toggleVisibilityDemand(idx: number) {
-    this.$set(this.demands[idx], "expanded", true);
-  }
-
-  updateSupply(idx: number, value: TeamDetails) {
-    console.log("Updating", idx, value);
+  update(type: "supply" | "demand", idx: number, value: TeamDetails) {
+    console.log("Updating", type, idx, value);
+    const array = type === "supply" ? this.supplies : this.demands;
 
     // if the user canceled the dialog this way, he canceled a new item
     if (value.quantity === 0) {
       this.counter -= 1;
-      this.supplies.splice(idx, 1);
+      array.splice(idx, 1);
     } else {
-      this.supplies.splice(idx, 1, value);
+      array.splice(idx, 1, value);
     }
   }
 
-  updateDemand(idx: number, value: TeamDetails) {
-    console.log("Updating", idx, value);
+  async remove(type: "supply" | "demand", idx: number) {  
+    const array = type === "supply" ? this.supplies : this.demands;
 
-    // if the user canceled the dialog this way, he canceled a new item
-    if (value.quantity === 0) {
-      this.counter -= 1;
-      this.demands.splice(idx, 1);
-    } else {
-      this.demands.splice(idx, 1, value);
+    const action = await this.$swal.confirm(
+      `Möchtest Du das Team '${array[idx].name}' wirklich löschen?`,
+      "Diese Aktion kann nicht rückgängig gemacht werden.",
+      true
+    );
+
+    // if .id is not set, the record has not been created yet, we can ignore that
+    if (action.value == true && array[idx].id != null) {
+      try {
+        await this.$apollo.mutate<
+          RemoveSupplyMutation, // types are equal
+          RemoveSupplyMutationVariables
+        >({
+          mutation: type === "supply" ? removeSupply : removeDemand,
+          variables: { id: array[idx].id! }
+        });
+
+        array.splice(idx, 1);
+      } catch (err) {
+        console.error(err);
+        this.$swal.alert("Das hat leider nicht geklappt.", err.message, 'error');
+      }
+    } else if (action.value == true) {
+      array.splice(idx, 1);
     }
   }
-  async removeSupply(idx: number) {
-    // remove i supply
-    this.$swal(
-      this.supplies[idx].name + " löschen",
-      "dieses Team wirklich löschen?",
-      "warning",
-      true
-    )
-      .then(async (action: any) => {
-        if (action.value == true) {
-          try {
-            await this.$apollo.mutate<
-              RemoveSupplyMutation,
-              RemoveSupplyMutationVariables
-            >({
-              mutation: removeSupply,
-              variables: { id: this.supplies[idx].id! }
-            });
-            this.supplies.splice(idx, 1);
-          } catch (err) {
-            // Supply not in backend, just delete item in list
-            this.supplies.splice(idx, 1);          
-          }
-        }
-      })
-      .catch(err => {
-        console.log("error: ", err);
-      });
-  }
-  async removeDemand(idx: number) {
-    // remove i demand
-    this.$swal(
-      this.demands[idx].name + " löschen",
-      "dieses Team wirklich löschen?",
-      "warning",
-      true
-    )
-      .then(async (action: any) => {
-        if (action.value == true) {
-          try {
-            await this.$apollo.mutate<
-              RemoveDemandMutation,
-              RemoveDemandMutationVariables
-            >({
-              mutation: removeDemand,
-              variables: { id: this.demands[idx].id! }
-            });
-            this.demands.splice(idx, 1);
-          } catch (err) {
-            // Demand not in backend, just delete item in listy
-             this.demands.splice(idx, 1);
-          }
-        }
-      })
-      .catch(err => {
-        console.log("error: ", err);
-      });
+
+  checkModifiedTeams() {
+    return [
+      ...this.demands.filter(t => t.expanded).map(t => t.name || 'Team ' + t.number),
+      ...this.supplies.filter(t => t.expanded).map(t => t.name || 'Team ' + t.number)
+    ]
   }
 
-  back() {
+  async back() {
+    const names = this.checkModifiedTeams();
+    
+    // check if one team is expanded and if list not empty
+    if (names.length > 0) {
+      this.$track("registration", "modified", "Zurück");
+
+      const result = await this.$swal.confirm(
+        `Möchtest Du die Änderungen wirklich verwerfen?`,
+        `Du hast die Bearbeitung ${names.length > 1 ? 'der' : 'des'} Teams '${names.join(', ')}' nicht abgeschlossen. Bitte schließe die Bearbeitungsmaske mit 'Abbrechen' oder 'OK' ab, bevor Du fortfährst.`,
+      );
+
+      // user canceled the dialog
+      if (!result.value) {
+        return;
+      }
+    }
+
     this.$router.push(`/register/${this.workflow.type}/company`);
   }
-  expandedDemand = {
-    state: false,
-    name:""
-  };
-  expandedSupply = {
-    state: false,
-    name:""
-  };
+
   @LoadingAnimation
   async save() {
     console.log("supply :", this.supplies);
-    this.supplies.forEach(supply => {
-      if (supply.expanded == true) {
-        this.expandedSupply.state = true;
-        this.expandedSupply.name = supply.name!;
-        return;
-      }else{
-        this.expandedSupply.state = false
-      }
-    });
-    this.demands.forEach(demand => {
-      if (demand.expanded == true) {
-         console.log("expanded found demand")
-        this.expandedDemand.state = true;
-        this.expandedDemand.name = demand.name!;
-        return true;
-      }else{
-        this.expandedDemand.state = false
-      }
-    });
+
+    const names = this.checkModifiedTeams();
+
     // check if one team is expanded and if list not empty
-    if(this.expandedSupply.state == true && this.supplies.length > 0){
-        this.$swal("Team " + this.expandedSupply.name, "wird noch bearbeitet","info")
-        return
+    if (names.length > 0) {
+      this.$track("registration", "modified", "Abschließen");
+
+      this.$swal.alert(
+        `Noch nicht fertig?`,
+        `Du hast die Bearbeitung ${names.length > 1 ? 'der' : 'des'} Teams '${names.join(', ')}' nicht abgeschlossen. Bitte schließe die Bearbeitungsmaske mit 'Abbrechen' oder 'OK' ab, bevor Du fortfährst.`,
+        'question'
+      );
+
+      return;
     }
-    // check if one team is expanded and if list not empty
-    if(this.expandedDemand.state == true && this.demands.length > 0){
-        this.$swal("Team " + this.expandedDemand.name, "wird noch bearbeitet","info")
-        return
-    }
+
     this.$track("registration", "team");
 
     try {
@@ -316,12 +282,12 @@ export default class extends Vue {
       this.$router.push(`/welcome`);
     } catch (err) {
       console.error(err);
-      this.$swal("Das hat nicht geklappt", err.message, "error");
+      this.$swal.alert("Das hat nicht geklappt", err.message, "error");
     }
   }
 
   async asyncData(context: Context) {
-    console.log("async data")
+    console.log("async data");
     let data: Pick<
       this,
       "counter" | "demands" | "supplies" | "skills" | "company" | "topics"
@@ -372,7 +338,7 @@ export default class extends Vue {
         if (data.demands.length === 0) {
           ++data.counter;
           data.demands.push(EMPTY_TEAM);
-          data.demands[0].expanded = true
+          data.demands[0].expanded = true;
         }
       } else {
         // @ts-ignore
@@ -381,7 +347,7 @@ export default class extends Vue {
         if (data.supplies.length === 0) {
           ++data.counter;
           data.supplies.push(EMPTY_TEAM);
-          data.supplies[0].expanded = true
+          data.supplies[0].expanded = true;
         }
       }
 
@@ -477,8 +443,9 @@ export default class extends Vue {
     flex-direction: column;
     position: absolute;
     left: 0;
+    cursor: pointer;
 
-    .edit {
+    .button {
       width: 44px;
       height: 44px;
       border-radius: 22px;
@@ -490,46 +457,20 @@ export default class extends Vue {
       justify-content: center;
       align-items: center;
 
-      transform: translateX(-88px);
+      transform: translate(-88px, -11px);
 
-      .img_edit {
+      .img {
         width: 22px;
         height: 22px;
-
         background-color: $textcolor;
+      }
+
+      .edit {
         -webkit-mask: url(/icons/edit.svg) no-repeat center;
         mask: url(/icons/edit.svg) no-repeat center;
       }
 
-      &:hover {
-        color: #ffffff !important;
-        background-color: darken($primary, 10%) !important;
-
-        .img_edit {
-          background-color: white;
-        }
-      }
-    }
-    .rm {
-      // left: 0;
-
-      width: 44px;
-      height: 44px;
-      border-radius: 22px;
-
-      background-color: white !important;
-      border: 1px solid $border !important;
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      transform: translateX(-88px);
-      .img_rm {
-        width: 22px;
-        height: 22px;
-
-        background-color: $textcolor;
+      .rm {
         -webkit-mask: url(/icons/remove.svg) no-repeat center;
         mask: url(/icons/remove.svg) no-repeat center;
       }
@@ -538,10 +479,14 @@ export default class extends Vue {
         color: #ffffff !important;
         background-color: darken($primary, 10%) !important;
 
-        .img_rm {
+        .img {
           background-color: white;
         }
       }
+    }
+
+    .button + .button {
+      margin-top: 11px;
     }
   }
 }
@@ -550,16 +495,16 @@ export default class extends Vue {
   .team-container {
     .action {
       flex-direction: row;
-      transform: translate(+200px, -6px);
-      .edit {
-        margin: 5px;
-      }
-      .rm {
-        margin: 5px;
+      transform: translate(+210px, 0px);
+
+      .button + .button {
+        margin-top: 0;
+        margin-left: 11px;
       }
     }
   }
 }
+
 .add {
   grid-column: 2;
   display: flex;

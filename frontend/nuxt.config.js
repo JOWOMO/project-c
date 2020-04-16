@@ -70,7 +70,7 @@ export default {
   */
   plugins: [
     '@/plugins/vuelidate.js',
-    '@/plugins/swal.js',
+    '@/plugins/swal.ts',
     '@/plugins/tracking.ts',
   ],
   /*

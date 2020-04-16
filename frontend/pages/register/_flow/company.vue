@@ -198,7 +198,7 @@ export default class extends Vue {
       this.$router.push(`/register/${this.workflow.type}/team`);
     } catch (err) {
       console.error(err);
-      this.$swal("Das hat nicht geklappt", err.message, "error");
+      this.$swal.alert("Das hat nicht geklappt", err.message, "error");
     }
   }
 
