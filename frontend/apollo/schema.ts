@@ -327,6 +327,26 @@ export type ConnectMutation = (
   & Pick<Mutation, 'contactMatch'>
 );
 
+export type RemoveDemandMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type RemoveDemandMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeDemand'>
+);
+
+export type RemoveSupplyMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type RemoveSupplyMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeSupply'>
+);
+
 export type UpdateDemandMutationVariables = {
   id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];

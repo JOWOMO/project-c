@@ -72,7 +72,7 @@ export default class extends Vue {
         email: this.email
       });
 
-      this.$swal(
+      this.$swal.alert(
         "Das hat geklappt",
         "Du solltes eine E-Mail in Deinem Posteingang haben.",
         "success"
@@ -80,7 +80,7 @@ export default class extends Vue {
     } catch (e) {
       console.error(e);
 
-      this.$swal("Das hat nicht geklappt", formatMessage(e), "error");
+      this.$swal.alert("Das hat nicht geklappt", formatMessage(e), "error");
     }
   }
   
@@ -131,7 +131,7 @@ export default class extends Vue {
       console.error("err: ", err);
       this.error = formatMessage(err);
 
-      this.$swal("Das hat nicht geklappt", this.error, "error");
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 }

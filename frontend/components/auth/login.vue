@@ -91,7 +91,7 @@ export default class extends Vue {
         return;
       }
 
-      this.$swal( 
+      this.$swal.alert( 
         "Das hat nicht geklappt", 
         this.error, 
         "error"

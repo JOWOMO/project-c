@@ -37,17 +37,12 @@
 
       <form novalidate @submit.prevent>
         <div class="form-group half-width">
-          <!-- <formSelect
-            id="editTeam.name"
-            v-model="editTeam.name"
-            :label="'Bezeichnung'"
-            :values="topics"
-          /> -->
           <formAutoComplete
             id="editTeam.name"
             v-model="editTeam.name"
             :label="'Bezeichnung (Freitext)'"
             :suggestions="topics"
+            
           />
         </div>
 
