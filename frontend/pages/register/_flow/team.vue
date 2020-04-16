@@ -131,7 +131,7 @@ export default class extends Vue {
       ...EMPTY_TEAM,
       number: ++this.counter
     };
-
+    record.expanded = true;
     if (this.workflow.type === RegistrationFlow.demand) {
       this.demands.push(record);
     } else {
@@ -330,6 +330,7 @@ export default class extends Vue {
         data.demands = (data.company.demands || []).map(map);
 
         if (data.demands.length === 0) {
+          ++data.counter;
           data.demands.push(EMPTY_TEAM);
         }
       } else {
@@ -337,6 +338,7 @@ export default class extends Vue {
         data.supplies = (data.company.supplies || []).map(map);
 
         if (data.supplies.length === 0) {
+          ++data.counter;
           data.supplies.push(EMPTY_TEAM);
         }
       }
