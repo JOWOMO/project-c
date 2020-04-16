@@ -175,7 +175,8 @@ export default class extends Vue {
         email: this.email,
         password: this.password,
         firstName: this.firstName,
-        lastName: this.lastName
+        lastName: this.lastName,
+        flow: this.workflow.type,
       });
 
       this.$router.push(`/register/${this.workflow.type}/validate`);

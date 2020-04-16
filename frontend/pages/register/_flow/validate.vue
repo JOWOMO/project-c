@@ -29,11 +29,10 @@ export default class extends Vue {
   handleStateChange(event: string, value: any) {
     if (event === "redirect") {
       // user cannot go back here
+      this.$router.replace(`/register/${this.workflow.type}/company`);
+    } else if (event === "back") {
       this.$router.replace(`/register/${this.workflow.type}`);
     }
-
-      // user cannot go foreward here
-    this.$router.replace(`/register/${this.workflow.type}`);
   }
 }
 </script>
