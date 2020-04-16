@@ -42,8 +42,8 @@ def create_app():
         xray_recorder.configure(service="btbapi")
         # Setup X-Ray Flask Integration
         XRayMiddleware(app, xray_recorder)
-        # Setup psycopg2 Integration
-        patch(["psycopg2"])
+        # Setup X-Ray psycopg2, boto3 (aws sdk) Integration
+        patch(["psycopg2", "boto3"])
 
     @app.route("/")
     def index():
