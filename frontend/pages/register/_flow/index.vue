@@ -175,7 +175,8 @@ export default class extends Vue {
         email: this.email,
         password: this.password,
         firstName: this.firstName,
-        lastName: this.lastName
+        lastName: this.lastName,
+        flow: this.workflow.type,
       });
 
       this.$track('registration', 'created User')
@@ -192,7 +193,7 @@ export default class extends Vue {
     console.debug("updateUser");
 
     try {
-      console.debug("Updating with", this.firstName, this.lastName, this.email);
+      console.log("Updating with", this.firstName, this.lastName, this.email);
 
       const result = await this.$apollo.mutate<
         UserAddMutation,

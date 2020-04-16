@@ -33,13 +33,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Provide } from "nuxt-property-decorator";
+import { Component, Vue, Provide, State } from "nuxt-property-decorator";
 import { Meta } from "@/components/decorator";
+import { IState } from "@/store";
 
 @Component
 export default class extends Vue {
+  @State((s): IState => s.auth.isAuthenticated)
+  authenticated!: boolean;
+
   get action_text() {
-    return this.$store.state.auth.user
+    return this.authenticated
       ? "Teams bearbeiten"
       : "Kostenlos anmelden";
   }

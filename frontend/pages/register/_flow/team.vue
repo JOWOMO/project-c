@@ -5,13 +5,19 @@
 
     <div v-for="(team, idx) in supplies" :key="idx">
       <div class="team-container">
-        <div v-if="!team.expanded" class="edit" @click="toggleVisibilitySupply(idx)">
-          <div class="img" />
+        <div class="action" v-if="!team.expanded">
+          <div class="button">
+            <div @click="toggleVisibility('supply', idx)" class="img edit" />
+          </div>
+          <div class="button">
+            <div @click="remove('supply', idx)" class="img rm" />
+          </div>
         </div>
+
         <team
           class="team-form"
           v-bind:value="team"
-          @input="updateSupply(idx, $event)"
+          @input="update('supply', idx, $event)"
           :topics="topics"
           :skills="skills"
         />
@@ -21,13 +27,19 @@
 
     <div v-for="(team, idx) in demands" :key="idx">
       <div class="team-container">
-        <div v-if="!team.expanded" class="edit" @click="toggleVisibilityDemand(idx)">
-          <div class="img" />
+        <div class="action" v-if="!team.expanded">
+          <div class="button">
+            <div @click="toggleVisibility('demand', idx)" class="img edit" />
+          </div>
+          <div class="button">
+            <div @click="remove('demand', idx)" class="img rm" />
+          </div>
         </div>
+
         <team
           class="team-form"
           v-bind:value="team"
-          @input="updateDemand(idx, $event)"
+          @input="update('demand', idx, $event)"
           :topics="topics"
           :skills="skills"
         />
@@ -68,6 +80,9 @@ import getTeams from "@/apollo/queries/registration/teams.gql";
 import updateSupply from "@/apollo/mutations/update_supply.gql";
 import updateDemand from "@/apollo/mutations/update_demand.gql";
 
+import removeDemand from "@/apollo/mutations/remove_demand.gql";
+import removeSupply from "@/apollo/mutations/remove_supply.gql";
+
 import {
   GetTeamsQuery,
   GetTeamsQueryVariables,
@@ -78,7 +93,11 @@ import {
   UpdateSupplyMutation,
   UpdateSupplyMutationVariables,
   UpdateDemandMutation,
-  UpdateDemandMutationVariables
+  UpdateDemandMutationVariables,
+  RemoveDemandMutation,
+  RemoveDemandMutationVariables,
+  RemoveSupplyMutation,
+  RemoveSupplyMutationVariables
 } from "@/apollo/schema";
 import { InjectReactive } from "vue-property-decorator";
 
@@ -115,6 +134,8 @@ export default class extends Vue {
       number: ++this.counter
     };
 
+    record.expanded = true;
+
     if (this.workflow.type === RegistrationFlow.demand) {
       this.demands.push(record);
       this.$track('teams', 'added team demand', this.counter.toString())
@@ -134,8 +155,9 @@ export default class extends Vue {
     this.$track('teams', 'enter / exit edit mode')
   }
 
-  updateSupply(idx: number, value: TeamDetails) {
-    console.log("Updating", idx, value);
+  update(type: "supply" | "demand", idx: number, value: TeamDetails) {
+    console.log("Updating", type, idx, value);
+    const array = type === "supply" ? this.supplies : this.demands;
 
     // if the user canceled the dialog this way, he canceled a new item
     if (value.quantity === 0) {
@@ -150,8 +172,8 @@ export default class extends Vue {
     }
   }
 
-  updateDemand(idx: number, value: TeamDetails) {
-    console.log("Updating", idx, value);
+  async remove(type: "supply" | "demand", idx: number) {
+    const array = type === "supply" ? this.supplies : this.demands;
 
     // if the user canceled the dialog this way, he canceled a new item
     if (value.quantity === 0) {
@@ -161,17 +183,82 @@ export default class extends Vue {
     } else {
       this.demands.splice(idx, 1, value);
       this.$track('teams', 'user canceled editing - removed team')
+    const action = await this.$swal.confirm(
+      `Möchtest Du das Team '${array[idx].name}' wirklich löschen?`,
+      "Diese Aktion kann nicht rückgängig gemacht werden.",
+      true
+    );
+
+    // if .id is not set, the record has not been created yet, we can ignore that
+    if (action.value == true && array[idx].id != null) {
+      try {
+        await this.$apollo.mutate<
+          RemoveSupplyMutation, // types are equal
+          RemoveSupplyMutationVariables
+        >({
+          mutation: type === "supply" ? removeSupply : removeDemand,
+          variables: { id: array[idx].id! }
+        });
+
+        array.splice(idx, 1);
+      } catch (err) {
+        console.error(err);
+        this.$swal.alert("Das hat leider nicht geklappt.", err.message, 'error');
+      }
+    } else if (action.value == true) {
+      array.splice(idx, 1);
     }
   }
 
-  back() {
+  checkModifiedTeams() {
+    return [
+      ...this.demands.filter(t => t.expanded).map(t => t.name || 'Team ' + t.number),
+      ...this.supplies.filter(t => t.expanded).map(t => t.name || 'Team ' + t.number)
+    ]
+  }
+
+  async back() {
+    const names = this.checkModifiedTeams();
+
+    // check if one team is expanded and if list not empty
+    if (names.length > 0) {
+      this.$track("registration", "modified", "Zurück");
+
+      const result = await this.$swal.confirm(
+        `Möchtest Du die Änderungen wirklich verwerfen?`,
+        `Du hast die Bearbeitung ${names.length > 1 ? 'der' : 'des'} Teams '${names.join(', ')}' nicht abgeschlossen. Bitte schließe die Bearbeitungsmaske mit 'Abbrechen' oder 'OK' ab, bevor Du fortfährst.`,
+      );
+
+      // user canceled the dialog
+      if (!result.value) {
+        return;
+      }
+    }
+
     this.$router.push(`/register/${this.workflow.type}/company`);
     this.$track('teams', 'going back to company')
   }
 
   @LoadingAnimation
   async save() {
-    this.$track('registration', 'team');
+    console.log("supply :", this.supplies);
+
+    const names = this.checkModifiedTeams();
+
+    // check if one team is expanded and if list not empty
+    if (names.length > 0) {
+      this.$track("registration", "modified", "Abschließen");
+
+      this.$swal.alert(
+        `Noch nicht fertig?`,
+        `Du hast die Bearbeitung ${names.length > 1 ? 'der' : 'des'} Teams '${names.join(', ')}' nicht abgeschlossen. Bitte schließe die Bearbeitungsmaske mit 'Abbrechen' oder 'OK' ab, bevor Du fortfährst.`,
+        'question'
+      );
+
+      return;
+    }
+
+    this.$track("registration", "team");
 
     try {
       for (const supply of this.supplies.filter(s => s.modified)) {
@@ -221,14 +308,10 @@ export default class extends Vue {
   }
 
   async asyncData(context: Context) {
+    console.log("async data");
     let data: Pick<
       this,
-      | "counter"
-      | "demands"
-      | "supplies"
-      | "skills"
-      | "company"
-      | "topics"
+      "counter" | "demands" | "supplies" | "skills" | "company" | "topics"
     > = {
       counter: 0,
       demands: [],
@@ -274,14 +357,18 @@ export default class extends Vue {
         data.demands = (data.company.demands || []).map(map);
 
         if (data.demands.length === 0) {
+          ++data.counter;
           data.demands.push(EMPTY_TEAM);
+          data.demands[0].expanded = true;
         }
       } else {
         // @ts-ignore
         data.supplies = (data.company.supplies || []).map(map);
 
         if (data.supplies.length === 0) {
+          ++data.counter;
           data.supplies.push(EMPTY_TEAM);
+          data.supplies[0].expanded = true;
         }
       }
 
@@ -292,13 +379,13 @@ export default class extends Vue {
     }
   }
 
-  @Emit('selectelement')
+  @Emit("selectelement")
   setElement() {
     return 2;
   }
 
   mounted() {
-   this.setElement();
+    this.setElement();
   }
 }
 </script>
@@ -372,55 +459,69 @@ export default class extends Vue {
 .team-container {
   position: relative;
 
-  .edit {
+  .action {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     left: 0;
+    cursor: pointer;
 
-    width: 44px;
-    height: 44px;
-    border-radius: 22px;
+    .button {
+      width: 44px;
+      height: 44px;
+      border-radius: 22px;
 
-    background-color: white !important;
-    border: 1px solid $border !important;
+      background-color: white !important;
+      border: 1px solid $border !important;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    transform: translateX(-88px);
-
-    .img {
-      width: 22px;
-      height: 22px;
-
-      background-color: $textcolor;
-      -webkit-mask: url(/icons/edit.svg) no-repeat center;
-      mask: url(/icons/edit.svg) no-repeat center;
-    }
-
-    &:hover {
-      color: #ffffff !important;
-      background-color: darken($primary, 10%) !important;
+      transform: translate(-88px, -11px);
 
       .img {
-        background-color: white;
+        width: 22px;
+        height: 22px;
+        background-color: $textcolor;
       }
+
+      .edit {
+        -webkit-mask: url(/icons/edit.svg) no-repeat center;
+        mask: url(/icons/edit.svg) no-repeat center;
+      }
+
+      .rm {
+        -webkit-mask: url(/icons/remove.svg) no-repeat center;
+        mask: url(/icons/remove.svg) no-repeat center;
+      }
+
+      &:hover {
+        color: #ffffff !important;
+        background-color: darken($primary, 10%) !important;
+
+        .img {
+          background-color: white;
+        }
+      }
+    }
+
+    .button + .button {
+      margin-top: 11px;
     }
   }
 }
 
 @media only screen and (max-width: 1321px) {
   .team-container {
-    .edit {
-      transform: translate(+150px, -6px);
-    }
-  }
-}
+    .action {
+      flex-direction: row;
+      transform: translate(+210px, 0px);
 
-@media only screen and (max-width: 1090px) {
-  .team-container {
-    .edit {
-      transform: translate(+150px, -6px);
+      .button + .button {
+        margin-top: 0;
+        margin-left: 11px;
+      }
     }
   }
 }

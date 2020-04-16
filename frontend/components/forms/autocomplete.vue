@@ -12,6 +12,7 @@
       @keydown.up="up"
       @focus="open"
       @blur="close"
+      :class="{ 'is-invalid': submitted && validation.$error }"
     />
 
     <label :for="id">
