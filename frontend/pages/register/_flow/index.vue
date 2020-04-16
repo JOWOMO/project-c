@@ -182,7 +182,7 @@ export default class extends Vue {
     } catch (err) {
       console.log("err: ", err);
       this.error = formatMessage(err);
-      this.$swal("Das hat nicht geklappt", this.error, "error");
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 
@@ -208,7 +208,7 @@ export default class extends Vue {
     } catch (err) {
       console.error(err);
       this.error = err.message;
-      this.$swal("Das hat nicht geklappt", this.error, "error");
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 
