@@ -1,13 +1,14 @@
 <template>
   <div class="card">
-    <div class="left">
-      <h2>{{ company.name }}</h2>
-      <div class="location">
+    <div class="left" :class="{fullWidth: singleRow}">
+      <h2 v-if="!singleRow">{{ company.name }}</h2>
+      <div class="location" v-if="!singleRow">
         <img height="10px" width="10px" src="/icons/pin.svg" alt />
         <span>{{ distance }} entfernt</span>
       </div>
 
-      <p class="highlighted">{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
+      <p class="highlighted" v-if="!singleRow">{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
+      <h2 class="highlighted heading" v-else>{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</h2>
 
       <div class="tags">
         <tag
@@ -42,18 +43,22 @@
         </v-clamp>
       </div>
 
-      <div class="bottom">
+      <div class="bottom" v-if="!singleRow">
         <div
           :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
         >{{ percentage }}% passend zu deiner Suche</div>
       </div>
+
+      <div class="bottom" v-else>
+        <button class="cta" @click.prevent="connect">Jetzt verbinden</button>
+      </div>
     </div>
 
-    <div class="middle">
+    <div class="middle" v-if="!singleRow">
       <div class="line" />
     </div>
 
-    <div class="right">
+    <div class="right" v-if="!singleRow">
       <div class="contact">Deine Kontaktperson</div>
 
       <img class="contact-image" v-if="contact.pictureUrl" :src="contact.pictureUrl" />
@@ -114,19 +119,24 @@ type MatchDetails = Pick<Demand, "name" | "description" | "quantity" | "id"> & {
 @Component({ components: { tag, VClamp } })
 export default class extends Vue {
   @Prop() flow!: string;
-  @Prop() company!: MatchCompany;
-  @Prop() contact!: MatchContact;
+  @Prop() company?: MatchCompany;
+  @Prop() contact?: MatchContact;
   @Prop() match!: MatchDetails;
-  @Prop() classification!: MatchClassification;
+  @Prop() classification?: MatchClassification;
+  @Prop() singleRow?: Boolean;
 
   get percentage() {
     return Math.round(this.classification.percentage);
   }
 
   get distance() {
-    return this.classification.distance < 1000
-      ? Math.round(this.classification.distance) + "m"
-      : Math.round(this.classification.distance / 1000) + "km";
+    if(this.singleRow == false) {
+      return this.classification.distance < 1000
+        ? Math.round(this.classification.distance) + "m"
+        : Math.round(this.classification.distance / 1000) + "km";
+    } else {
+      return
+    }
   }
 
   get bestMatch() {
@@ -185,6 +195,10 @@ export default class extends Vue {
 .left {
   grid-column: 1;
 
+  &.fullWidth {
+    grid-column: 1 / span 3;
+  }
+
   .location {
     padding-top: 6px;
 
@@ -202,6 +216,10 @@ export default class extends Vue {
     padding-top: 24px;
     color: $primary;
     font-weight: 500;
+  }
+
+  .heading {
+    padding: 0;
   }
 
   .tags {
