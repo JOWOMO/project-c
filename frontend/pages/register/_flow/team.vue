@@ -131,7 +131,6 @@ export default class extends Vue {
       ...EMPTY_TEAM,
       number: ++this.counter
     };
-    record.expanded = true;
     if (this.workflow.type === RegistrationFlow.demand) {
       this.demands.push(record);
     } else {
@@ -172,7 +171,7 @@ export default class extends Vue {
   }
   async removeSupply(idx: number) {
     // remove i supply
-     this.$swal(
+    this.$swal(
       this.supplies[idx].name + " löschen",
       "dieses Team wirklich löschen?",
       "warning",
@@ -190,7 +189,8 @@ export default class extends Vue {
             });
             this.supplies.splice(idx, 1);
           } catch (err) {
-            // Supplies could not be delet ed
+            // Supply not in backend, just delete item in list
+            this.supplies.splice(idx, 1);          
           }
         }
       })
@@ -218,7 +218,8 @@ export default class extends Vue {
             });
             this.demands.splice(idx, 1);
           } catch (err) {
-            // Demand could not be deleted
+            // Demand not in backend, just delete item in listy
+             this.demands.splice(idx, 1);
           }
         }
       })
@@ -230,9 +231,46 @@ export default class extends Vue {
   back() {
     this.$router.push(`/register/${this.workflow.type}/company`);
   }
-
+  expandedDemand = {
+    state: false,
+    name:""
+  };
+  expandedSupply = {
+    state: false,
+    name:""
+  };
   @LoadingAnimation
   async save() {
+    console.log("supply :", this.supplies);
+    this.supplies.forEach(supply => {
+      if (supply.expanded == true) {
+        this.expandedSupply.state = true;
+        this.expandedSupply.name = supply.name!;
+        return;
+      }else{
+        this.expandedSupply.state = false
+      }
+    });
+    this.demands.forEach(demand => {
+      if (demand.expanded == true) {
+         console.log("expanded found demand")
+        this.expandedDemand.state = true;
+        this.expandedDemand.name = demand.name!;
+        return true;
+      }else{
+        this.expandedDemand.state = false
+      }
+    });
+    // check if one team is expanded and if list not empty
+    if(this.expandedSupply.state == true && this.supplies.length > 0){
+        this.$swal("Team " + this.expandedSupply.name, "wird noch bearbeitet","info")
+        return
+    }
+    // check if one team is expanded and if list not empty
+    if(this.expandedDemand.state == true && this.demands.length > 0){
+        this.$swal("Team " + this.expandedDemand.name, "wird noch bearbeitet","info")
+        return
+    }
     this.$track("registration", "team");
 
     try {
@@ -282,6 +320,7 @@ export default class extends Vue {
   }
 
   async asyncData(context: Context) {
+    console.log("async data")
     let data: Pick<
       this,
       "counter" | "demands" | "supplies" | "skills" | "company" | "topics"
@@ -332,6 +371,7 @@ export default class extends Vue {
         if (data.demands.length === 0) {
           ++data.counter;
           data.demands.push(EMPTY_TEAM);
+          data.demands[0].expanded = true
         }
       } else {
         // @ts-ignore
@@ -340,6 +380,7 @@ export default class extends Vue {
         if (data.supplies.length === 0) {
           ++data.counter;
           data.supplies.push(EMPTY_TEAM);
+          data.supplies[0].expanded = true
         }
       }
 
