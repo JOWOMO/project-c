@@ -131,6 +131,7 @@ export default class extends Vue {
       ...EMPTY_TEAM,
       number: ++this.counter
     };
+    record.expanded = true
     if (this.workflow.type === RegistrationFlow.demand) {
       this.demands.push(record);
     } else {
