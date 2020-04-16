@@ -6,7 +6,6 @@ from .render import render
 def match_template(data):
     frontend = environ["FRONTEND_URL"] if "FRONTEND_URL" in environ else 'http://localhost:5000'
 
-    match_html = load_file('match.html')
     subject = "{name} {term} {team}".format(**data)
     body = render("match.html", data)
     
