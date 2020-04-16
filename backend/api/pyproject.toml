@@ -14,6 +14,7 @@ psycopg2-binary = "^2.8.4"
 flask-cors = "^3.0.8"
 boto3 = "^1.12.35"
 premailer = "^3.6.1"
+aws-xray-sdk = "^2.5.0"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
