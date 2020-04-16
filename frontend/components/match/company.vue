@@ -143,6 +143,8 @@ export default class extends Vue {
 
   @Emit("showall")
   showAllTeams() {
+    // redurects to the details page of the company with the appropriate id
+    this.$router.push(`/dashboard/details/${this.company.id}`)
     return this.company.id;
   }
 

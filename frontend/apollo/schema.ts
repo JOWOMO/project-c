@@ -390,6 +390,40 @@ export type Check_StateQuery = (
   ) }
 );
 
+export type GetCompanyQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type GetCompanyQuery = (
+  { __typename?: 'Query' }
+  & { company?: Maybe<(
+    { __typename?: 'Company' }
+    & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
+    & { industry?: Maybe<(
+      { __typename?: 'Industry' }
+      & Pick<Industry, 'id' | 'name'>
+    )>, contact: (
+      { __typename?: 'CompanyContact' }
+      & Pick<CompanyContact, 'firstName' | 'lastName' | 'pictureUrl'>
+    ), demands?: Maybe<Array<(
+      { __typename?: 'Demand' }
+      & Pick<Demand, 'id' | 'isActive' | 'name' | 'description' | 'quantity' | 'maxHourlySalary'>
+      & { skills: Array<(
+        { __typename?: 'Skill' }
+        & Pick<Skill, 'id' | 'group' | 'name'>
+      )> }
+    )>>, supplies?: Maybe<Array<(
+      { __typename?: 'Supply' }
+      & Pick<Supply, 'id' | 'isActive' | 'name' | 'description' | 'quantity' | 'hourlySalary'>
+      & { skills: Array<(
+        { __typename?: 'Skill' }
+        & Pick<Skill, 'id' | 'group' | 'name'>
+      )> }
+    )>> }
+  )> }
+);
+
 export type DemandMatchesQueryVariables = {
   id: Scalars['ID'];
   radius?: Maybe<Scalars['Int']>;
