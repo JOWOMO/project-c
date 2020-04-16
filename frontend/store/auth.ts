@@ -65,7 +65,7 @@ async function signInAndToken(email: string, password: string): Promise<string> 
 
   // safety check
   await Auth.currentSession();
-  
+
   // @ts-ignore
   await this.$apolloHelpers.onLogin(await getIdToken());
 
@@ -186,4 +186,18 @@ export const actions = {
 
     commit('set', null);
   },
+
+  async updateUser({ commit }: ActionContext<IAuthState, IState>, { firstName, lastName }: Required<Pick<User, 'firstName' | 'lastName'>>) {
+    console.log("user payload", firstName, lastName)
+
+    let user = await Auth.currentAuthenticatedUser();
+
+    await Auth.updateUserAttributes(user, {
+      'given_name': firstName,
+      'family_name': lastName
+    })
+
+    let newUser = await Auth.currentAuthenticatedUser();
+    commit('set', newUser)
+  }
 }

@@ -190,7 +190,7 @@ export default class extends Vue {
     console.debug("updateUser");
 
     try {
-      console.debug("Updating with", this.firstName, this.lastName, this.email);
+      console.log("Updating with", this.firstName, this.lastName, this.email);
 
       const result = await this.$apollo.mutate<
         UserAddMutation,
@@ -203,6 +203,9 @@ export default class extends Vue {
           email: this.email
         }
       });
+
+      console.log("first, last name", this.firstName, this.lastName)
+      await this.$store.dispatch('auth/updateUser', { firstName: this.firstName, lastName: this.lastName })
 
       this.$router.push(`/register/${this.workflow.type}/company`);
     } catch (err) {
