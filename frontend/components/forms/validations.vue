@@ -26,6 +26,10 @@
         v-if="validation.minValue != null && !validation.minValue"
         class="field-validation"
       >{{ label }} kann nicht kleiner als {{validation.$params.minValue.min}} sein.</div>
+      <div
+        v-if="validation.contains != null && !validation.contains"
+        class="field-validation"
+      >Bitte wähle eine {{label}} aus der Liste.</div>
     </div>
   </div>
 </template>
