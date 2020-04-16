@@ -30,6 +30,8 @@ export default class extends Vue {
       menu.style.visibility = "hidden";
       menu.style.display = "block";
 
+      this.$track('navigation', 'show burger menu')
+
       this.menuWidth = menu.offsetWidth;
       this.menuHeight = menu.offsetHeight;
 
@@ -53,6 +55,7 @@ export default class extends Vue {
 
   hide() {
     this.menuElement.classList.remove("menu--active");
+    this.$track('navigation', 'hide burger menu')
   }
 
   optionClicked(option: any) {
@@ -103,7 +106,7 @@ ul, li {
     align-items: center;
 
     // border-radius: 0px 0px $radius/4 $radius/4;
-    
+
     &:hover {
       background-color: $primary;
       color: #ffffff;

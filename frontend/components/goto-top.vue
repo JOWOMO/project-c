@@ -16,6 +16,7 @@ export default class extends Vue {
 
   backToTop() {
     this.scroller.scrollTo(0, 0);
+    this.$track('navigation', 'go to top')
   }
 
   scrolled(evt: any) {

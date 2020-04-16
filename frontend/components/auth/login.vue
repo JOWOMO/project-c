@@ -35,7 +35,7 @@ import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput },
-  
+
 })
 export default class extends Vue {
   @Validate({ required, email })
@@ -53,10 +53,12 @@ export default class extends Vue {
 
   cancel() {
     this.$emit("change-state", "back");
+    this.$track('registration', 'canceled')
   }
 
   resetPassword() {
     this.$emit("change-state", "reset");
+    this.$track('registration', "password reset")
   }
 
   @LoadingAnimation
@@ -90,10 +92,10 @@ export default class extends Vue {
         this.$emit("change-state", "validate");
         return;
       }
-
-      this.$swal( 
-        "Das hat nicht geklappt", 
-        this.error, 
+      this.$track('registration', 'error', this.error)
+      this.$swal(
+        "Das hat nicht geklappt",
+        this.error,
         "error"
       );
     }

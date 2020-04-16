@@ -1,6 +1,6 @@
 <template>
-  <!-- 
-    element needs tabindex to receive focus/blur 
+  <!--
+    element needs tabindex to receive focus/blur
     context menu needs to be inside to be part of the focus group
   -->
   <div class="frame" ref="frame" tabindex="0" @click="show" @blur="hide">
@@ -40,10 +40,12 @@ export default class extends Vue {
 
   show(event: MouseEvent) {
     this.contextmenu.show(event, this.avtr);
+    this.$track('navigation', 'avatar expaned')
   }
 
   hide() {
     this.contextmenu.hide();
+    this.$track('navigation', 'avatar expaned')
   }
 }
 </script>

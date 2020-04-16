@@ -72,8 +72,10 @@ export default class extends Vue {
   changeTeam(team: any) {
     if (team.__typename == "Demand") {
       this.$router.push(`/dashboard/demand/${team.id}`);
+      this.$track('navigation', 'change Team to demands')
     } else {
       this.$router.push(`/dashboard/supply/${team.id}`);
+      this.$track('navigation', 'change Team to supplies')
     }
   }
 

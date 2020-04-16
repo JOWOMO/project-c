@@ -106,7 +106,7 @@ export default class extends Vue {
     console.debug("Filter changed dashboard", filter);
     this.$set(this.filter, "range", filter.range);
 
-    this.$track('dashboard', 'changed filter', filter.range)
+    this.$track('dashboard', 'changed filter', filter.range.toString())
   }
 
   get company() {

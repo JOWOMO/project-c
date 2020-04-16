@@ -26,9 +26,9 @@ export default class extends Vue {
 
   get currentSelected() {
     if (this.selectedItem) { return this.selectedItem; }
-
-    return this.options.length > 0 
-      ? this.options[0] 
+    
+    return this.options.length > 0
+      ? this.options[0]
       : this.selectedItem;
   }
 

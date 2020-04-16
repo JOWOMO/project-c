@@ -1,5 +1,5 @@
 <template>
-  <div class="team">  
+  <div class="team">
     <div v-if="!editTeam.expanded">
       <div class="team-header">
         <h2>Team {{ formattedNumber }}</h2>
@@ -240,6 +240,8 @@ export default class extends Vue {
   cancel() {
     this.value.expanded = false;
     this.update(this.value);
+
+    this.$track('teams', 'canceled team editing')
   }
 
   confirm() {
@@ -250,6 +252,7 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('teams', 'saved team after editing')
     this.editTeam.modified = true;
     this.editTeam.expanded = false;
 

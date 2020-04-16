@@ -73,6 +73,7 @@ export default class extends Vue {
   @Emit('change-state')
   back() {
     return 'reset';
+    this.$track('registration', 'new password back to enter email')
   }
 
   @LoadingAnimation
@@ -104,6 +105,7 @@ export default class extends Vue {
     } catch (err) {
       console.error(err);
       this.error = formatMessage(err);
+      this.$track('registration', 'error during new password', this.error)
     }
   }
 }

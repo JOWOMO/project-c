@@ -7,8 +7,8 @@
       <div class="subline">
         <div>{{ me.postalCode }} {{ me.city }}</div>
         <div class="km">
-          <dropdown 
-            class="dropdown" 
+          <dropdown
+            class="dropdown"
             :options="['+5 Kilometer', '+10 Kilometer', '+20 Kilometer', '+30 Kilometer', '+50 Kilometer', '+70 Kilometer', '+100 Kilometer']"
             :selected="'+30 Kilometer'"
             @input="changeRange"
@@ -53,11 +53,15 @@ export default class extends Vue {
   @Emit("viewtype")
   listview() {
     return "list";
+
+    this.$track('dashboard', 'map view')
   }
 
   @Emit("viewtype")
   mapview() {
     return "map";
+
+    this.$track('dashboard', 'map view')
   }
 }
 </script>

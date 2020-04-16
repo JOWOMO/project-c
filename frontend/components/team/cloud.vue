@@ -57,11 +57,12 @@ export default class extends Vue {
   toggleTag(id: string) {
     if (!find(this.value, v => v == id)) {
       this.value.push(id);
+      this.$track('teams', 'tag cloud add tag', this.skills[id])
     } else {
-
       // we must keep the array instance
       for (var i = 0; i < this.value.length; i++) {
         if (this.value[i] == id) {
+          this.$track('teams', 'tag cloud remove tag', this.value[i])
           this.value.splice(i, 1);
         }
       }
@@ -78,6 +79,7 @@ export default class extends Vue {
 
   @Emit("close-dialog")
   closeDialog() {
+    this.$track('teams', 'closing tag cloud')
     console.debug("close dialog");
   }
 

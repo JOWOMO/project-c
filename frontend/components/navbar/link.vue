@@ -14,6 +14,7 @@ export default class extends Vue {
   navigate() {
     if (this.target) {
       this.$router.push(this.target);
+      this.$track('navigation', 'clicked link from nav bar', this.target)
     }
   }
 }

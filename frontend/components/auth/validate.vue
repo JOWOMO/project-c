@@ -68,10 +68,12 @@ export default class extends Vue {
   @LoadingAnimation
   async resend() {
     try {
+      this.$track('registration', 'resend email')
       await this.$store.dispatch("auth/resendcode", {
         email: this.email
       });
 
+      this.$track('registration', 'resend email error')
       this.$swal(
         "Das hat geklappt",
         "Du solltes eine E-Mail in Deinem Posteingang haben.",
@@ -79,11 +81,11 @@ export default class extends Vue {
       );
     } catch (e) {
       console.error(e);
-
+      this.$track('registration', 'error sending email', formatMessage(e))
       this.$swal("Das hat nicht geklappt", formatMessage(e), "error");
     }
   }
-  
+
   @LoadingAnimation
   async confirm() {
     // stop here if form is invalid
@@ -130,7 +132,7 @@ export default class extends Vue {
     } catch (err) {
       console.error("err: ", err);
       this.error = formatMessage(err);
-
+      this.$track('registration', 'error validate new user (email)', this.error)
       this.$swal("Das hat nicht geklappt", this.error, "error");
     }
   }
