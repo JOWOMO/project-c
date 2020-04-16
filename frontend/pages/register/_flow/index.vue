@@ -178,10 +178,12 @@ export default class extends Vue {
         lastName: this.lastName
       });
 
+      this.$track('registration', 'created User')
       this.$router.push(`/register/${this.workflow.type}/validate`);
     } catch (err) {
       console.log("err: ", err);
       this.error = formatMessage(err);
+      this.$track('authentication', 'registration didnt work', this.error)
       this.$swal("Das hat nicht geklappt", this.error, "error");
     }
   }
@@ -203,11 +205,12 @@ export default class extends Vue {
           email: this.email
         }
       });
-
+      this.$track('registration', 'updated User')
       this.$router.push(`/register/${this.workflow.type}/company`);
     } catch (err) {
       console.error(err);
       this.error = err.message;
+      this.$track('registration', 'error while updating user', this.error)
       this.$swal("Das hat nicht geklappt", this.error, "error");
     }
   }

@@ -101,10 +101,14 @@ export default class extends Vue {
   open() {
     this.current = -1;
     this.isOpen = true;
+
+    this.$track('teams', 'user opend dropdown menu')
   }
 
   close() {
     this.isOpen = false;
+
+    this.$track('teams', 'user closed dropdown menu')
   }
 
   enter(event: KeyboardEvent) {
@@ -117,6 +121,8 @@ export default class extends Vue {
 
     event.cancelBubble = true;
     event.stopPropagation();
+
+    this.$track('teams', 'user stopped editing')
   }
 
   scrollToElement() {
@@ -155,11 +161,15 @@ export default class extends Vue {
     }
 
     this.update(event.target.value || "");
+
+    this.$track('teams', 'editing autocomplete', event.target.value)
   }
 
   suggestionClick(index: number) {
     this.update(this.matches[index]);
     this.close();
+
+    this.$track('teams', 'clicked suggestion', this.matches[index])
   }
 
   parentValidate() {

@@ -32,7 +32,7 @@ export default class extends Vue {
       this.$router.replace(`/register/${this.workflow.type}`);
     }
 
-      // user cannot go foreward here
+    // user cannot go foreward here
     this.$router.replace(`/register/${this.workflow.type}`);
   }
 }

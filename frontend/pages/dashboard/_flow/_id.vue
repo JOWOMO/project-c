@@ -109,6 +109,8 @@ export default class extends Vue {
         .then(data => {
           this.spinnerid += 1;
           this.$set(this.feed, "data", data.data.result);
+
+          this.$track('dashboard', 'loading new data', this.spinnerid.toString())
           resolve();
         })
         .catch(resolve)
@@ -144,6 +146,7 @@ export default class extends Vue {
 
           if (!fetchMoreResult) {
             $state.complete();
+            this.$track('dashboard', 'reached final page')
             return prev;
           }
 

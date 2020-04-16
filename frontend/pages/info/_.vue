@@ -28,6 +28,8 @@ export default class extends Vue {
 
   dashboard() {
     this.$router.replace("/dashboard");
+
+    this.$track('info', 'user redirected to dashboard')
   }
 
   async asyncData(context: Context) {

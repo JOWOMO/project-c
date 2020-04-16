@@ -117,17 +117,21 @@ export default class extends Vue {
 
     if (this.workflow.type === RegistrationFlow.demand) {
       this.demands.push(record);
+      this.$track('teams', 'added team demand', this.counter.toString())
     } else {
       this.supplies.push(record);
+      this.$track('teams', 'added team supply', this.counter.toString())
     }
   }
 
   toggleVisibilitySupply(idx: number) {
     this.$set(this.supplies[idx], "expanded", true);
+    this.$track('teams', 'enter / exit edit mode')
   }
 
   toggleVisibilityDemand(idx: number) {
     this.$set(this.demands[idx], "expanded", true);
+    this.$track('teams', 'enter / exit edit mode')
   }
 
   updateSupply(idx: number, value: TeamDetails) {
@@ -137,8 +141,12 @@ export default class extends Vue {
     if (value.quantity === 0) {
       this.counter -= 1;
       this.supplies.splice(idx, 1);
+
+      this.$track('teams', 'user canceled editing - removed team', 'quantity 0')
     } else {
       this.supplies.splice(idx, 1, value);
+
+      this.$track('teams', 'user canceled editing - removed team')
     }
   }
 
@@ -149,13 +157,16 @@ export default class extends Vue {
     if (value.quantity === 0) {
       this.counter -= 1;
       this.demands.splice(idx, 1);
+      this.$track('teams', 'user canceled editing - removed team', 'quantity 0')
     } else {
       this.demands.splice(idx, 1, value);
+      this.$track('teams', 'user canceled editing - removed team')
     }
   }
 
   back() {
     this.$router.push(`/register/${this.workflow.type}/company`);
+    this.$track('teams', 'going back to company')
   }
 
   @LoadingAnimation
@@ -204,6 +215,7 @@ export default class extends Vue {
       this.$router.push(`/welcome`);
     } catch (err) {
       console.error(err);
+      this.$track('teams', 'error during team editing / creation', err.message)
       this.$swal("Das hat nicht geklappt", err.message, "error");
     }
   }

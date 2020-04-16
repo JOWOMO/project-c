@@ -46,10 +46,12 @@ export default class extends Vue {
 
   demand_register() {
     this.$router.push({ path: "/register/demand" });
+    this.$track('home', 'register demand')
   }
 
   supply_register() {
     this.$router.push({ path: "/register/supply" });
+    this.$track('home', 'register supply')
   }
 
   @Meta

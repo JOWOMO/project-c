@@ -154,6 +154,8 @@ export default class extends Vue {
 
   back() {
     this.$router.push(`/register/${this.workflow.type}`);
+
+    this.$track('registration', 'user went back to personal info')
   }
 
   @LoadingAnimation
@@ -194,11 +196,13 @@ export default class extends Vue {
           industry: this.industry!
         }
       });
-
+      this.$track('registration', 'finished company setup')
       this.$router.push(`/register/${this.workflow.type}/team`);
     } catch (err) {
       console.error(err);
       this.$swal("Das hat nicht geklappt", err.message, "error");
+
+      this.$track('registration', 'error while editing company', err.message)
     }
   }
 

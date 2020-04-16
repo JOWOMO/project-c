@@ -105,6 +105,8 @@ export default class extends Vue {
   changeFilter(filter: Filter) {
     console.debug("Filter changed dashboard", filter);
     this.$set(this.filter, "range", filter.range);
+
+    this.$track('dashboard', 'changed filter', filter.range)
   }
 
   get company() {
@@ -112,10 +114,12 @@ export default class extends Vue {
 
     if (this.flow  === 'supply' && this.supplies) {
       return this.supplies.find((f) => f.id)!.company;
+      this.$track('dashboard', 'flow supply')
     }
 
     if (this.flow  === 'demand' && this.supplies) {
       return this.demands.find((f) => f.id)!.company;
+      this.$track('dashboard', 'flow supply')
     }
 
     return null;

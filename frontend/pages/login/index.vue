@@ -42,11 +42,14 @@ export default class extends Vue {
     if (me != null && me.companies != null) {
       if (me.companies.length > 0) {
         this.$router.push("/dashboard");
+        this.$track('authentication', 'user already logged in and has companies')
       } else {
         this.$router.push("/");
+        this.$track('authentication', 'user already logged in but has no companies')
       }
     } else {
       this.$router.push("/");
+      this.$track('authentication', 'user not logged in')
     }
   }
 }
