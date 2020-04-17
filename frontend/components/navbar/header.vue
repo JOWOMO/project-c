@@ -1,11 +1,11 @@
 <template>
   <div class="item-header">
-    <slot v-bind:selected="selected" />
+    <slot />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide, Prop, Emit, Ref } from "nuxt-property-decorator";
+import { Vue, Component } from "nuxt-property-decorator";
 
 @Component
 export default class extends Vue {

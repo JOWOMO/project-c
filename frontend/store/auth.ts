@@ -24,7 +24,7 @@ declare module "vuex" {
 
   export interface Dispatch {
     (arg: 'auth/load'): Promise<CognitoUser>;
-    (arg: 'auth/register', payload: Required<Pick<User, 'email' | 'password' | 'firstName' | 'lastName'>>): Promise<CognitoUser>;
+    (arg: 'auth/register', payload: Required<Pick<User, 'email' | 'password' | 'firstName' | 'lastName'>> & { flow: string }): Promise<CognitoUser>;
     (arg: 'auth/token'): Promise<string>;
     (arg: 'auth/confirm', payload: Required<Pick<User, 'email'>> & { code: string }): Promise<void>;
     (arg: 'auth/startResetPassword', payload: Required<Pick<User, 'email'>>): Promise<void>;
@@ -97,7 +97,9 @@ export const actions = {
   // continue the registration without additional details
   async register(
     { commit }: ActionContext<IAuthState, IState>,
-    { email, password, firstName, lastName }: Required<Pick<User, 'email' | 'password' | 'firstName' | 'lastName'>>
+    { email, password, firstName, lastName, flow }: Required<
+      Pick<User, 'email' | 'password' | 'firstName' | 'lastName'>
+    > & { flow: string },
   ) {
     const user = await Auth.signUp({
       username: email,
@@ -107,6 +109,7 @@ export const actions = {
         email,
         given_name: firstName,
         family_name: lastName,
+        profile: flow,
       },
     });
 

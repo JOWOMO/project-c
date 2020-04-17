@@ -1,4 +1,10 @@
 query demandMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
+  request: demand(id: $id) {
+    skills {
+      id
+    }
+  }
+
   result: matchDemand(cursor: $cursor, id: $id, radius: $radius) {
     pageInfo {
       offset
@@ -15,6 +21,7 @@ query demandMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
         description
         skills {
           name
+          id
         }
         quantity
         salary: hourlySalary

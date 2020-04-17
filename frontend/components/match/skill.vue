@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     class="tag"
   >
     <span>{{ name }}</span>
@@ -33,6 +33,7 @@ export default class extends Vue {
 
   display: flex;
   align-items: center;
+
   padding-left: 10px;
   padding-right: 10px;
 
@@ -43,6 +44,9 @@ export default class extends Vue {
   span {
     padding: 3px;
     user-select: none;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>

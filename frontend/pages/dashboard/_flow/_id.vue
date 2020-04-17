@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <companyCard
+      class="company-card"
       v-for="result in matches"
       :key="result.match.id"
       :flow="$route.params.flow"
@@ -8,6 +9,7 @@
       :contact="result.match.company.contact"
       :match="result.match"
       :classification="result"
+      :requestedSkills="skills"
       @showall="onShowAll"
       @connect="onConnect"
     />
@@ -51,6 +53,7 @@ import { LoadingAnimation } from "../../../components/loadinganimation";
 })
 export default class extends Vue {
   feed: {
+    skills?: { [id: string]: boolean };
     query?: ObservableQuery<DemandMatchesQuery, DemandMatchesQueryVariables>;
     data?: MatchDemandResult; // other type is equal
   } = {};
@@ -66,6 +69,10 @@ export default class extends Vue {
     return (
       !this.noRecords && this.feed.data && !this.feed.data.pageInfo.hasNextPage
     );
+  }
+
+  get skills() {
+    return this.feed.skills;
   }
 
   get matches() {
@@ -183,6 +190,7 @@ export default class extends Vue {
 
       return new Promise((resolve, fail) => {
         const feed = {
+          skills: {},
           query: matchQuery,
           data: {}
         };
@@ -190,6 +198,12 @@ export default class extends Vue {
         matchQuery.subscribe({
           next({ data }) {
             console.log("received", data);
+
+            feed.skills = (data.request?.skills || []).reduce((p, c) => {
+              p[c.id] = true;
+              return p;
+            }, {} as any);
+
             feed.data = data.result;
 
             // we return first result this way
@@ -218,6 +232,21 @@ export default class extends Vue {
 
 <style scoped lang="scss">
 @import "@/assets/colors";
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-left: -20px;
+}
+
+.company-card {
+  flex: 1 1 650px;
+}
+
+.container > .company-card {
+  margin-left: 20px;
+}
 
 .eof {
   margin-left: 25%;
