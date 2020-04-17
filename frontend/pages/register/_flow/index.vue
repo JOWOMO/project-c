@@ -175,14 +175,15 @@ export default class extends Vue {
         email: this.email,
         password: this.password,
         firstName: this.firstName,
-        lastName: this.lastName
+        lastName: this.lastName,
+        flow: this.workflow.type,
       });
 
       this.$router.push(`/register/${this.workflow.type}/validate`);
     } catch (err) {
       console.log("err: ", err);
       this.error = formatMessage(err);
-      this.$swal("Das hat nicht geklappt", this.error, "error");
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 
@@ -190,7 +191,7 @@ export default class extends Vue {
     console.debug("updateUser");
 
     try {
-      console.debug("Updating with", this.firstName, this.lastName, this.email);
+      console.log("Updating with", this.firstName, this.lastName, this.email);
 
       const result = await this.$apollo.mutate<
         UserAddMutation,
@@ -204,11 +205,14 @@ export default class extends Vue {
         }
       });
 
+      console.log("first, last name", this.firstName, this.lastName)
+      await this.$store.dispatch('auth/updateUser', { firstName: this.firstName, lastName: this.lastName })
+
       this.$router.push(`/register/${this.workflow.type}/company`);
     } catch (err) {
       console.error(err);
       this.error = err.message;
-      this.$swal("Das hat nicht geklappt", this.error, "error");
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 

@@ -10,9 +10,26 @@
       <p class="highlighted" v-if="!singleRow">{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
       <h2 class="highlighted heading" v-else>{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</h2>
 
+      <!-- <div v-if="matchingSkills.length > 0" class="tags-label">Passend zu {{ subject }}</div> -->
+
+      <div
+          :class="{'tags-label': true, 'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
+        >{{ percentage }}% passend zu {{ subject }}</div>
+
       <div class="tags">
         <tag
-          v-for="skill in match.skills"
+          v-for="skill in matchingSkills"
+          :key="skill.id"
+          :skill="skill"
+          :name="skill.name"
+          class="tag"
+        />
+      </div>
+
+      <div v-if="additionalSkills.length > 0" class="tags-label">Zusätzliche Fähigkeiten</div>
+      <div class="tags">
+        <tag
+          v-for="skill in additionalSkills"
           :key="skill.id"
           :skill="skill"
           :name="skill.name"
@@ -43,6 +60,7 @@
         </v-clamp>
       </div>
 
+<<<<<<< HEAD
       <div class="bottom" v-if="!singleRow">
         <div
           :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
@@ -52,6 +70,13 @@
       <div class="bottom" v-else>
         <button class="cta" @click.prevent="connect">Jetzt verbinden</button>
       </div>
+=======
+      <!-- <div class="bottom">
+        <div
+          :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
+        >{{ percentage }}% passend zu {{ subject }}</div>
+      </div> -->
+>>>>>>> 6bcc9ae0730203603852964cd1a4f74d0ca4c045
     </div>
 
     <div class="middle" v-if="!singleRow">
@@ -119,14 +144,25 @@ type MatchDetails = Pick<Demand, "name" | "description" | "quantity" | "id"> & {
 @Component({ components: { tag, VClamp } })
 export default class extends Vue {
   @Prop() flow!: string;
-  @Prop() company?: MatchCompany;
-  @Prop() contact?: MatchContact;
+  @Prop() requestedSkills!: { [id: string]: boolean };
+  @Prop() company!: MatchCompany;
+  @Prop() contact!: MatchContact;
   @Prop() match!: MatchDetails;
   @Prop() classification?: MatchClassification;
   @Prop() singleRow?: Boolean;
 
   get percentage() {
     return Math.round(this.classification.percentage);
+  }
+
+  get matchingSkills() {
+    if (!this.requestedSkills) return [];
+    return this.match.skills.filter((s) => this.requestedSkills[s.id] == true);
+  }
+
+  get additionalSkills() {
+    if (!this.requestedSkills) return this.match.skills;
+    return this.match.skills.filter((s) => this.requestedSkills[s.id] != true);
   }
 
   get distance() {
@@ -141,6 +177,10 @@ export default class extends Vue {
 
   get bestMatch() {
     return this.classification.percentage >= 70 ? true : false;
+  }
+
+  get subject() {
+    return this.flow == "demand" ? "Deiner Suche" : "Deinem Angebot";
   }
 
   get teaserAll() {
@@ -160,7 +200,11 @@ export default class extends Vue {
 
   @Emit("connect")
   connect() {
-    return { id: this.match.id, name: this.contact.firstName, pictureUrl: this.contact.pictureUrl };
+    return {
+      id: this.match.id,
+      name: this.contact.firstName,
+      pictureUrl: this.contact.pictureUrl
+    };
   }
 }
 </script>
@@ -218,8 +262,15 @@ export default class extends Vue {
     font-weight: 500;
   }
 
+<<<<<<< HEAD
   .heading {
     padding: 0;
+=======
+  .tags-label {
+    color: $textcolor;
+    font-size: 12px;
+    margin-top: 6px;
+>>>>>>> 6bcc9ae0730203603852964cd1a4f74d0ca4c045
   }
 
   .tags {
@@ -298,11 +349,11 @@ export default class extends Vue {
 }
 
 .full-match {
-  color: $success;
+  color: $success !important;
 }
 
 .partial-match {
-  color: $warning;
+  color: $warning !important;
 }
 
 .right {

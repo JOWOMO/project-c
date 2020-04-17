@@ -5,7 +5,7 @@
       <div class="message">
         <h2>{{error.message}}</h2>
         <nuxt-link to="/">
-          Zurück nach Hause in
+          Zurück nach Hause
           <!-- <span>{{ counter }}</span> -->
         </nuxt-link>
       </div>
@@ -55,7 +55,7 @@ export default {
 
     img {
       position: relative;
-      top: 20%;
+      top: 10%;
       left: 50%;
       width: 150px;
       animation: moveShip 6s 1 0s linear;
@@ -89,10 +89,10 @@ export default {
 
       a {
         font-weight: normal;
+        color: #000;
 
         span {
           font-weight: bold;
-          color: $primary;
         }
       }
     }

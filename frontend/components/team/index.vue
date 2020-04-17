@@ -1,5 +1,5 @@
 <template>
-  <div class="team">  
+  <div class="team">
     <div v-if="!editTeam.expanded">
       <div class="team-header">
         <h2>Team {{ formattedNumber }}</h2>
@@ -37,12 +37,6 @@
 
       <form novalidate @submit.prevent>
         <div class="form-group half-width">
-          <!-- <formSelect
-            id="editTeam.name"
-            v-model="editTeam.name"
-            :label="'Bezeichnung'"
-            :values="topics"
-          /> -->
           <formAutoComplete
             id="editTeam.name"
             v-model="editTeam.name"
@@ -168,6 +162,8 @@ export type TeamDetails = {
   }
 })
 export default class extends Vue {
+  // contains = (value:string) => this.topics.indexOf(value) >= 0
+
   @Provide("validation")
   validation() {
     return this.$v;
@@ -196,7 +192,8 @@ export default class extends Vue {
           minValue: minValue(1)
         },
         name: {
-          required
+          required,
+          // contains:this.contains
         },
         skills: {
           required,

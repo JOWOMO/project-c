@@ -16,6 +16,10 @@ where
 """
     )
 
+    # already populated
+    if root is not None and "companies" in root:
+        return root["companies"]
+
     # we're coming from me, principal is already resolved
     if root is not None and "id" in root:
         with db.engine.begin() as conn:

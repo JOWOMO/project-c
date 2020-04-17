@@ -6,6 +6,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Arbitrary JSON Properties for features */
   JSONScalar: any;
 };
 
@@ -327,6 +328,26 @@ export type ConnectMutation = (
   & Pick<Mutation, 'contactMatch'>
 );
 
+export type RemoveDemandMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type RemoveDemandMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeDemand'>
+);
+
+export type RemoveSupplyMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type RemoveSupplyMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeSupply'>
+);
+
 export type UpdateDemandMutationVariables = {
   id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];
@@ -433,7 +454,13 @@ export type DemandMatchesQueryVariables = {
 
 export type DemandMatchesQuery = (
   { __typename?: 'Query' }
-  & { result: (
+  & { request?: Maybe<(
+    { __typename?: 'Demand' }
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result: (
     { __typename?: 'MatchSupplyResult' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
@@ -447,7 +474,7 @@ export type DemandMatchesQuery = (
         & { salary: Supply['hourlySalary'] }
         & { skills: Array<(
           { __typename?: 'Skill' }
-          & Pick<Skill, 'name'>
+          & Pick<Skill, 'name' | 'id'>
         )>, company: (
           { __typename?: 'Company' }
           & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
@@ -473,7 +500,13 @@ export type SupplyMatchesQueryVariables = {
 
 export type SupplyMatchesQuery = (
   { __typename?: 'Query' }
-  & { result: (
+  & { request?: Maybe<(
+    { __typename?: 'Supply' }
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result: (
     { __typename?: 'MatchDemandResult' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
@@ -487,7 +520,7 @@ export type SupplyMatchesQuery = (
         & { salary: Demand['maxHourlySalary'] }
         & { skills: Array<(
           { __typename?: 'Skill' }
-          & Pick<Skill, 'name'>
+          & Pick<Skill, 'name' | 'id'>
         )>, company: (
           { __typename?: 'Company' }
           & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
