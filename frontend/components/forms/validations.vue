@@ -23,6 +23,10 @@
         class="field-validation"
       >{{ label }} muss mindestens {{validation.$params.minLength.min}} Zeichen lang sein.</div>
       <div
+        v-if="validation.maxLength != null && !validation.maxLength"
+        class="field-validation"
+      >{{ label }} darf höchstens {{validation.$params.maxLength.max}} Zeichen lang sein.</div>
+      <div
         v-if="validation.minValue != null && !validation.minValue"
         class="field-validation"
       >{{ label }} kann nicht kleiner als {{validation.$params.minValue.min}} sein.</div>

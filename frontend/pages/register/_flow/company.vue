@@ -44,7 +44,7 @@ import {
 import { InjectReactive, Emit } from "vue-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
-import { required, numeric, minValue } from "vuelidate/lib/validators";
+import { required, numeric, minValue, minLength, maxLength } from "vuelidate/lib/validators";
 
 import { CognitoUser } from "@aws-amplify/auth";
 
@@ -89,7 +89,7 @@ export default class extends Vue {
   @Validate({ required })
   address: string | null | undefined = "";
 
-  @Validate({ required, numeric })
+  @Validate({ required, numeric, minLength: minLength(5), maxLength: maxLength(5) })
   postalcode?: string | null | undefined = "";
 
   @Validate({ required })

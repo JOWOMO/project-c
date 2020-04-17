@@ -1,4 +1,4 @@
-from graphene import ObjectType, Field, Schema, ID, Int, List, String, NonNull, Argument
+from graphene import ObjectType, Field, Schema, Boolean, ID, Int, List, String, NonNull, Argument
 from btb.api.schema.types import (
     User,
     Demand,
@@ -10,6 +10,7 @@ from btb.api.schema.types import (
     MatchQueryInput,
     CursorInput,
     Industry,
+    PostalCodeMatch,
 )
 from btb.api.schema.resolvers import (
     me as resolveme,
@@ -25,7 +26,8 @@ from btb.api.schema.resolvers import (
     industries as industies_resolver,
     active_demands_by_principal,
     active_supplies_by_principal,
-    team_names
+    team_names,
+    validate_postal_code
 )
 from btb.api.schema.mutations import (
     UpdateCompany,
@@ -55,6 +57,12 @@ class Query(ObjectType):
     industries = List(NonNull(Industry), required=True, resolver=industies_resolver)
     team_names = List(NonNull(String), required=True, resolver=team_names)
     
+    postal_code = Field(
+        List(PostalCodeMatch),
+        code = Argument(String, required=True),
+        resolver=validate_postal_code
+    )
+
     match_demand = Field(
         MatchSupplyResult,
         cursor=Argument(CursorInput),

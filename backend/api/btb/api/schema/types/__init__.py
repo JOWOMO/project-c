@@ -4,3 +4,4 @@ from .skills import Skill
 from .industry import Industry
 from .match import MatchDemandResult, MatchSupplyResult, MatchQueryInput, CursorInput
 from .scalar import JSONScalar
+from .postal_code_match import PostalCodeMatch
