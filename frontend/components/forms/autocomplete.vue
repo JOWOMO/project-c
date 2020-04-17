@@ -159,7 +159,6 @@ export default class extends Vue {
   }
 
   suggestionClick(index: number) {
-    console.log("clicked: ",index)
     this.update(this.matches[index]);
     this.close();
   }
