@@ -31,7 +31,7 @@
         v-for="(suggestion, index) in matches"
         v-bind:key="suggestion"
         v-bind:class="{'active': isActive(index)}"
-        @click="suggestionClick(index)"
+        @mousedown="suggestionClick(index)"
       >{{ suggestion }}</div>
     </div>
 

@@ -1,11 +1,17 @@
 query supplyMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
-  result: matchSupply(cursor: $cursor, id: $id, radius: $radius) {    
+  request: supply(id: $id) {
+    skills {
+      id
+    }
+  }
+
+  result: matchSupply(cursor: $cursor, id: $id, radius: $radius) {
     pageInfo {
       offset
       pageSize
       hasNextPage
     }
-    
+
     matches {
       distance
       percentage
@@ -15,6 +21,7 @@ query supplyMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
         description
         skills {
           name
+          id
         }
         quantity
         salary: maxHourlySalary
