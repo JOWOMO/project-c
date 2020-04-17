@@ -1,13 +1,16 @@
 <template>
   <navBar :key="$route.path" :horizontal="horizontal">
     <slot name="header"></slot>
-    
+
     <hdr v-if="!horizontal">Navigation</hdr>
     <item v-if="!horizontal" :selected="is('/')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
-    <item :selected="isPath('/info/faq')" v-slot:default="is">
-      <lnk :selected="is.selected" :text="'FAQ'" :target="'/info/faq'" />
+     <item :selected="isPath('/info/faq')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/faq'" />
+    </item>
+    <item :selected="isPath('/info/about')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'Über uns'" :target="'/info/about'" />
     </item>
 
     <item v-if="horizontal">
@@ -56,7 +59,7 @@ export default class extends Vue {
 <style scoped lang="scss">
 .down {
   margin-top: 24px;
-  margin-left: 24px; 
+  margin-left: 24px;
   margin-right: 24px;
   min-width: calc(100% - 48px);
 }

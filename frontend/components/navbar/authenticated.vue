@@ -10,7 +10,10 @@
       <lnk :selected="is.selected" :text="'Meine Suchergebnisse'" :target="'/dashboard'" />
     </item>
     <item :selected="isPath('/info/faq')" v-slot:default="is">
-      <lnk :selected="is.selected" :text="'FAQ'" :target="'/info/faq'" />
+      <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/faq'" />
+    </item>
+    <item :selected="isPath('/info/about')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'Über uns'" :target="'/info/about'" />
     </item>
 
     <hdr v-if="!horizontal">Benutzerprofil</hdr>

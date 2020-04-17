@@ -171,7 +171,7 @@ export default class extends Vue {
 }
 
 .header {
-  padding-top: 34px;
+  padding-top: 46px;
   padding-left: 20px;
   padding-right: 48px;
 }
