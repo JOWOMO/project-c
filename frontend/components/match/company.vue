@@ -60,7 +60,6 @@
         </v-clamp>
       </div>
 
-<<<<<<< HEAD
       <div class="bottom" v-if="!singleRow">
         <div
           :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
@@ -70,13 +69,6 @@
       <div class="bottom" v-else>
         <button class="cta" @click.prevent="connect">Jetzt verbinden</button>
       </div>
-=======
-      <!-- <div class="bottom">
-        <div
-          :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
-        >{{ percentage }}% passend zu {{ subject }}</div>
-      </div> -->
->>>>>>> 6bcc9ae0730203603852964cd1a4f74d0ca4c045
     </div>
 
     <div class="middle" v-if="!singleRow">
@@ -262,15 +254,10 @@ export default class extends Vue {
     font-weight: 500;
   }
 
-<<<<<<< HEAD
-  .heading {
-    padding: 0;
-=======
   .tags-label {
     color: $textcolor;
     font-size: 12px;
     margin-top: 6px;
->>>>>>> 6bcc9ae0730203603852964cd1a4f74d0ca4c045
   }
 
   .tags {
