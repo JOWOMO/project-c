@@ -107,6 +107,9 @@ insert into btb_data.team_name (name)
     ('Verkäufer')
 on conflict do nothing;
 
+-- wipe data
+truncate table btb_data.centered_postalcodes;
+
 insert into btb_data.centered_postalcodes
 select postalcode, st_centroid(st_union(ST_SetSRID(ST_MakePoint(longitude, latitude),4326))) as centoid
 from 
