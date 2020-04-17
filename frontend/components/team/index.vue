@@ -1,5 +1,5 @@
 <template>
-  <div class="team">  
+  <div class="team">
     <div v-if="!editTeam.expanded">
       <div class="team-header">
         <h2>Team {{ formattedNumber }}</h2>
@@ -40,9 +40,8 @@
           <formAutoComplete
             id="editTeam.name"
             v-model="editTeam.name"
-            :label="'Bezeichnung'"
+            :label="'Bezeichnung (Freitext)'"
             :suggestions="topics"
-            
           />
         </div>
 
@@ -163,8 +162,7 @@ export type TeamDetails = {
   }
 })
 export default class extends Vue {
-
-  contains = (value:string) => this.topics.indexOf(value) >= 0
+  // contains = (value:string) => this.topics.indexOf(value) >= 0
 
   @Provide("validation")
   validation() {
@@ -195,7 +193,7 @@ export default class extends Vue {
         },
         name: {
           required,
-          contains:this.contains
+          // contains:this.contains
         },
         skills: {
           required,
