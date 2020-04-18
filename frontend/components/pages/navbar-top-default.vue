@@ -6,11 +6,14 @@
     <item v-if="!horizontal" :selected="is('/')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
-     <item :selected="isPath('/info/faq')" v-slot:default="is">
-      <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/faq'" />
+     <item :selected="isPath('/info/process')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/process'" />
     </item>
     <item :selected="isPath('/info/about')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Über uns'" :target="'/info/about'" />
+    </item>
+    <item :selected="isPath('/info/faq')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'FAQ'" :target="'/info/faq'" />
     </item>
 
     <item v-if="horizontal">

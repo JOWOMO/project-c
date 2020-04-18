@@ -1,7 +1,21 @@
 <template>
-  <div class="container">
-    <component class="markdown" :is="content" />
-  </div>
+  <leftNav>
+    <template slot="navbar">
+      <topBar :hideLogo="true" />
+    </template>
+
+    <template slot="left">
+      <sidebar class="sidebar">
+        <sec :name="menu.label">
+          <item v-for="m in (menu.items || [])" :key="m.label" :name="m.label" :to="m.to" />
+        </sec>
+      </sidebar>
+    </template>
+
+    <template slot="body">
+      <component class="markdown" :is="content" />
+    </template>
+  </leftNav>
 </template>
 
 <script lang="ts">
@@ -9,12 +23,27 @@ import { Component, Vue, Provide } from "nuxt-property-decorator";
 import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 
-@Component
+import leftNav from "@/components/pages/navbar-left.vue";
+import topBar from "@/components/pages/topbar.vue";
+
+import sidebar from "@/components/sidebar/bar.vue";
+import item from "@/components/sidebar/item.vue";
+import sec from "@/components/sidebar/section.vue";
+
+import faq from "@/components/faq.vue";
+import about from "@/components/about/block.vue";
+import sponsor from "@/components/about/sponsor.vue";
+
+
+@Component({
+  components: { sidebar, item, sec, leftNav, topBar },
+  layout: "main-left"
+})
 export default class extends Vue {
   title: string = "";
   description: string = "";
-
   content: string = "";
+  menu: any;
 
   @Meta
   head() {
@@ -26,18 +55,22 @@ export default class extends Vue {
     };
   }
 
-  dashboard() {
-    this.$router.replace("/dashboard");
-  }
-
   async asyncData(context: Context) {
     try {
       let content = await import(`~/content/${context.params.pathMatch}.md`);
 
+      const other = {
+        extends: content.vue.component,
+        components: {
+          faq, about, sponsor,
+        }
+      };
+
       return {
         title: content.attributes?.title,
         description: content.attributes?.description,
-        content: content.vue.component
+        content: other,
+        menu: content.attributes?.menu || {}
       };
     } catch (e) {
       console.error(e);
@@ -51,42 +84,78 @@ export default class extends Vue {
 @import "@/assets/colors";
 @import "@/assets/scales";
 
-.container {
-  justify-content: left;
-  align-items: flex-start;
+$grid: 44px;
 
-  overflow-y: auto;
-  padding: 50px;
+.sidebar {
+  display: flex;
+}
 
+.markdown /deep/ {
+  color: $textcolor;
+  font-size: $textsize;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  hyphens: auto;
+  text-align: center;
+
+  button {
+    margin-top: $grid/4 * 3;
+  }
+
+  h1 {
+    padding-bottom: $grid;
+    // color: $secondary;
+  }
+
+  .hl-secondary {
+    color: $secondary;
+  }
+
+  h2 {
+    padding-bottom: $grid/4 * 3;
+  }
+
+  p + h2 {
+    padding-top: $grid/2;
+  }
+
+  h3 {
+    padding-bottom: $grid/4;
+  }
+
+  p {
+    padding-bottom: $grid/4;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  th {
+    color: $headercolor;
+    font-size: $h3FontSize;
+    text-align: left;
+  }
+
+  td {
+    color: $textcolor;
+  }
+}
+
+@media only screen and (min-width: $breakpoint_md) {
   .markdown /deep/ {
-    h1 {
-      padding-bottom: 48px;
-    }
+    padding-right: 0;
 
-    h2 {
-      padding-bottom: 24px;
-    }
+    align-items: flex-start;
+    text-align: left;
 
-    p + h2 {
-      padding-top: 24px;
-    }
-
-    h3 {
-      padding-bottom: 12px;
-    }
-
-    p {
-      padding-bottom: 12px;
-    }
-
-    th {
-      color: $headercolor;
-      font-size: $h3FontSize;
+    h1,
+    h2,
+    h3,
+    h4 {
       text-align: left;
-    }
-
-    td {
-      color: $textcolor;
     }
   }
 }

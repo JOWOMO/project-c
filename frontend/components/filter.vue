@@ -2,7 +2,7 @@
   <div class="filter">
     <div class="left">
       <div class="header">
-        <h1>Finde Personal-Partner</h1>
+        <h1>Finde Deine Personal-Partner</h1>
       </div>
       <div class="subline">
         <div>{{ me.postalCode }} {{ me.city }}</div>

@@ -1,15 +1,17 @@
 <template>
   <div class="imprint">
-    <div>&copy; 2020 Hackathon</div>
-    <div>
-      <nuxt-link to="/info/imprint">Impressum</nuxt-link>
+    <div class="links">
+      <div>
+        <nuxt-link to="/info/imprint">Impressum</nuxt-link>
+      </div>
+      <div>
+        <nuxt-link to="/info/privacy">Datenschutz</nuxt-link>
+      </div>
+      <div>
+        <nuxt-link to="/info/agb">AGB</nuxt-link>
+      </div>
     </div>
-    <div>
-      <nuxt-link to="/info/privacy">Datenschutz</nuxt-link>
-    </div>
-    <div>
-      <nuxt-link to="/info/agb">AGB</nuxt-link>
-    </div>
+    <div class="copy">&copy; 2020 JOWOMO</div>
   </div>
 </template>
 
@@ -24,24 +26,27 @@ export default class extends Vue {}
 @import "@/assets/colors";
 
 .imprint {
-  height: 40px;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-
   font-size: 14px;
   color: $textcolor;
-
-  div {
-    margin-left: 20px;
-  }
 
   a {
     font-size: 14px;
     color: $textcolor;
     font-weight: normal;
+  }
+
+  .links,
+  .copy {
+    margin-left: 48px;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    div {
+      margin-right: 20px;
+    }
   }
 }
 </style>

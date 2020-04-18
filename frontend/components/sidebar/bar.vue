@@ -6,6 +6,9 @@
     <row class="menu">
       <slot />
     </row>
+    <row :height="54">
+      <imprint />
+    </row>
   </layout>
 </template>
 
@@ -17,8 +20,10 @@ import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
 import logo from "@/components/logo.vue";
 
+import imprint from "@/components/imprint.vue";
+
 @Component({
-  components: { layout, column, row, logo }
+  components: { layout, column, row, logo, imprint }
 })
 export default class extends Vue {}
 </script>

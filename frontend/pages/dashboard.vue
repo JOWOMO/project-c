@@ -20,6 +20,7 @@
 
     <template slot="left">
       <sidebar
+        class="left"
         :key="flow+selectedId"
         :demands="demands"
         :supplies="supplies"
@@ -32,7 +33,6 @@
       <filterElement v-if="company" class="filter" :me="company" @change-filter="changeFilter" />
       <nuxt-child :filter="filter" />
       <top />
-      <imprint />
     </template>
   </leftNav>
 </template>
@@ -45,7 +45,6 @@ import filterElement, { Filter, DEFAULT_FILTER } from "@/components/filter.vue";
 
 import item from "@/components/navbar/item.vue";
 import burger from "@/components/menu/burger.vue";
-import imprint from "@/components/imprint.vue";
 
 import topbar from "@/components/pages/topbar.vue";
 import navbarAuthenticated from "@/components/pages/navbar-top-authenticated.vue";
@@ -75,7 +74,6 @@ import { Context } from "@nuxt/types";
     burger,
     teamItems,
     leftNav,
-    imprint,
     topbar,
   },
   middleware: "authenticated",
@@ -154,6 +152,10 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/scales";
+
+.left {
+  display: flex;
+}
 
 .filter {
   margin-bottom: 40px;

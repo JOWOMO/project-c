@@ -2,7 +2,20 @@
   <div :class="{'element': true, 'selected': selected}">
     <slot>
       <img v-if="selected" height="16" width="16" src="/icons/arrow-right.svg" />
-      <nuxt-link v-if="to" :class="{'selected': selected}" :to="to">{{name}}</nuxt-link>
+      <a
+        v-if="to && to.startsWith('#')"
+        :class="{'selected': selected}"
+        :href="to"
+      >
+        {{name}}
+      </a>
+      <nuxt-link
+        v-else-if="to"
+        :class="{'selected': selected}"
+        :to="to"
+      >
+        {{name}}
+      </nuxt-link>
       <p v-else>{{ name }}</p>
       <img v-if="checked" height="18" width="18" src="/icons/checkmark.svg" />
     </slot>

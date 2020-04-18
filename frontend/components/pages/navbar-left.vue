@@ -45,7 +45,7 @@ export default class extends Vue {
 
 .scroller {
   overflow-y: scroll;
-  padding: 20px;
+  padding: 44px;
   padding-top: 0px;
   padding-right: 48px;
 }
@@ -71,7 +71,8 @@ export default class extends Vue {
     overflow: unset;
     width: 100vw;
 
-    padding-top: 20px;
+    padding-left: 20px;
+    padding-top: 44px;
     padding-right: 20px;
 
     height: calc(100vh - 120px) !important;
