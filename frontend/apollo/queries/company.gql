@@ -1,0 +1,44 @@
+query getCompany($id:ID!){
+  company(id:$id) {
+    id
+    name
+    addressLine1
+    postalCode
+    city
+    industry {
+      id
+      name
+    }
+    contact {
+      firstName
+      lastName
+      pictureUrl
+    }
+    demands {
+      id
+      isActive
+      name
+      description
+      skills {
+        id
+        group
+        name
+      }
+      quantity
+      maxHourlySalary
+    }
+    supplies {
+      id
+      isActive
+      name
+      description
+      skills {
+        id
+        group
+        name
+      }
+      quantity
+      hourlySalary
+    }
+  }
+}
