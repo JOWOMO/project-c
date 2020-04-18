@@ -92,6 +92,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "assets/colors";
+@import "@/assets/scales";
 
 .taglist {
   display: flex;
@@ -153,18 +154,4 @@ export default class extends Vue {
     }
   }
 }
-
-// @media only screen and (max-width: 765px) {
-//   .card {
-//     width: 90%;
-//     height: 90%;
-//     left: 5%;
-
-//     .head {
-//       button {
-//         width: 30px !important;
-//       }
-//     }
-//   }
-// }
 </style>

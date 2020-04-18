@@ -72,6 +72,7 @@ export default {
     '@/plugins/vuelidate.js',
     '@/plugins/swal.ts',
     '@/plugins/tracking.ts',
+    '@/plugins/mq.ts'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -162,7 +163,7 @@ export default {
     noscriptURL: 'https://www.googletagmanager.com/ns.html'
   },
   sentry: {
-    dsn: '', 
+    dsn: '',
     disabled: true,
     disableServerSide: true,
     config: {}, // Additional config

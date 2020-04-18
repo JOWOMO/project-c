@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="center">
-      <topbar />
+      <topbar class="topbar" />
       <nuxt class="screen-center" />
       <cookies />
     </div>
@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import topbar from "@/components/topbar.vue";
+import topbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
 
 @Component({
@@ -26,6 +26,10 @@ export default class extends Vue {}
 <style lang="scss" scoped>
 @import "@/assets/screen";
 @import "@/assets/colors";
+
+.topbar {
+  background-color: white;
+}
 
 .center {
   display: flex;

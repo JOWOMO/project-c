@@ -1,5 +1,5 @@
 <template>
-  <navBar :key="$route.path" :horizontal="horizontal">
+  <navBar :horizontal="horizontal">
     <slot name="header"></slot>
 
     <hdr v-if="!horizontal">Navigation</hdr>
@@ -7,7 +7,7 @@
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
     <item :selected="isPath('/dashboard')" v-slot:default="is">
-      <lnk :selected="is.selected" :text="'Meine Suchergebnisse'" :target="'/dashboard'" />
+      <lnk :selected="is.selected" :text="'Meine Partner'" :target="'/dashboard'" />
     </item>
     <item :selected="isPath('/info/faq')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/faq'" />
@@ -43,13 +43,13 @@ import {
   Emit,
   Ref
 } from "nuxt-property-decorator";
-import navBar from "./bar.vue";
-import lnk from "./link.vue";
-import item from "./item.vue";
-import avatar from "./avatar.vue";
-import hdr from "./header.vue";
 
-@Component({ components: { navBar, lnk, item, avatar, hdr } })
+import navBar from "@/components/navbar/bar.vue";
+import lnk from "@/components/navbar/link.vue";
+import item from "@/components/navbar/item.vue";
+import hdr from "@/components/navbar/header.vue";
+
+@Component({ components: { navBar, lnk, item, hdr } })
 export default class extends Vue {
   @Prop() name!: string;
   @Prop({ default: true }) horizontal!: boolean;

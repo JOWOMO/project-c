@@ -28,9 +28,9 @@
 
 <script lang="ts">
 import { mapGetters } from "vuex";
-import lnk from "./link.vue";
-import item from "./item.vue";
-import hdr from "./header.vue";
+import lnk from "@/components/navbar/link.vue";
+import item from "@/components/navbar/item.vue";
+import hdr from "@/components/navbar/header.vue";
 
 import { Vue, Component, Prop } from "nuxt-property-decorator";
 

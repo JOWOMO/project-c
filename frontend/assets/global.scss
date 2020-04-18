@@ -21,7 +21,7 @@ html, body {
   background: $background;
   margin: 0;
   padding: 0;
-} 
+}
 
 h1 {
   font-size: $h1FontSize;
@@ -60,7 +60,7 @@ button {
   background: $uiComponent;
   font-size: $buttonFormText;
   font-weight: 500;
-  
+
   transition: all .5s ease;
   border: none;
   outline: none;
@@ -77,7 +77,7 @@ a {
   cursor: pointer;
 
   &:hover {
-    color: darken($primary, 10%) !important;;
+    color: darken($primary, 10%);
   }
 }
 

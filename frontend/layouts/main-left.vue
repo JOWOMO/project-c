@@ -10,7 +10,6 @@ import { Component, Vue } from "nuxt-property-decorator";
 import cookies from "@/components/cookies.vue";
 
 @Component({
-  middleware: "authenticated",
   components: {cookies}
 })
 export default class extends Vue {}

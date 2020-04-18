@@ -9,40 +9,46 @@
       <b>Mehrbedarf</b> in Unternehmen zu decken und so Arbeitsplätze zu schützen.
     </div>
 
-    <div class="two-rows">
-      <div class="two-columns grow">
-        <div class="login-scale">
-          <div class="left" />
-          <div class="index-cta">
-            <h1>
-              Ich
-              <b>biete</b>
-              <br />Mitarbeiter
-            </h1>
-            <button @click="supply_register" class="third">
-              {{ action_text }}
-              <img src="/icons/arrow-right.svg" />
-            </button>
-          </div>
+    <!-- <div class="two-rows"> -->
+    <div class="two-columns grow">
+      <div class="login-scale">
+        <div class="left" />
+        <div class="index-cta">
+          <h1>
+            Ich
+            <b>biete</b>
+            <br />Mitarbeiter:innen
+          </h1>
+          <button @click="supply_register" class="third">
+            {{ action_text }}
+            <img src="/icons/arrow-right.svg" />
+          </button>
         </div>
-
-        <div class="login-scale">
-          <div class="right" />
-          <div class="index-cta">
-            <h1>
-              Ich
-              <b>suche</b>
-              <br />Mitarbeiter
-            </h1>
-            <button v-on:click="demand_register" class="third">
-              {{ action_text }}
-              <img src="/icons/arrow-right.svg" />
-            </button>
-          </div>
-        </div>
+        <div
+          class="text"
+        >Du kannst deine Mitarbeiter:innen momentan nicht beschäftigen? Setze sie ein, wo sie gebraucht werden.</div>
       </div>
 
-      <div class="two-columns">
+      <div class="login-scale">
+        <div class="right" />
+        <div class="index-cta">
+          <h1>
+            Ich
+            <b>suche</b>
+            <br />Mitarbeiter:innen
+          </h1>
+          <button v-on:click="demand_register" class="third">
+            {{ action_text }}
+            <img src="/icons/arrow-right.svg" />
+          </button>
+        </div>
+        <div
+          class="text"
+        >Finde hier Arbeitskräfte, um den derzeitigen Mehrbedarf in Deinem Unternehmen zu decken.</div>
+      </div>
+    </div>
+
+    <!-- <div class="two-columns">
         <div
           class="text"
         >Du kannst deine Mitarbeiter:innen momentan nicht beschäftigen? Setze sie ein, wo sie gebraucht werden.</div>
@@ -51,7 +57,7 @@
           class="text"
         >Finde hier Arbeitskräfte, um den derzeitigen Mehrbedarf in Deinem Unternehmen zu decken.</div>
       </div>
-    </div>
+    </div>-->
 
     <div class="section white">
       <div class="hr">
@@ -174,6 +180,7 @@ $fullheight: calc(100vh - 120px);
 
 h1 {
   font-weight: 100;
+  hyphens: auto;
 }
 
 .hr {
@@ -215,6 +222,7 @@ h1 {
   display: flex;
   flex-direction: row;
   position: relative;
+  min-height: $fullheight;
 
   & > * {
     width: 50%;
@@ -242,7 +250,6 @@ h1 {
 }
 
 .text {
-  width: 50%;
   background-color: $border;
   padding: 22px 44px;
   font-size: $h3FontSize;
@@ -262,7 +269,8 @@ h1 {
   display: block;
   justify-content: center;
 
-  h1 + p, h3 + p {
+  h1 + p,
+  h3 + p {
     padding-top: $padding;
   }
 
@@ -274,10 +282,13 @@ h1 {
 .login-scale {
   display: flex;
   flex: 1;
+  height: $fullheight;
 
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   flex-direction: column;
+
+  position: relative;
 
   button {
     width: 100%;
@@ -297,42 +308,51 @@ h1 {
 
   .index-cta {
     position: absolute;
-  }
-
-  .left,
-  .right {
-    width: 100%;
-    height: 100%;
-
-    background-size: cover;
-    -webkit-filter: brightness(90%);
-  }
-
-  .left {
-    background: url(/images/1.jpg) center center no-repeat;
-  }
-
-  .right {
-    background: url(/images/2.jpg) center center no-repeat;
-  }
-
-  &:hover {
-    .left,
-    .right {
-      -webkit-filter: brightness(60%);
-      -webkit-transition: all 1s ease;
-      -moz-transition: all 1s ease;
-      -o-transition: all 1s ease;
-      -ms-transition: all 1s ease;
-      transition: all 1s ease;
-    }
+    bottom: 120px;
   }
 }
 
-@media only screen and (max-width: 765px) {
-  .container {
+.left,
+.right {
+  flex: 1;
+  width: 100%;
+  background-size: auto;
+  -webkit-filter: brightness(90%);
+}
+
+.left {
+  background: url(/images/1_720.jpg) left top no-repeat;
+}
+
+.right {
+  background: url(/images/2_720.jpg) right top no-repeat;
+}
+
+.left:hover,
+.right:hover {
+  -webkit-filter: brightness(60%);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+@media only screen and (max-width: $breakpoint_md) {
+  .two-columns {
     flex-direction: column;
-    display: block;
+
+    & > * {
+      width: 100%;
+    }
+  }
+
+  .three-columns {
+    flex-direction: column;
+
+    & > * {
+      width: 100%;
+    }
   }
 }
 </style>

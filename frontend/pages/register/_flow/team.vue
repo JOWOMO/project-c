@@ -161,7 +161,7 @@ export default class extends Vue {
     }
   }
 
-  async remove(type: "supply" | "demand", idx: number) {  
+  async remove(type: "supply" | "demand", idx: number) {
     const array = type === "supply" ? this.supplies : this.demands;
 
     const action = await this.$swal.confirm(
@@ -200,7 +200,7 @@ export default class extends Vue {
 
   async back() {
     const names = this.checkModifiedTeams();
-    
+
     // check if one team is expanded and if list not empty
     if (names.length > 0) {
       this.$track("registration", "modified", "Zurück");
@@ -371,6 +371,7 @@ export default class extends Vue {
 
 <style scoped lang="scss">
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .container {
   h1 {
@@ -407,7 +408,7 @@ export default class extends Vue {
   min-width: 800px;
 }
 
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: $breakpoint_vl) {
   // we first make the grid smaller
   .container {
     min-width: 550px;
@@ -415,7 +416,7 @@ export default class extends Vue {
   }
 }
 
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: $breakpoint_sm) {
   .container {
     min-width: 100vw;
     max-width: 100vw;
@@ -491,7 +492,7 @@ export default class extends Vue {
   }
 }
 
-@media only screen and (max-width: 1321px) {
+@media only screen and (max-width: $breakpoint_vl + 180px) {
   .team-container {
     .action {
       flex-direction: row;

@@ -105,7 +105,7 @@ export default class extends Vue {
       ) {
         result.error = `Du hast heute schon zu viele Anfragen gestellt. Bitte versuch es Morgen noch einmal.`;
       } else if (
-        mutation.errors 
+        mutation.errors
       ) {
         result.error = `Es ist ein unbekannter Fehler aufgetreten: ` + mutation.errors[0].message;
       }
@@ -121,6 +121,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .container {
   display: flex;
@@ -198,7 +199,7 @@ p {
   }
 }
 
-@media only screen and (max-width: 765px) {
+@media only screen and (max-width: $breakpoint_sm) {
  .images {
     .frame {
       border: 3px solid $border;

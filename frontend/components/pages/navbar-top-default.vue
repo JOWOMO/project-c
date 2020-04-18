@@ -1,5 +1,5 @@
 <template>
-  <navBar :key="$route.path" :horizontal="horizontal">
+  <navBar :horizontal="horizontal">
     <slot name="header"></slot>
 
     <hdr v-if="!horizontal">Navigation</hdr>
@@ -31,10 +31,10 @@ import {
   Emit,
   Ref
 } from "nuxt-property-decorator";
-import navBar from "./bar.vue";
-import lnk from "./link.vue";
-import item from "./item.vue";
-import hdr from "./header.vue";
+import navBar from "@/components/navbar/bar.vue";
+import lnk from "@/components/navbar/link.vue";
+import item from "@/components/navbar/item.vue";
+import hdr from "@/components/navbar/header.vue";
 
 @Component({ components: { navBar, lnk, item, hdr } })
 export default class extends Vue {
