@@ -4,7 +4,7 @@
     <item v-for="(element) in demands" :key="'d_' + element.id">
       <lnk
         :text="element.name"
-        :target="'/dashboard/demand/' + element.id"
+        :target="'/dashboard/match/demand/' + element.id"
         :selected="element.id == selected && flow == 'demand'"
       />
     </item>
@@ -16,7 +16,7 @@
     <item v-for="(element) in supplies" :key="'s_' + element.id">
       <lnk
         :text="element.name"
-        :target="'/dashboard/supply/' + element.id"
+        :target="'/dashboard/match/supply/' + element.id"
         :selected="element.id == selected && flow == 'supply'"
       />
     </item>

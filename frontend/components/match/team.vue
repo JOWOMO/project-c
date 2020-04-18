@@ -1,17 +1,8 @@
 <template>
   <div class="card">
     <div class="left">
-      <h2>{{ company.name }}</h2>
-      <div class="location">
-        <img height="10px" width="10px" src="/icons/pin.svg" alt />
-        <span>{{ distance }} entfernt</span>
-      </div>
-
-      <p class="highlighted">{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
-
-      <div
-          :class="{'tags-label': true, 'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
-        >{{ percentage }}% passend zu {{ subject }}</div>
+      <h2>{{ teaser }} {{ match.quantity }} Mitarbeiter</h2>
+      <p class="highlighted heading">{{ match.name }}</p>
 
       <div class="tags">
         <tag
@@ -57,37 +48,6 @@
         </v-clamp>
       </div>
 
-      <!-- <div class="bottom">
-        <div
-          :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
-        >{{ percentage }}% passend zu {{ subject }}</div>
-      </div> -->
-    </div>
-
-    <div class="middle">
-      <div class="line" />
-    </div>
-
-    <div class="right">
-      <div class="contact">Deine Kontaktperson</div>
-
-      <img class="contact-image" v-if="contact.pictureUrl" :src="contact.pictureUrl" />
-
-      <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
-      <h4>{{ (company.industry || {}).name }}</h4>
-
-      <div class="address">
-        <span>{{ company.addressLine1 }}</span>
-        <br />
-        <span>{{ company.postalCode }}</span>
-        <span>{{ company.city }}</span>
-      </div>
-
-      <a class="all" @click.prevent="showAllTeams">
-        <span>Alle {{ teaserAll }} anzeigen</span>
-        <img width="14px" height="14px" src="/icons/arrow-right.svg" />
-      </a>
-
       <div class="bottom">
         <button class="cta" @click.prevent="connect">Jetzt verbinden</button>
       </div>
@@ -129,15 +89,9 @@ type MatchDetails = Pick<Demand, "name" | "description" | "quantity" | "id"> & {
 @Component({ components: { tag, VClamp } })
 export default class extends Vue {
   @Prop() flow!: string;
-  @Prop() requestedSkills!: { [id: string]: boolean };
-  @Prop() company!: MatchCompany;
-  @Prop() contact!: MatchContact;
   @Prop() match!: MatchDetails;
-  @Prop() classification!: MatchClassification;
-
-  get percentage() {
-    return Math.round(this.classification.percentage);
-  }
+  @Prop() contact!: MatchContact;
+  @Prop() requestedSkills!: { [id: string]: boolean };
 
   get matchingSkills() {
     if (!this.requestedSkills) return [];
@@ -149,35 +103,12 @@ export default class extends Vue {
     return this.match.skills.filter((s) => this.requestedSkills[s.id] != true);
   }
 
-  get distance() {
-    return this.classification.distance < 1000
-      ? Math.round(this.classification.distance) + "m"
-      : Math.round(this.classification.distance / 1000) + "km";
-  }
-
-  get bestMatch() {
-    return this.classification.percentage >= 70 ? true : false;
-  }
-
-  get subject() {
-    return this.flow == "demand" ? "Deiner Suche" : "Deinem Angebot";
-  }
-
   get teaserAll() {
     return this.flow !== "demand" ? "Gesuche" : "Verfügbarkeiten";
   }
 
   get teaser() {
     return this.flow !== "demand" ? "Sucht" : "Bietet";
-  }
-
-  @Emit("showall")
-  showAllTeams() {
-    return {
-      flow: this.flow,
-      id: this.match.id,
-      company: this.company.id,
-    }
   }
 
   @Emit("connect")
@@ -205,7 +136,7 @@ export default class extends Vue {
   border-radius: 8px;
 
   display: grid;
-  grid-template-columns: 1fr 64px 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
 }
 
@@ -219,8 +150,6 @@ export default class extends Vue {
 }
 
 .left {
-  grid-column: 1;
-
   .location {
     padding-top: 6px;
 
@@ -307,20 +236,6 @@ export default class extends Vue {
   margin-top: 24px;
 }
 
-.middle {
-  grid-column: 2;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .line {
-    height: 100%;
-    width: 1px;
-    background: $border;
-  }
-}
-
 .full-match {
   color: $success !important;
 }
@@ -329,56 +244,7 @@ export default class extends Vue {
   color: $warning !important;
 }
 
-.right {
-  grid-column: 3;
-
-  .contact {
-    color: $textcolor;
-    font-size: 12px;
-  }
-
-  .contact-image {
-    padding-top: 24px;
-  }
-
-  h3 {
-    padding-top: 12px;
-  }
-
-  h4 {
-    padding-top: 4px;
-    // color: $textcolor;
-    font-weight: 500;
-  }
-
-  .address {
-    padding-top: 20px;
-    font-size: 12px;
-    color: $textcolor;
-  }
-
-  a {
-    font-size: 14px;
-
-    img {
-      padding-top: 4px;
-      margin-left: 16px;
-    }
-  }
-
-  .all {
-    padding-top: 20px;
-  }
-
-  button {
-    margin-top: 24px;
-
-    min-width: 250px;
-    max-width: 250px;
-  }
-}
-
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: $breakpoint_vl) {
   .card {
     grid-template-columns: 1fr;
   }
@@ -387,27 +253,9 @@ export default class extends Vue {
     grid-column: 1;
     grid-row: 1;
   }
-
-  .middle {
-    grid-column: 1;
-    grid-row: 2;
-
-    // display: none;
-    height: 64px;
-
-    .line {
-      height: 1px;
-      width: 100%;
-    }
-  }
-
-  .right {
-    grid-column: 1;
-    grid-row: 3;
-  }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: $breakpoint_md) {
   .card {
     grid-template-columns: 1fr;
   }
@@ -415,28 +263,6 @@ export default class extends Vue {
   .left {
     grid-column: 1;
     grid-row: 1;
-  }
-
-  .middle {
-    grid-column: 1;
-    grid-row: 2;
-
-    // display: none;
-    height: 64px;
-
-    .line {
-      height: 1px;
-      width: 100%;
-    }
-  }
-
-  .right {
-    grid-column: 1;
-    grid-row: 3;
-
-    button {
-      min-width: 100%;
-    }
   }
 }
 </style>

@@ -130,8 +130,14 @@ export default {
     // optional
     errorHandler: '~/plugins/apollo-error-handler.js',
     // required
+    defaultOptions: {
+      $query: {
+        fetchPolicy: 'network-only',
+      }
+    },
     clientConfigs: {
       default: {
+        cache: null,
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
         httpLinkOptions: {
           fetchOptions: {

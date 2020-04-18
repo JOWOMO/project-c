@@ -5,7 +5,7 @@
         v-for="(team) in demands"
         :key="team.id"
         :name="team.name"
-        :to="'/dashboard/demand/' + team.id"
+        :to="'/dashboard/match/demand/' + team.id"
         :selected="team.id == selected && flow == 'demand'"
       />
 
@@ -19,7 +19,7 @@
         v-for="(team) in supplies"
         :key="team.id"
         :name="team.name"
-        :to="'/dashboard/supply/' + team.id"
+        :to="'/dashboard/match/supply/' + team.id"
         :selected="team.id == selected && flow == 'supply'"
       />
 

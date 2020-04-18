@@ -32,7 +32,6 @@ import getDemandMatch from "@/apollo/queries/dashboard/demand.gql";
 import getSupplyMatch from "@/apollo/queries/dashboard/supply.gql";
 
 import companyCard from "@/components/match/company.vue";
-import { loadMatch } from "../dataloader";
 import { ObservableQuery } from "apollo-client";
 import {
   MatchDemandResult,
@@ -41,12 +40,12 @@ import {
   GetDemandsQueryVariables,
   DemandMatchesQuery,
   DemandMatchesQueryVariables
-} from "../../../apollo/schema";
+} from "../../../../apollo/schema";
 
 import infinite, { StateChanger } from "vue-infinite-loading";
 import { ConnectParams } from "@/pages/connect/_.vue";
 import { Filter, DEFAULT_FILTER } from "~/components/filter.vue";
-import { LoadingAnimation } from "../../../components/loadinganimation";
+import { LoadingAnimation } from "../../../../components/loadinganimation";
 
 @Component({
   components: { companyCard, infinite }
@@ -85,12 +84,18 @@ export default class extends Vue {
     this.reload(filter);
   }
 
-  onShowAll(company: string) {
-    // this.$router.push(`/dashboard/demand/${this.dem[0].id}`);
+  onShowAll(match: {id: string, company: string, flow: string}) {
+    this.$router.push({
+      path: `/dashboard/company/${match.flow == 'demand' ? 'supply' : 'demand'}/${match.id}`,
+      query: {
+        flow: this.$route.params.flow,
+        id: this.$route.params.id,
+      }
+    });
   }
 
   onConnect(party: any) {
-    this.$track("dashboard", "connect", "Jetzt Verbinden");
+    this.$track("dashboard", "connect", "match", "Jetzt verbinden");
 
     const params: ConnectParams = {
       flow: this.$route.params.flow,

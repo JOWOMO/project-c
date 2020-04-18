@@ -73,10 +73,10 @@ export default class extends Vue {
       let result: Partial<Pick<this, "error" | "name" | "route">> = {};
 
       const params: ConnectParams = JSON.parse(atob(context.params.pathMatch));
-      console.log('connect', params);
+      console.debug('connect', params);
 
       result.name = params.name;
-      result.route = `/dashboard/${params.flow}/${params.origin}`;
+      result.route = `/dashboard/match/${params.flow}/${params.origin}`;
 
       const client = context.app.apolloProvider!.defaultClient;
       const mutation = await client.mutate<

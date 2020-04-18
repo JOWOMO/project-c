@@ -1,4 +1,5 @@
-<template></template>
+<template>
+</template>
 
 <script lang="ts">
 import { Vue, Component, State } from "nuxt-property-decorator";
@@ -19,12 +20,12 @@ export default class extends Vue {
 
   async created() {
     if (this.dem.length > 0) {
-      this.$router.replace(`/dashboard/demand/${this.dem[0].id}`);
+      this.$router.replace(`/dashboard/match/demand/${this.dem[0].id}`);
       return;
     }
 
     if (this.sup.length > 0) {
-      this.$router.replace(`/dashboard/supply/${this.sup[0].id}`);
+      this.$router.replace(`/dashboard/match/supply/${this.sup[0].id}`);
       return;
     }
 
@@ -32,7 +33,7 @@ export default class extends Vue {
       this.$router.replace(`/register/${this.user?.attributes?.profile}`);
     } else {
       await this.$swal.alert(
-        'Du musst Deine Registrierung noch abschließen', 
+        'Du musst Deine Registrierung noch abschließen',
         `Bitte entscheide Dich auf der Startseite für 'Ich suche Mitarbeiter' oder 'Ich biete Mitarbeiter'. Danach kannst Du mit der Suche nach passenden Personalpartnern anfangen.`,
         'info'
       );
