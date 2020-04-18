@@ -17,10 +17,8 @@ body {
     height: 37px;
     width: 500px;
 
-    background: url('#url#/images/logo.svg');
-    background-repeat: no-repeat;
 
-    box-sizing:w border-box;
+    box-sizing: border-box;
     margin-bottom: 19px;
     margin-top: 19px;
 }
