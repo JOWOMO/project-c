@@ -167,11 +167,12 @@ CREATE TABLE IF NOT EXISTS btb_data.centered_postalcodes
     point geography  
 );
 
--- drop table if exists btb_data.contact_request;
+-- drop table if exists btb_data.contact_request cascade;
 CREATE TABLE IF NOT EXISTS btb_data.contact_request
 (
+    id uuid NOT NULL default uuid_generate_v4(),
+    date_created timestamp with time zone not null default now(),
     external_id text not null,
-    date timestamp with time zone not null default now(),
     
     distance integer,
     match_type text not null,
@@ -180,6 +181,9 @@ CREATE TABLE IF NOT EXISTS btb_data.contact_request
     request jsonb not null,
 
     response_id uuid not null,
-    response jsonb not null
+    response jsonb not null,
+
+    date_accepted timestamp with time zone,
+    date_rejected timestamp with time zone
 );
 

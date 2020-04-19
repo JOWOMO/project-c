@@ -83,7 +83,7 @@ export default class extends Vue {
         match.flow == "demand" ? "supply" : "demand"
       }/${match.id}`,
       query: {
-        flow: this.$route.params.flow,
+        // flow: this.$route.params.flow,
         id: this.$route.params.id
       }
     });
@@ -101,7 +101,7 @@ export default class extends Vue {
     };
 
     console.log("onConnect", params);
-    this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
+    this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
   @State((s: IState) => s.match.filter)

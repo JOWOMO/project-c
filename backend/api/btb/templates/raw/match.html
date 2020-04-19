@@ -34,12 +34,17 @@
             line-height: 50px;
 
             margin-top: 50px;
+            margin-bottom: 44px;
         }
 
         .template .cto-all {
             margin-top: 51px;
             padding-bottom: 44px;
             font-size: 14px;
+        }
+
+        .template .optout {
+            padding-top: 44px;
         }
     </style>
 </header>
@@ -72,23 +77,23 @@
 
                                 <h1>#name# #term# #team#</h1>
                                 <div class="team">
-                                    <a href="#url#/dashboard/#team_type#/#team_id#">
-                                        Team von #name# anzeigen
+                                    <a href="#url#/dashboard/company/#team_type#/#team_id#?id=#your_team_id#&disable=1">
+                                        Teams von #name# anzeigen
                                     </a>
                                 </div>
 
                                 <div class="myteam">
                                     <h2>Passend zu Deinem Team</h2>
-                                    <a href="#url#/dashboard/#your_team_type#/#your_team_id#">#your_team#</a>
+                                    <a href="#url#/register/#your_team_type#/team?id=#your_team_id#">#your_team#</a>
                                 </div>
 
-                                <a href="#url#/contact?type=#team_type#&id=#team_id#">
+                                <a href="#url#/connect/response/#match_id#">
                                     <div class="cto">#name# per E-Mail antworten</div>
                                 </a>
 
-                                <a href="#url#/dashboard/#team_type#/#team_id#">
+                                <!-- <a href="#url#/dashboard/company/#team_type#/#team_id#">
                                     <div class="cto-all">Alles von #name# anzeigen</div>
-                                </a>
+                                </a> -->
                             </td>
                         </tr>
                     </table>
@@ -99,10 +104,10 @@
                     <table class="template" width="540px" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td align="center">                         
-                                <div class="optout">Falls Du von uns keine E-Mails zu passenden Teams erhalten möchtest, kannst du diese hier <a href="#url#/optout/#external_id#">abbestellen</a></div>
+                                <div class="optout">Falls Du von uns keine E-Mails zu passenden Teams erhalten möchtest, kannst Du die Teams hier <a href="#url#">deaktivieren</a>.</div>
                                 <br />
                                 <div class="terms">
-                                    Du erhältst diese Mail weil Du bei <a href="#url#">JOWOMO</a> ein Team hinterlegt hast.
+                                    Du erhältst diese Mail, weil Du bei <a href="#url#">JOWOMO</a> angemeldet bist und ein passendes Team hinterlegt hast.
                                     <br/>
                                     <a href="#url#/agb">AGB</a> | <a href="#url#/impressum">Impressum</a>
                                 </div>

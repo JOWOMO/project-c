@@ -48,7 +48,7 @@
         </v-clamp>
       </div>
 
-      <div class="bottom">
+      <div v-if="!disableConnect" class="bottom">
         <button class="cta" @click.prevent="connect">Jetzt verbinden</button>
       </div>
     </div>
@@ -92,6 +92,7 @@ export default class extends Vue {
   @Prop() match!: MatchDetails;
   @Prop() contact!: MatchContact;
   @Prop() requestedSkills!: { [id: string]: boolean };
+  @Prop({default: false}) disableConnect!: boolean;
 
   get matchingSkills() {
     if (!this.requestedSkills) return [];

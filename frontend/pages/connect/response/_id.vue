@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div v-if="!error">
+    <div>
       <div class="images">
         <div class="frame">
           <div class="img left" />
@@ -10,16 +10,17 @@
         </div>
       </div>
 
-      <h1>{{ name }} wurde kontaktiert</h1>
-      <p>Wir haben {{ name }} benachrichtigt. Wenn es klappt könnt ihr Euch persönlich über alle weiteren Details austauschen.</p>
-    </div>
-    <div v-else>
-      <h1 class="error">Das hat leider nicht geklappt!</h1>
-      <p>{{error}}</p>
+      <h1>{{data.firstName}} hat Dich gefunden!</h1>
+
+      <h2>{{data.firstName}} {{data.lastName}}</h2>
+      <p class="padding">{{data.name}}</p>
+      <p>{{data.addressLine1}}, {{data.postalCode}} {{data.city}}</p>
+      <p class="padding email">{{data.email}}</p>
     </div>
 
     <div class="buttons">
-      <button class="primary" @click.prevent="dashboard">Meine Suchergebnisse</button>
+      <button class="primary" @click.prevent="email">Per E-Mail antworten</button>
+      <button class="secondary" @click.prevent="faq">Fragen zur Abwicklung</button>
     </div>
   </div>
 </template>
@@ -29,12 +30,12 @@ import { Component, Vue, Provide } from "nuxt-property-decorator";
 import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 import {
-  ConnectMutation,
-  ConnectMutationVariables,
-  MatchType
-} from "../../apollo/schema";
+  SetMatchStateMutation,
+  SetMatchStateMutationVariables,
+  MatchDetails,
+} from "@/apollo/schema";
 
-import connectMutation from "@/apollo/mutations/connect.gql";
+import connectMutation from "@/apollo/mutations/connect_state.gql";
 
 export type ConnectParams = {
   match: string;
@@ -48,9 +49,7 @@ export type ConnectParams = {
   middleware: "authenticated"
 })
 export default class extends Vue {
-  name: string = "";
-  error: string = "";
-  route: string = "";
+  data!: MatchDetails;
 
   @Meta
   head() {
@@ -60,54 +59,45 @@ export default class extends Vue {
     };
   }
 
-  dashboard() {
-    this.$router.replace(this.route || "/welcome");
+  faq() {
+    this.$track('connect', 'faq');
+    this.$router.push('/info/faq');
+  }
+
+  email() {
+    this.$track('connect', 'mail');
+    window.open(`mailto:${this.data.email}?subject=Ihre Nachricht über JOWOMO!`)
   }
 
   created() {
-    this.$track('connect', this.error ? 'failed' : 'success', this.error);
+    this.$track('connect', 'response');
   }
 
   async asyncData(context: Context) {
     try {
-      let result: Partial<Pick<this, "error" | "name" | "route">> = {};
-
-      const params: ConnectParams = JSON.parse(atob(context.params.pathMatch));
-      console.debug('connect', params);
-
-      result.name = params.name;
-      result.route = `/dashboard/match/${params.flow}/${params.origin}`;
+      let result: Partial<Pick<this, "data" >> = {};
 
       const client = context.app.apolloProvider!.defaultClient;
       const mutation = await client.mutate<
-        ConnectMutation,
-        ConnectMutationVariables
+        SetMatchStateMutation,
+        SetMatchStateMutationVariables
       >({
         mutation: connectMutation,
         variables: {
-          id: params.match,
-          origin: params.origin,
-          type: params.flow === "demand" ? MatchType.Demand : MatchType.Supply
+          id: context.params.id!,
         },
         errorPolicy: "all"
       });
 
       if (
         mutation.errors &&
-        mutation.errors[0].message == "TOO_MANY_RECIPIENT"
+        mutation.errors[0].message == "NOT_FOUND"
       ) {
-        result.error = `Du hast ${params.name} schon einmal wegen ${
-          "demand" ? "dieses Gesuchs" : "diesem Team"
-        } kontaktiert. Wir haben Deine Anfrage nicht noch einmal weitergleitet. Bitte hab etwas Geduld.`;
-      } else if (
-        mutation.errors &&
-        mutation.errors[0].message == "TOO_MANY_REQUESTS"
-      ) {
-        result.error = `Du hast heute schon zu viele Anfragen gestellt. Bitte versuch es Morgen noch einmal.`;
-      } else if (
-        mutation.errors
-      ) {
-        result.error = `Es ist ein unbekannter Fehler aufgetreten: ` + mutation.errors[0].message;
+        context.error({ statusCode: 404, message: 'Der Datensatz konnte nicht gefunden werden' });
+      } else if (mutation.errors) {
+        context.error({ statusCode: 500, message: `Es ist ein unbekannter Fehler aufgetreten: ` + mutation.errors[0].message });
+      } else {
+        result.data = mutation.data!.setMatchState!;
       }
 
       return result;
@@ -140,13 +130,21 @@ h1 {
   text-align: center;
 }
 
-.error {
-  color: $secondary;
+h2 {
+  text-align: center;
 }
 
 p {
   max-width: 600px;
   text-align: center;
+}
+
+.email {
+  color: $headercolor;
+}
+
+.padding {
+  padding-top: $gridsize/2;
 }
 
 .buttons {

@@ -24,6 +24,11 @@ export default class extends Vue {
   visible = false;
 
   toggle() {
+    // next action is visible
+    if (!this.visible) {
+      this.$track('faq', this.question);
+    }
+
     this.visible = !this.visible;
   }
 }
