@@ -17,20 +17,20 @@ def send_email(to_email, template):
     response = client.send_email(
         Destination={
             'ToAddresses': [
-                from_email,
+                to_email, 
             ],
         },
         Message={
             'Body': {
                 'Html': {
-                    'Charset': 'utft-8',
+                    'Charset': 'UTF-8',
                     'Data': template.body,
                 },
             },
             'Subject': {
-                'Charset': 'utft-8',
+                'Charset': 'UTF-8',
                 'Data': template.subject,
             },
         },
-        Source=to_email,
+        Source=from_email,
     )

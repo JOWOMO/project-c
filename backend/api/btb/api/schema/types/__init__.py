@@ -1,4 +1,4 @@
-from .company import Company, Demand, Supply
+from .company import Company, Demand, Supply, CompanyContact
 from .user import User
 from .skills import Skill
 from .industry import Industry

@@ -1,6 +1,6 @@
 import { Plugin } from '@nuxt/types'
 
-type Category = 'authentication' | 'registration' | 'teams' | 'dashboard' | 'connect';
+type Category = 'authentication' | 'registration' | 'teams' | 'dashboard' | 'connect' | 'faq';
 
 declare module '@nuxt/types' {
     interface Context {

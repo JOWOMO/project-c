@@ -1,0 +1,13 @@
+fragment DemandInfo on Demand {
+  id
+  name
+  description
+
+  skills {
+    name
+    id
+  }
+
+  quantity
+  salary: maxHourlySalary
+}

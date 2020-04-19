@@ -26,6 +26,7 @@ export type Company = {
 
 export type CompanyContact = {
    __typename?: 'CompanyContact';
+  id: Scalars['ID'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   pictureUrl?: Maybe<Scalars['String']>;
@@ -84,10 +85,27 @@ export type Industry = {
 };
 
 
+export enum MatchAnswer {
+  Accept = 'Accept',
+  Reject = 'Reject'
+}
+
 export type MatchDemandResult = {
    __typename?: 'MatchDemandResult';
   matches: Array<DemandMatch>;
   pageInfo: PageInfo;
+};
+
+export type MatchDetails = {
+   __typename?: 'MatchDetails';
+  id: Scalars['ID'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  pictureUrl?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  addressLine1: Scalars['String'];
+  postalCode: Scalars['String'];
+  city: Scalars['String'];
 };
 
 export type MatchQueryInput = {
@@ -119,6 +137,7 @@ export type Mutation = {
   removeSupply?: Maybe<Scalars['String']>;
   startUploadPicture?: Maybe<S3UploadGrant>;
   contactMatch?: Maybe<Scalars['Boolean']>;
+  setMatchState?: Maybe<MatchDetails>;
 };
 
 
@@ -158,6 +177,12 @@ export type MutationContactMatchArgs = {
   originId: Scalars['ID'];
 };
 
+
+export type MutationSetMatchStateArgs = {
+  answer: MatchAnswer;
+  id: Scalars['ID'];
+};
+
 export type PageInfo = {
    __typename?: 'PageInfo';
   hasNextPage?: Maybe<Scalars['Boolean']>;
@@ -173,7 +198,6 @@ export type Query = {
   activeSupplies?: Maybe<Array<Maybe<Supply>>>;
   demand?: Maybe<Demand>;
   supply?: Maybe<Supply>;
-  company?: Maybe<Company>;
   skills: Array<Skill>;
   industries: Array<Industry>;
   teamNames: Array<Scalars['String']>;
@@ -190,11 +214,6 @@ export type QueryDemandArgs = {
 
 
 export type QuerySupplyArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryCompanyArgs = {
   id: Scalars['ID'];
 };
 
@@ -327,6 +346,19 @@ export type ConnectMutation = (
   & Pick<Mutation, 'contactMatch'>
 );
 
+export type SetMatchStateMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type SetMatchStateMutation = (
+  { __typename?: 'Mutation' }
+  & { setMatchState?: Maybe<(
+    { __typename?: 'MatchDetails' }
+    & Pick<MatchDetails, 'id' | 'email' | 'firstName' | 'lastName' | 'pictureUrl' | 'addressLine1' | 'postalCode' | 'city'>
+  )> }
+);
+
 export type RemoveDemandMutationVariables = {
   id: Scalars['ID'];
 };
@@ -410,6 +442,104 @@ export type Check_StateQuery = (
   ) }
 );
 
+export type CompanyInfoFragment = (
+  { __typename?: 'Company' }
+  & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
+  & { industry?: Maybe<(
+    { __typename?: 'Industry' }
+    & Pick<Industry, 'id' | 'name'>
+  )> }
+);
+
+export type ContactInfoFragment = (
+  { __typename?: 'CompanyContact' }
+  & Pick<CompanyContact, 'id' | 'firstName' | 'lastName' | 'pictureUrl'>
+);
+
+export type DemandInfoFragment = (
+  { __typename?: 'Demand' }
+  & Pick<Demand, 'id' | 'name' | 'description' | 'quantity'>
+  & { salary: Demand['maxHourlySalary'] }
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & Pick<Skill, 'name' | 'id'>
+  )> }
+);
+
+export type SupplyInfoFragment = (
+  { __typename?: 'Supply' }
+  & Pick<Supply, 'id' | 'name' | 'description' | 'quantity'>
+  & { salary: Supply['hourlySalary'] }
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & Pick<Skill, 'name' | 'id'>
+  )> }
+);
+
+export type CompanyDetailsFromDemandQueryVariables = {
+  id: Scalars['ID'];
+  origin: Scalars['ID'];
+};
+
+
+export type CompanyDetailsFromDemandQuery = (
+  { __typename?: 'Query' }
+  & { query?: Maybe<(
+    { __typename?: 'Supply' }
+    & Pick<Supply, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result?: Maybe<(
+    { __typename?: 'Demand' }
+    & Pick<Demand, 'id'>
+    & { company: (
+      { __typename?: 'Company' }
+      & { contact: (
+        { __typename?: 'CompanyContact' }
+        & ContactInfoFragment
+      ), demands?: Maybe<Array<(
+        { __typename?: 'Demand' }
+        & DemandInfoFragment
+      )>> }
+      & CompanyInfoFragment
+    ) }
+  )> }
+);
+
+export type CompanyDetailsFromSupplyQueryVariables = {
+  id: Scalars['ID'];
+  origin: Scalars['ID'];
+};
+
+
+export type CompanyDetailsFromSupplyQuery = (
+  { __typename?: 'Query' }
+  & { query?: Maybe<(
+    { __typename?: 'Demand' }
+    & Pick<Demand, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result?: Maybe<(
+    { __typename?: 'Supply' }
+    & Pick<Supply, 'id'>
+    & { company: (
+      { __typename?: 'Company' }
+      & { contact: (
+        { __typename?: 'CompanyContact' }
+        & ContactInfoFragment
+      ), supplies?: Maybe<Array<(
+        { __typename?: 'Supply' }
+        & SupplyInfoFragment
+      )>> }
+      & CompanyInfoFragment
+    ) }
+  )> }
+);
+
 export type DemandMatchesQueryVariables = {
   id: Scalars['ID'];
   radius?: Maybe<Scalars['Int']>;
@@ -419,7 +549,14 @@ export type DemandMatchesQueryVariables = {
 
 export type DemandMatchesQuery = (
   { __typename?: 'Query' }
-  & { result: (
+  & { request?: Maybe<(
+    { __typename?: 'Demand' }
+    & Pick<Demand, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result: (
     { __typename?: 'MatchSupplyResult' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
@@ -429,22 +566,15 @@ export type DemandMatchesQuery = (
       & Pick<SupplyMatch, 'distance' | 'percentage'>
       & { match: (
         { __typename?: 'Supply' }
-        & Pick<Supply, 'id' | 'name' | 'description' | 'quantity'>
-        & { salary: Supply['hourlySalary'] }
-        & { skills: Array<(
-          { __typename?: 'Skill' }
-          & Pick<Skill, 'name'>
-        )>, company: (
+        & { company: (
           { __typename?: 'Company' }
-          & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
           & { contact: (
             { __typename?: 'CompanyContact' }
-            & Pick<CompanyContact, 'firstName' | 'lastName' | 'pictureUrl'>
-          ), industry?: Maybe<(
-            { __typename?: 'Industry' }
-            & Pick<Industry, 'name'>
-          )> }
+            & ContactInfoFragment
+          ) }
+          & CompanyInfoFragment
         ) }
+        & SupplyInfoFragment
       ) }
     )> }
   ) }
@@ -459,7 +589,14 @@ export type SupplyMatchesQueryVariables = {
 
 export type SupplyMatchesQuery = (
   { __typename?: 'Query' }
-  & { result: (
+  & { request?: Maybe<(
+    { __typename?: 'Supply' }
+    & Pick<Supply, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result: (
     { __typename?: 'MatchDemandResult' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
@@ -469,22 +606,15 @@ export type SupplyMatchesQuery = (
       & Pick<DemandMatch, 'distance' | 'percentage'>
       & { match: (
         { __typename?: 'Demand' }
-        & Pick<Demand, 'id' | 'name' | 'description' | 'quantity'>
-        & { salary: Demand['maxHourlySalary'] }
-        & { skills: Array<(
-          { __typename?: 'Skill' }
-          & Pick<Skill, 'name'>
-        )>, company: (
+        & { company: (
           { __typename?: 'Company' }
-          & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
           & { contact: (
             { __typename?: 'CompanyContact' }
-            & Pick<CompanyContact, 'firstName' | 'lastName' | 'pictureUrl'>
-          ), industry?: Maybe<(
-            { __typename?: 'Industry' }
-            & Pick<Industry, 'name'>
-          )> }
+            & ContactInfoFragment
+          ) }
+          & CompanyInfoFragment
         ) }
+        & DemandInfoFragment
       ) }
     )> }
   ) }
@@ -513,24 +643,6 @@ export type DasboardTeamsQuery = (
       & Pick<Company, 'id' | 'postalCode' | 'city'>
     ) }
   )>>> }
-);
-
-export type GetDemandsQueryVariables = {};
-
-
-export type GetDemandsQuery = (
-  { __typename?: 'Query' }
-  & { companies?: Maybe<Array<(
-    { __typename?: 'Company' }
-    & { demands?: Maybe<Array<(
-      { __typename?: 'Demand' }
-      & Pick<Demand, 'id' | 'name' | 'isActive' | 'description' | 'quantity'>
-      & { skills: Array<(
-        { __typename?: 'Skill' }
-        & Pick<Skill, 'id' | 'name' | 'group'>
-      )> }
-    )>> }
-  )>> }
 );
 
 export type RegistrationCompanyQueryVariables = {};
@@ -593,31 +705,5 @@ export type RegistrationUserQuery = (
   & { me: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
-  ) }
-);
-
-export type GetSkillsQueryVariables = {};
-
-
-export type GetSkillsQuery = (
-  { __typename?: 'Query' }
-  & { skills: Array<(
-    { __typename?: 'Skill' }
-    & Pick<Skill, 'id' | 'name' | 'group'>
-  )> }
-);
-
-export type UserQueryVariables = {};
-
-
-export type UserQuery = (
-  { __typename?: 'Query' }
-  & { me: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
-    & { companies?: Maybe<Array<(
-      { __typename?: 'Company' }
-      & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
-    )>> }
   ) }
 );

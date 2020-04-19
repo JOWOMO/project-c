@@ -40,10 +40,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: "Wikommen",
-      meta: [{ hid: "description", name: "description", content: "" }]
-    };
+    return {};
   }
 
   dashboard() {
@@ -81,6 +78,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .container {
   display: flex;
@@ -154,7 +152,7 @@ p {
   }
 }
 
-@media only screen and (max-width: 765px) {
+@media only screen and (max-width: $breakpoint_sm) {
  c
 
   .buttons {

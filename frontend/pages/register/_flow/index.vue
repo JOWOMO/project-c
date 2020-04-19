@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Persönliche Daten</h1>
-    <p>Wir benötigen ein paar Informationen, um loszulegen</p>
+    <p>Bitte registriere Dich hier als Kontaktperson für Dein Unternehmen.</p>
 
     <form method="POST" @submit.prevent="register" novalidate>
       <div class="form-group half-width">

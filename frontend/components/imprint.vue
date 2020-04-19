@@ -1,15 +1,18 @@
 <template>
   <div class="imprint">
-    <div>&copy; 2020 Hackathon</div>
-    <div>
-      <nuxt-link to="/info/imprint">Impressum</nuxt-link>
+    <div class="links">
+      <div v-if="horizontal">&copy; 2020 JOWOMO</div>
+      <div>
+        <nuxt-link to="/info/imprint">Impressum</nuxt-link>
+      </div>
+      <div>
+        <nuxt-link to="/info/privacy">Datenschutz</nuxt-link>
+      </div>
+      <div>
+        <nuxt-link to="/info/agb">AGB</nuxt-link>
+      </div>
     </div>
-    <div>
-      <nuxt-link to="/info/privacy">Datenschutz</nuxt-link>
-    </div>
-    <div>
-      <nuxt-link to="/info/agb">AGB</nuxt-link>
-    </div>
+    <div v-if="!horizontal" class="copy">&copy; 2020 JOWOMO</div>
   </div>
 </template>
 
@@ -17,31 +20,37 @@
 import { Vue, Component, Prop } from "nuxt-property-decorator";
 
 @Component
-export default class extends Vue {}
+export default class extends Vue {
+  @Prop({default: false}) horizontal!: boolean;
+}
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .imprint {
-  height: 40px;
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-
   font-size: 14px;
   color: $textcolor;
-
-  div {
-    margin-left: 20px;
-  }
 
   a {
     font-size: 14px;
     color: $textcolor;
     font-weight: normal;
+  }
+
+  .links,
+  .copy {
+    margin-left: $gridsize;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    div {
+      margin-right: $pageMarginMin;
+    }
   }
 }
 </style>

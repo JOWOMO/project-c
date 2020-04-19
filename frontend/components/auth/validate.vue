@@ -83,7 +83,7 @@ export default class extends Vue {
       this.$swal.alert("Das hat nicht geklappt", formatMessage(e), "error");
     }
   }
-  
+
   @LoadingAnimation
   async confirm() {
     // stop here if form is invalid
@@ -139,6 +139,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/form-layout-single";
+@import "@/assets/scales";
 
 .link-wrapper {
   padding-top: 10px;
@@ -146,7 +147,7 @@ export default class extends Vue {
 
 .container {
   .buttons {
-    margin-top: 22px;
+    margin-top: $gridsize/2;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <!-- 
-    element needs tabindex to receive focus/blur 
+  <!--
+    element needs tabindex to receive focus/blur
     context menu needs to be inside to be part of the focus group
   -->
   <div class="frame" ref="frame" tabindex="0" @click="show" @blur="hide">
@@ -12,7 +12,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Ref, Emit } from "nuxt-property-decorator";
 import initial from "initials";
-import contextmenu from "./contextmenu.vue";
+import contextmenu from "@/components/menu/contextmenu.vue";
 
 @Component({ components: { contextmenu } })
 export default class extends Vue {

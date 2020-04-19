@@ -1,6 +1,11 @@
 <template>
   <div class="page">
-    <sidebar :labels="labels" :selectedElement="selectedIndex" class="sidebar" />
+    <mq-layout mq="lg+">
+      <sidebar :labels="labels" :selectedElement="selectedIndex" class="sidebar" />
+    </mq-layout>
+    <mq-layout :mq="['sm', 'md']">
+      <topbar class="top" :hideMenu="true" />
+    </mq-layout>
     <nuxt-child @selectelement="selectElement" class="screen-right" />
   </div>
 </template>
@@ -10,7 +15,8 @@ import { Component, Vue, Provide } from "nuxt-property-decorator";
 import { ProvideReactive, Watch } from "vue-property-decorator";
 import { Meta } from "@/components/decorator";
 
-import sidebar from "@/components/sidebars/register.vue";
+import sidebar from "@/components/pages/sidebar-register.vue";
+import topbar from "@/components/pages/topbar.vue";
 import auth from "@/components/auth/index.vue";
 
 export enum RegistrationFlow {
@@ -26,7 +32,8 @@ export type Workflow = {
 @Component({
   components: {
     sidebar,
-    auth
+    auth,
+    topbar,
   },
   layout: "registration"
 })
@@ -39,10 +46,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: this.providedWorfklow?.displayName,
-      meta: [{ hid: "description", name: "description", content: "" }]
-    };
+    return {};
   }
 
   selectElement(value: any) {
@@ -55,7 +59,8 @@ export default class extends Vue {
 
     this.providedWorfklow = {
       type: this.$route.params.flow as RegistrationFlow,
-      displayName: this.$route.params.flow == "demand" ? "Ich suche" : "Ich biete"
+      displayName:
+        this.$route.params.flow == "demand" ? "Ich suche" : "Ich biete"
     };
 
     this.labels.push(this.providedWorfklow.displayName);
@@ -64,14 +69,21 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/scales";
+
 .page {
   display: flex;
   flex-direction: row;
 }
 
+.top {
+  background-color: white;
+}
+
 .sidebar {
   display: flex;
   min-width: 330px;
+  height: 100%;
 }
 
 .screen-right {
@@ -81,33 +93,28 @@ export default class extends Vue {
   min-height: 100vh;
 
   padding-top: 150px;
-  padding-bottom: 44px;
+  padding-bottom: $gridsize;
 
   justify-content: center;
-  // overflow-y: scroll;
 }
 
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: $breakpoint_md) {
   .page {
     flex-direction: column;
   }
 
   .screen-right {
-    padding-top: 44px;
-    padding-bottom: 44px;
+    padding-top: $gridsize;
+    padding-bottom: $gridsize;
 
     flex-shrink: 0;
   }
 }
 
-@media only screen and (max-height: 600px) {
-  // .page {
-  //   display: block;
-  // }
-
+@media only screen and (max-height: $breakpoint_sm) {
   .screen-right {
-    padding-bottom: 44px;
-    padding-top: 44px;
+    padding-bottom: $gridsize;
+    padding-top: $gridsize;
   }
 }
 </style>

@@ -1,36 +1,34 @@
+#import "./DemandInfo.gql"
+#import "./ContactInfo.gql"
+#import "./CompanyInfo.gql"
+
 query supplyMatches($id: ID!, $radius: Int, $cursor: CursorInput) {
-  result: matchSupply(cursor: $cursor, id: $id, radius: $radius) {    
+  request: supply(id: $id) {
+    id 
+    skills {
+      id
+    }
+  }
+
+  result: matchSupply(cursor: $cursor, id: $id, radius: $radius) {
     pageInfo {
       offset
       pageSize
       hasNextPage
     }
-    
+
     matches {
       distance
       percentage
+
       match: demand {
-        id
-        name
-        description
-        skills {
-          name
-        }
-        quantity
-        salary: maxHourlySalary
+        ...DemandInfo
+
         company {
-          id
-          name
-          addressLine1
-          postalCode
-          city
+          ...CompanyInfo
+
           contact {
-            firstName
-            lastName
-            pictureUrl
-          }
-          industry {
-            name
+            ...ContactInfo
           }
         }
       }

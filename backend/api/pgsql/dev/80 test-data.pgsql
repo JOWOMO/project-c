@@ -120,7 +120,15 @@ insert into btb_data.team_demand
 )
 select
     uuid_key,
-    'Bedarf ' || temp_uuid.id,
+    (
+        SELECT name
+        FROM btb_data.team_name 
+        where uuid_key = uuid_key
+        OFFSET floor(random() * (
+                SELECT COUNT(*) FROM btb_data.team_name)
+            )
+        LIMIT 1
+    ),
     3,
     (
         select array_agg(match_id)
@@ -132,7 +140,7 @@ select
             OFFSET floor(random() * (
                     SELECT COUNT(*) FROM btb_data.skill)
                 )
-            LIMIT floor(random() * 10 / 2)
+            LIMIT random()*(8-3)+3
         ) sk
     ),
     floor(random() * 10000),
@@ -154,7 +162,15 @@ insert into btb_data.team_supply
 )
 select
     uuid_key,
-    'Versorgung ' || temp_uuid.id,
+    (
+        SELECT name
+        FROM btb_data.team_name 
+        where uuid_key = uuid_key
+        OFFSET floor(random() * (
+                SELECT COUNT(*) FROM btb_data.team_name)
+            )
+        LIMIT 1
+    ),
     3,
     (
         select array_agg(match_id)
@@ -164,7 +180,7 @@ select
             FROM btb_data.skill 
             where uuid_key = uuid_key
             OFFSET floor(random() * (SELECT COUNT(*) FROM btb_data.skill))
-            LIMIT floor(random() * 10 / 2)
+            LIMIT random()*(8-3)+3
         ) sk
     ),
     floor(random() * 10000),

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Dein Unternehmen</h1>
-    <p>Erzähle uns mehr über Dein Unternehmen</p>
+    <p>Bitte gib die Adresse des Standortes an, an dem Du Mitarbeiter:innen {{ verb }}. Das ist wichtig um einen passenden Personalpartner in Deiner Region zu finden.</p>
 
     <form method="POST" novalidate>
       <div class="form-group half-width">
@@ -81,6 +81,12 @@ export default class extends Vue {
   @Provide("validation")
   validation() {
     return this.$v;
+  }
+
+  get verb() {
+    return this.workflow.type === 'supply'
+      ? 'suchst'
+      : 'stellen kannst';
   }
 
   @Validate({ required })

@@ -35,7 +35,7 @@ export default class extends Vue {
 
   created() {
     const cookies = new Cookies();
-    if (!cookies.get("tracking-consent")) {      
+    if (!cookies.get("tracking-consent")) {
         this.visible = true;
     }
   }
@@ -48,7 +48,7 @@ export default class extends Vue {
 
 .footer {
   background-color: $border;
-  padding: 20px;
+  padding: $gridsize/2;
   color: $textcolor;
 
   position: absolute;
@@ -63,7 +63,7 @@ export default class extends Vue {
 
   .text {
     font-size: 14px;
-    margin-right: 20px;
+    margin-right: $gridsize/2;
 
     a {
       font-size: 14px;
@@ -75,18 +75,18 @@ export default class extends Vue {
       font-size: 14px;
       height: 40px;
       min-width: auto;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-left: $gridsize/2;
+      padding-right: $gridsize/2;
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: $breakpoint_sm) {
   .footer {
     flex-direction: column;
     align-items: center;
 
     .text {
-      margin-bottom: 20px;
+      margin-bottom: $gridsize/2;
     }
   }
 }

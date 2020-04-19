@@ -22,10 +22,6 @@ nav {
   justify-content: flex-end;
   flex-direction: row;
   align-items: center;
-
-  /deep/ .item + .item {
-    margin-left: 50px;
-  }
 }
 
 .vertical {

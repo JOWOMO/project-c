@@ -12,6 +12,7 @@
       @keydown.up="up"
       @focus="open"
       @blur="close"
+      :required="true"
       :class="{ 'is-invalid': submitted && validation.$error }"
     />
 
@@ -31,7 +32,7 @@
         v-for="(suggestion, index) in matches"
         v-bind:key="suggestion"
         v-bind:class="{'active': isActive(index)}"
-        @click="suggestionClick(index)"
+        @mousedown="suggestionClick(index)"
       >{{ suggestion }}</div>
     </div>
 
@@ -214,9 +215,11 @@ $radius: 8px;
   border-top: 0;
   border-radius: 0px 0px $radius $radius;
 
+  color: $textcolor;
+
   .dropdown-menu-element {
     padding: 10px;
-    padding-left: 20px;
+    padding-left: $gridsize/2;
     font-size: $textsize;
 
     &:hover {

@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="background">
-      <img src="/images/ship.svg" />
+      <img src="/images/error/ship.svg" />
     </div>
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
     bottom: 0;
     left: 0;
     width: 100vw;
-    background: url(/images/ocean.svg) no-repeat bottom center;
+    background: url(/images/error/ocean.svg) no-repeat bottom center;
     height: 300px;
     z-index: 1;
 

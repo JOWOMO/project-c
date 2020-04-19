@@ -2,10 +2,6 @@
 @import './colors';
 @import './scales';
 
-$h1FontSize: 36px;
-$h2FontSize: 24px;
-$h3FontSize: 20px;
-
 $buttonFormText: 18px;
 $input-width: 100%;
 
@@ -21,7 +17,7 @@ html, body {
   background: $background;
   margin: 0;
   padding: 0;
-} 
+}
 
 h1 {
   font-size: $h1FontSize;
@@ -48,6 +44,7 @@ h4 {
 
 p {
   font-size: $textsize;
+  line-height: $textsize*1.5;
   color: $textcolor;
 }
 
@@ -60,7 +57,7 @@ button {
   background: $uiComponent;
   font-size: $buttonFormText;
   font-weight: 500;
-  
+
   transition: all .5s ease;
   border: none;
   outline: none;
@@ -77,7 +74,7 @@ a {
   cursor: pointer;
 
   &:hover {
-    color: darken($primary, 10%) !important;;
+    color: darken($primary, 10%);
   }
 }
 
@@ -115,7 +112,7 @@ a {
 
 .cta {
   background-color: $secondary !important;
-  border: 1px solid $border !important;
+  border: 1px solid $secondary !important;
   color: #ffffff !important;
 
   &:hover {

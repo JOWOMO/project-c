@@ -38,6 +38,7 @@ from btb.api.schema.mutations import (
     UpdateUser,
     StartUploadPicture,
     ContactMatch,
+    SetMatchState,
 )
 
 
@@ -51,7 +52,7 @@ class Query(ObjectType):
 
     demand = Field(Demand, id=ID(required=True), resolver=demand_by_id)
     supply = Field(Supply, id=ID(required=True), resolver=supply_by_id)
-    company = Field(Company, id=ID(required=True), resolver=company_by_id)
+    # company = Field(Company, id=ID(required=True), resolver=company_by_id)
 
     skills = List(NonNull(Skill), required=True, resolver=skills_resolver)
     industries = List(NonNull(Industry), required=True, resolver=industies_resolver)
@@ -110,6 +111,8 @@ class Mutation(ObjectType):
 
     start_upload_picture = StartUploadPicture.Field()
     contact_match = ContactMatch.Field()
+
+    set_match_state = SetMatchState.Field()
 
 
 executableSchema = Schema(query=Query, mutation=Mutation)

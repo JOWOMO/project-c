@@ -1,0 +1,34 @@
+#import "./DemandInfo.gql"
+#import "./ContactInfo.gql"
+#import "./CompanyInfo.gql"
+
+query companyDetailsFromDemand($id:ID!, $origin: ID!) {
+  query: supply (id: $origin) {
+    id
+
+    skills {
+      id
+    }
+  }
+
+  result: demand(id: $id) {
+    id
+
+    company {
+      ...CompanyInfo
+
+      contact {
+        ...ContactInfo
+      }
+
+      demands {
+        ...DemandInfo
+      }
+
+      # supplies {
+      #   ...SupplyInfo
+      # }
+    }
+  }
+}
+

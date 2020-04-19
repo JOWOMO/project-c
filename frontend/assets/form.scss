@@ -25,73 +25,79 @@ input:-webkit-autofill {
     position: relative;
 
     .field-validation {
-      // margin-top: 20px;
+      // margin-top: $gridsize/2;
       color: $error;
       padding-top: 4px;
       padding-left: 4px;
       font-size: 12px;
     }
-  
+
     label {
       position: absolute;
-      top: 21px;
+      top: $gridsize /2;
       left: 10px;
       font-weight: normal;
       font-size: $textsize;
       display: inline-block;
+
+      width: calc(100% - 20px);
+      white-space: nowrap;
+      text-overflow: ellipsis;;
+      overflow: hidden;
+
       text-align: left;
       padding-left: 12px;
       transition: all .5s ease;
       color: $inputlabelcolor;
     }
-  
+
     select, input {
       -moz-appearance: none;
       -webkit-appearance: none;
       appearance: none;
       border: none;
     }
-  
+
     input, select {
       background: $uiComponent;
       border-radius: 8px;
       border: 1px solid $border;
       width: $input-width;
-      
+
       height: 70px;
       // padding-left: 10px;
 
       color: $inputtextcolor;
       outline: none;
       font-size: $textsize;
-  
+
       &:focus {
         background: $uiComponentHighlighted;
         border-color: $primary;
-        padding: 20px 20px 0px 21px;
+        padding: $gridsize/2 $gridsize/2 0px 21px;
       }
-  
+
       &:valid, &:disabled {
-        padding: 20px 20px 0px 21px;
+        padding: $gridsize/2 $gridsize/2 0px 21px;
       }
 
       &:disabled {
         color: lighten($color: $inputtextcolor, $amount: 10);
         border: 1px solid lighten($color: $border, $amount: 5);
       }
-  
+
       &:valid + label {
         top: 11px;
         font-size: 12px;
         color: $inputlabelcolor ;
         font-weight: normal;
       }
-  
+
       &:focus + label {
         top: 11px;
         font-size: 12px;
         color: $primary;
-        font-weight: bold;
+        font-weight: 500;
       }
 
       &:disabled + label {
@@ -100,7 +106,7 @@ input:-webkit-autofill {
         font-weight: normal;
         color: lighten($color: $inputtextcolor, $amount: 30);
       }
-  
+
       &[type=number]::-webkit-inner-spin-button,
       &[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -113,13 +119,13 @@ input:-webkit-autofill {
     .is-invalid {
       border: 1px solid $error !important;
     }
-  
+
     textarea {
       background: $uiComponent;
       border-radius: 8px;
       border: 1px solid $border;
       width: $input-width;
-      
+
       height: 70px;
       // padding-left: 10px;
 
@@ -131,32 +137,32 @@ input:-webkit-autofill {
       color: $inputtextcolor;
       outline: none;
       font-size: $textsize;
-  
+
       &:focus {
         background: $uiComponentHighlighted;
         border-color: $primary;
-        padding: 20px 20px 0px 21px;
+        padding: $gridsize/2 $gridsize/2 0px 21px;
       }
-  
+
       &:valid {
-        padding: 34px 20px 0 21px;
+        padding: 34px $gridsize/2 0 21px;
       }
-  
+
       &:valid + label {
         top: 11px;
         font-size: 12px;
         color: $inputlabelcolor;
         font-weight: normal;
       }
-  
+
       &:focus + label {
         top: 11px;
         font-size: 12px;
         color: $primary;
-        font-weight: bold;
+        font-weight: 500;
       }
     }
-  
+
     .error {
       color: $error;
     }
