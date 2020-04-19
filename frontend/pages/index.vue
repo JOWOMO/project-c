@@ -17,7 +17,7 @@
             <button @click="supply_register" class="primary">
               <div>
                 Ich
-                <b>suche</b>
+                <b>biete</b>
                 <br />Mitarbeiter:innen
               </div>
               <div class="arrow" />
@@ -36,10 +36,10 @@
           <div class="grow" />
 
           <div class="buttons">
-            <button @click="supply_register" class="cta">
+            <button @click="demand_register" class="cta">
               <div>
                 Ich
-                <b>biete</b>
+                <b>suche</b>
                 <br />Mitarbeiter:innen
               </div>
               <div class="arrow" />
