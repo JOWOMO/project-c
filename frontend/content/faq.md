@@ -99,7 +99,7 @@ Du erhältst von uns eine E-Mail über die Du mit dem Partnerunternehmen in Verb
 
 <faq question="Was muss ich bei der rechtlichen Umsetzung der Personalpartnerschaft beachten?"> 
 
-Die Plattform JoWoMo bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen und keine Rechtsberatung zur Umsetzung der Personalpartnerschaft. Es gibt verschiedene Möglichkeiten zur Umsetzung, die rechtlich geprüft werden können. Eventuell könnten die aktuellen Regelungen zur Arbeitnehmerüberlassung in Verbindung mit Kurzarbeit für dich relevant sein. 
+Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen und keine Rechtsberatung zur Umsetzung der Personalpartnerschaft. Es gibt verschiedene Möglichkeiten zur Umsetzung, die rechtlich geprüft werden können. Eventuell könnten die aktuellen Regelungen zur Arbeitnehmerüberlassung in Verbindung mit Kurzarbeit für dich relevant sein. 
 
 Hier findest Du Informationen der Bundesagentur für Arbeit dazu: [https://www.arbeitsagentur.de/datei/dok_ba015249.pdf](https://www.arbeitsagentur.de/datei/dok_ba015249.pdf). 
 
@@ -111,12 +111,12 @@ Am Ende handelt es sich aber um rechtliche Fragestellungen, die für euren Fall 
 
 <faq question="Wer klärt Konflikte, die während der Partnerschaft auftreten, z.B. wenn die Fähigkeiten meiner Mitarbeitenden weniger gut auf die Bedarfe des Partnerunternehmens passen als erwartet?"> 
 
-Die Plattform JoWoMo bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen an. Neben Detailfragen zur rechtlichen Umsetzung der Personalpartnerschaft liegt auch die Zusammenarbeit innerhalb der Partnerschaft und die Klärung von Fragen oder Konflikten bei den Partnerunternehmen. Wir empfehlen auf jeden Fall vor Abschluss der Personalpartnerschaft alle wichtigen Details genau zu besprechen, um Uneinigkeiten im Nachhinein von vorneherein zu vermeiden. 
+Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen an. Neben Detailfragen zur rechtlichen Umsetzung der Personalpartnerschaft liegt auch die Zusammenarbeit innerhalb der Partnerschaft und die Klärung von Fragen oder Konflikten bei den Partnerunternehmen. Wir empfehlen auf jeden Fall vor Abschluss der Personalpartnerschaft alle wichtigen Details genau zu besprechen, um Uneinigkeiten im Nachhinein von vorneherein zu vermeiden. 
 
 </faq> 
 
 <faq question="Wer garantiert, dass die angebotenen Fähigkeiten auch tatsächlich vorhanden sind, z.B. CNC-Fräse bedienen, Risiko für Schaden an teurem Equipment?"> 
 
-Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein Partnerunternehmen findest, erhältst Du eine E-Mail, über die Du mit diesem in Kontakt treten kannst. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen und die Plattform JoWoMo ist weder Teil dieser Absprachen, noch der Partnerschaft. 
+Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein Partnerunternehmen findest, erhältst Du eine E-Mail, über die Du mit diesem in Kontakt treten kannst. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen und die Plattform JOWOMO ist weder Teil dieser Absprachen, noch der Partnerschaft. 
 
 </faq>
