@@ -24,38 +24,34 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
+import { Vue, Component, Prop, Watch, State } from "nuxt-property-decorator";
 import { Company } from "@/apollo/schema";
 import { InjectReactive, Emit } from "vue-property-decorator";
 import dropdown from "@/components/dropdown.vue";
-
-export type Filter = {
-  range: number;
-}
-
-export const DEFAULT_FILTER: Filter = {
-  range: 30,
-}
+import { IState } from "../store";
+import { IMatchState } from "../store/match";
 
 @Component({ components: { dropdown } })
 export default class extends Vue {
   @Prop({ required: true })
   me!: Pick<Company, "id" | "postalCode" | "city">;
 
-  filter: Filter = DEFAULT_FILTER;
+  @State((s: IState) => s.match.filter)
+  filter!: Pick<IMatchState, 'filter'>;
 
-  @Emit('change-filter')
+  // @Emit('change-filter')
   changeRange(option: string) {
-    this.filter.range = parseInt(option.replace(/[^\d]/ig, ''), 10);
-    return this.filter;
+    const range = parseInt(option.replace(/[^\d]/ig, ''), 10);
+    this.$store.commit('match/range', range);
+    this.$track("dashboard", "filter", "KM", range.toString());
   }
 
-  @Emit("viewtype")
+  // @Emit("viewtype")
   listview() {
     return "list";
   }
 
-  @Emit("viewtype")
+  // @Emit("viewtype")
   mapview() {
     return "map";
   }

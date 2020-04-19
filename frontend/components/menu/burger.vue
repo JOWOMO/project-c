@@ -17,6 +17,7 @@ import { Vue, Component, Prop, Ref } from "nuxt-property-decorator";
 @Component
 export default class extends Vue {
   open = false;
+  saved?: string;
 
   @Ref("elbackground")
   background!: HTMLElement;
@@ -27,11 +28,16 @@ export default class extends Vue {
   show() {
     this.background.style.visibility = "visible";
     this.menu.style.right = "0";
+
+    this.saved = window.document.body.style.overflow;
+    window.document.body.style.overflow = "hidden";
   }
 
   hide() {
     if (this.background) this.background.style.visibility = "hidden";
     if (this.menu) this.menu.style.right = "-70vw";
+
+    window.document.body.style.overflow = this.saved || '';
   }
 }
 </script>
@@ -60,8 +66,9 @@ $radius: 68px;
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
-  right: 0;
+
+  width: 100vw;
+  height: 100vh;
 
   margin: 0;
   padding: 0;
@@ -91,6 +98,8 @@ $radius: 68px;
 
   height: 100vh;
   box-shadow: 0 10px 6px 0 rgba(#000000, 0.2);
+
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style>

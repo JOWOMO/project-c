@@ -34,9 +34,14 @@
         v-if="company"
         class="filter"
         :me="company"
-        @change-filter="changeFilter"
       />
-      <nuxt-child :filter="filter" />
+
+      <nuxt-child />
+
+      <infinite :key="$route.fullPath" :identifier="spinnerid" spinner="waveDots" @infinite="onLoadMore" :distance="500">
+        <div slot="no-more"></div>
+        <div slot="no-results"></div>
+      </infinite>
     </template>
   </leftNav>
 </template>
@@ -44,11 +49,13 @@
 <script lang="ts">
 import sidebar from "@/components/pages/sidebar-dashboard.vue";
 import leftNav from "@/components/pages/navbar-left.vue";
-import filterElement, { Filter, DEFAULT_FILTER } from "@/components/filter.vue";
+import filterElement from "@/components/filter.vue";
 
 import topbar from "@/components/pages/topbar.vue";
 import navbarAuthenticated from "@/components/pages/navbar-top-authenticated.vue";
 import teamItems from "@/components/menuitems-teams.vue";
+
+import infinite  from "vue-infinite-loading";
 
 import {
   Company,
@@ -57,9 +64,10 @@ import {
   Supply
 } from "@/apollo/schema";
 
-import { Vue, Component, Ref } from "nuxt-property-decorator";
+import { Vue, Component, Ref, State } from "nuxt-property-decorator";
 import { ProvideReactive, InjectReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
+import { IState } from "../../store";
 
 @Component({
   components: {
@@ -69,6 +77,7 @@ import { Context } from "@nuxt/types";
     teamItems,
     leftNav,
     topbar,
+    infinite,
   },
   middleware: "authenticated",
   layout: "main-left"
@@ -83,11 +92,12 @@ export default class extends Vue {
   @InjectReactive("all-supplies")
   supplies!: Supply[];
 
-  filter: Filter = DEFAULT_FILTER;
+  @State((s: IState) => s.match.spinnerid)
+  spinnerid!: number;
 
-  changeFilter(filter: Filter) {
-    console.debug("Filter changed dashboard", filter);
-    this.$set(this.filter, "range", filter.range);
+  onLoadMore(state: any) {
+    console.debug('parent onLoadMore', state);
+    this.$store.commit('match/more', state);
   }
 
   get company() {

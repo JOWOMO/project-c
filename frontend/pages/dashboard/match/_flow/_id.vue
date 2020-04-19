@@ -14,18 +14,20 @@
       @connect="onConnect"
     />
 
-    <infinite :identifier="spinnerid" spinner="waveDots" @infinite="loadMore" :distance="500">
-      <div slot="no-more"></div>
-      <div slot="no-results"></div>
-    </infinite>
-
     <div v-if="noRecords" class="no-records">Es wurden leider keine passenden Einträge gefunden.</div>
     <hr class="eof" v-if="endOfRecords" />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
+import {
+  Vue,
+  Component,
+  Prop,
+  Watch,
+  Emit,
+  State
+} from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 
 import getDemandMatch from "@/apollo/queries/dashboard/demand.gql";
@@ -40,13 +42,15 @@ import {
   DemandMatchesQueryVariables
 } from "../../../../apollo/schema";
 
-import infinite, { StateChanger } from "vue-infinite-loading";
+import { StateChanger } from "vue-infinite-loading";
 import { ConnectParams } from "@/pages/connect/_.vue";
-import { Filter, DEFAULT_FILTER } from "~/components/filter.vue";
 import { LoadingAnimation } from "../../../../components/loadinganimation";
+import { IMatchState, MatchFilter } from "../../../../store/match";
+import { IState } from "../../../../store";
 
 @Component({
-  components: { companyCard, infinite }
+  components: { companyCard },
+  scrollToTop: true
 })
 export default class extends Vue {
   feed: {
@@ -54,9 +58,6 @@ export default class extends Vue {
     query?: ObservableQuery<DemandMatchesQuery, DemandMatchesQueryVariables>;
     data?: MatchDemandResult; // other type is equal
   } = {};
-
-  @Prop({ required: true }) filter!: Filter;
-  spinnerid = 1;
 
   get noRecords() {
     return !this.feed.data || this.feed.data.matches.length === 0;
@@ -76,18 +77,14 @@ export default class extends Vue {
     return this.feed && this.feed.data ? this.feed.data.matches : [];
   }
 
-  @Watch("filter", { deep: true })
-  filterChanged(filter: Filter) {
-    this.$track("dashboard", "filter", "KM", filter.range.toString());
-    this.reload(filter);
-  }
-
-  onShowAll(match: {id: string, company: string, flow: string}) {
+  onShowAll(match: { id: string; company: string; flow: string }) {
     this.$router.push({
-      path: `/dashboard/company/${match.flow == 'demand' ? 'supply' : 'demand'}/${match.id}`,
+      path: `/dashboard/company/${
+        match.flow == "demand" ? "supply" : "demand"
+      }/${match.id}`,
       query: {
         flow: this.$route.params.flow,
-        id: this.$route.params.id,
+        id: this.$route.params.id
       }
     });
   }
@@ -107,17 +104,23 @@ export default class extends Vue {
     this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
   }
 
+  @State((s: IState) => s.match.filter)
+  filter!: MatchFilter;
+
   @LoadingAnimation
-  async reload(filter: Filter) {
+  @Watch("filter", { deep: true })
+  async reload(filter: MatchFilter) {
+    console.debug("filter changed", filter);
+
     return new Promise(resolve =>
       this.feed
         .query!.refetch({
           id: this.$route.params.id,
           cursor: undefined,
-          radius: this.filter.range
+          radius: filter.range
         })
         .then(data => {
-          this.spinnerid += 1;
+          this.$store.commit("match/newspinner");
           this.$set(this.feed, "data", data.data.result);
           resolve();
         })
@@ -125,7 +128,17 @@ export default class extends Vue {
     );
   }
 
-  loadMore($state: StateChanger) {
+  @State((s: IState) => s.match.loadMore)
+  loadMore!: StateChanger;
+
+  @State((s: IState) => s.match.triggerLoadMore)
+  triggerLoadMore!: StateChanger;
+
+  @Watch("triggerLoadMore")
+  onLoadMore() {
+    console.debug("child onLoadMore");
+    const $state = this.loadMore;
+
     if (!this.feed.data!.pageInfo.hasNextPage) {
       $state.complete();
       return;
@@ -139,7 +152,7 @@ export default class extends Vue {
         cursor: {
           offset: this.feed.data!.pageInfo.offset
         },
-        radius: DEFAULT_FILTER.range
+        radius: this.filter.range
       },
 
       updateQuery: (prev, { fetchMoreResult }) => {
@@ -200,7 +213,7 @@ export default class extends Vue {
 
         matchQuery.subscribe({
           next({ data }) {
-            console.log("received", data);
+            // console.log("received", data);
 
             feed.skills = (data.request?.skills || []).reduce((p, c) => {
               p[c.id] = true;
@@ -209,6 +222,7 @@ export default class extends Vue {
 
             feed.data = data.result;
 
+            context.store.commit('match/newspinner');
             // we return first result this way
             resolve({ feed });
           },

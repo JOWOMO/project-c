@@ -52,7 +52,8 @@ import { ConnectParams } from "@/pages/connect/_.vue";
 @Component({
   components: {
     teamCarc
-  }
+  },
+  scrollToTop: true,
 })
 export default class Details extends Vue {
   company: any;

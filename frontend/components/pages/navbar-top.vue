@@ -27,6 +27,8 @@ export default class extends Vue {
 
 .scroller {
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
   padding: $gridsize;
   padding-right: $pageMarginRight;
 
@@ -50,8 +52,10 @@ export default class extends Vue {
     padding-right: $pageMarginMin;
   }
 
-  .main {
-    overflow-y: scroll;
-  }
+
+  // only need this when we want to do scroll detectio inside
+  // .main {
+  //   overflow-y: scroll;
+  // }
 }
 </style>
