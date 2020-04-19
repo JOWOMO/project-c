@@ -91,12 +91,12 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/global";
+@import "assets/colors";
+@import "@/assets/scales";
 
 .taglist {
   display: flex;
   flex-direction: row;
-  // align-items: center;
   flex-wrap: wrap;
   justify-content: flex-start;
 
@@ -136,7 +136,6 @@ export default class extends Vue {
 
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
 
     .head {
       display: flex;
@@ -147,11 +146,6 @@ export default class extends Vue {
       }
     }
 
-    span {
-      display: block;
-      color: lighten(#000, 20);
-    }
-
     .button {
       padding-top: 10px;
       display: flex;
@@ -160,18 +154,4 @@ export default class extends Vue {
     }
   }
 }
-
-// @media only screen and (max-width: 765px) {
-//   .card {
-//     width: 90%;
-//     height: 90%;
-//     left: 5%;
-
-//     .head {
-//       button {
-//         width: 30px !important;
-//       }
-//     }
-//   }
-// }
 </style>

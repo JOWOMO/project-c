@@ -1,17 +1,25 @@
 <template>
-  <div class="center">
-    <navbar class="navbar" />
-    <nuxt class="screen-center" />
+  <div>
+    <div class="center">
+      <topbar class="topbar" />
+      <nuxt class="screen-center" />
+      <cookies />
+    </div>
+    <top :useBody="true" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import navbar from "@/components/navbar.vue";
+import topbar from "@/components/pages/topbar.vue";
+import cookies from "@/components/cookies.vue";
+import top from "@/components/goto-top.vue";
 
 @Component({
   components: {
-    navbar
+    topbar,
+    cookies,
+    top,
   },
   middleware: "loaduser"
 })
@@ -20,21 +28,15 @@ export default class extends Vue {}
 
 <style lang="scss" scoped>
 @import "@/assets/screen";
+@import "@/assets/colors";
+
+.topbar {
+  background-color: white;
+}
 
 .center {
   display: flex;
   flex-direction: column;
   height: 100vh;
-}
-
-// collapse the navbar
-@media only screen and (max-height: 460px) {
-  // .navbar {
-  //   display: none;
-  // }
-
-  .center {
-    display: block;
-  }
 }
 </style>

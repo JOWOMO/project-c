@@ -1,122 +1,120 @@
 <template>
-  <div class="screen-with-nav">
-    <keep-alive>
-      <sidebar :labels="labels" :selectedElement="selectedElement" class="sidebar" />
-    </keep-alive>
-
-    <nuxt-child class="screen-right" />
+  <div class="page">
+    <mq-layout mq="lg+">
+      <sidebar :labels="labels" :selectedElement="selectedIndex" class="sidebar" />
+    </mq-layout>
+    <mq-layout :mq="['sm', 'md']">
+      <topbar class="top" :hideMenu="true" />
+    </mq-layout>
+    <nuxt-child @selectelement="selectElement" class="screen-right" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
+import { ProvideReactive, Watch } from "vue-property-decorator";
 import { Meta } from "@/components/decorator";
 
-import sidebar from "@/components/sidebars/register.vue";
+import sidebar from "@/components/pages/sidebar-register.vue";
+import topbar from "@/components/pages/topbar.vue";
 import auth from "@/components/auth/index.vue";
 
 export enum RegistrationFlow {
   demand = "demand",
-  supply = "supply",
+  supply = "supply"
 }
 
-export type WorkflowProvider = () => Workflow;
-type Workflow = {
+export type Workflow = {
   type: RegistrationFlow;
   displayName: string;
-  setStage: (nbr: number) => void;
-}
+};
 
 @Component({
   components: {
     sidebar,
-    auth
+    auth,
+    topbar,
   },
   layout: "registration"
 })
 export default class extends Vue {
   labels = ["Persönliche Daten", "Dein Unternehmen"];
-  selectedElement: number = 0;
+  selectedIndex = 0;
 
-  flowType!: RegistrationFlow;
-  actionName!: string;
-
-  setState(num: number) {
-    this.selectedElement = num;
-  }
-
-  @Provide("workflow")
-  provideWorkflow(): Workflow {
-    return {
-      type: this.flowType,
-      displayName: this.actionName,
-      setStage: this.setState.bind(this),
-    }
-  }
+  @ProvideReactive("workflow")
+  providedWorfklow: Workflow | null = null;
 
   @Meta
   head() {
-    return {
-      title: this.actionName,
-      meta: [{ hid: "description", name: "description", content: "" }]
-    };
+    return {};
   }
 
-  mounted() {
-    this.flowType = this.$route.query.flow === "demand"
-      ? RegistrationFlow.demand
-      : RegistrationFlow.supply;
+  selectElement(value: any) {
+    console.debug("register", "selectElement", value);
+    this.selectedIndex = value;
+  }
 
-    this.actionName = this.flowType === RegistrationFlow.demand ? "Ich suche" : "Ich biete";
-    this.labels.push(this.actionName);
+  created() {
+    console.debug("register", "created");
+
+    this.providedWorfklow = {
+      type: this.$route.params.flow as RegistrationFlow,
+      displayName:
+        this.$route.params.flow == "demand" ? "Ich suche" : "Ich biete"
+    };
+
+    this.labels.push(this.providedWorfklow.displayName);
   }
 }
 </script>
 
 <style scoped lang="scss">
-.screen-with-nav {
+@import "@/assets/scales";
+
+.page {
   display: flex;
-  flex-direction: row !important;
-  height: 100vh;
+  flex-direction: row;
+}
+
+.top {
+  background-color: white;
 }
 
 .sidebar {
   display: flex;
+  min-width: 330px;
+  height: 100%;
 }
 
 .screen-right {
   display: flex;
-  flex-grow: 1;
 
-  align-items: center;
+  width: 100vw;
+  min-height: 100vh;
+
+  padding-top: 150px;
+  padding-bottom: $gridsize;
+
   justify-content: center;
-
-  overflow-y: scroll;
-
-  // margin-top: 50px;
-  // margin-bottom: 50px;
 }
 
-@media only screen and (max-width: 950px) {
-  .sidebar {
-    display: none;
+@media only screen and (max-width: $breakpoint_md) {
+  .page {
+    flex-direction: column;
+  }
+
+  .screen-right {
+    padding-top: $gridsize;
+    padding-bottom: $gridsize;
+
+    flex-shrink: 0;
   }
 }
 
-// this is required for the scrollbars to appear
-// this is a fix for the centering viewport that cannot live
-// with /deep/ .container 100vh; need to check
-@media only screen and (max-height: 780px) {
+@media only screen and (max-height: $breakpoint_sm) {
   .screen-right {
-    display: block !important;
-    margin: 20px;
-  }
-}
-
-// we need to collapse the margin to allow resizing in block mode
-@media only screen and (max-width: 950px) and (max-height: 780px) {
-  .screen-right {
-    margin: 0px;
+    padding-bottom: $gridsize;
+    padding-top: $gridsize;
   }
 }
 </style>

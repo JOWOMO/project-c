@@ -4,15 +4,21 @@ from werkzeug.wrappers import Request, Response, ResponseStream
 
 
 class Principal:
-    def __init__(self, id, email):
+    def __init__(self, id, claims):
         self.id = id
-        self.email = email
+        self.claims = claims
 
     def get_id(self):
         return self.id
 
     def get_email(self):
-        return self.email
+        return self.claims["email"]
+
+    def get_first_name(self):
+        return self.claims["given_name"]
+
+    def get_last_name(self):
+        return self.claims["family_name"]
 
 
 def load_principal_from_serverless():
@@ -24,13 +30,14 @@ def load_principal_from_serverless():
         auth = environ["serverless.authorizer"]
         claims = auth["claims"]
 
-        g.principal = Principal(claims["cognito:username"], claims["email"],)
+        current_app.logger.debug("claims")
+        g.principal = Principal(claims["cognito:username"], claims)
 
     elif current_app.debug:
         current_app.logger.debug(
             "no serverless.authorizer, falling back to debug principal"
         )
-        g.principal = Principal("DebugUserId", "test@example.com")
+        g.principal = Principal("DebugUserId", {"email": "test@example.com", 'given_name': 'Debug', 'family_name': 'User'})
 
     else:
         current_app.logger.error("failed to set auth principal")

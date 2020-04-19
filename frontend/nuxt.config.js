@@ -1,4 +1,7 @@
 const fs = require('fs');
+const path = require('path');
+var glob = require('glob');
+var Mode = require('frontmatter-markdown-loader/mode');
 
 if (!fs.existsSync('aws.json')) {
   console.error(`please run: npm run config:aws`);
@@ -8,7 +11,8 @@ if (!fs.existsSync('aws.json')) {
 // reads the dependencies from the cloudformation stack
 const awsConfig = JSON.parse(fs.readFileSync('aws.json'));
 function findAWSExport(setting) {
-  const node = awsConfig.find((n) => n.ExportName === `${setting}-${process.env.STAGE || 'dev'}`);
+  const envName = process.env.NUXT_ENV_STAGE || 'dev';
+  const node = awsConfig.find((n) => n.ExportName === `${setting}-${envName}`);
   if (!node) throw `Setting ${setting} is not known`;
 
   console.log(setting, ':', node.OutputValue)
@@ -16,10 +20,21 @@ function findAWSExport(setting) {
   // can be overriden for local development
   if (setting === 'ApiGatewayRestApiId') {
     return process.env.API_URL ||
-      `https://${node.OutputValue}.execute-api.eu-west-1.amazonaws.com/dev/graphql`;
+      `https://${node.OutputValue}.execute-api.eu-west-1.amazonaws.com/${envName}/graphql`;
   }
 
   return node.OutputValue;
+}
+
+async function getDynamicPaths(urlFilepathTable) {
+  return [].concat(
+    ...Object.keys(urlFilepathTable).map(url => {
+      var filepathGlob = urlFilepathTable[url];
+      return glob
+        .sync(filepathGlob, { cwd: 'content' })
+        .map(filepath => `${url}/${path.basename(filepath, '.md')}`);
+    })
+  );
 }
 
 export default {
@@ -28,11 +43,11 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'JOWOMO - Die Plattform zur Personalpartnerschaft',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { name: 'viewport', content: 'minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no, initial-scale=1' },
+      { hid: 'description', name: 'description', content: 'JOWOMO vernetzt Unternehmen für einen temporären Austausch von Personal. Flexibel. Innovativ. Krisengerecht.' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -40,14 +55,10 @@ export default {
     ]
   },
 
-  router: {
-    // trailingSlash: false,
-  },
-  
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#DA2566' },
+  loading: { color: '#25A6DA', height: '5px' },
   /*
   ** Global SCSS
   */
@@ -59,6 +70,9 @@ export default {
   */
   plugins: [
     '@/plugins/vuelidate.js',
+    '@/plugins/swal.ts',
+    '@/plugins/tracking.ts',
+    '@/plugins/mq.ts'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -71,10 +85,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    // Doc: https://github.com/microcipcip/cookie-universal/tree/master/packages/cookie-universal-nuxt
-    'cookie-universal-nuxt',
+    '@nuxtjs/sentry',
     // Doc: https://github.com/nuxt-community/apollo-module
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt-community/gtm-module
@@ -83,14 +94,21 @@ export default {
     [
       'nuxt-i18n',
       {
-        locales: ['de'],
+        seo: true,
+        locales: [
+          {
+            code: 'de',
+            iso: 'de',
+            isCatchallLocale: true // This one will be used as catchall locale
+          },
+        ],
         defaultLocale: 'de',
         vueI18n: {
           fallbackLocale: 'de',
           messages: {}
         }
       }
-    ]
+    ],
   ],
 
   env: {
@@ -105,85 +123,41 @@ export default {
   ** See https://github.com/nuxt-community/apollo-module
   */
   apollo: {
-    tokenName: 'apollo-token', // optional, default: apollo-token
-    cookieAttributes: {
-      /*
-      ** Define when the cookie will be removed. Value can be a Number
-      ** which will be interpreted as days from time of creation or a
-      ** Date instance. If omitted, the cookie becomes a session cookie.
-      */
-      expires: 7, // optional, default: 7 (days)
-
-      /**
-        * Define the path where the cookie is available. Defaults to '/'
-        */
-      // path: '/', // optional
-      /**
-        * Define the domain where the cookie is available. Defaults to
-        * the domain of the page where the cookie was created.
-        */
-      // domain: 'example.com', // optional
-
-      /**
-        * A Boolean indicating if the cookie transmission requires a
-        * secure protocol (https). Defaults to false.
-        */
-      secure: false,
-    },
-    includeNodeModules: true, // optional, default: false (this includes graphql-tag for node_modules folder)
-    authenticationType: '', // required to be empty
-    // (Optional) Default 'apollo' definition
-    defaultOptions: {
-      // See 'apollo' definition
-      // For example: default query options
-      $query: {
-        loadingKey: 'loading',
-        fetchPolicy: 'cache-and-network',
-      },
-    },
+    includeNodeModules: true,
+    authenticationType: '',
     // optional
     watchLoading: '~/plugins/apollo-watch-loading-handler.js',
     // optional
     errorHandler: '~/plugins/apollo-error-handler.js',
     // required
+    defaultOptions: {
+      $query: {
+        fetchPolicy: 'network-only',
+      }
+    },
     clientConfigs: {
       default: {
-        // required
+        cache: null,
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
-
-        getAuth: async () => {
-          const token = await Vue.prototype.$store.dispatch('auth/token');
-          return token;
-        },
-
-        // optional
-        // See https://www.apollographql.com/docs/link/links/http.html#options
         httpLinkOptions: {
-          credentials: 'same-origin'
+          fetchOptions: {
+            mode: 'cors'
+          },
         },
-
-        // Enable Automatic Query persisting with Apollo Engine
-        persisting: false, // Optional
-      },
+        persisting: false,
+      }
     },
   },
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-  },
+
   gtm: {
     // Set to false to disable module in development mode
-    dev: true,
+    dev: false,
 
-    id: null,
+    id: process.env.NUXT_GTM_ID,
     layer: 'dataLayer',
     variables: {},
 
-    pageTracking: true,
-    pageViewEventName: 'nuxtRoute',
-
+    pageTracking: false,
     autoInit: true,
     respectDoNotTrack: true,
 
@@ -191,10 +165,18 @@ export default {
     scriptDefer: false,
     scriptURL: 'https://www.googletagmanager.com/gtm.js',
 
-    noscript: true,
+    noscript: false,
     noscriptId: 'gtm-noscript',
     noscriptURL: 'https://www.googletagmanager.com/ns.html'
   },
+
+  sentry: {
+    dsn: '',
+    disabled: true,
+    disableServerSide: true,
+    config: {}, // Additional config
+  },
+
   /*
   ** Build configuration
   */
@@ -204,9 +186,48 @@ export default {
     */
     extend(config, ctx) {
       if (ctx.isDev) {
-        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map';
       }
-      transpile: [/^vue2-google-maps($|\/)/]
-    }
+
+      const markdownIt = require('markdown-it');
+      const anchor = require('markdown-it-anchor');
+
+      // add frontmatter-markdown-loader
+      config.module.rules.push({
+        test: /\.md$/,
+        include: path.resolve(__dirname, "content"),
+        loader: "frontmatter-markdown-loader",
+        options: {
+          mode: [Mode.VUE_COMPONENT, Mode.META],
+          markdownIt: markdownIt({html: true}).use(anchor),
+        }
+      });
+    },
+
+    // transpile: [/^vue2-google-maps($|\/)/],
+    optimizeCSS: {
+    },
+
+    transpile: ['vue-clamp', 'resize-detector'],
+  },
+  generate: {
+    routes: async () => {
+      const info = await getDynamicPaths({
+        '/info': '*.md'
+      });
+
+      const register = [
+        '/register/demand',
+        '/register/demand/company',
+        '/register/demand/team',
+        '/register/demand/validate',
+        '/register/supply',
+        '/register/supply/company',
+        '/register/supply/team',
+        '/register/supply/validate',
+      ];
+
+      return [...info, ...register];
+    },
   }
 }

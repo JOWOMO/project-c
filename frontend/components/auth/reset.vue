@@ -7,7 +7,7 @@
         <formInput :id="'email'" :label="'E-Mail'" v-model="email" />
       </div>
 
-      <span id="error">{{ error }}</span>
+      <!-- <span id="error" v-if="error">{{ error }}</span> -->
 
       <div class="buttons">
         <button class="secondary" @click.prevent="back">Zurück</button>
@@ -18,17 +18,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide } from "nuxt-property-decorator";
+import { Vue, Emit, Component, Provide, State } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
 import formInput from "@/components/forms/input.vue";
+import { IState } from "@/store";
+import { formatMessage } from "./messages";
+import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput }
 })
 export default class extends Vue {
+  @State((s: IState) => s.register.user.email)
   @Validate({ required, email })
   email: string = "";
 
@@ -39,10 +43,12 @@ export default class extends Vue {
     return this.$v;
   }
 
+  @Emit('change-state')
   back() {
-    this.$emit("change-state", "login");
+    return 'login';
   }
 
+  @LoadingAnimation
   async resetPassword() {
     // stop here if form is invalid
     this.$v.$touch();
@@ -52,17 +58,24 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('authentication', 'start-reset-password');
+
     try {
       await this.$store.dispatch("auth/startResetPassword", {
         email: this.email
       });
 
-      this.$store.commit("register_user_state", { email: this.email });
+      this.$store.commit("register/user", { email: this.email });
       this.$emit("change-state", "new");
     } catch (err) {
-      this.error = err.message;
+      console.error(err);
+      this.error = formatMessage(err);
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+@import "@/assets/form-layout-single";
+</style>

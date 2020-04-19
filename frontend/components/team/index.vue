@@ -7,15 +7,15 @@
 
       <div class="display">
         <div class="row">
-          <div class="field">Bezeichnung</div>
+          <div class="field">Tätigkeit der Mitarbeiter:innen</div>
           <div>{{ editTeam.name || '-' }}</div>
         </div>
-    
+
         <div class="row">
           <div>Anzahl Mitarbeiter</div>
-          <div>{{ editTeam.quantity }} </div>
+          <div>{{ editTeam.quantity }}</div>
         </div>
- 
+
         <div class="nobr">
           <formSwitch class="sw" :id="'editTeam.isActive'" disabled v-model="editTeam.isActive" />
 
@@ -25,23 +25,32 @@
       </div>
     </div>
 
-    <div v-if="editTeam.expanded">    
+    <div v-if="editTeam.expanded">
       <div class="team-header">
         <h2>Team {{ formattedNumber }}</h2>
 
         <formSwitch class="sw" :id="'editTeam.isActive'" v-model="editTeam.isActive" />
 
         <div class="lbl" v-if="editTeam.isActive">deaktivieren</div>
-        <div class="lbl" v-if="!editTeam.isActive">aktivieren</div>
+        <div class="lbl" v-if="!editTeam.isActive">Angebot aktivieren</div>
       </div>
 
-      <form novalidate>
+      <form novalidate @submit.prevent>
         <div class="form-group half-width">
-          <formSelect id="editTeam.name" v-model="editTeam.name" :label="'Bezeichnung'" :values="topics" />
+          <formAutoComplete
+            id="editTeam.name"
+            v-model="editTeam.name"
+            :label="'Tätigkeit der Mitarbeitr:innen (Freitext)'"
+            :suggestions="topics"
+          />
         </div>
 
         <div class="form-group right">
-          <formInput :id="'editTeam.quantity'" v-model="editTeam.quantity" :label="'Anzahl Mitarbeiter'" />
+          <formInput
+            :id="'editTeam.quantity'"
+            v-model="editTeam.quantity"
+            :label="'Anzahl Mitarbeiter'"
+          />
         </div>
 
         <div class="form-group">
@@ -49,34 +58,28 @@
             :id="'editTeam.description'"
             v-model="editTeam.description"
             name="editTeam.description"
-            required
           />
-          <label for="editTeam.description">Zusätzliche Informationen</label>
+          <label for="editTeam.description">Hier kannst Du das Team noch detailierter beschreiben</label>
         </div>
 
         <div class="form-group lbl">
-          Teamprofil (min. 3)
+          <b>Zentrale Fähigkeiten und Rahmenbedingungen:</b> Diese Angaben helfen uns einen passenden temporären Arbeitsgeber für Deine Mitarbeiter:innen zu finden. Bitte wähle mind. 3 Kriterien aus.
 
-          <validations 
-            :label="'Teamprofil'" 
-            :validation="$v['editTeam']['skills']" 
-            :submitted="true" 
-          />
+          <validations
+            :label="'Zentrale Fähigkeiten und Rahmenbedingungen'"
+            :validation="$v.editTeam.skills"
+            :submitted="true"
+            />
         </div>
 
-        <div class="form-group skills">
+        <div class="form-group">
           <div class="skills">
-            <button class="third" @click.prevent="showTagCloud = !showTagCloud">
+            <button :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minLength }" @click.prevent="showTagCloud = !showTagCloud">
               Bitte wählen
               <span>+</span>
             </button>
 
-            <tag 
-              class="tag"
-              v-for="skill in skillWithNames" 
-              :key="skill.id" 
-              :name="skill.name" 
-            />
+            <tag class="tag" v-for="skill in skillWithNames" :key="skill.id" :name="skill.name" />
           </div>
         </div>
 
@@ -92,7 +95,7 @@
           <button class="primary" @click.prevent="confirm">OK</button>
         </div>
       </form>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -117,8 +120,14 @@ import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
 import formTextArea from "@/components/forms/textarea.vue";
 import formSwitch from "@/components/forms/switch.vue";
+import formAutoComplete from "@/components/forms/autocomplete.vue";
 
-import { required, numeric, minValue, minLength } from "vuelidate/lib/validators";
+import {
+  required,
+  numeric,
+  minValue,
+  minLength
+} from "vuelidate/lib/validators";
 import { Validate, Validations } from "vuelidate-property-decorators";
 
 type KeyValuePair = {
@@ -141,9 +150,20 @@ export type TeamDetails = {
 };
 
 @Component({
-  components: { tagCloud, tag, formInput, formSelect, formTextArea, formSwitch, validations }
+  components: {
+    tagCloud,
+    tag,
+    formInput,
+    formSelect,
+    formTextArea,
+    formSwitch,
+    formAutoComplete,
+    validations
+  }
 })
 export default class extends Vue {
+  // contains = (value:string) => this.topics.indexOf(value) >= 0
+
   @Provide("validation")
   validation() {
     return this.$v;
@@ -153,7 +173,7 @@ export default class extends Vue {
   skills!: KeyValuePair[];
 
   @Prop({ type: Array, required: true, default: () => [] })
-  topics!: KeyValuePair[];
+  topics!: string[];
 
   @Prop({ type: Object, required: true, default: {} })
   value!: TeamDetails;
@@ -173,10 +193,11 @@ export default class extends Vue {
         },
         name: {
           required,
+          // contains:this.contains
         },
         skills: {
           required,
-          minLength: minLength(3),
+          minLength: minLength(3)
         }
       }
     };
@@ -203,14 +224,14 @@ export default class extends Vue {
     this.showTagCloud = false;
   }
 
-  @Watch('value', {deep: true, immediate: true}) 
+  @Watch("value", { deep: true, immediate: true })
   teamUpdated(newVal: TeamDetails) {
-    this.editTeam = JSON.parse(JSON.stringify(this.value))
+    this.editTeam = JSON.parse(JSON.stringify(this.value));
   }
 
-  mounted() {
+  created() {
     // make deep copy
-    this.editTeam = JSON.parse(JSON.stringify(this.value))
+    this.editTeam = JSON.parse(JSON.stringify(this.value));
   }
 
   cancel() {
@@ -235,12 +256,17 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/global";
-// @import "assets/form-layout-two";
+@import "assets/form-layout-two";
+@import "assets/colors";
+@import "assets/scales";
 
 .lbl {
-    color: #7b7b7b;
+  color: $inputlabelcolor;
 }
+
+  .is-invalid {
+    border: 1px solid $error !important;
+  }
 
 .team-header {
   display: flex;
@@ -253,7 +279,7 @@ export default class extends Vue {
 
   .lbl {
     margin-left: 19px;
-    font-size: 18px;
+    font-size: $textsize;
   }
 
   margin-bottom: 20px;
@@ -272,9 +298,9 @@ export default class extends Vue {
     display: flex;
     flex-direction: column;
 
-    font-size: 18px;
-    color: #7B7B7B;
-    
+    font-size: $textsize;
+    color: $inputlabelcolor;
+
     :first-child {
       font-size: 12px;
     }
@@ -290,34 +316,6 @@ export default class extends Vue {
       justify-content: flex-end;
 
       width: 100px;
-    }
-  }
-}
-
-form {
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
-
-  .form-group {
-    grid-column: 1 / span 2;
-  }
-
-  .half-width {
-    grid-column: 1;
-  }
-
-  .right {
-    grid-column: 2;
-  }
-
-  .save-buttons {    
-    display: flex;
-    justify-self: flex-end;
-
-    button {
-      margin-left: 20px;
-      width: 200px;
     }
   }
 }
@@ -346,33 +344,62 @@ form {
       margin-left: 10px;
     }
   }
-
-  // button {
-  //   width: 200px;
-  //   height: 60px;
-  //   padding: 20px;
-  //   margin-top: 10px;
-  //   border: 2px solid $uiComponentHighlighted;
-
-  //   img {
-  //     display: inline;
-  //     margin-left: 10px;
-  //   }
-  // }
 }
 
-// @media only screen and (max-width: 765px) {
-//   form {
-//     grid-template-columns: 1fr 0 !important;
-//     column-gap: 0 !important;
+@media only screen and (max-width: $breakpoint_sm) {
+  .display {
+    flex-direction: column;
 
-//     .head {
-//       justify-content: space-around !important;
-//     }
+    min-width: 100vw;
+    max-width: 100vw;
 
-//     .right {
-//       grid-column: 1 !important;
-//     }
-//   }
-// }
+    .row {
+      flex: 1;
+      padding-bottom: 10px;
+
+      min-width: 100vw;
+      max-width: 100vw;
+
+      flex-direction: row;
+
+      :first-child {
+        width: 120px;
+      }
+    }
+
+    .nobr {
+      min-width: 100vw;
+      max-width: 100vw;
+
+      align-items: baseline;
+      justify-content: flex-end;
+      font-size: 12px;
+      flex-direction: row-reverse;
+
+      .switch {
+        margin-left: 20px;
+      }
+
+      .lbl {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  .save-buttons {
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column-reverse;
+
+    button {
+      margin-top: 21px;
+      min-width: 100%;
+    }
+  }
+
+  .skills {
+    // correct the margin given by the formgroup
+    margin-bottom: -20px;
+  }
+}
 </style>

@@ -18,7 +18,7 @@ class MatchQuery:
         }
 
         self.select = []
-        self.orders = []
+        self.orders = {}
         self.conditions = []
 
         self.page_size = 10
@@ -42,29 +42,33 @@ class MatchQuery:
         self.conditions.append(
             "st_dwithin(point, btb.get_postalcode_position(:postal_code), :radius)"
         )
-        self.orders.append("point <-> btb.get_postalcode_position(:postal_code)")
+        self.orders["distance"] = "point <-> btb.get_postalcode_position(:postal_code)"
 
         self.params["postal_code"] = postal_code
         self.params["radius"] = (radius if radius is not None else self.radius) * 1000
 
     def match_skills(self, skills):
-        self.select.append("array_length(skills & :skills, 1) as matchingskills")
-        self.conditions.append("array_length(skills & :skills, 1) > 0")
-        self.orders.append("{} desc".format(len(self.orders) + 1))
+        # number of matching elements
+        self.select.append("icount(skills & :skills) as matchingskills")
+
+        # have one element in common
+        self.conditions.append("skills && :skills")
+        self.orders["skills"] = "{} desc".format(len(self.select))
 
         self.params["skills"] = skills
 
     def match_salary(self, salary=None):
         self.select.append(":max_salary - hourly_salary as diffsalary")
-        self.orders.append("{} desc".format(len(self.orders) + 1))
+        self.orders["salary"] = "{} desc".format(len(self.select))
 
         self.params["max_salary"] = salary if salary is not None else 0
 
     def match_quantity(self, quantity=None):
         self.select.append(":min_quantity - quantity as diffquantity")
         self.params["min_quantity"] = quantity if quantity is not None else 0
+        self.orders["quantity"] = "{} desc".format(len(self.select))
 
-    def calculate_percentage(self, record):
+    def calculate_percentage(self, record, orderby):
         matchingskills = record["matchingskills"] if "matchingskills" in record else 0
         diffsalary = record["diffsalary"] if "diffsalary" in record else 0
         diffquantity = record["diffquantity"] if "diffquantity" in record else 0
@@ -76,13 +80,13 @@ class MatchQuery:
         optionscount = amountskills
         matches = matchingskills
 
-        if salary > 0:
+        if "salary" in orderby and salary > 0:
             optionscount += 1
 
             if diffsalary >= 0:
                 matches += 1
 
-        if quantity > 0:
+        if "quantity" in orderby and quantity > 0:
             optionscount += 1
 
             if diffquantity >= 0:
@@ -90,23 +94,31 @@ class MatchQuery:
 
         return round(matches / optionscount * 100, 0)
 
-    def map_default_result(self, tag, loader, record):
+    def map_default_result(self, tag, loader, record, orderby):
         return {
             "distance": round(record["distance"], 0),
-            "percentage": self.calculate_percentage(record),
+            "percentage": self.calculate_percentage(record, orderby),
             tag: loader.load(record["record_id"]),
         }
 
-    def map_result(self, record):
+    def map_result(self, record, orderby):
         return record
 
-    def execute(self):
+    # ["skills", "salary", "quantity", "distance"] we neglegt salary for now
+    def execute(self, orderby = ["skills", "quantity", "distance"]): 
         select = self.select
         conditions = self.conditions
-        orders = self.orders
+
+        orders = list(filter(
+            lambda x: x is not None,
+            map(lambda k: self.orders[k] if k in self.orders else None, orderby)
+        ))
+
+        current_app.logger.debug('orderby %s', orders)
 
         orders.append("company_name")
         select.append("record_id")
+
         conditions.append("external_id <> :principal")
 
         with db.engine.begin() as conn:
@@ -152,5 +164,5 @@ order by {}
 
             return {
                 "page_info": {**nextCursor},
-                "matches": map(lambda row: self.map_result(row), data),
+                "matches": map(lambda row: self.map_result(row, orderby), data),
             }

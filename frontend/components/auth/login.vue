@@ -14,7 +14,7 @@
         <a @click="resetPassword" class="link">Passwort vergessen?</a>
       </div>
 
-      <span id="error">{{error}}</span>
+      <!-- <span id="error">{{error}}</span> -->
 
       <div class="buttons">
         <button class="primary">Login</button>
@@ -30,9 +30,12 @@ import { Validate } from "vuelidate-property-decorators";
 import { required, email } from "vuelidate/lib/validators";
 
 import formInput from "@/components/forms/input.vue";
+import { AuthErrorCodes, formatMessage } from "./messages";
+import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
-  components: { formInput }
+  components: { formInput },
+  
 })
 export default class extends Vue {
   @Validate({ required, email })
@@ -56,6 +59,7 @@ export default class extends Vue {
     this.$emit("change-state", "reset");
   }
 
+  @LoadingAnimation
   async login() {
     this.$v.$touch();
     this.$emit("validate");
@@ -64,26 +68,39 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('authentication', 'login');
+
     try {
       const user = {
         email: this.email,
-        password: this.password
+        password: this.password,
       };
 
       // we need to clone the object
-      this.$store.commit("register_user_state", user);
+      this.$store.commit("register/user", user);
 
       await this.$store.dispatch("auth/login", user);
       this.$emit("change-state", "redirect");
     } catch (err) {
       console.log("err: ", err);
-      this.error = err.message;
+      this.error = formatMessage(err);
 
       // we need to verify him
-      if (err.code === "UserNotConfirmedException") {
+      if (err.code === AuthErrorCodes.NotConfirmed) {
         this.$emit("change-state", "validate");
+        return;
       }
+
+      this.$swal.alert( 
+        "Das hat nicht geklappt", 
+        this.error, 
+        "error"
+      );
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/form-layout-single';
+</style>

@@ -1,0 +1,23 @@
+$h1FontSize: 36px;
+
+$h2FontSize: 24px;
+$h3FontSize: 20px;
+$textsize: 18px;
+
+$firstbreak: 800;
+$secondbreak: 500;
+
+$gridsize: 48px;
+
+$pageHeaderHeight: 120px;
+
+// $marginTop: 50px;
+$pageMarginBottom: $gridsize * 3;
+
+$pageMarginRight: $gridsize;
+$pageMarginMin: $gridsize / 2;
+
+// compare plugin mq.ts
+$breakpoint_sm: 600px;
+$breakpoint_md: 850px;
+$breakpoint_vl: 1150px;

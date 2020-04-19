@@ -3,9 +3,6 @@
     <div v-if="state == 'login'">
       <login @change-state="handleStateChange" />
     </div>
-    <div v-if="state == 'register'">
-      <register @change-state="handleStateChange" />
-    </div>
     <div v-if="state == 'newPassword'">
       <newPassword @change-state="handleStateChange" />
     </div>
@@ -26,7 +23,6 @@ import Component from "nuxt-class-component";
 import { Vue, Prop } from "nuxt-property-decorator";
 
 import login from "./login.vue";
-import register from "./register.vue";
 import validate from "./validate.vue";
 import reset from "./reset.vue";
 import newpassword from "./new.vue";
@@ -34,24 +30,32 @@ import newpassword from "./new.vue";
 @Component({
   components: {
     login,
-    register,
     validate,
     reset,
-    newpassword
+    newpassword,
   }
 })
-export default class Auth extends Vue {
-  @Prop({ type: String, required: false, default: "Login" })
+export default class extends Vue {
+  @Prop({ type: String, required: false, default: "login" })
   readonly start_component!: String;
 
   @Prop({ type: String, required: false }) 
   readonly target_route!: any;
 
-  state: String = this.start_component;
+  @Prop({ type: Object, required: false }) 
+  readonly registration!: any;
+
+  state: String = '';
+
+  mounted() {
+    this.state = this.start_component;
+  }
 
   handleStateChange(event: string, value?: string) {
     console.debug("handleStateChange", event);
-    
+
+    this.$track('authentication', event, value);
+
     if (event === "redirect") {
       console.log("target route", this.target_route);
 
@@ -70,7 +74,4 @@ export default class Auth extends Vue {
 </script>
 
 <style lang="scss" scoped>
-* /deep/ {
-  @import '@/assets/form-layout-single';
-}
 </style>

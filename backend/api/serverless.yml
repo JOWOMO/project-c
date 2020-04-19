@@ -3,6 +3,8 @@ service: bee-to-bee-api
 plugins:
   - serverless-python-requirements
   - serverless-wsgi
+  - serverless-iam-roles-per-function
+  - serverless-plugin-log-retention
 
 provider:
   name: aws
@@ -22,9 +24,23 @@ provider:
   apiGateway:
     minimumCompressionSize: 1024
 
+  tracing:
+    lambda: true
+    apiGateway: true
+
   environment:
     SQLALCHEMY_DATABASE_URI: ${ssm:/btb/${self:custom.stage}/dburl~true}
     STAGE: ${self:custom.stage}
+    MAX_CONTACT_REQUESTS: 10
+    EMAIL_SENDER: ${ssm:/btb/${self:custom.stage}/emailsender}
+    PYTHONIOENCODING: UTF8
+    FRONTEND_URL: 
+      Fn::Join:
+        - ''       
+        -  - 'https://'
+           - Fn::Select:
+             - 0
+             - ${ssm:/btb/${self:custom.stage}/cloudfronturl~split}
 
   vpc:
     securityGroupIds:
@@ -34,6 +50,13 @@ provider:
       - Fn::ImportValue: DatabaseSubnetAId
       - Fn::ImportValue: DatabaseSubnetBId
       - Fn::ImportValue: DatabaseSubnetCId
+
+  iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
 
 package:
   include:
@@ -45,7 +68,9 @@ package:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  
+  serverless-iam-roles-per-function:
+    defaultInherit: true
+
   wsgi:
     app: btb.api.wsgi.app
     packRequirements: false
@@ -53,12 +78,41 @@ custom:
   pythonRequirements:
     dockerizePip: non-linux
 
+  logRetentionInDays: 30
+
 functions:
   dbupdate:
     handler: btb.update.handler
+    timeout: 900
+    reservedConcurrency: 1
+
+  custom-message:
+    handler: btb.cognito.handler
+    vpc: 
+      securityGroupIds: []
+      subnetIds: []
+
+    events:
+      - cognitoUserPool:
+          pool: MyUserPool # searches for CognitoUserPoolMyUserPool
+          trigger: CustomMessage
 
   graphql:
     handler: wsgi_handler.handler
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - ses:SendEMail
+          - ses:SendRawEmail
+
+        Resource:
+          - "*"
+          
+      - Effect: Allow
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+        Resource: "*"
 
     events:
       - http:
@@ -83,7 +137,31 @@ functions:
 
 resources:
   Resources:
-    CognitoUserPool:
+    DBUpdateAsyncConfig:
+      Type: AWS::Lambda::EventInvokeConfig
+      Properties:
+        FunctionName:
+          Ref: DbupdateLambdaFunction
+        MaximumRetryAttempts: 0
+        Qualifier: $LATEST
+
+    CustomDashmessageAsyncConfig:
+      Type: AWS::Lambda::EventInvokeConfig
+      Properties:
+        FunctionName:
+          Ref: CustomDashmessageLambdaFunction
+        MaximumRetryAttempts: 0
+        Qualifier: $LATEST
+
+    GraphqlUpdateAsyncConfig:
+      Type: AWS::Lambda::EventInvokeConfig
+      Properties:
+        FunctionName:
+          Ref: GraphqlLambdaFunction
+        MaximumRetryAttempts: 0
+        Qualifier: $LATEST
+
+    CognitoUserPoolMyUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
         MfaConfiguration: OFF
@@ -102,25 +180,6 @@ resources:
 
         VerificationMessageTemplate:
           DefaultEmailOption: CONFIRM_WITH_CODE
-          EmailSubject: Bestätigen Sie Ihre E-Mail-Adresse
-          EmailMessage: |
-            Bee-to-Bee Konto
-            <h1>Bestätigen Sie Ihre E-Mail-Adresse</h1>
-
-            <p>Um die Einrichtung dieses Bee-to-Bee-Kontos abzuschließen, müssen wir nur noch sicherstellen, dass diese E-Mail-Adresse Ihnen gehört.</p>
-
-            <p>
-            Verwenden Sie zum Bestätigen Ihrer E-Mail-Adresse den folgenden Sicherheitscode: <b>{####}</b>
-            </p>
-
-            <p>
-            Wenn Sie diesen Code nicht angefordert haben, können Sie diese E-Mail ignorieren, da Ihre E-Mail-Adresse u. U. versehentlich von einer anderen Person eingegeben wurde.
-            </p>
-
-            <p>
-            Mit freundlichen Grüßen<br/>
-            Ihr Bee-to-Bee-Team
-            </p>
 
         Policies:
           PasswordPolicy:
@@ -142,7 +201,7 @@ resources:
               Ref: CognitoUserPoolClient
             ProviderName:
               Fn::GetAtt:
-                - CognitoUserPool
+                - CognitoUserPoolMyUserPool
                 - ProviderName
 
     CognitoUserPoolDomain:
@@ -150,7 +209,7 @@ resources:
       Properties:
         Domain: ${self:service}-${self:custom.stage}-pool-client  
         UserPoolId:
-          Ref: CognitoUserPool
+          Ref: CognitoUserPoolMyUserPool
 
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
@@ -171,7 +230,7 @@ resources:
         SupportedIdentityProviders: 
           - COGNITO
         UserPoolId:
-          Ref: CognitoUserPool
+          Ref: CognitoUserPoolMyUserPool
         
     ApiGatewayAuthorizer:
       Type: AWS::ApiGateway::Authorizer
@@ -187,13 +246,13 @@ resources:
         Type: COGNITO_USER_POOLS
         ProviderARNs:
           - Fn::GetAtt:
-              - CognitoUserPool
+              - CognitoUserPoolMyUserPool
               - Arn
 
   Outputs:
     UserPoolOutput:
       Value:
-        Ref: CognitoUserPool
+        Ref: CognitoUserPoolMyUserPool
       Export:
         Name: CognitoUserPool-${self:custom.stage}
 

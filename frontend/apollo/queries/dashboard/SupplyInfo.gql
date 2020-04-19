@@ -1,0 +1,13 @@
+fragment SupplyInfo on Supply {
+  id
+  name
+  description
+
+  skills {
+    name
+    id
+  }
+
+  quantity
+  salary: hourlySalary
+}

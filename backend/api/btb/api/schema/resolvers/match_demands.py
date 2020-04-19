@@ -8,41 +8,37 @@ from promise.dataloader import DataLoader
 from flask import current_app, g
 from .match import MatchQuery
 
+from .match_queries import match_supply, DemandQuery
 
-class DemandQuery(MatchQuery):
-    def __init__(self, skills, location):
-        super().__init__("btb.match_team_demand", skills, location)
-
-    def map_result(self, record):
-        return self.map_default_result("demand", g.demand_loader, record)
-
-
-def match_demand(demand, cursor = None):
-    match_query = DemandQuery(demand.skills, demand.postal_code)
-    # match_query.set_radius(demand.radius)
-
-    if cursor is not None:
-        match_query.set_offset(cursor.offset)
-
-    if demand.max_hourly_salary:
-        match_query.match_salary(demand.max_hourly_salary)
-
-    if demand.quantity:
-        match_query.match_quantity(demand.quantity)
-
-    return match_query.execute()
-
-
-def match_demand_by_id(root, info, id, cursor=None):
+def match_demand_by_id(root, info, id, radius=None, cursor=None):
     with db.engine.begin() as conn:
-        sql = text("select d.*, c.postal_code from btb.team_demand d, btb.company c where d.company_id = c.id and d.id = :id")
-        data = conn.execute(sql, id=id).fetchone()
+        sql = text("""
+select 
+    d.*, 
+    d.max_hourly_salary as hourly_salary,
+    c.postal_code 
+from 
+    btb_data.team_demand d, 
+    btb.company_with_contact c
+where 
+    d.company_id = c.id 
+and d.id = :id
+and c.owner_external_id = :uid
+        """)
 
-        for row in data:
-            return match_demand(data, cursor)
+        data = conn.execute(
+            sql, 
+            uid=g.principal.get_id(), 
+            id=id,
+        ).fetchone()
+
+        if data is not None:
+            for row in data:
+                return match_supply(data, radius, cursor) # find matching supplies
 
         return {
             "page_info": {
+                "page_size": 0,
                 "has_next_page": False,
             },
             "matches": [],

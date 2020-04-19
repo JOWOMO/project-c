@@ -1,0 +1,6 @@
+fragment ContactInfo on CompanyContact {
+  id
+  firstName
+  lastName
+  pictureUrl
+}

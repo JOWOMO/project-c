@@ -1,10 +1,13 @@
 export default async function ({
-  store, redirect, route
+  store, app
 }) {
   try {
-    console.info('loading user');
+    console.debug('[Loaduser Guard] checking');
     await store.dispatch('auth/load');
   } catch (e) {
-    console.error('failed to load', e);
+    try { await app.$apolloHelpers.onLogout(); }
+    catch { }
+
+    console.error('failed to load user', e);
   }
 }

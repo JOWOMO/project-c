@@ -27,7 +27,8 @@
         "@types/node",
         "@nuxt/types",
         "vue-apollo/types",
-        "@types/vuelidate"
+        "@types/vuelidate",
+        "./types"
       ]
     },
     "exclude": [

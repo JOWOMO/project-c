@@ -9,10 +9,12 @@ from flask import g
 from .industry import Industry
 
 class CompanyContact(ObjectType):
+    id = ID(required=True)
     first_name = String(required=True)
     last_name = String(required=True)
 
     picture_url = String(required=False)
+    
 
 class Company(ObjectType):
     id = ID(required=True)
@@ -53,6 +55,13 @@ class Demand(ObjectType):
     max_hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True, resolver=company_by_id)
 
+    # we only have this for now
+    def resolve_description(root, info):
+        if root.description_ext is None:
+            return None
+
+        return root.description_ext
+
     def resolve_skills(root, info):
         if root.skills is None:
             return []
@@ -71,6 +80,13 @@ class Supply(ObjectType):
     quantity = Int(required=True)
     hourly_salary = Float(required=False)
     company = Field(lambda: Company, required=True, resolver=company_by_id)
+
+    # we only have this for now
+    def resolve_description(root, info):
+        if root.description_ext is None:
+            return None
+
+        return root.description_ext
 
     def resolve_skills(root, info):
         if root.skills is None:

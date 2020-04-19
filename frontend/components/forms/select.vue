@@ -1,38 +1,35 @@
 <template>
   <div>
-      <select 
-        class="form-control"
-        :class="{ 'is-invalid': submitted && validation.$error }"
+    <select
+      class="form-control"
+      :class="{ 'is-invalid': submitted && validation.$error }"
+      :id="id"
+      :name="id"
+      :value="value"
+      @input="update"
+      @keypress.enter.prevent
+    >
+      <option hidden disabled value>- Bitte auswählen -</option>
+      <option
+        v-for="ind in values"
+        :key="ind.id"
+        :value="ind.id"
+        :selected="ind.id == value"
+      >{{ ind.name }}</option>
+    </select>
 
-        :id="id"
-        :name="id"
+    <label :for="id">
+      <slot v-bind:label="label">{{ label }}</slot>
+    </label>
 
-        :value="value"
-        @input="update"
-      >
-        <option hidden disabled value=''>- Bitte auswählen -</option>
-        <option
-          v-for="ind in values"
-          :key="ind.id"
-          :value="ind.id"
-          :selected="ind.id == value"
-        >
-          {{ ind.name }}
-        </option>
-      </select>
-
-      <label :for="id">
-        <slot v-bind:label="label">{{ label }}</slot>
-      </label>  
-
-      <slot
-        v-if="submitted && validation.$error"
-        name="validation"
-        v-bind:validation="validation"
-        v-bind:label="label"
-        >
-          <validations :label="label" :validation="validation" :submitted="submitted" />
-      </slot>
+    <slot
+      v-if="submitted && validation.$error"
+      name="validation"
+      v-bind:validation="validation"
+      v-bind:label="label"
+    >
+      <validations :label="label" :validation="validation" :submitted="submitted" />
+    </slot>
   </div>
 </template>
 
@@ -48,10 +45,10 @@ import {
   On
 } from "nuxt-property-decorator";
 import { Validation } from "vuelidate";
-import { get } from 'lodash';
-import  validations from "./validations.vue";
+import { get } from "lodash";
+import validations from "./validations.vue";
 
-@Component({components: {validations}})
+@Component({ components: { validations } })
 export default class extends Vue {
   @Inject("validation")
   validationAccessor!: any;
@@ -82,7 +79,7 @@ export default class extends Vue {
   }
 
   mounted() {
-      // we need to bind to the validation event as
+    // we need to bind to the validation event as
     // injected properties are not reactive
     const accessor = this.validationAccessor();
     this.validation = accessor ? get(accessor, this.id, {}) : {};

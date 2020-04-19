@@ -1,0 +1,30 @@
+query DasboardTeams {
+  me {
+    id
+    firstName
+    lastName
+    pictureUrl
+  }
+
+  activeDemands  {
+    id
+    name
+
+    company {
+      id
+      postalCode
+      city
+    }
+  }
+
+  activeSupplies {
+    id
+    name
+
+    company {
+      id
+      postalCode
+      city
+    }
+  }
+}

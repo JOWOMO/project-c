@@ -1,11 +1,7 @@
 @import './colors.scss';
+@import './scales.scss';
 
 $input-width: 100%;
-
-$labelColor: #787878; 
-$fontColor: #484848;
-
-$fontSize: 18px;
 
 form {
   padding: 0;
@@ -29,70 +25,88 @@ input:-webkit-autofill {
     position: relative;
 
     .field-validation {
-      // margin-top: 20px;
+      // margin-top: $gridsize/2;
       color: $error;
       padding-top: 4px;
       padding-left: 4px;
       font-size: 12px;
     }
-  
+
     label {
       position: absolute;
-      top: 21px;
+      top: $gridsize /2;
       left: 10px;
       font-weight: normal;
-      font-size: $fontSize;
+      font-size: $textsize;
       display: inline-block;
+
+      width: calc(100% - 20px);
+      white-space: nowrap;
+      text-overflow: ellipsis;;
+      overflow: hidden;
+
       text-align: left;
       padding-left: 12px;
       transition: all .5s ease;
-      color: $fontColor;
+      color: $inputlabelcolor;
     }
-  
+
     select, input {
       -moz-appearance: none;
       -webkit-appearance: none;
       appearance: none;
       border: none;
     }
-  
+
     input, select {
       background: $uiComponent;
       border-radius: 8px;
       border: 1px solid $border;
       width: $input-width;
-      
+
       height: 70px;
       // padding-left: 10px;
 
-      color: #000;
+      color: $inputtextcolor;
       outline: none;
-      font-size: $fontSize;
-  
+      font-size: $textsize;
+
       &:focus {
         background: $uiComponentHighlighted;
         border-color: $primary;
-        padding: 20px 20px 0px 21px;
+        padding: $gridsize/2 $gridsize/2 0px 21px;
       }
-  
-      &:valid {
-        padding: 20px 20px 0px 21px;
+
+      &:valid, &:disabled {
+        padding: $gridsize/2 $gridsize/2 0px 21px;
       }
-  
+
+      &:disabled {
+        color: lighten($color: $inputtextcolor, $amount: 10);
+        border: 1px solid lighten($color: $border, $amount: 5);
+      }
+
       &:valid + label {
         top: 11px;
         font-size: 12px;
-        color: $labelColor;
+        color: $inputlabelcolor ;
         font-weight: normal;
       }
-  
+
       &:focus + label {
         top: 11px;
         font-size: 12px;
         color: $primary;
-        font-weight: bold;
+        font-weight: 500;
       }
-  
+
+      &:disabled + label {
+        top: 11px;
+        font-size: 12px;
+        font-weight: normal;
+        color: lighten($color: $inputtextcolor, $amount: 30);
+      }
+
       &[type=number]::-webkit-inner-spin-button,
       &[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -105,148 +119,52 @@ input:-webkit-autofill {
     .is-invalid {
       border: 1px solid $error !important;
     }
-  
+
     textarea {
       background: $uiComponent;
       border-radius: 8px;
       border: 1px solid $border;
       width: $input-width;
-      
+
       height: 70px;
       // padding-left: 10px;
 
       color: #000;
       outline: none;
-      font-size: $fontSize;
+      font-size: $textsize;
 
       padding-left: 10px;
-      color: $fontColor;
+      color: $inputtextcolor;
       outline: none;
-      font-size: $fontSize;
-  
+      font-size: $textsize;
+
       &:focus {
         background: $uiComponentHighlighted;
         border-color: $primary;
-        padding: 20px 20px 0px 21px;
+        padding: $gridsize/2 $gridsize/2 0px 21px;
       }
-  
+
       &:valid {
-        padding: 34px 20px 0 21px;
+        padding: 34px $gridsize/2 0 21px;
       }
-  
+
       &:valid + label {
         top: 11px;
         font-size: 12px;
-        color: $labelColor;
+        color: $inputlabelcolor;
         font-weight: normal;
       }
-  
+
       &:focus + label {
         top: 11px;
         font-size: 12px;
         color: $primary;
-        font-weight: bold;
+        font-weight: 500;
       }
     }
-  
+
     .error {
       color: $error;
     }
   }
 
-
-// @supports(-webkit-appearance: none) or (-moz-appearance: none) {
-//   input[type='checkbox'] {
-//     -webkit-appearance: none;
-//     -moz-appearance: none;
-//     height: 20px;
-//     width: 20px;
-//     outline: none;
-//     display: inline-block;
-//     position: relative;
-//     margin: 0;
-//     cursor: pointer;
-    
-//     border: 2px solid $border;
-//     // background: $border;
-
-//     transition: background .3s, border-color .3s, box-shadow .2s;
-
-//     &:after {
-//       content: '';
-//       display: block;
-//       left: 0;
-//       top: 0;
-//       position: absolute;
-//       transition: transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s);
-//     }
-
-//     &:checked {
-//       // background: $primary !important;
-//       // border: $primary !important;
-//       --d-o: .3s;
-//       --d-t: .6s;
-//       --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
-//     }
-
-//     &:not(.switch) {
-//       width: 20px;
-
-//       &:after {
-//         opacity: var(--o, 0);
-//       }
-
-//       &:checked {
-//         --o: 1;
-//       }
-
-//       &:hover {
-//         &:not(:checked) {
-//           &:not(:disabled) {
-//             border: #25A6DA;
-//           }
-//         }
-//       }
-//     }
-//   }
-
-//   input[type='checkbox'] {
-//     &:not(.switch) {
-//       border-radius: 7px;
-
-//       &:after {
-//         width: 5px;
-//         height: 9px;
-//         border: 2px solid $border;
-//         border-top: 0;
-//         border-left: 0;
-//         left: 7px;
-//         top: 4px;
-//         transform: rotate(var(--r, 20deg));
-//       }
-
-//       &:checked {
-//         --r: 43deg;
-//       }
-//     }
-
-//     &.switch {
-//       width: 38px;
-//       border-radius: 11px;
-
-//       &:after {
-//         left: 2px;
-//         top: 2px;
-//         border-radius: 50%;
-//         width: 15px;
-//         height: 15px;
-//         transform: translateX(var(--x, 0));
-//       }
-
-//       &:checked {
-//         color: $primary;
-//         --x: 17px;
-//       }
-//     }
-//   }
-// }

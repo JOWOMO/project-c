@@ -19,10 +19,10 @@
         <formInput :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
       </div>
 
-      <span id="error">{{ error }}</span>
+      <span id="error" v-if="error">{{ error }}</span>
 
       <div class="buttons">
-        <button class="secondary" @click.prevent="$router.push('/')">Zurück</button>
+        <button class="secondary" @click.prevent="back">Zurück</button>
         <button class="primary">Weiter</button>
       </div>
     </form>
@@ -30,17 +30,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide } from "nuxt-property-decorator";
+import { Vue, Component, Provide, State, Emit } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
+import { IState } from '@/store'
 import formInput from "@/components/forms/input.vue";
+import { formatMessage } from "./messages";
+import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
   components: { formInput }
 })
 export default class extends Vue {
+  @State((s: IState) => s.register.user.email)
+  existingEMail?: string;
+
   @Validate({ required, email })
   email: string = "";
 
@@ -60,6 +66,16 @@ export default class extends Vue {
     return this.$v;
   }
 
+  mounted() {
+    this.email = this.existingEMail || '';
+  }
+
+  @Emit('change-state')
+  back() {
+    return 'reset';
+  }
+
+  @LoadingAnimation
   async resetPassword() {
     this.$v.$touch();
     this.$emit("validate");
@@ -68,19 +84,31 @@ export default class extends Vue {
       return;
     }
 
+    this.$track('authentication', 'reset-password');
+
     try {
       const user = {
         email: this.email,
-        password: this.password
+        password: this.password,
+        code: this.code,
       };
 
-      await this.$store.dispatch("auth/resetPassword", user);
+      this.$store.commit('register/user', user);
+      const loginSucceeded = await this.$store.dispatch("auth/resetPassword", user);
 
-      this.$emit("change-state", "login");
+      if (loginSucceeded) {
+        this.$emit("change-state", "redirect");
+      } else {
+        this.$emit("change-state", "login");
+      }
     } catch (err) {
-      this.error = err.message;
+      console.error(err);
+      this.error = formatMessage(err);
     }
   }
 }
 </script>
 
+<style lang="scss" scoped>
+@import '@/assets/form-layout-single';
+</style>

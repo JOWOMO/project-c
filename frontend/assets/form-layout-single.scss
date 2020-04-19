@@ -1,51 +1,29 @@
-@import './colors.scss';
+@import '@/assets/form-layout-two';
+@import '@/assets/scales';
 
 .container {
-  h1 {
-    text-align: left;
-    padding-bottom: 24px;
-  }
-
+  // buttons are stretched in this case
   .buttons {
-    margin-top: 21px;
+    // form-group is missing
+    grid-column: 1 / span 2;
 
-    display: grid;
-    grid-gap: 24px;
-    grid-auto-flow: column;
-    
+    display: flex;
+    justify-content: space-between;
+
     button {
-      width: 100%;
+      flex-grow: 1;
+      max-width: none;
+    }
+
+    // spacing between equal elements
+    button + button {
+      margin-left: $gridsize;
     }
   }
 
-  form {
-    display: grid;
-    grid-gap: 11px;
-  }
+  max-width: 500px;
+  min-width: 500px;
 }
 
-// @media only screen and (max-width: 765px) {
-//   .container {
-//     justify-content: center;
-//     grid-template-rows: auto 1fr;
-//     grid-template-columns: 80vw;
-
-//     h1 {
-//       margin: 50px 0 0 0;
-//     }
-
-//     #error {
-//       grid-column: 1;
-//       grid-row: 4;
-//       text-align: center;
-//     }
-
-//     .form-group {
-//       width: 80vw;
-
-//       input, label, .error {
-//         width: 100%;
-//       }
-//     }
-//   }
-// }
+// need to redeclare that
+@import '@/assets/form-layout-responsive';

@@ -31,7 +31,7 @@ jobs:
         python-version: 3.7
         
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v1.4.1
       with:
         node-version: 12.x
 
@@ -61,16 +61,79 @@ jobs:
     - name: Deploy to stage
       run: |
         source $HOME/.poetry/env
+        
+        poetry env use python3.7
+        poetry config --local virtualenvs.in-project true
+        poetry install
+
+        source .venv/bin/activate
+        python3 -m btb.templates
+        
         npx serverless deploy --stage $STAGE
       working-directory: backend/api
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    - name: Run database upde
-      uses: ItsKarma/aws-cli@v1.70.0
-      with:
-        args: lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --invocation-type RequestResponse --payload {} response.json
+    - uses: chrislennon/action-aws-cli@v1.1
+
+    - name: Cleanup database
+      if: contains(github.event.pull_request.labels.*.name, 'db:clean')
+      run: |
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --cli-read-timeout 0 --payload '{"action": "clean"}' response.json > output.txt
+
+        echo "RESPONSE"
+        cat response.json
+
+        echo "\nOUTPUT"
+        cat output.txt
+
+        if grep -q FunctionError output.txt; then
+          exit 1;
+        fi
+
+      working-directory: backend/api
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: "eu-west-1"
+
+    - name: Run database update
+      run: |
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --cli-read-timeout 0 --payload '{}' response.json > output.txt
+
+        echo "RESPONSE"
+        cat response.json
+
+        echo "\nOUTPUT"
+        cat output.txt
+
+        if grep -q FunctionError output.txt; then
+          exit 1;
+        fi
+
+      working-directory: backend/api
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: "eu-west-1"
+
+    - name: Import test-data
+      if: contains(github.event.pull_request.labels.*.name, 'db:data')
+      run: |
+        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --cli-read-timeout 0 --payload '{"action": "test-data"}' response.json > output.txt
+
+        echo "RESPONSE"
+        cat response.json
+
+        echo "\nOUTPUT"
+        cat output.txt
+
+        if grep -q FunctionError output.txt; then
+          exit 1;
+        fi
+
+      working-directory: backend/api
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

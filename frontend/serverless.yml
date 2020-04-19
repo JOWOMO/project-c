@@ -23,7 +23,7 @@ custom:
     bucketName: ${self:custom.s3Bucket}
     distributionFolder: dist 
     indexDocument: index.html
-    errorDocument: index.html
+    errorDocument: 200.html
 
     objectHeaders:
        ALL_OBJECTS:
@@ -112,11 +112,11 @@ resources:
           CustomErrorResponses:
             - ErrorCode: 404
               ResponseCode: 200
-              ResponsePagePath: /index.html
+              ResponsePagePath: /200.html
               
             - ErrorCode: 403
               ResponseCode: 200
-              ResponsePagePath: /index.html
+              ResponsePagePath: /200.html
 
           DefaultCacheBehavior:
             Compress: True

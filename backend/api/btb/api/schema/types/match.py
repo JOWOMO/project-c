@@ -21,7 +21,7 @@ class MatchQueryInput(InputObjectType):
     radius = Int()
 
     # must give skillset
-    skills = List(NonNull(Int), required=True)
+    skills = List(NonNull(ID), required=True)
     postal_code = String(required=True)
 
     max_salary = Float()
@@ -35,8 +35,8 @@ class PageInfo(ObjectType):
 
 
 class SupplyMatch(ObjectType):
-    distance = Int()
-    percentage = Int()
+    distance = Int(required=True)
+    percentage = Int(required=True)
     supply = Field(Supply, required=True)
 
 
@@ -46,8 +46,8 @@ class MatchSupplyResult(ObjectType):
 
 
 class DemandMatch(ObjectType):
-    distance = Int()
-    percentage = Int()
+    distance = Int(required=True)
+    percentage = Int(required=True)
     demand = Field(Demand, required=True)
 
 

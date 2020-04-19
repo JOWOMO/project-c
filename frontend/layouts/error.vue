@@ -1,37 +1,46 @@
 <template>
   <div class="container">
     <div class="text">
-      <h1>404</h1>
+      <h1>{{error.statusCode}}</h1>
       <div class="message">
-        <h2>Hier ist nichts</h2>
-        <nuxt-link to="/">Zurück nach Hause in <span>{{ counter }}</span></nuxt-link>
+        <h2>{{error.message}}</h2>
+        <nuxt-link to="/">
+          Zurück nach Hause
+          <!-- <span>{{ counter }}</span> -->
+        </nuxt-link>
       </div>
     </div>
     <div class="background">
-      <img src="/images/ship.svg">
+      <img src="/images/error/ship.svg" />
     </div>
   </div>
 </template>
 
 <script>
+const DURATION = 10;
+
 export default {
   props: ["error"],
-  data() {
-    return {
-      counter: 5
-    }
-  },
+  // data() {
+  //   return {
+  //     counter: DURATION
+  //   };
+  // },
   mounted() {
-    setTimeout(() => {
-      this.$router.push('/')
-    }, 5000)
-    setInterval(() => {
-      this.counter--
-    }, 1000)
+    // setTimeout(() => {
+    //   this.$router.push("/");
+    // }, DURATION * 1000);
+
+    // setInterval(() => {
+    //   this.counter--;
+    // }, 1000);
   }
 };
 </script>
+
 <style lang="scss" scoped>
+@import '@/assets/colors';
+
 .container {
   height: calc(100vh - 80px);
 
@@ -40,13 +49,13 @@ export default {
     bottom: 0;
     left: 0;
     width: 100vw;
-    background: url(../static/images/ocean.svg) no-repeat bottom center;
+    background: url(/images/error/ocean.svg) no-repeat bottom center;
     height: 300px;
     z-index: 1;
 
     img {
       position: relative;
-      top: 20%;
+      top: 10%;
       left: 50%;
       width: 150px;
       animation: moveShip 6s 1 0s linear;
@@ -65,7 +74,7 @@ export default {
 
     h1 {
       grid-column: 1;
-      color: #DA2566;
+      color: $secondary;
       font-size: 120px;
       justify-self: flex-start !important;
     }
@@ -75,15 +84,15 @@ export default {
       text-align: left;
 
       h2 {
-        font-size: 40px
+        font-size: 40px;
       }
 
       a {
         font-weight: normal;
+        color: #000;
 
-        span{
+        span {
           font-weight: bold;
-          color: #25A6DA;
         }
       }
     }
@@ -91,10 +100,10 @@ export default {
 }
 
 @keyframes moveShip {
-  0%{
+  0% {
     transform: translateX(0);
   }
-  100%{
+  100% {
     transform: translateX(200px);
   }
 }

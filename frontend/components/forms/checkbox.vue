@@ -87,9 +87,10 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .outer {
-  height: 44px;
+  min-height: $gridsize;
 }
 
 // need to reset all styles coming from form
@@ -252,12 +253,12 @@ label {
   display: block !important;
   position: relative !important;
 
-  padding-left: 52px;
-  margin-bottom: 12px;
+  padding-left: $gridsize*1.5;
+  // margin-bottom: 12px;
 
   cursor: pointer;
-  font-size: 18px;
-  padding-top: 10px;
+  font-size: $textsize;
+  // padding-top: 10px;
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -281,8 +282,8 @@ label {
   top: 0;
   left: 0;
 
-  height: 44px;
-  width: 44px;
+  height: $gridsize;
+  width: $gridsize;
 
   border-radius: 8px;
   background-color: $uiComponent;

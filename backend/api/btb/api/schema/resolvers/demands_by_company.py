@@ -7,6 +7,6 @@ from sqlalchemy import text
 def demands_by_company(root, info):
     with db.engine.begin() as conn:
         result = conn.execute(
-            text("select * from btb.team_demand where company_id = :id"), id=root["id"]
+            text("select * from btb_data.team_demand where company_id = :id"), id=root["id"]
         )
         return result.fetchall()

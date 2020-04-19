@@ -8,45 +8,41 @@ from promise.dataloader import DataLoader
 from flask import current_app, g
 from .match import MatchQuery
 
+from .match_queries import match_demand, SupplyQuery
 
-class SupplyQuery(MatchQuery):
-    def __init__(self, skills, location):
-        super().__init__("btb.match_team_supply", skills, location)
-
-    def map_result(self, record):
-        return self.map_default_result("supply", g.supply_loader, record)
-
-
-def match_supply(supply, cursor = None):
-    match_query = SupplyQuery(supply['skills'], supply.postal_code)
-    # match_query.set_radius(demand.radius)
-
-    if cursor is not None:
-        match_query.set_offset(cursor.offset)
-
-    if "hourly_salary" in supply:
-        match_query.match_salary(supply["hourly_salary"])
-
-    if "quantity" in supply:
-        match_query.match_quantity(supply["quantity"])
-
-    return match_query.execute()
-
-
-def match_supply_by_id(root, info, id, cursor=None):
+def match_supply_by_id(root, info, id, radius=None, cursor=None):
     with db.engine.begin() as conn:
-        sql = text("select s.*, c.postal_code from btb.team_supply s, btb.company c where s.company_id = c.id and s.id = :id")
-        data = conn.execute(sql, id=id).fetchone()
+        sql = text("""
+select 
+    s.*, 
+    s.hourly_salary as max_hourly_salary,
+    c.postal_code 
+from 
+    btb_data.team_supply s, 
+    btb.company_with_contact c 
+where 
+    s.company_id = c.id 
+and s.id = :id
+and c.owner_external_id = :uid
+        """)
 
-        for row in data:
-            return match_supply(data, cursor)
+        data = conn.execute(
+            sql, 
+            uid=g.principal.get_id(), 
+            id=id
+        ).fetchone()
+
+        if data is not None:
+            for row in data:
+                return match_demand(data, radius, cursor) # find matching demands
 
         return {
             "page_info": {
+                "page_size": 0,
                 "has_next_page": False,
             },
             "matches": [],
-        }
+        }   
 
 
 def match_supplies_by_query(root, info, query, cursor=None):

@@ -1,30 +1,11 @@
-<template>
-  <div>
-    <h1>AGB</h1>
-  </div>
-</template>
-
 <script lang="ts">
-import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
+import { Component, Vue } from "nuxt-property-decorator";
+import { Context } from "@nuxt/types";
 
 @Component
 export default class extends Vue {
-  @Meta
-  head() {
-    return {
-      title: "Title",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: ""
-        }
-      ]
-    };
+  async asyncData({redirect}: Context) {
+    redirect(302, 'https://weserberglandag.de/allgemeine-geschaeftsbedingungen-agb/');
   }
 }
 </script>
-
-<style>
-</style>

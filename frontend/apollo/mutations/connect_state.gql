@@ -1,0 +1,13 @@
+mutation setMatchState($id: ID!) {
+  setMatchState(answer: Accept, id: $id) {
+    id
+    name
+    email
+    firstName
+    lastName
+    pictureUrl
+    addressLine1
+    postalCode
+    city
+  }
+}
