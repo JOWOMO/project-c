@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <navbar />
+    <navbar class="nav" />
     <nuxt class="screen-center" />
     <cookies />
   </div>
@@ -23,6 +23,11 @@ export default class extends Vue {}
 <style lang="scss" scoped>
 @import "@/assets/screen";
 @import "@/assets/scales";
+
+.nav {
+  background-color: white;
+  height: 120px;
+}
 
 .page {
   display: flex;

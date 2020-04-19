@@ -65,7 +65,7 @@
         <hr />
       </div>
 
-      <h2>Unser Konzept</h2>
+      <h1>Unser Konzept</h1>
       <p>Wir vernetzen Unternehmen um gewinnbringende Personalpartnerschaften zu bilden.</p>
       <p>Mitarbeiter:innen eines Unternehmen, das aktuell von eingeschränkten Betriebsbedingungen betroffen ist, können temporär in Unternehmen arbeiten, die einen aktuellen Mehrbedarf haben. Dies erlaubt eine Entlastung von Unternehmen und den Schutz von Arbeitsplätzen auf der einen Seite und eine schnelle Deckung des erhöhten Bedarfs auf der anderen Seite.</p>
 
@@ -85,7 +85,7 @@
         <hr />
       </div>
 
-      <h2>Wir vernetzen</h2>
+      <h1>Wir vernetzen</h1>
 
       <div class="fullrow">
         <div class="blue h-padding v-padding">
@@ -123,7 +123,7 @@
         <hr />
       </div>
 
-      <h2>Unser Service</h2>
+      <h1>Unser Service</h1>
       <p>Temporäre Personalengpässe und Überkapazitäten zwischen Branchen und Unternehmen werden ausgeglichen.</p>
 
       <div class="three-columns">
@@ -432,7 +432,7 @@ $fullheight: calc(100vh - 120px);
     padding-bottom: $padding / 2;
   }
 
-  h2 {
+  h1 {
     padding-left: $padding;
     padding-right: $padding;
     padding-bottom: $padding / 2;
@@ -509,7 +509,7 @@ $fullheight: calc(100vh - 120px);
   }
 
   .content {
-    h2, p {
+    h1, p {
       padding-left: 22px;
       padding-right: 22px;
     }

@@ -5,7 +5,6 @@
       <nuxt class="screen-center" />
       <cookies />
     </div>
-    <imprint />
   </div>
 </template>
 
@@ -13,13 +12,11 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import topbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
-import imprint from "@/components/imprint.vue";
 
 @Component({
   components: {
     topbar,
     cookies,
-    imprint
   },
   middleware: "loaduser"
 })
