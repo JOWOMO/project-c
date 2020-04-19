@@ -141,8 +141,10 @@
             <hr />
           </div>
           <h3 class="padding">Juristische Umsetzung</h3>
-          <p>Wie geht es weiter, wenn der richtige Personalpartner gefunden ist? In unseren FAQs
-            findest du hilfreiche Informationen.</p>
+          <p>
+            Wie geht es weiter, wenn der richtige Personalpartner gefunden ist? In unseren FAQs
+            findest du hilfreiche Informationen.
+          </p>
           <p></p>
         </div>
         <div>
@@ -157,7 +159,7 @@
       </div>
     </div>
 
-    <div class="spacer"/>
+    <div class="spacer" />
     <imprint class="imprint" :horizontal="true" />
   </div>
 </template>
@@ -446,7 +448,7 @@ $fullheight: calc(100vh - 120px);
 
   .icon {
     height: 44px;
-    margin-top: $padding*2;
+    margin-top: $padding * 2;
     margin-bottom: $padding/2;
   }
 
@@ -490,8 +492,14 @@ $fullheight: calc(100vh - 120px);
 }
 
 @media only screen and (max-width: $breakpoint_md) {
+  .container {
+    overflow: unset;
+  }
+
   .login {
     .login-cta {
+      height: 50vh;
+
       .text {
         padding: 44px 22px;
       }
@@ -509,15 +517,16 @@ $fullheight: calc(100vh - 120px);
   }
 
   .content {
-    h1, p {
+    h1,
+    p {
       padding-left: 22px;
       padding-right: 22px;
     }
   }
 
   .process {
-      padding-left: 22px;
-      padding-right: 22px;
+    padding-left: 22px;
+    padding-right: 22px;
   }
 
   .fullrow {
@@ -545,6 +554,7 @@ $fullheight: calc(100vh - 120px);
 
     & > * {
       width: 100%;
+      height: 50vh;
     }
   }
 
@@ -553,6 +563,28 @@ $fullheight: calc(100vh - 120px);
 
     & > * {
       width: 100%;
+    }
+  }
+
+  .section {
+    min-height: 100vh;
+  }
+
+  .imprint {
+    margin-left: -28px;
+  }
+}
+
+@media only screen and (max-height: 700px) {
+  .login {
+    .login-cta {
+      .text {
+        padding: 22px;
+      }
+
+      .buttons {
+        padding: 22px;
+      }
     }
   }
 }
