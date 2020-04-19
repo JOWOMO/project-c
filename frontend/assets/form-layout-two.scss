@@ -1,4 +1,5 @@
 @import '@/assets/colors';
+@import '@/assets/scales';
 
 .container {
   h1 {
@@ -15,7 +16,7 @@
   }
 
   .buttons {
-    margin-top: 44px;
+    margin-top: $gridsize;
 
     display: flex;
     justify-content: space-between;
@@ -27,7 +28,7 @@
 
   form {
     display: grid;
-    grid-gap: 20px;
+    grid-gap: $gridsize/2;
     grid-template-columns: repeat(2, 1fr);
 
     .form-group {

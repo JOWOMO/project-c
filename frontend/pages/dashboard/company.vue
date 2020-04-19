@@ -38,7 +38,6 @@
 <script lang="ts">
 import sidebar from "@/components/pages/sidebar-dashboard.vue";
 import leftNav from "@/components/pages/navbar-left.vue";
-import filterElement, { Filter, DEFAULT_FILTER } from "@/components/filter.vue";
 
 import topbar from "@/components/pages/topbar.vue";
 import navbarAuthenticated from "@/components/pages/navbar-top-authenticated.vue";
@@ -58,7 +57,6 @@ import { Context } from "@nuxt/types";
 @Component({
   components: {
     sidebar,
-    filterElement,
     navbarAuthenticated,
     teamItems,
     leftNav,

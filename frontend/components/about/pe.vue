@@ -45,8 +45,6 @@ export default class extends Vue {
 @import "@/assets/colors";
 @import "@/assets/scales";
 
-$grid: 44px;
-
 .row {
   display: flex;
   flex: 1;
@@ -55,7 +53,7 @@ $grid: 44px;
 }
 
 .row + .row {
-  padding-top: $grid;
+  padding-top: $gridsize;
 }
 
 .left,
@@ -67,16 +65,16 @@ $grid: 44px;
 }
 
 .left {
-  margin-right: $grid/4/2;
+  margin-right: $gridsize/4/2;
 }
 
 .right {
-  margin-left: $grid/4/2;
+  margin-left: $gridsize/4/2;
 }
 
 .number-left,
 .number-right {
-  font-size: 48px;
+  font-size: $gridsize;
   font-weight: 100;
 }
 
@@ -89,14 +87,14 @@ $grid: 44px;
 }
 
 .title {
-  padding-top: $grid / 4;
+  padding-top: $gridsize / 4;
   color: $headercolor;
   font-weight: 500;
   font-size: $h3FontSize;
 }
 
 .text {
-  padding-top: $grid / 4;
+  padding-top: $gridsize / 4;
   font-size: 16px;
   color: $textcolor;
 

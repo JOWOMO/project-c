@@ -60,10 +60,12 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/scales';
+
 .down {
-  margin-top: 24px;
-  margin-left: 24px;
-  margin-right: 24px;
-  min-width: calc(100% - 48px);
+  margin-top: $gridsize/2;
+  margin-left: $gridsize/2;
+  margin-right: $gridsize/2;
+  min-width: calc(100% - #{$gridsize});
 }
 </style>

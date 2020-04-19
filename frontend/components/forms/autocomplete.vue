@@ -216,7 +216,7 @@ $radius: 8px;
 
   .dropdown-menu-element {
     padding: 10px;
-    padding-left: 20px;
+    padding-left: $gridsize/2;
     font-size: $textsize;
 
     &:hover {

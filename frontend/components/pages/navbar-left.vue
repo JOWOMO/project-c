@@ -8,7 +8,6 @@
         <row :height="'calc(100vh - ' + TOPHEIGHT + 'px)'" class="scroller">
           <slot name="body" />
         </row>
-        <top />
       </layout>
     </column>
     <column :width="330" :order="1" class="left-nav">
@@ -24,14 +23,12 @@ import { Context } from "@nuxt/types";
 import layout from "@/components/layout/layout.vue";
 import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
-import top from "@/components/goto-top.vue";
 
 @Component({
   components: {
     layout,
     column,
     row,
-    top,
   }
 })
 export default class extends Vue {
@@ -45,9 +42,11 @@ export default class extends Vue {
 
 .scroller {
   overflow-y: scroll;
-  padding: 44px;
+  -webkit-overflow-scrolling: touch;
+
+  padding: $gridsize;
   padding-top: 0px;
-  padding-right: 48px;
+  padding-right: $pageMarginRight;
 }
 
 @media only screen and (max-width: $breakpoint_md) {
@@ -64,22 +63,24 @@ export default class extends Vue {
     justify-content: flex-start;
     align-items: center;
 
-    height: 120px !important;
+    height: $pageHeaderHeight !important;
   }
 
   .scroller {
     overflow: unset;
     width: 100vw;
 
-    padding-left: 20px;
-    padding-top: 44px;
-    padding-right: 20px;
+    padding-left: $pageMarginMin;
+    padding-top: $gridsize;
+    padding-right: $pageMarginMin;
 
-    height: calc(100vh - 120px) !important;
+    height: calc(100vh - #{$pageHeaderHeight}) !important;
   }
 
-  .main {
-    overflow-y: scroll;
-  }
+  // this is required to scroll in combination with main-left#overflow
+  // .main {
+  //   overflow-y: scroll;
+  //   -webkit-overflow-scrolling: touch;
+  // }
 }
 </style>

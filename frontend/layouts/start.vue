@@ -5,6 +5,7 @@
       <nuxt class="screen-center" />
       <cookies />
     </div>
+    <top :useBody="true" />
   </div>
 </template>
 
@@ -12,11 +13,13 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import topbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
+import top from "@/components/goto-top.vue";
 
 @Component({
   components: {
     topbar,
     cookies,
+    top
   },
   middleware: "loaduser"
 })
@@ -36,5 +39,4 @@ export default class extends Vue {}
   flex-direction: column;
   height: 100vh;
 }
-
 </style>

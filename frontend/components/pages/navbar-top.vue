@@ -1,6 +1,7 @@
 <template>
   <div :height="'calc(100vh - ' + TOPHEIGHT + 'px)'" class="scroller">
     <slot />
+    <div class="spacer" />
     <imprint class="imprint" :horizontal="true" />
   </div>
 </template>
@@ -20,10 +21,16 @@ export default class extends Vue {
 @import "@/assets/scales";
 @import "@/assets/colors";
 
+.spacer {
+  padding-bottom: $pageMarginBottom;
+}
+
 .scroller {
   overflow-y: scroll;
-  padding: 44px;
-  padding-right: 48px;
+  -webkit-overflow-scrolling: touch;
+
+  padding: $gridsize;
+  padding-right: $pageMarginRight;
 
   flex: 1;
   align-items: unset;
@@ -31,9 +38,9 @@ export default class extends Vue {
 }
 
 .imprint {
-  padding-top: 24px;
-  margin-bottom: -24px;
-  margin-left: -24px;
+  padding-top: $pageMarginMin;
+  margin-bottom: -$pageMarginMin;
+  margin-left: -$pageMarginMin;
 }
 
 @media only screen and (max-width: $breakpoint_md) {
@@ -41,12 +48,14 @@ export default class extends Vue {
     overflow: unset;
     width: 100vw;
 
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: $pageMarginMin;
+    padding-right: $pageMarginMin;
   }
 
-  .main {
-    overflow-y: scroll;
-  }
+
+  // only need this when we want to do scroll detectio inside
+  // .main {
+  //   overflow-y: scroll;
+  // }
 }
 </style>

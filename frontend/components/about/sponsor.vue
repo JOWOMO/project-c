@@ -28,8 +28,6 @@ export default class extends Vue {
 @import "@/assets/colors";
 @import "@/assets/scales";
 
-$grid: 44px;
-
 .sponsor {
   display: grid;
   grid-auto-columns: 1fr 1fr;
@@ -57,18 +55,18 @@ $grid: 44px;
   }
 
   .text {
-    padding-top: $grid / 2;
+    padding-top: $gridsize / 2;
     grid-column: 1 / span 2;
     grid-row: 2;
   }
 }
 
 .sponsor {
-  padding-top: $grid * 1;
+  padding-top: $gridsize * 1;
 }
 
 .sponsor + .sponsor {
-  padding-top: $grid * 2.5;
+  padding-top: $gridsize * 2.5;
 }
 
 @media only screen and (min-width: $breakpoint_md) {

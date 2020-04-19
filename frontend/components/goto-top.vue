@@ -11,6 +11,8 @@ const MINIMUM = 1000;
 
 @Component
 export default class extends Vue {
+  @Prop({default: false}) useBody!: boolean;
+
   isVisible = false;
   scroller!: any;
 
@@ -19,17 +21,21 @@ export default class extends Vue {
   }
 
   scrolled(evt: any) {
-    if (!this.isVisible && this.scroller.scrollTop > MINIMUM) {
+    const offset = this.scroller.scrollTop || this.scroller.scrollY;
+
+    if (!this.isVisible && offset > MINIMUM) {
       this.isVisible = true;
     }
 
-    if (this.isVisible && this.scroller.scrollTop <= MINIMUM) {
+    if (this.isVisible && offset <= MINIMUM) {
       this.isVisible = false;
     }
+
+    console.debug('offset', offset, this.isVisible);
   }
 
   mounted(el: any) {
-    this.scroller = this.$parent.$el;
+    this.scroller = this.useBody ? window : this.$parent.$el;
     // console.debug("mounted", this.scroller);
     this.scroller.addEventListener("scroll", this.scrolled);
   }
@@ -60,7 +66,7 @@ export default class extends Vue {
   background-color: rgb(1, 14, 27);
   background-color: rgba(1, 14, 27, 0.7);
 
-  position: absolute;
+  position: fixed;
 
   width: 45px;
   height: 45px;
@@ -87,7 +93,7 @@ export default class extends Vue {
 
 .isVisible {
   opacity: 0.5;
-  z-index: 4;
+  z-index: 9999;
   transition: all 1s ease;
 }
 </style>

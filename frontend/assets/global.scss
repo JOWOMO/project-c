@@ -2,10 +2,6 @@
 @import './colors';
 @import './scales';
 
-$h1FontSize: 36px;
-$h2FontSize: 24px;
-$h3FontSize: 20px;
-
 $buttonFormText: 18px;
 $input-width: 100%;
 
@@ -55,7 +51,7 @@ button {
   border-radius: 90px;
 
   min-width: 200px;
-  min-height: 50px;
+  height: 50px;
 
   background: $uiComponent;
   font-size: $buttonFormText;

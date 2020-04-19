@@ -72,9 +72,8 @@ export default class extends Vue {
 
 .nav-small,
 .nav-wide {
-  height: 120px;
+  height: $pageHeaderHeight;
   width: 100%;
-  // padding: 0 48px;
 
   display: flex;
   flex-direction: row;
@@ -90,16 +89,16 @@ export default class extends Vue {
 .navbar {
   // this is the offset for the bar below to mark the active entry
   padding-top: 18px;
-  padding-right: 48px;
+  padding-right: $gridsize;
 }
 
 .burger {
-  padding-right: 20px;
+  padding-right: $pageMarginMin;
 }
 
 .grow {
   flex: 1;
-  padding-left: 48px;
+  padding-left: $gridsize;
 }
 
 .center {

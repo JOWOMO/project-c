@@ -90,7 +90,7 @@ export default class extends Vue {
 @import "@/assets/scales";
 
 .outer {
-  min-height: 44px;
+  min-height: $gridsize;
 }
 
 // need to reset all styles coming from form
@@ -253,7 +253,7 @@ label {
   display: block !important;
   position: relative !important;
 
-  padding-left: 52px;
+  padding-left: $gridsize*1.5;
   // margin-bottom: 12px;
 
   cursor: pointer;
@@ -282,8 +282,8 @@ label {
   top: 0;
   left: 0;
 
-  height: 44px;
-  width: 44px;
+  height: $gridsize;
+  width: $gridsize;
 
   border-radius: 8px;
   background-color: $uiComponent;
