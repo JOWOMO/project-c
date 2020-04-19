@@ -36,8 +36,6 @@ import { ObservableQuery } from "apollo-client";
 import {
   MatchDemandResult,
   Company,
-  GetDemandsQuery,
-  GetDemandsQueryVariables,
   DemandMatchesQuery,
   DemandMatchesQueryVariables
 } from "../../../../apollo/schema";
