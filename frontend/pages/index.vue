@@ -366,9 +366,14 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
       padding: $gridsize $gridsize*1.5;
       width: 100%;
 
+      display: flex;
+      justify-content: center;
+
       button {
         text-align: left;
         width: 100%;
+        max-width: 350px;
+        height: auto;
 
         font-weight: 100;
         font-size: $h2FontSize;
