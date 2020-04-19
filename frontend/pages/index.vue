@@ -212,11 +212,10 @@ export default class extends Vue {
 @import "@/assets/colors";
 @import "@/assets/scales";
 
-$padding: 44px;
-$fullheight: calc(100vh - 120px);
+$fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .container {
-  height: calc(100vh - 120px);
+  height: $fullheight;
   overflow-y: scroll;
 
   display: block;
@@ -231,7 +230,7 @@ $fullheight: calc(100vh - 120px);
   hr {
     height: 4px;
     background-color: $primary;
-    width: 50px;
+    width: $gridsize;
   }
 }
 
@@ -241,15 +240,15 @@ $fullheight: calc(100vh - 120px);
   font-size: $h1FontSize;
   color: $headercolor;
 
-  padding-right: $padding;
-  padding-left: $padding;
+  padding-right: $gridsize;
+  padding-left: $gridsize;
 
   hyphens: manual;
 }
 
 .teaser {
   font-size: $h2FontSize;
-  padding-top: $padding;
+  padding-top: $gridsize;
 }
 
 .two-rows {
@@ -278,12 +277,12 @@ $fullheight: calc(100vh - 120px);
 
   & > * {
     width: 33.33%;
-    padding-left: $padding / 2;
-    padding-right: $padding / 2;
+    padding-left: $gridsize / 2;
+    padding-right: $gridsize / 2;
   }
 
   img {
-    min-height: 88px;
+    min-height: $gridsize * 2;
   }
 }
 
@@ -346,7 +345,7 @@ $fullheight: calc(100vh - 120px);
       font-size: $h2FontSize;
       color: white;
 
-      padding: 0px 44px;
+      padding: 0px $gridsize;
       min-height: 200px;
 
       display: flex;
@@ -354,7 +353,7 @@ $fullheight: calc(100vh - 120px);
     }
 
     .arrow {
-      margin-left: 22px;
+      margin-left: $gridsize/2;
       width: 33px;
       height: 33px;
 
@@ -364,7 +363,7 @@ $fullheight: calc(100vh - 120px);
     }
 
     .buttons {
-      padding: 44px 66px;
+      padding: $gridsize $gridsize*1.5;
       width: 100%;
 
       button {
@@ -375,7 +374,7 @@ $fullheight: calc(100vh - 120px);
         font-size: $h2FontSize;
 
         border-radius: 180px;
-        padding: 16px 44px;
+        padding: 16px $gridsize;
 
         display: flex;
         flex-direction: row;
@@ -387,24 +386,24 @@ $fullheight: calc(100vh - 120px);
 }
 
 .process {
-  padding: $padding * 2 $padding;
+  padding: $gridsize * 2 $gridsize;
   img {
-    max-width: 950px;
+    max-width: $breakpoint_md;
   }
 }
 
 .fullrow {
-  padding-top: $padding / 2;
+  padding-top: $gridsize / 2;
   display: grid;
   width: 100vw;
-  grid-auto-columns: 1fr 100px 1fr;
+  grid-auto-columns: 1fr $gridsize*2 1fr;
   color: white;
   position: relative;
 
   align-items: stretch;
 
   .blue {
-    padding: $padding;
+    padding: $gridsize;
     grid-column: 1;
     align-items: center;
     background-color: $primary;
@@ -418,7 +417,7 @@ $fullheight: calc(100vh - 120px);
   }
 
   .red {
-    padding: $padding;
+    padding: $gridsize;
     grid-column: 3;
     align-items: center;
     background-color: $secondary;
@@ -427,38 +426,38 @@ $fullheight: calc(100vh - 120px);
 
 .content {
   .hr {
-    padding-left: $padding;
-    padding-right: $padding;
+    padding-left: $gridsize;
+    padding-right: $gridsize;
 
-    padding-top: $padding * 2;
-    padding-bottom: $padding / 2;
+    padding-top: $gridsize * 2;
+    padding-bottom: $gridsize / 2;
   }
 
   h1 {
-    padding-left: $padding;
-    padding-right: $padding;
-    padding-bottom: $padding / 2;
+    padding-left: $gridsize;
+    padding-right: $gridsize;
+    padding-bottom: $gridsize / 2;
   }
 
   p {
-    padding-left: $padding;
-    padding-right: $padding;
-    padding-top: $padding / 2;
+    padding-left: $gridsize;
+    padding-right: $gridsize;
+    padding-top: $gridsize / 2;
   }
 
   .icon {
-    height: 44px;
-    margin-top: $padding * 2;
-    margin-bottom: $padding/2;
+    height: $gridsize;
+    margin-top: $gridsize * 2;
+    margin-bottom: $gridsize/2;
   }
 
   .icon + .hr {
-    padding-top: $padding/4;
+    padding-top: $gridsize/4;
   }
 }
 
 .spacer {
-  height: $padding * 2;
+  height: $pageMarginBottom;
 }
 
 .imprint {
@@ -501,32 +500,32 @@ $fullheight: calc(100vh - 120px);
       height: 50vh;
 
       .text {
-        padding: 44px 22px;
+        padding: $gridsize $pageMarginMin;
       }
 
       .buttons {
-        padding: 44px 22px;
+        padding: $gridsize $pageMarginMin;
       }
     }
   }
 
   .claim,
   .teaser {
-    padding-left: 22px;
-    padding-right: 22px;
+    padding-left: $pageMarginMin;
+    padding-right: $pageMarginMin;
   }
 
   .content {
     h1,
     p {
-      padding-left: 22px;
-      padding-right: 22px;
+      padding-left: $pageMarginMin;
+      padding-right: $pageMarginMin;
     }
   }
 
   .process {
-    padding-left: 22px;
-    padding-right: 22px;
+    padding-left: $pageMarginMin;
+    padding-right: $pageMarginMin;
   }
 
   .fullrow {
@@ -535,7 +534,7 @@ $fullheight: calc(100vh - 120px);
     .blue {
       grid-row: 1;
       grid-column: 1;
-      padding: 22px;
+      padding: $pageMarginMin;
     }
 
     .middle {
@@ -543,7 +542,7 @@ $fullheight: calc(100vh - 120px);
     }
 
     .red {
-      padding: 22px;
+      padding: $pageMarginMin;
       grid-row: 3;
       grid-column: 1;
     }
@@ -571,7 +570,7 @@ $fullheight: calc(100vh - 120px);
   }
 
   .imprint {
-    margin-left: -28px;
+    margin-left: -$pageMarginMin;
   }
 }
 
@@ -579,11 +578,11 @@ $fullheight: calc(100vh - 120px);
   .login {
     .login-cta {
       .text {
-        padding: 22px;
+        padding: $pageMarginMin;
       }
 
       .buttons {
-        padding: 22px;
+        padding: $pageMarginMin;
       }
     }
   }

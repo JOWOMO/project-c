@@ -26,7 +26,7 @@ export default class extends Vue {}
 
 .nav {
   background-color: white;
-  height: 120px;
+  height: $pageHeaderHeight;
 }
 
 .page {
@@ -41,7 +41,7 @@ export default class extends Vue {}
   }
 
   .screen-center {
-    padding-top: 44px;
+    padding-top: $gridsize;
   }
 }
 
@@ -51,8 +51,8 @@ export default class extends Vue {}
   }
 
   .screen-center {
-    padding-bottom: 44px;
-    padding-top: 44px;
+    padding-bottom: $gridsize;
+    padding-top: $gridsize;
   }
 }
 </style>

@@ -1,4 +1,5 @@
-@import './form-layout-two';
+@import '@/assets/form-layout-two';
+@import '@/assets/scales';
 
 .container {
   // buttons are stretched in this case
@@ -13,10 +14,10 @@
       flex-grow: 1;
       max-width: none;
     }
-    
+
     // spacing between equal elements
     button + button {
-      margin-left: 44px;
+      margin-left: $gridsize;
     }
   }
 
@@ -25,4 +26,4 @@
 }
 
 // need to redeclare that
-@import './form-layout-responsive';
+@import '@/assets/form-layout-responsive';

@@ -94,8 +94,6 @@ export default class extends Vue {
 @import "@/assets/colors";
 @import "@/assets/scales";
 
-$grid: 44px;
-
 .top {
   display: block;
 }
@@ -106,11 +104,11 @@ $grid: 44px;
 
 h1 {
   padding-top: 0;
-  padding-bottom: $grid / 2;
+  padding-bottom: $gridsize / 2;
 }
 
 p {
-  padding-bottom: $grid;
+  padding-bottom: $gridsize;
 }
 
 

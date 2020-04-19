@@ -86,6 +86,7 @@ export default class extends Vue {
 .sidebar {
   display: flex;
   min-width: 330px;
+  height: 100%;
 }
 
 .screen-right {
@@ -95,7 +96,7 @@ export default class extends Vue {
   min-height: 100vh;
 
   padding-top: 150px;
-  padding-bottom: 44px;
+  padding-bottom: $gridsize;
 
   justify-content: center;
 }
@@ -106,8 +107,8 @@ export default class extends Vue {
   }
 
   .screen-right {
-    padding-top: 44px;
-    padding-bottom: 44px;
+    padding-top: $gridsize;
+    padding-bottom: $gridsize;
 
     flex-shrink: 0;
   }
@@ -115,8 +116,8 @@ export default class extends Vue {
 
 @media only screen and (max-height: $breakpoint_sm) {
   .screen-right {
-    padding-bottom: 44px;
-    padding-top: 44px;
+    padding-bottom: $gridsize;
+    padding-top: $gridsize;
   }
 }
 </style>

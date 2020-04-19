@@ -34,12 +34,12 @@ export default class extends Vue {
 @import "@/assets/scales";
 
 .faq {
-  padding-top: 22px;
-  padding-bottom: 22px;
+  padding-top: $gridsize/2;
+  padding-bottom: $gridsize/2;
 
   display: grid;
   width: 100%;
-  grid-template-columns: auto 20px;
+  grid-template-columns: auto $gridsize/2;
 
   border-top: 1px solid $border;
   border-bottom: 1px solid $border;
@@ -67,7 +67,7 @@ export default class extends Vue {
   }
 
   .answer {
-    padding-top: 22px;
+    padding-top: $gridsize/2;
     grid-row: 2;
     grid-column: 1 / span 2;
   }

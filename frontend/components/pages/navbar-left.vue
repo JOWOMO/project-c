@@ -45,9 +45,9 @@ export default class extends Vue {
 
 .scroller {
   overflow-y: scroll;
-  padding: 44px;
+  padding: $gridsize;
   padding-top: 0px;
-  padding-right: 48px;
+  padding-right: $pageMarginRight;
 }
 
 @media only screen and (max-width: $breakpoint_md) {
@@ -64,18 +64,18 @@ export default class extends Vue {
     justify-content: flex-start;
     align-items: center;
 
-    height: 120px !important;
+    height: $pageHeaderHeight !important;
   }
 
   .scroller {
     overflow: unset;
     width: 100vw;
 
-    padding-left: 20px;
-    padding-top: 44px;
-    padding-right: 20px;
+    padding-left: $pageMarginMin;
+    padding-top: $gridsize;
+    padding-right: $pageMarginMin;
 
-    height: calc(100vh - 120px) !important;
+    height: calc(100vh - #{$pageHeaderHeight}) !important;
   }
 
   .main {

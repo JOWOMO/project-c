@@ -84,8 +84,6 @@ export default class extends Vue {
 @import "@/assets/colors";
 @import "@/assets/scales";
 
-$grid: 44px;
-
 .sidebar {
   display: flex;
 }
@@ -100,12 +98,14 @@ $grid: 44px;
   hyphens: auto;
   text-align: center;
 
+  padding-bottom: $pageMarginBottom;
+
   button {
-    margin-top: $grid/4 * 3;
+    margin-top: $gridsize/4 * 3;
   }
 
   h1 {
-    padding-bottom: $grid;
+    padding-bottom: $gridsize;
     // color: $secondary;
   }
 
@@ -114,19 +114,19 @@ $grid: 44px;
   }
 
   h2 {
-    padding-bottom: $grid/4 * 3;
+    padding-bottom: $gridsize/4 * 3;
   }
 
   p + h2 {
-    padding-top: $grid/2;
+    padding-top: $gridsize/2;
   }
 
   h3 {
-    padding-bottom: $grid/4;
+    padding-bottom: $gridsize/4;
   }
 
   p {
-    padding-bottom: $grid/4;
+    padding-bottom: $gridsize/4;
   }
 
   table {

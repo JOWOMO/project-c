@@ -27,6 +27,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .imprint {
   font-size: 14px;
@@ -40,7 +41,7 @@ export default class extends Vue {
 
   .links,
   .copy {
-    margin-left: 48px;
+    margin-left: $gridsize;
     display: flex;
     flex: 1;
     flex-direction: row;
@@ -48,7 +49,7 @@ export default class extends Vue {
     align-items: center;
 
     div {
-      margin-right: 20px;
+      margin-right: $pageMarginMin;
     }
   }
 }

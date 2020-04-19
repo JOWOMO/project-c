@@ -100,6 +100,8 @@ export default class Details extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scales';
+
 h2 {
   margin-top: 24px;
 }
@@ -117,7 +119,7 @@ h4 + h4 {
   display: flex;
   flex-wrap: wrap;
   margin-left: -20px;
-  margin-top: 44px;
+  margin-top: $gridsize;
 }
 
 .company-card {

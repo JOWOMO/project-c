@@ -15,7 +15,9 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scales';
+
 .section + .section {
-  padding-top: 48px;
+  padding-top: $gridsize;
 }
 </style>

@@ -30,6 +30,7 @@ export default class extends Vue {}
 
 <style lang="scss" scoped>
 @import "@/assets/colors";
+@import "@/assets/scales";
 
 .dashboard-sidebar {
   background: $uiComponent;
@@ -47,9 +48,7 @@ export default class extends Vue {}
   display: flex;
   width: 100%;
 
-  padding-left: 48px;
-
+  padding-left: $gridsize;
   flex-direction: column;
-  // justify-content: center;
 }
 </style>

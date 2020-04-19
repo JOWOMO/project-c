@@ -21,10 +21,8 @@ export default class extends Vue {
 @import "@/assets/colors";
 @import "@/assets/scales";
 
-$grid: 44px;
-
 .block {
-  padding: $grid / 2;
+  padding: $gridsize / 2;
 
   background-color: white;
   min-width: 100%;
@@ -32,39 +30,39 @@ $grid: 44px;
 
 .block-icon {
   justify-self: center;
-  width: $grid * 2.5;
+  width: $gridsize * 2.5;
 
-  padding-bottom: $grid;
-  margin-right: $grid;
+  padding-bottom: $gridsize;
+  margin-right: $gridsize;
 }
 
 .outer {
-  margin-top: $grid * 2;
+  margin-top: $gridsize * 2;
 }
 
 h1 + .outer {
-  margin-top: $grid;
+  margin-top: $gridsize;
 }
 
 @media only screen and (min-width: $breakpoint_md) {
   .block {
-    padding: $grid;
+    padding: $gridsize;
     grid-column: 2;
   }
 
   .block-icon {
     grid-column: 1;
     justify-self: center;
-    width: $grid * 2.5;
+    width: $gridsize * 2.5;
 
-    margin-top: $grid / 2;
-    padding-bottom: $grid;
-    margin-right: $grid;
+    margin-top: $gridsize / 2;
+    padding-bottom: $gridsize;
+    margin-right: $gridsize;
   }
 
   .outer {
     display: grid;
-    grid-auto-columns: $grid * 4 auto;
+    grid-auto-columns: $gridsize * 4 auto;
     align-content: flex-start;
   }
 }
