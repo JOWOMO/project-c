@@ -43,7 +43,7 @@ import {
 } from "../../../../apollo/schema";
 
 import { StateChanger } from "vue-infinite-loading";
-import { ConnectParams } from "@/pages/connect/_.vue";
+import { ConnectParams } from "@/pages/connect/request/_.vue";
 import { LoadingAnimation } from "../../../../components/loadinganimation";
 import { IMatchState, MatchFilter } from "../../../../store/match";
 import { IState } from "../../../../store";
