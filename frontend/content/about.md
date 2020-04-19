@@ -21,7 +21,7 @@ menu:
 
 ---
 
-# <img height="28px" src="/images/logo.svg" /> ist Deine Plattform zur Personalpartnerschaft</span>
+# JOWOMO ist Deine Plattform zur Personalpartnerschaft</span>
 
 <about id="vision" icon="vision">
 

@@ -30,10 +30,9 @@ export default class extends Vue {
 
 .block-icon {
   justify-self: center;
-  width: $gridsize * 2.5;
+  width: $gridsize * 2;
 
-  padding-bottom: $gridsize;
-  margin-right: $gridsize;
+  margin-bottom: $gridsize;
 }
 
 .outer {
@@ -44,6 +43,7 @@ h1 + .outer {
   margin-top: $gridsize;
 }
 
+// this is the scaling for the LARGE screen
 @media only screen and (min-width: $breakpoint_md) {
   .block {
     padding: $gridsize;
@@ -52,11 +52,8 @@ h1 + .outer {
 
   .block-icon {
     grid-column: 1;
-    justify-self: center;
-    width: $gridsize * 2.5;
 
     margin-top: $gridsize / 2;
-    padding-bottom: $gridsize;
     margin-right: $gridsize;
   }
 
