@@ -117,6 +117,10 @@ export default class extends Vue {
     padding-bottom: $gridsize/4 * 3;
   }
 
+  .faq + h2 {
+    padding-top: $gridsize;
+  }
+
   p + h2 {
     padding-top: $gridsize/2;
   }
