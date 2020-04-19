@@ -11,7 +11,7 @@ def reset_template(code):
         else "http://localhost:5000"
     )
 
-    subject = "Jetzt Passwort zurücksetzen"
+    subject = "JOWOMO: Setze Dein Passwort zurücksetzen"
     body = render("reset.html", {"code": code, "url": frontend})
 
     return Template(subject, body)

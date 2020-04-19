@@ -11,7 +11,7 @@ def code_template(code):
         else "http://localhost:5000"
     )
 
-    subject = "Bestätige Deine E-Mail Adresse"
+    subject = "JOWOMO: Bitte bestätige Deine E-Mail Adresse"
     body = render("code.html", {"url": frontend, "code": code})
 
     return Template(subject, body)
