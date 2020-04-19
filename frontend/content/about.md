@@ -21,7 +21,7 @@ menu:
 
 ---
 
-# JOWOMO ist Deine Plattform zur Personalpartnerschaft</span>
+# JOWOMO ist Deine Plattform für Personalpartnerschaften</span>
 
 <about id="vision" icon="vision">
 
