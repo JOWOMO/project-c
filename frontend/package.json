@@ -1,8 +1,8 @@
 {
   "name": "bee2bee_frontend",
   "version": "1.0.1",
-  "description": "The web frontend for the bee2bee platform",
-  "author": "“[Johann",
+  "description": "JOWOMO vernetzt Unternehmen für einen temporären Austausch von Personal. Flexibel. Innovativ. Krisengerecht.",
+  "author": "",
   "private": true,
   "scripts": {
     "deploy": "serverless deploy && serverless client deploy --no-confirm --no-policy-change",
