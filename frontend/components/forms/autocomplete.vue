@@ -12,6 +12,7 @@
       @keydown.up="up"
       @focus="open"
       @blur="close"
+      :required="true"
       :class="{ 'is-invalid': submitted && validation.$error }"
     />
 
@@ -213,6 +214,8 @@ $radius: 8px;
   border: 1px solid $primary;
   border-top: 0;
   border-radius: 0px 0px $radius $radius;
+
+  color: $textcolor;
 
   .dropdown-menu-element {
     padding: 10px;

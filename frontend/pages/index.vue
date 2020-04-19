@@ -143,7 +143,7 @@
           <h3 class="padding">Juristische Umsetzung</h3>
           <p>
             Wie geht es weiter, wenn der richtige Personalpartner gefunden ist? In unseren FAQs
-            findest du hilfreiche Informationen.
+            findest Du hilfreiche Informationen.
           </p>
           <p></p>
         </div>
@@ -153,7 +153,7 @@
             <hr />
           </div>
           <h3 class="padding">Support</h3>
-          <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für dich da. Wenn du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
+          <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für dich da. Wenn Du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
           <p></p>
         </div>
       </div>

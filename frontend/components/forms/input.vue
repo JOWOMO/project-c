@@ -25,6 +25,7 @@
       :checked="value"
       @input="update"
       :disabled="disabled"
+      :required="true"
       class="form-control"
       :class="{ 'is-invalid': submitted && validation.$error }"
     />
