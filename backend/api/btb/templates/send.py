@@ -23,12 +23,12 @@ def send_email(to_email, template):
         Message={
             'Body': {
                 'Html': {
-                    'Charset': 'utft-8',
+                    'Charset': 'UTF-8',
                     'Data': template.body,
                 },
             },
             'Subject': {
-                'Charset': 'utft-8',
+                'Charset': 'UTF-8',
                 'Data': template.subject,
             },
         },
