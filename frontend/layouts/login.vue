@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <navbar />
+    <navbar class="nav" />
     <nuxt class="screen-center" />
     <cookies />
   </div>
@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import navbar from "@/components/topbar.vue";
+import navbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
 
 @Component({
@@ -22,6 +22,12 @@ export default class extends Vue {}
 
 <style lang="scss" scoped>
 @import "@/assets/screen";
+@import "@/assets/scales";
+
+.nav {
+  background-color: white;
+  height: 120px;
+}
 
 .page {
   display: flex;
@@ -39,7 +45,7 @@ export default class extends Vue {}
   }
 }
 
-@media only screen and (max-height: 600px) {
+@media only screen and (max-height: $breakpoint_sm) {
   .page {
     display: block;
   }

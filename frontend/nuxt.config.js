@@ -72,6 +72,7 @@ export default {
     '@/plugins/vuelidate.js',
     '@/plugins/swal.ts',
     '@/plugins/tracking.ts',
+    '@/plugins/mq.ts'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -129,8 +130,14 @@ export default {
     // optional
     errorHandler: '~/plugins/apollo-error-handler.js',
     // required
+    defaultOptions: {
+      $query: {
+        fetchPolicy: 'network-only',
+      }
+    },
     clientConfigs: {
       default: {
+        cache: null,
         httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
         httpLinkOptions: {
           fetchOptions: {
@@ -141,6 +148,7 @@ export default {
       }
     },
   },
+
   gtm: {
     // Set to false to disable module in development mode
     dev: false,
@@ -161,12 +169,14 @@ export default {
     noscriptId: 'gtm-noscript',
     noscriptURL: 'https://www.googletagmanager.com/ns.html'
   },
+
   sentry: {
-    dsn: '', 
+    dsn: '',
     disabled: true,
     disableServerSide: true,
     config: {}, // Additional config
   },
+
   /*
   ** Build configuration
   */
@@ -179,19 +189,25 @@ export default {
         config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map';
       }
 
+      const markdownIt = require('markdown-it');
+      const anchor = require('markdown-it-anchor');
+
       // add frontmatter-markdown-loader
       config.module.rules.push({
         test: /\.md$/,
         include: path.resolve(__dirname, "content"),
         loader: "frontmatter-markdown-loader",
         options: {
-          mode: [Mode.VUE_COMPONENT, Mode.META]
+          mode: [Mode.VUE_COMPONENT, Mode.META],
+          markdownIt: markdownIt({html: true}).use(anchor),
         }
       });
     },
+
     // transpile: [/^vue2-google-maps($|\/)/],
     optimizeCSS: {
     },
+
     transpile: ['vue-clamp', 'resize-detector'],
   },
   generate: {

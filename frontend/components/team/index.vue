@@ -342,7 +342,7 @@ export default class extends Vue {
   }
 }
 
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: $breakpoint_sm) {
   .display {
     flex-direction: column;
 

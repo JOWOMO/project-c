@@ -9,8 +9,6 @@
 
       <p class="highlighted">{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
 
-      <!-- <div v-if="matchingSkills.length > 0" class="tags-label">Passend zu {{ subject }}</div> -->
-
       <div
           :class="{'tags-label': true, 'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
         >{{ percentage }}% passend zu {{ subject }}</div>
@@ -175,7 +173,11 @@ export default class extends Vue {
 
   @Emit("showall")
   showAllTeams() {
-    return this.company.id;
+    return {
+      flow: this.flow,
+      id: this.match.id,
+      company: this.company.id,
+    }
   }
 
   @Emit("connect")

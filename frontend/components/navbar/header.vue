@@ -19,7 +19,7 @@ export default class extends Vue {
 .item-header {
   font-size: $h3FontSize;
   color: $headercolor;
-  font-weight: 500;
+  font-weight: bold;
 
   padding-left: 24px;
   padding-right: 15px;

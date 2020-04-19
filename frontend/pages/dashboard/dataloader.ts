@@ -1,6 +1,3 @@
-import { Vue, Component } from "nuxt-property-decorator";
-import { Context } from "@nuxt/types";
-
 import getDemandMatch from "@/apollo/queries/dashboard/demand.gql";
 import getSupplyMatch from "@/apollo/queries/dashboard/supply.gql";
 import { MatchDemandResult, MatchSupplyResult } from "~/apollo/schema";

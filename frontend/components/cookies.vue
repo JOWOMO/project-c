@@ -35,7 +35,7 @@ export default class extends Vue {
 
   created() {
     const cookies = new Cookies();
-    if (!cookies.get("tracking-consent")) {      
+    if (!cookies.get("tracking-consent")) {
         this.visible = true;
     }
   }
@@ -80,7 +80,7 @@ export default class extends Vue {
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: $breakpoint_sm) {
   .footer {
     flex-direction: column;
     align-items: center;

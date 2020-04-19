@@ -71,6 +71,60 @@ declare module '*/check_state.gql' {
 }
     
 
+declare module '*/CompanyInfo.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const CompanyInfo: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/ContactInfo.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const ContactInfo: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/DemandInfo.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const DemandInfo: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/SupplyInfo.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const SupplyInfo: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/company_demand.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const companyDetailsFromDemand: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
+declare module '*/company_supply.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const companyDetailsFromSupply: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/demand.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -99,15 +153,6 @@ export const getTeams: DocumentNode;
 }
     
 
-declare module '*/demands.gql' {
-  import { DocumentNode } from 'graphql';
-  const defaultDocument: DocumentNode;
-  export const getDemands: DocumentNode;
-
-  export default defaultDocument;
-}
-    
-
 declare module '*/company.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
@@ -121,16 +166,6 @@ declare module '*/user.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;
   export const RegistrationUser: DocumentNode;
-export const user: DocumentNode;
-
-  export default defaultDocument;
-}
-    
-
-declare module '*/skills.gql' {
-  import { DocumentNode } from 'graphql';
-  const defaultDocument: DocumentNode;
-  export const getSkills: DocumentNode;
 
   export default defaultDocument;
 }

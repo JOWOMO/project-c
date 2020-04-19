@@ -9,6 +9,7 @@ from flask import g
 from .industry import Industry
 
 class CompanyContact(ObjectType):
+    id = ID(required=True)
     first_name = String(required=True)
     last_name = String(required=True)
 

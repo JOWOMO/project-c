@@ -25,8 +25,11 @@ export default class extends Vue {
 .link {
   display: flex;
   align-items: center;
+
   width: 100%;
   height: 100%;
+
+  white-space: nowrap;
   cursor: pointer;
 }
 

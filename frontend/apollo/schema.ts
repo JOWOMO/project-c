@@ -6,7 +6,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** Arbitrary JSON Properties for features */
   JSONScalar: any;
 };
 
@@ -27,6 +26,7 @@ export type Company = {
 
 export type CompanyContact = {
    __typename?: 'CompanyContact';
+  id: Scalars['ID'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   pictureUrl?: Maybe<Scalars['String']>;
@@ -411,6 +411,104 @@ export type Check_StateQuery = (
   ) }
 );
 
+export type CompanyInfoFragment = (
+  { __typename?: 'Company' }
+  & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
+  & { industry?: Maybe<(
+    { __typename?: 'Industry' }
+    & Pick<Industry, 'id' | 'name'>
+  )> }
+);
+
+export type ContactInfoFragment = (
+  { __typename?: 'CompanyContact' }
+  & Pick<CompanyContact, 'id' | 'firstName' | 'lastName' | 'pictureUrl'>
+);
+
+export type DemandInfoFragment = (
+  { __typename?: 'Demand' }
+  & Pick<Demand, 'id' | 'name' | 'description' | 'quantity'>
+  & { salary: Demand['maxHourlySalary'] }
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & Pick<Skill, 'name' | 'id'>
+  )> }
+);
+
+export type SupplyInfoFragment = (
+  { __typename?: 'Supply' }
+  & Pick<Supply, 'id' | 'name' | 'description' | 'quantity'>
+  & { salary: Supply['hourlySalary'] }
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & Pick<Skill, 'name' | 'id'>
+  )> }
+);
+
+export type CompanyDetailsFromDemandQueryVariables = {
+  id: Scalars['ID'];
+  origin: Scalars['ID'];
+};
+
+
+export type CompanyDetailsFromDemandQuery = (
+  { __typename?: 'Query' }
+  & { query?: Maybe<(
+    { __typename?: 'Supply' }
+    & Pick<Supply, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result?: Maybe<(
+    { __typename?: 'Demand' }
+    & Pick<Demand, 'id'>
+    & { company: (
+      { __typename?: 'Company' }
+      & { contact: (
+        { __typename?: 'CompanyContact' }
+        & ContactInfoFragment
+      ), demands?: Maybe<Array<(
+        { __typename?: 'Demand' }
+        & DemandInfoFragment
+      )>> }
+      & CompanyInfoFragment
+    ) }
+  )> }
+);
+
+export type CompanyDetailsFromSupplyQueryVariables = {
+  id: Scalars['ID'];
+  origin: Scalars['ID'];
+};
+
+
+export type CompanyDetailsFromSupplyQuery = (
+  { __typename?: 'Query' }
+  & { query?: Maybe<(
+    { __typename?: 'Demand' }
+    & Pick<Demand, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & Pick<Skill, 'id'>
+    )> }
+  )>, result?: Maybe<(
+    { __typename?: 'Supply' }
+    & Pick<Supply, 'id'>
+    & { company: (
+      { __typename?: 'Company' }
+      & { contact: (
+        { __typename?: 'CompanyContact' }
+        & ContactInfoFragment
+      ), supplies?: Maybe<Array<(
+        { __typename?: 'Supply' }
+        & SupplyInfoFragment
+      )>> }
+      & CompanyInfoFragment
+    ) }
+  )> }
+);
+
 export type DemandMatchesQueryVariables = {
   id: Scalars['ID'];
   radius?: Maybe<Scalars['Int']>;
@@ -436,22 +534,15 @@ export type DemandMatchesQuery = (
       & Pick<SupplyMatch, 'distance' | 'percentage'>
       & { match: (
         { __typename?: 'Supply' }
-        & Pick<Supply, 'id' | 'name' | 'description' | 'quantity'>
-        & { salary: Supply['hourlySalary'] }
-        & { skills: Array<(
-          { __typename?: 'Skill' }
-          & Pick<Skill, 'name' | 'id'>
-        )>, company: (
+        & { company: (
           { __typename?: 'Company' }
-          & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
           & { contact: (
             { __typename?: 'CompanyContact' }
-            & Pick<CompanyContact, 'firstName' | 'lastName' | 'pictureUrl'>
-          ), industry?: Maybe<(
-            { __typename?: 'Industry' }
-            & Pick<Industry, 'name'>
-          )> }
+            & ContactInfoFragment
+          ) }
+          & CompanyInfoFragment
         ) }
+        & SupplyInfoFragment
       ) }
     )> }
   ) }
@@ -482,22 +573,15 @@ export type SupplyMatchesQuery = (
       & Pick<DemandMatch, 'distance' | 'percentage'>
       & { match: (
         { __typename?: 'Demand' }
-        & Pick<Demand, 'id' | 'name' | 'description' | 'quantity'>
-        & { salary: Demand['maxHourlySalary'] }
-        & { skills: Array<(
-          { __typename?: 'Skill' }
-          & Pick<Skill, 'name' | 'id'>
-        )>, company: (
+        & { company: (
           { __typename?: 'Company' }
-          & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
           & { contact: (
             { __typename?: 'CompanyContact' }
-            & Pick<CompanyContact, 'firstName' | 'lastName' | 'pictureUrl'>
-          ), industry?: Maybe<(
-            { __typename?: 'Industry' }
-            & Pick<Industry, 'name'>
-          )> }
+            & ContactInfoFragment
+          ) }
+          & CompanyInfoFragment
         ) }
+        & DemandInfoFragment
       ) }
     )> }
   ) }
@@ -526,24 +610,6 @@ export type DasboardTeamsQuery = (
       & Pick<Company, 'id' | 'postalCode' | 'city'>
     ) }
   )>>> }
-);
-
-export type GetDemandsQueryVariables = {};
-
-
-export type GetDemandsQuery = (
-  { __typename?: 'Query' }
-  & { companies?: Maybe<Array<(
-    { __typename?: 'Company' }
-    & { demands?: Maybe<Array<(
-      { __typename?: 'Demand' }
-      & Pick<Demand, 'id' | 'name' | 'isActive' | 'description' | 'quantity'>
-      & { skills: Array<(
-        { __typename?: 'Skill' }
-        & Pick<Skill, 'id' | 'name' | 'group'>
-      )> }
-    )>> }
-  )>> }
 );
 
 export type RegistrationCompanyQueryVariables = {};
@@ -606,31 +672,5 @@ export type RegistrationUserQuery = (
   & { me: (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
-  ) }
-);
-
-export type GetSkillsQueryVariables = {};
-
-
-export type GetSkillsQuery = (
-  { __typename?: 'Query' }
-  & { skills: Array<(
-    { __typename?: 'Skill' }
-    & Pick<Skill, 'id' | 'name' | 'group'>
-  )> }
-);
-
-export type UserQueryVariables = {};
-
-
-export type UserQuery = (
-  { __typename?: 'Query' }
-  & { me: (
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>
-    & { companies?: Maybe<Array<(
-      { __typename?: 'Company' }
-      & Pick<Company, 'id' | 'name' | 'addressLine1' | 'postalCode' | 'city'>
-    )>> }
   ) }
 );

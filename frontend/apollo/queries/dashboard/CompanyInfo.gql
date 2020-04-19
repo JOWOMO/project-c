@@ -1,0 +1,12 @@
+fragment CompanyInfo on Company {
+  id
+  name
+  addressLine1
+  postalCode
+  city
+
+  industry {
+    id
+    name
+  }
+}

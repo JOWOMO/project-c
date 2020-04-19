@@ -2,13 +2,13 @@
   <div class="filter">
     <div class="left">
       <div class="header">
-        <h1>Finde Personal-Partner</h1>
+        <h1>Finde Deine Personal-Partner</h1>
       </div>
       <div class="subline">
         <div>{{ me.postalCode }} {{ me.city }}</div>
         <div class="km">
-          <dropdown 
-            class="dropdown" 
+          <dropdown
+            class="dropdown"
             :options="['+5 Kilometer', '+10 Kilometer', '+20 Kilometer', '+30 Kilometer', '+50 Kilometer', '+70 Kilometer', '+100 Kilometer']"
             :selected="'+30 Kilometer'"
             @input="changeRange"
@@ -63,6 +63,8 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scales";
+
 .filter {
   display: flex;
   flex: 1;
@@ -114,9 +116,7 @@ export default class extends Vue {
   }
 }
 
-// @media only screen and (max-width: 800px) {
-  .right {
-    display: none;
-  }
-// }
+.right {
+  display: none;
+}
 </style>
