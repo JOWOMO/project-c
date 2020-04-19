@@ -79,12 +79,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: this.title,
-      meta: [
-        { hid: "description", name: "description", content: this.description }
-      ]
-    };
+    return {};
   }
 }
 </script>

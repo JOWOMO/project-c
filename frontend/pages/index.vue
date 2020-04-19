@@ -192,18 +192,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: "Willkommen bei Bee2Bee",
-      meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        {
-          hid: "description",
-          name: "description",
-          content:
-            "Wir bieten eine Plattform für kleine / mittelständige Unternehmen um Mittarbeier vor der Kurzarbeit zu bewahren. Unternehmen können Mitarbeiter an andrere zum gleichen Lohn ausleihen. Eventuelle Unterschiede im Lohn zahlt das Arbeitsamt."
-        }
-      ]
-    };
+    return {};
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="sponsor">
-    <div v-if="logo" class="logo">
+    <div v-if="logo" :class="{'logo': true, 'x': scalex, 'y': !scalex}">
       <img :src="'/images/sponsors/' + logo" />
     </div>
 
@@ -20,6 +20,7 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 @Component
 export default class extends Vue {
   @Prop() logo!: string;
+  @Prop({ default: false }) scalex!: boolean;
   @Prop() person!: string;
 }
 </script>
@@ -48,9 +49,17 @@ export default class extends Vue {
     text-align: right;
     grid-column: 2;
     grid-row: 1;
+  }
 
+  .y {
     img {
-      height: 80px;
+      max-height: 80px;
+    }
+  }
+
+  .x {
+    img {
+      width: 250px;
     }
   }
 
@@ -71,13 +80,19 @@ export default class extends Vue {
 
 @media only screen and (min-width: $breakpoint_md) {
   .sponsor {
-    .person {
+    .y {
       img {
-        height: 120px;
+        max-height: 120px;
       }
     }
 
-    .logo {
+    .x {
+      img {
+        width: 300px;
+      }
+    }
+
+    .person {
       img {
         height: 120px;
       }

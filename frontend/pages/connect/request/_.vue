@@ -54,10 +54,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: "Wikommen",
-      meta: [{ hid: "description", name: "description", content: "" }]
-    };
+    return {};
   }
 
   dashboard() {
