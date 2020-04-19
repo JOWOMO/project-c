@@ -17,7 +17,7 @@ def send_email(to_email, template):
     response = client.send_email(
         Destination={
             'ToAddresses': [
-                from_email,
+                to_email, 
             ],
         },
         Message={
@@ -32,5 +32,5 @@ def send_email(to_email, template):
                 'Data': template.subject,
             },
         },
-        Source=to_email,
+        Source=from_email,
     )
