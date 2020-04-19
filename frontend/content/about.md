@@ -26,7 +26,8 @@ menu:
 <about id="vision" icon="vision">
 
 ## Unsere Vision
-Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>​#GemeinsamArbeitSchützen</b>
+Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>​
+#GemeinsamArbeitSchützen</b>
 
 </about>
 
