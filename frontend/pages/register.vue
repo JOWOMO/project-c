@@ -46,10 +46,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: this.providedWorfklow?.displayName,
-      meta: [{ hid: "description", name: "description", content: "" }]
-    };
+    return {};
   }
 
   selectElement(value: any) {

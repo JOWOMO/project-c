@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>{{ workflow.displayName }}</h1>
-    <p>Details helfen uns Dir passende Suchvorschläge anzuzeigen</p>
+    <p>Gib hier an, welche Mitarbeiter:innen Du aktuell {{ subject }}. Fasse bitte alle Mitarbeiter:innen mit der gleichen Tätigkeit in ein Team zusammen. Solltest Du Mitarbeiter:innen aus unterschiedlichen Bereichen {{ verb }}, lege bitte mehrere Teams an (z.B. Team 01 Service, Team 02 Küche).</p>
 
     <div v-for="(team, idx) in supplies" :key="idx">
       <div class="team-container">
@@ -126,6 +126,18 @@ export default class extends Vue {
   supplies: TeamDetails[] = [];
   skills: Pick<Skill, "id" | "name">[] = [];
   topics: string[] = [];
+
+  get verb() {
+    return this.workflow.type === 'supply'
+      ? 'anbieten können'
+      : 'suchen';
+  }
+
+  get subject() {
+    return this.workflow.type === 'supply'
+      ? 'zur Verfügung stellen kannst'
+      : 'suchst';
+  }
 
   counter = 0;
   addTeam() {
@@ -380,7 +392,7 @@ export default class extends Vue {
   }
 
   p {
-    padding-bottom: 75px;
+    padding-bottom: $gridsize*1.5;
   }
 
   .buttons {

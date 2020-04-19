@@ -18,7 +18,7 @@ select
         u.last_name,
         'email',
         u.email,
-        'picture_url',
+        'w',
         u.picture_url
     ) 
     as contact
@@ -147,14 +147,14 @@ where
 create or replace view btb.contact_requests_today as
 select * from btb_data.contact_request
 where 
-    date_trunc('day', date at time zone 'Europe/Paris') = date_trunc('day', now() at time zone 'Europe/Paris')
+    date_trunc('day', date_created at time zone 'Europe/Paris') = date_trunc('day', now() at time zone 'Europe/Paris')
 ;
 
 create or replace view btb.contact_requests_week as
 select * 
 from btb_data.contact_request
 where 
-    date_trunc('day', date at time zone 'Europe/Paris') >= date_trunc('day', now() at time zone 'Europe/Paris' - INTERVAL '6 DAY' ) 
+    date_trunc('day', date_created at time zone 'Europe/Paris') >= date_trunc('day', now() at time zone 'Europe/Paris' - INTERVAL '6 DAY' ) 
 ;
 
 -- drop index btb.idx_contact_request_query;
@@ -170,7 +170,7 @@ where
 CREATE INDEX IF NOT EXISTS idx_contact_request_throttle
     on btb_data.contact_request (
         external_id,
-        date_trunc('day', date at time zone 'Europe/Paris'),
+        date_trunc('day', date_created at time zone 'Europe/Paris'),
         response_id
     )
 ;

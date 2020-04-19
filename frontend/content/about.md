@@ -36,7 +36,7 @@ Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassun
 ## Unsere Mission
 Wir möchten die erste Anlaufstelle für Unternehmen mit temporären Kapazitätsänderungen sein. Durch  eine passgenaue Zusammenführung von Unternehmen und Unterstützung bei der rechtlichen Umsetzung sorgen wir für eine effiziente krisengerechte Kapazitätsverteilung. ​
 
-<button onclick="window.location.href='/register/demand';" class="cta">Jetzt mitmachen</button>
+<button onclick="window.location.href='/register/supply';" class="cta">Jetzt mitmachen</button>
 
 </about>
 
@@ -62,11 +62,23 @@ Wir sind ein interdisziplinäres Team aus den unterschiedlichsten Ecken von Deut
 
 Viele Dinge gelingen nur mit dem richtigen Partnern. Diese Unternehmen und Menschen unterstützen unsere Idee mit Ressourcen, Know-how und mindestens derselben Begeisterung wie wir selbst.
 
+<sponsor logo="wlb.jpg" person="wlb_person.png" scalex="true">
+
+### Weserbergland Aktiengesellschaft - Thomas Kexel
+
+Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG betreibt unsere Plattform. "Eine tolle Idee, genau zur richtigen Zeit. Wir versuchen stets mit kleveren Ideen Menschen und Unternehmen zu verbinden. Die Idee von JOWOMO passt perfekt in die aktuelle Zeit, das unterstützen wir gerne."
+
+[Mehr Informationen zur Weserbergland AG](https://weserberglandag.de/)
+
+</sponsor>
+
 <sponsor logo="aws.png" person="aws_person.jpg">
 
 ### Amazon Web Services - Robin d'Alquen
 
 Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, jomowo als Teil der #wirvsvirus Hackathon Community unterstützen zu können."
+
+[Mehr Informationen zu Amazon Web Services](https://aws.amazon.com/)
 
 </sponsor>
 
@@ -75,6 +87,8 @@ Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, jomowo als Teil der 
 ### WirVsVirus Solution Enabler Programm
 
 Der Solution Enabler ist ein Umsetzungsprogramm für Teams mit vielversprechenden Lösungen in Zeiten von Covid-19. Mit dem Solution Enabler werden 130 ausgewählte Teams unterstützt, um Lösungen gegen die Auswirkungen von Covid-19 schnell zu testen und breitflächig umzusetzen.
+
+[Mehr Informationen zum #WirVsVirus](https://wirvsvirushackathon.org/)
 
 </sponsor>
 

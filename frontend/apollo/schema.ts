@@ -85,10 +85,27 @@ export type Industry = {
 };
 
 
+export enum MatchAnswer {
+  Accept = 'Accept',
+  Reject = 'Reject'
+}
+
 export type MatchDemandResult = {
    __typename?: 'MatchDemandResult';
   matches: Array<DemandMatch>;
   pageInfo: PageInfo;
+};
+
+export type MatchDetails = {
+   __typename?: 'MatchDetails';
+  id: Scalars['ID'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  pictureUrl?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
+  addressLine1: Scalars['String'];
+  postalCode: Scalars['String'];
+  city: Scalars['String'];
 };
 
 export type MatchQueryInput = {
@@ -120,6 +137,7 @@ export type Mutation = {
   removeSupply?: Maybe<Scalars['String']>;
   startUploadPicture?: Maybe<S3UploadGrant>;
   contactMatch?: Maybe<Scalars['Boolean']>;
+  setMatchState?: Maybe<MatchDetails>;
 };
 
 
@@ -159,6 +177,12 @@ export type MutationContactMatchArgs = {
   originId: Scalars['ID'];
 };
 
+
+export type MutationSetMatchStateArgs = {
+  answer: MatchAnswer;
+  id: Scalars['ID'];
+};
+
 export type PageInfo = {
    __typename?: 'PageInfo';
   hasNextPage?: Maybe<Scalars['Boolean']>;
@@ -174,7 +198,6 @@ export type Query = {
   activeSupplies?: Maybe<Array<Maybe<Supply>>>;
   demand?: Maybe<Demand>;
   supply?: Maybe<Supply>;
-  company?: Maybe<Company>;
   skills: Array<Skill>;
   industries: Array<Industry>;
   teamNames: Array<Scalars['String']>;
@@ -191,11 +214,6 @@ export type QueryDemandArgs = {
 
 
 export type QuerySupplyArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryCompanyArgs = {
   id: Scalars['ID'];
 };
 
@@ -326,6 +344,19 @@ export type ConnectMutationVariables = {
 export type ConnectMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'contactMatch'>
+);
+
+export type SetMatchStateMutationVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type SetMatchStateMutation = (
+  { __typename?: 'Mutation' }
+  & { setMatchState?: Maybe<(
+    { __typename?: 'MatchDetails' }
+    & Pick<MatchDetails, 'id' | 'email' | 'firstName' | 'lastName' | 'pictureUrl' | 'addressLine1' | 'postalCode' | 'city'>
+  )> }
 );
 
 export type RemoveDemandMutationVariables = {
@@ -520,6 +551,7 @@ export type DemandMatchesQuery = (
   { __typename?: 'Query' }
   & { request?: Maybe<(
     { __typename?: 'Demand' }
+    & Pick<Demand, 'id'>
     & { skills: Array<(
       { __typename?: 'Skill' }
       & Pick<Skill, 'id'>
@@ -559,6 +591,7 @@ export type SupplyMatchesQuery = (
   { __typename?: 'Query' }
   & { request?: Maybe<(
     { __typename?: 'Supply' }
+    & Pick<Supply, 'id'>
     & { skills: Array<(
       { __typename?: 'Skill' }
       & Pick<Skill, 'id'>

@@ -32,7 +32,7 @@ import {
   ConnectMutation,
   ConnectMutationVariables,
   MatchType
-} from "../../apollo/schema";
+} from "@/apollo/schema";
 
 import connectMutation from "@/apollo/mutations/connect.gql";
 
@@ -54,10 +54,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: "Wikommen",
-      meta: [{ hid: "description", name: "description", content: "" }]
-    };
+    return {};
   }
 
   dashboard() {

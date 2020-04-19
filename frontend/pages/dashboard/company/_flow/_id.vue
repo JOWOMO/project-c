@@ -15,6 +15,7 @@
         :requestedSkills="skills"
         :contact="company.contact"
         @connect="onConnect"
+        :disableConnect="disableConnect"
       />
     </div>
 
@@ -29,6 +30,7 @@
         :requestedSkills="skills"
         :contact="company.contact"
         @connect="onConnect"
+        :disableConnect="disableConnect"
       />
     </div>
   </div>
@@ -47,7 +49,7 @@ import {
   CompanyDetailsFromDemandQuery,
   CompanyDetailsFromDemandQueryVariables,
 } from "@/apollo/schema";
-import { ConnectParams } from "@/pages/connect/_.vue";
+import { ConnectParams } from "@/pages/connect/request/_.vue";
 
 @Component({
   components: {
@@ -59,11 +61,15 @@ export default class Details extends Vue {
   company: any;
   skills: any;
 
+  get disableConnect() {
+    return this.$route.query.disable != null;
+  }
+
   onConnect(party: any) {
     this.$track("dashboard", "connect", "company", "Jetzt verbinden");
 
     const params: ConnectParams = {
-      flow: this.$route.query.flow as string,
+      flow: this.$route.params.flow === 'supply' ? 'demand' : 'supply',
       origin: this.$route.query.id as string,
       match: party.id,
       name: party.name,
@@ -71,7 +77,7 @@ export default class Details extends Vue {
     };
 
     console.log("onConnect", params);
-    this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
+    this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
   async asyncData(context: Context) {

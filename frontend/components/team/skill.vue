@@ -50,7 +50,7 @@ export default class extends Vue {
   padding-right: 10px;
 
   font-size: $textsize;
-  color: $inputtextcolor;
+  color: $textcolor;
 
   span {
     margin: 0 10px;

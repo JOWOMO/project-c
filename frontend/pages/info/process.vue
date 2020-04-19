@@ -6,7 +6,7 @@
     </div>
 
     <div class="workflow">
-      <pe title="Arbeitskröfte anbieten" titleRight="Arbeitskräfte suchen">
+      <pe title="Arbeitskräfte anbieten" titleRight="Arbeitskräfte suchen">
         <template #number-left>
           <img height="100px" src="/icons/supply.svg" />
         </template>
@@ -24,8 +24,8 @@
       </pe>
 
       <pe number="3" title="Stelle Team(s) ein">
-        <template #left>Lass andere Unternehmen wissen, welche Arbeitskräfte du suchst.</template>
-        <template #right>Lass  andere Unternehmen wissen, welche Arbeitskräfte gerade bei dir verfügbar sind.</template>
+        <template #left>Lass andere Unternehmen wissen, welche Arbeitskräfte Du suchst.</template>
+        <template #right>Lass andere Unternehmen wissen, welche Arbeitskräfte gerade bei Dir verfügbar sind.</template>
       </pe>
 
       <pe number="4" title="Starte Deine Suche">
@@ -50,7 +50,7 @@
       <pe number="7" title="Triff eine vertragliche Regelung">
         <template
           #both
-        >Es gibt verschieden Möglichkeiten zur Umsetzung, die du für deinen Fall rechtlich prüfen lassen solltest. <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link></template>
+        >Es gibt verschiedene Möglichkeiten zur Umsetzung, die Du für Deinen Fall rechtlich prüfen lassen solltest. <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link></template>
       </pe>
 
       <pe number="8" title="Boarde deine Mitarbeiter:innen off " titleRight="Boarde deine Mitarbeiter:innen on">
@@ -79,12 +79,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: this.title,
-      meta: [
-        { hid: "description", name: "description", content: this.description }
-      ]
-    };
+    return {};
   }
 }
 </script>

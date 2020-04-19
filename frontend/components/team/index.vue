@@ -7,7 +7,7 @@
 
       <div class="display">
         <div class="row">
-          <div class="field">Bezeichnung</div>
+          <div class="field">Tätigkeit der Mitarbeiter:innen</div>
           <div>{{ editTeam.name || '-' }}</div>
         </div>
 
@@ -32,7 +32,7 @@
         <formSwitch class="sw" :id="'editTeam.isActive'" v-model="editTeam.isActive" />
 
         <div class="lbl" v-if="editTeam.isActive">deaktivieren</div>
-        <div class="lbl" v-if="!editTeam.isActive">aktivieren</div>
+        <div class="lbl" v-if="!editTeam.isActive">Angebot aktivieren</div>
       </div>
 
       <form novalidate @submit.prevent>
@@ -40,7 +40,7 @@
           <formAutoComplete
             id="editTeam.name"
             v-model="editTeam.name"
-            :label="'Bezeichnung (Freitext)'"
+            :label="'Tätigkeit der Mitarbeitr:innen (Freitext)'"
             :suggestions="topics"
           />
         </div>
@@ -58,23 +58,23 @@
             :id="'editTeam.description'"
             v-model="editTeam.description"
             name="editTeam.description"
-            required
           />
-          <label for="editTeam.description">Zusätzliche Informationen</label>
+          <label for="editTeam.description">Hier kannst Du das Team noch detailierter beschreiben</label>
         </div>
 
         <div class="form-group lbl">
-          Teamprofil (min. 3)
+          <b>Zentrale Fähigkeiten und Rahmenbedingungen:</b> Diese Angaben helfen uns einen passenden temporären Arbeitsgeber für Deine Mitarbeiter:innen zu finden. Bitte wähle mind. 3 Kriterien aus.
+
           <validations
-            :label="'Teamprofil'"
-            :validation="$v['editTeam']['skills']"
+            :label="'Zentrale Fähigkeiten und Rahmenbedingungen'"
+            :validation="$v.editTeam.skills"
             :submitted="true"
-          />
+            />
         </div>
 
         <div class="form-group">
           <div class="skills">
-            <button class="third" @click.prevent="showTagCloud = !showTagCloud">
+            <button :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minLength }" @click.prevent="showTagCloud = !showTagCloud">
               Bitte wählen
               <span>+</span>
             </button>
@@ -263,6 +263,10 @@ export default class extends Vue {
 .lbl {
   color: $inputlabelcolor;
 }
+
+  .is-invalid {
+    border: 1px solid $error !important;
+  }
 
 .team-header {
   display: flex;

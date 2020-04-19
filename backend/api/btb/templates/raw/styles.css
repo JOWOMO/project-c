@@ -3,8 +3,11 @@ body {
     margin: 0;
     background: #F8FDFF;
     font-family: 'Roboto', sans-serif;
-    font-size: 14px;
     color: #817D7D;
+}
+
+body, a, p, td {
+    font-size: 18px;
 }
 
 .frame {
@@ -17,10 +20,9 @@ body {
     height: 37px;
     width: 500px;
 
-
     box-sizing: border-box;
-    margin-bottom: 19px;
-    margin-top: 19px;
+    margin-bottom: 44px;
+    margin-top: 44px;
 }
 
 .template-top {
@@ -75,9 +77,13 @@ body {
 
 .terms {
     margin-top: 25px;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
     font-weight: normal;
+}
+
+.terms a {
+    font-size: 14px;
 }
 
 .output {}

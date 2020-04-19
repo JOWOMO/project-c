@@ -14,6 +14,7 @@ class CompanyContact(ObjectType):
     last_name = String(required=True)
 
     picture_url = String(required=False)
+    
 
 class Company(ObjectType):
     id = ID(required=True)

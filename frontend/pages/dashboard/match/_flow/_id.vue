@@ -43,7 +43,7 @@ import {
 } from "../../../../apollo/schema";
 
 import { StateChanger } from "vue-infinite-loading";
-import { ConnectParams } from "@/pages/connect/_.vue";
+import { ConnectParams } from "@/pages/connect/request/_.vue";
 import { LoadingAnimation } from "../../../../components/loadinganimation";
 import { IMatchState, MatchFilter } from "../../../../store/match";
 import { IState } from "../../../../store";
@@ -83,7 +83,7 @@ export default class extends Vue {
         match.flow == "demand" ? "supply" : "demand"
       }/${match.id}`,
       query: {
-        flow: this.$route.params.flow,
+        // flow: this.$route.params.flow,
         id: this.$route.params.id
       }
     });
@@ -101,7 +101,7 @@ export default class extends Vue {
     };
 
     console.log("onConnect", params);
-    this.$router.push(`/connect/${btoa(JSON.stringify(params))}`);
+    this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
   @State((s: IState) => s.match.filter)

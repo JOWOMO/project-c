@@ -143,7 +143,7 @@
           <h3 class="padding">Juristische Umsetzung</h3>
           <p>
             Wie geht es weiter, wenn der richtige Personalpartner gefunden ist? In unseren FAQs
-            findest du hilfreiche Informationen.
+            findest Du hilfreiche Informationen.
           </p>
           <p></p>
         </div>
@@ -153,7 +153,7 @@
             <hr />
           </div>
           <h3 class="padding">Support</h3>
-          <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für dich da. Wenn du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
+          <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für dich da. Wenn Du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
           <p></p>
         </div>
       </div>
@@ -192,18 +192,7 @@ export default class extends Vue {
 
   @Meta
   head() {
-    return {
-      title: "Willkommen bei Bee2Bee",
-      meta: [
-        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
-        {
-          hid: "description",
-          name: "description",
-          content:
-            "Wir bieten eine Plattform für kleine / mittelständige Unternehmen um Mittarbeier vor der Kurzarbeit zu bewahren. Unternehmen können Mitarbeiter an andrere zum gleichen Lohn ausleihen. Eventuelle Unterschiede im Lohn zahlt das Arbeitsamt."
-        }
-      ]
-    };
+    return {};
   }
 }
 </script>

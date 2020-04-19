@@ -140,10 +140,11 @@ values (
     :response, 
     :distance
 )
+returning id
         """
         )
 
-        conn.execute(
+        insert = conn.execute(
             insert_sql,
             external_id=g.principal.get_id(),
 
@@ -158,6 +159,8 @@ values (
             response=json.dumps(
                 ContactMatch.filter_record(match["record"])),
         )
+
+        return list(insert)[0]["id"]
 
 
     @staticmethod
@@ -213,7 +216,7 @@ and c.owner_external_id = :external_id
 
 
     @staticmethod
-    def contact(origin, match_type, match):
+    def contact(id, origin, match_type, match):
 
         from_email = environ["EMAIL_SENDER"] if "EMAIL_SENDER" in environ else 'debug'
         to_email = match["contact"]['email']
@@ -222,6 +225,7 @@ and c.owner_external_id = :external_id
         your_team_type = 'supply' if match_type != 1 else 'demand'
 
         data = {
+            "match_id": id,
             "name": origin["contact"]["first_name"],
 
             "team": origin["name"],
@@ -259,11 +263,11 @@ and c.owner_external_id = :external_id
             current_app.logger.debug(
                 'match {} origin {}'.format(match, origin))
 
-            ContactMatch.archive_match(
+            id = ContactMatch.archive_match(
                 conn,
                 match_type,
                 origin,
                 match,
             )
 
-        ContactMatch.contact(origin, match_type, match)
+            ContactMatch.contact(id, origin, match_type, match)
