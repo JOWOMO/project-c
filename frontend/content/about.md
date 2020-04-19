@@ -42,22 +42,16 @@ Wir möchten die erste Anlaufstelle für Unternehmen mit temporären Kapazitäts
 <about id="team" icon="team">
 
 ## Über uns
-Wir bringen Unternehmen für ein flexibles on-demand Jobsharing zusammen. ​
+Wir bringen Unternehmen für einen flexiblen temporären Austausch von Personal zusammen. ​
 
-Unternehmen, die momentan Überkapazitäten an Arbeitnehmer:innen haben, können ganze Teams anbieten, damit diese temporär bei einem passenden Unternehmen mit Bedarf arbeiten können. ​
+Unternehmen, die momentan Überkapazitäten an Arbeitnehmer:innen haben, können ganze Teams anbieten, damit diese temporär bei einem passenden Unternehmen mit Bedarf arbeiten können. ​
+Unternehmen, die kurzfristig einen Mehrbedarf an Arbeitnehmer:innen haben, finden über unsere Plattform schnell helfende Hände. ​
 
-Unternehmen, die kurzfristig einen Mehrbedarf an Arbeitnehmer:innen haben, finden über unsere Plattform schnell helfende Hände. ​
+Darüber hinaus arbeiten wir gerade daran auch relevante Informationen zur rechtlichen Umsetzung zur Verfügung zu stellen (Musterverträge, Standardprozesse, Kontakte zu Partnerkanzleien bei Rückfragen). So reduzieren wir bürokratische Prozesse und unterstützen Unternehmen, die eine Personalpartnerschaft eingehen, bei einer effizienten Umsetzung.​
 
-Darüber hinaus stellen wir relevante Informationen zur rechtlichen Umsetzung zur Verfügung (Musterverträge, Standardprozesse, Kontakte zu Partnerkanzleien bei Rückfragen). So reduzieren wir bürokratische Prozesse und unterstützen Unternehmen, die eine Personalpartnerschaft eingehen, bei einer effizienten Umsetzung.​
 
 ## Das Team
-Wir bringen Unternehmen für ein flexibles on-demand Jobsharing zusammen. ​
-
-Unternehmen, die momentan Überkapazitäten an Arbeitnehmer:innen haben, können ganze Teams anbieten, damit diese temporär bei einem passenden Unternehmen mit Bedarf arbeiten können. ​
-
-Unternehmen, die kurzfristig einen Mehrbedarf an Arbeitnehmer:innen haben, finden über unsere Plattform schnell helfende Hände. ​
-
-Darüber hinaus stellen wir relevante Informationen zur rechtlichen Umsetzung zur Verfügung (Musterverträge, Standardprozesse, Kontakte zu Partnerkanzleien bei Rückfragen). So reduzieren wir bürokratische Prozesse und unterstützen Unternehmen, die eine Personalpartnerschaft eingehen, bei einer effizienten Umsetzung.​
+Wir sind ein interdisziplinäres Team aus den unterschiedlichsten Ecken von Deutschland, das digital zusammenarbeitet, um für Unternehmen und Arbeitnehmer:innen eine Lösung in der Corona Krise zu realisieren. Ursprünglich haben wir uns über den #WirVsVirus Hackathon unter Schirmherrschaft der Bundesregierung kennengelernt und aus drei Teams zusammengeschlossen. 
 
 </about>
 
@@ -79,7 +73,7 @@ Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, jomowo als Teil der 
 
 ### WirVsVirus Solution Enabler Programm
 
-Der Solution Enabler ist ein Umsetzungsprogramm für Teams mit vielversprechenden Lösungen in Zeiten von Covid-19. Mit dem Solution Enabler werden 150 ausgewählte Teams unterstützt, um Lösungen gegen die Auswirkungen von Covid-19 schnell zu testen und breitflächig umzusetzen.
+Der Solution Enabler ist ein Umsetzungsprogramm für Teams mit vielversprechenden Lösungen in Zeiten von Covid-19. Mit dem Solution Enabler werden 130 ausgewählte Teams unterstützt, um Lösungen gegen die Auswirkungen von Covid-19 schnell zu testen und breitflächig umzusetzen.
 
 </sponsor>
 
