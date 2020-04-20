@@ -3,7 +3,7 @@
     <div
       v-if="validation.required != null && !validation.required"
       class="field-validation"
-    >{{ label }} is erforderlich.</div>
+    >{{ label }} ist erforderlich.</div>
 
     <div v-if="validation.required == null || validation.required">
       <div
