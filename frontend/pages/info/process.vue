@@ -1,7 +1,7 @@
 <template>
   <top class="top">
     <div class="title">
-      <h1>So funtioniert's</h1>
+      <h1>So funktioniert's</h1>
       <p>Hier ein schneller Überblick über den Prozess.</p>
     </div>
 
@@ -34,7 +34,7 @@
 
       <pe number="5" title="Wir verbinden Euch">
         <template #both>
-          Du einen passenden Personalpartner entdeckt? Sende per Klick direkt eine Anfrage, damit ihr Details besprechen könnt.
+          Hast Du einen passenden Personalpartner entdeckt? Sende per Klick direkt eine Anfrage, damit ihr Details besprechen könnt.
         </template>
       </pe>
 
@@ -42,18 +42,16 @@
         <template #number>
           <img height="52px" src="/icons/logo.svg" />
         </template>
-        <template
-          #both
-        >Glückwunsch! Ihr entscheidt Euch für die Partnerschaft und leitet die nächsten Schritte ein.</template>
+        <template #both>
+        Glückwunsch! Ihr entscheidet Euch für die Partnerschaft und leitet die nächsten Schritte ein.</template>
       </pe>
 
       <pe number="7" title="Triff eine vertragliche Regelung">
-        <template
-          #both
-        >Es gibt verschiedene Möglichkeiten zur Umsetzung, die Du für Deinen Fall rechtlich prüfen lassen solltest. <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link></template>
+        <template #both>
+        Es gibt verschiedene Möglichkeiten zur Umsetzung, die Du für Deinen Fall rechtlich prüfen lassen solltest. <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link></template>
       </pe>
 
-      <pe number="8" title="Boarde deine Mitarbeiter:innen off " titleRight="Boarde deine Mitarbeiter:innen on">
+      <pe number="8" title="Übergebe deine Mitarbeiter:innen" titleRight="Lerne deine neuen Mitarbeiter:innen ein">
         <template #left>Hilf Deinen Arbeitskräften in der Übergangsphase.</template>
         <template #right>Hilf Deinen neuen Arbeitskräften sich in Deinem Betrieb wohl zu fühlen.</template>
       </pe>
