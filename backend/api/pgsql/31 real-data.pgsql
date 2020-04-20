@@ -68,7 +68,7 @@ insert into btb_data.skill (skill_group_id, match_id, name)
     (get_skill_group('Mobilität'), 603, 'Mobil bis 100km'),
 
     (get_skill_group('Spezialwissen'), 701, 'Ersthelfer'),
-    (get_skill_group('Spezialwissen'), 702, 'Hygienzertifikat'),
+    (get_skill_group('Spezialwissen'), 702, 'Hygienezertifikat'),
     (get_skill_group('Spezialwissen'), 703, 'Medizinische Kenntnisse'),
     (get_skill_group('Spezialwissen'), 704, 'Küche')
 on conflict do nothing;

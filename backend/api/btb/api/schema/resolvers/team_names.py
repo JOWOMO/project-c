@@ -18,6 +18,8 @@ from
     btb_data.team_name
 where
     is_active = True
+order by
+    name
 """
         )
         result = conn.execute(sql)
