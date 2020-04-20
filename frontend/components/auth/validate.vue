@@ -98,10 +98,9 @@ export default class extends Vue {
 
     try {
       let user: any = {};
-      this.code = this.code.trim() // remove whitespace from copy&paste
       await this.$store.dispatch("auth/confirm", {
         email: this.email,
-        code: this.code
+        code: this.code.trim(), // remove whitespace from copy&paste
       });
 
       // https://github.com/amazon-archives/amazon-cognito-identity-js/issues/186#issuecomment-335690410
