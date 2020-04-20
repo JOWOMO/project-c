@@ -40,7 +40,7 @@
           <formAutoComplete
             id="editTeam.name"
             v-model="editTeam.name"
-            :label="'Tätigkeit der Mitarbeitr:innen (Freitext)'"
+            :label="'Tätigkeit der Mitarbeiter:innen (Freitext)'"
             :suggestions="topics"
           />
         </div>
