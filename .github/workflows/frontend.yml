@@ -68,7 +68,8 @@ jobs:
         NUXT_GTM_ID: ${{ secrets.GTM_ID }}
         NUXT_ENV_STAGE: ${{ env.STAGE }}
 
-    - uses: actions/upload-artifact@v1
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
       with:
         name: app
         path: frontend/dist
