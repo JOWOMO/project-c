@@ -328,8 +328,7 @@ export default class extends Vue {
       }
 
       data.skills = result.data?.skills;
-      data.topics = result.data?.teamNames.sort(); // sort topics lexicographically
-
+      data.topics = result.data?.teamNames;
       data.company = companies[0]!;
 
       const map = (r: Demand | Supply): TeamDetails => {
