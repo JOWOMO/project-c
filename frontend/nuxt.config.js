@@ -116,6 +116,7 @@ export default {
     userPoolId: findAWSExport('CognitoUserPool'),
     identityPoolId: findAWSExport('CognitoIdentityPool'),
     userPoolWebClientId: findAWSExport('CognitoUserPoolClient'),
+    useBetaLogo: findAWSExport('UseBetaLogo'),
   },
 
   /*
