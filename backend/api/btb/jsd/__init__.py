@@ -114,7 +114,7 @@ def handler():
 
         jsdconfig["instance_name"] = "jowomo"
         jsdconfig["project_id"] = "SUPPORT"
-        jsdconfig["issue_type"] = 10022
+        jsdconfig["request_type"] = 10022
         jsdconfig["user"] = input("jsd user: ")
         jsdconfig["api_key"] = getpass("jsd api_key: ")
         # print("next time use this: JOWOMO_JSD_CONFIG=" + json.dumps(jsdconfig))
@@ -132,7 +132,7 @@ def handler():
     dump_json(user)
 
     req = client.create_request(
-        user["accountId"], jsdconfig["issue_type"], "test summary", "test description"
+        user["accountId"], jsdconfig["request_type"], "test summary", "test description"
     )
     dump_json(req)
 
