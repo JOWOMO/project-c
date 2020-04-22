@@ -166,5 +166,14 @@ input:-webkit-autofill {
     .error {
       color: $error;
     }
+
+    /* Clicking the label does not activate the input without this */
+    input[type="text"] + label {
+      pointer-events: none;
+
+      * {
+          pointer-events: all;
+      }
+    }
   }
 
