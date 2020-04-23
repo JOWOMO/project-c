@@ -1,18 +1,18 @@
 service: bee-to-bee-client
 
 plugins:
-  - serverless-finch
+  - c
   - serverless-cloudfront-distribution-certificate
 
 provider:
   name: aws
   runtime: nodejs12.x
-  
+
   region: eu-west-1
   deploymentBucket:
     name: bee-to-bee-deployment
     blockPublicAccess: true
-    maxPreviousDeploymentArtifacts: 5 
+    maxPreviousDeploymentArtifacts: 5
     serverSideEncryption: AES256
 
 custom:
@@ -21,16 +21,24 @@ custom:
 
   client:
     bucketName: ${self:custom.s3Bucket}
-    distributionFolder: dist 
+    distributionFolder: dist
     indexDocument: index.html
     errorDocument: 200.html
 
     objectHeaders:
        ALL_OBJECTS:
         - name: Cache-Control
-          value: no-cache
+          value: max-age=600
 
-  publicurls: 
+       icons/:
+        - name: Cache-Control
+          value: max-age=3600
+
+       images/:
+        - name: Cache-Control
+          value: max-age=3600
+
+  publicurls:
     ${ssm:/btb/${self:custom.stage}/cloudfronturl~split}
 
   cfdDomain:
@@ -53,7 +61,7 @@ resources:
           IndexDocument: index.html
           ErrorDocument: index.html
 
-        PublicAccessBlockConfiguration: 
+        PublicAccessBlockConfiguration:
           BlockPublicAcls: true
           BlockPublicPolicy: true
 
@@ -69,13 +77,13 @@ resources:
               Principal:
                 CanonicalUser:
                   Fn::GetAtt: [ CloudFrontOriginAccessIdentity, S3CanonicalUserId ]
-              Action: 
+              Action:
                 - "s3:GetObject"
-              Resource: 
+              Resource:
                 - "arn:aws:s3:::${self:custom.s3Bucket}/*"
 
     # the identity to use when accessing s3
-    CloudFrontOriginAccessIdentity: 
+    CloudFrontOriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
       Properties:
         CloudFrontOriginAccessIdentityConfig:
@@ -87,14 +95,14 @@ resources:
       Properties:
         DistributionConfig:
           Origins:
-            - DomainName: 
+            - DomainName:
                 Fn::GetAtt: [ WebAppS3Bucket, DomainName ]
-              
+
               Id: WebApp
 
               ## In case you want to restrict the bucket access use S3OriginConfig and remove CustomOriginConfig
               S3OriginConfig:
-                OriginAccessIdentity: 
+                OriginAccessIdentity:
                   Fn::Join:
                     - ''
                     -
@@ -102,7 +110,7 @@ resources:
                       - Ref: CloudFrontOriginAccessIdentity
 
           Enabled: 'true'
-          Aliases: 
+          Aliases:
             ${self:custom.publicurls}
 
           DefaultRootObject: index.html
@@ -113,7 +121,7 @@ resources:
             - ErrorCode: 404
               ResponseCode: 200
               ResponsePagePath: /200.html
-              
+
             - ErrorCode: 403
               ResponseCode: 200
               ResponsePagePath: /200.html
@@ -128,7 +136,7 @@ resources:
               # - PATCH
               # - POST
               # - PUT
-            
+
             ## The origin id defined above
             TargetOriginId: WebApp
 
@@ -152,7 +160,7 @@ resources:
           #   IncludeCookies: 'false'
           #   Bucket: mylogs.s3.amazonaws.com
           #   Prefix: myprefix
-  
+
     # '.' at the end is required
     DnsRecord:
       Type: AWS::Route53::RecordSet
@@ -169,7 +177,7 @@ resources:
         # HostedZoneName: ${ssm:/btb/dnszonename}.
 
         # we only take the first element as A, the rest must be configured in 53 directly
-        Name: 
+        Name:
            Fn::Select:
             - 0
             - ${self:custom.publicurls}
