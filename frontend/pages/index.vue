@@ -6,8 +6,7 @@
         <div class="login-cta">
           <div class="text">
             <div>
-              Du kannst Deine Mitarbeiter:innen momentan nicht beschäftigen?
-              Setze sie ein, wo sie gebraucht werden.
+              Du kannst Deine Mitarbeiter:innen momentan nicht voll beschäftigen? Gib ihnen die Chance, an anderer Stelle zu unterstützen.
             </div>
           </div>
 
@@ -30,7 +29,7 @@
         <div class="right" />
         <div class="login-cta">
           <div class="text">
-            <div>Finde hier Arbeitskräfte, um den derzeitigen Mehrbedarf in Deinem Unternehmen zu decken.</div>
+            <div>Du suchst aktuell zusätzliche Mitarbeiter:innen? Finde hier passende Teams, die Dein Unternehmen temporär unterstützen.</div>
           </div>
 
           <div class="grow" />
