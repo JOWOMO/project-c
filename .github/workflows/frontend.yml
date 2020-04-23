@@ -38,17 +38,20 @@ jobs:
     - name: Set env default
       run: |
         echo "::set-env name=STAGE::dev"
+        echo "::set-env name=USE_BETA_LOGO::true"
 
     - name: Set env to test
       if: endsWith(github.ref, '/develop')
       run: |
         echo "::set-env name=STAGE::test"
+        echo "::set-env name=USE_BETA_LOGO::true"
         
     - name: Set env to production
       if: endsWith(github.ref, '/master')
       run: |
         echo "::set-env name=STAGE::prod"
-  
+          echo "::set-env name=USE_BETA_LOGO::true"
+
     - uses: chrislennon/action-aws-cli@v1.1
 
     - name: Export aws config
@@ -67,6 +70,7 @@ jobs:
       env:
         NUXT_GTM_ID: ${{ secrets.GTM_ID }}
         NUXT_ENV_STAGE: ${{ env.STAGE }}
+        USE_BETA_LOGO: ${{ env.USE_BETA_LOGO }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
