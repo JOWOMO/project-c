@@ -11,11 +11,9 @@ import { Vue, Component }  from "nuxt-property-decorator";
 
 @Component
 export default class extends Vue {
-  useBetaLogo:boolean = false;
-
-  created() {
-    console.log("created hook")
-    this.useBetaLogo = process.env.useBetaLogo == "true"
+  get useBetaLogo(): boolean {
+    // @ts-ignore
+    return process.env.useBetaLogo == 'true' || process.env.useBetaLogo === true;
   }
 }
 </script>
