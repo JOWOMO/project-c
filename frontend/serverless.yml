@@ -1,7 +1,7 @@
 service: bee-to-bee-client
 
 plugins:
-  - c
+  - serverless-finch
   - serverless-cloudfront-distribution-certificate
 
 provider:
