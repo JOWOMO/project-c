@@ -41,7 +41,7 @@ export default class extends Vue {}
   text-align: center;
   display: flex;
   justify-content: center;
-  padding-top: 39px;
+  padding-top: 40px;
 }
 
 .menu {

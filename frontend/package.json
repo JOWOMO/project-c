@@ -7,7 +7,7 @@
   "scripts": {
     "deploy": "serverless deploy && serverless client deploy --no-confirm --no-policy-change",
     "dev": "npx forever --minUptime 1000 --spinSleepTime 1000 node_modules/.bin/nuxt dev --spa",
-    "dev-local": "API_URL=http://localhost:5000/graphql npm run dev",
+    "dev-local": "USE_BETA_LOGO=true API_URL=http://localhost:5000/graphql npm run dev",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate --spa",
