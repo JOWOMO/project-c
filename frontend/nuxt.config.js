@@ -43,7 +43,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    // title: 'JOWOMO: Deine Plattform für Personalpartnerschaften',
+    title: 'JOWOMO: Deine Plattform für Personalpartnerschaften',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no, initial-scale=1' },
