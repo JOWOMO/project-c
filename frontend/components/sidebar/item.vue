@@ -45,6 +45,9 @@ export default class extends Vue {
 
   margin-top: 16px;
 
+  width: 100%;
+  overflow: hidden;
+
   img {
     margin: 4px 0;
   }
@@ -53,12 +56,17 @@ export default class extends Vue {
     color: $textcolor;
     font-weight: normal;
     font-size: $textsize;
-    margin-left: 20px;
-    margin-right: 10px;
+    margin-left: $gridsize/2;
+    margin-right: $gridsize/2;
 
     &:hover {
       color: darken($primary, 10);
     }
+
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   a.selected {
