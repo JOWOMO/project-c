@@ -117,6 +117,6 @@ Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung de
 
 <faq question="Wer garantiert, dass die angebotenen Fähigkeiten auch tatsächlich vorhanden sind, z.B. CNC-Fräse bedienen, Risiko für Schaden an teurem Equipment?"> 
 
-Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein passendes Partnerunternehmen findest, kannst Du mit diesem in Kontakt treten. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen und die Plattform JOWOMO ist weder Teil dieser Absprachen, noch der Partnerschaft. 
+Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein passendes Partnerunternehmen findest, kannst Du mit diesem in Kontakt treten. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen. Die Plattform JOWOMO ist weder Teil dieser Absprachen, noch der Partnerschaft. 
 
 </faq>
