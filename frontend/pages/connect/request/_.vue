@@ -63,6 +63,7 @@ export default class extends Vue {
 
   created() {
     this.$track('connect', this.error ? 'failed' : 'success', this.error);
+    this.$store.commit('support/context', `zum Match`);
   }
 
   async asyncData(context: Context) {

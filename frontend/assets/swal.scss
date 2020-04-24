@@ -3,25 +3,35 @@
 @import './scales';
 
 .swal-title {
-  font-size: $h1FontSize;
-  color: $headercolor;
-  font-weight: bold;
-  line-height: 42px;
+  font-size: $h1FontSize  -5px !important;
+  color: $headercolor !important;
+  font-weight: bold !important;
+  line-height: 42px !important;
 }
 
 .swal-subtitle {
-  font-size: $textsize;
-  color: $textcolor;
+  font-size: $textsize !important;
+  color: $textcolor !important;
+}
+
+.swal-icon-primary {
+  border-color: $secondary !important;
+  color: $secondary !important;
 }
 
 .swal-button {
   border-radius: 90px  !important;
   min-width: 200px  !important;
   height: 50px  !important;
-  
-  border: none;
-  outline: none;
+
+  // border: none !important;
+  outline: none !important;
 
   font-size: $buttonFormText !important;
-  font-weight: 500;
+  font-weight: 500 !important;
+}
+
+.swal2-textarea {
+  border: 1px solid $border !important;
+  color: $inputtextcolor !important;
 }

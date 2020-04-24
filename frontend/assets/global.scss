@@ -128,5 +128,20 @@ a {
   height: 50px;
 }
 
+// .page-enter-active, .layout-enter-active {
+//   transition: opacity 0.25s ease-out;
+// }
+
+// .page-leave-active, .layout-leave-active {
+//   transition: opacity 0.25s ease-in;
+// }
+
+// .page-enter,
+// .page-leave-to,
+// .layout-enter,
+// .layout-leave-to {
+//   opacity: 0;
+// }
+
 @import './form';
 @import './swal';

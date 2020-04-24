@@ -81,7 +81,7 @@ class JSDClient:
             "POST", "customer", data={"fullName": name, "email": email}
         )
 
-    def create_request(self, requestor_id, request_type, summary, description):
+    def create_request(self, requestor_id, request_type, fields):
         # https://developer.atlassian.com/cloud/jira/service-desk/rest/#api-rest-servicedeskapi-request-post
         return self._request(
             "POST",
@@ -90,7 +90,7 @@ class JSDClient:
                 "raiseOnBehalfOf": requestor_id,
                 "serviceDeskId": self.service_desk_id,
                 "requestTypeId": request_type,
-                "requestFieldValues": {"summary": summary, "description": description,},
+                "requestFieldValues": fields,
             },
         )
 

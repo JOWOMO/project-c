@@ -1,5 +1,5 @@
 <template>
-    <nuxt-child />
+  <nuxt-child />
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@ import {
   DasboardTeamsQueryVariables,
   User,
   Demand,
-  Supply,
+  Supply
 } from "@/apollo/schema";
 
 import getTeams from "@/apollo/queries/dashboard/teams.gql";
@@ -18,8 +18,7 @@ import { ProvideReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
 
 @Component({
-  components: {
-  },
+  components: {},
   middleware: "authenticated",
   layout: "main-left"
 })
@@ -33,7 +32,12 @@ export default class extends Vue {
   @ProvideReactive("all-supplies")
   supplies: Supply[] = [];
 
+  created() {
+    this.$store.commit("support/context", "zu Finde/Suche");
+  }
+
   async asyncData(context: Context) {
+    console.debug('dashboard', 'asyncdata');
     let data: Pick<this, "demands" | "supplies" | "me">;
 
     try {

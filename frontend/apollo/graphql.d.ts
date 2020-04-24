@@ -53,6 +53,15 @@ declare module '*/remove_supply.gql' {
 }
     
 
+declare module '*/support.gql' {
+  import { DocumentNode } from 'graphql';
+  const defaultDocument: DocumentNode;
+  export const supportRequest: DocumentNode;
+
+  export default defaultDocument;
+}
+    
+
 declare module '*/update_demand.gql' {
   import { DocumentNode } from 'graphql';
   const defaultDocument: DocumentNode;

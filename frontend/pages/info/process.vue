@@ -79,6 +79,10 @@ export default class extends Vue {
   head() {
     return {};
   }
+
+  created() {
+    this.$store.commit('support/context', `zur Prozessdarstellung`);
+  }
 }
 </script>
 

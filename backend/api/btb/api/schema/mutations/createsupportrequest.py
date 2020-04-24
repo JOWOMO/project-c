@@ -23,12 +23,13 @@ class CreateSupportRequest(graphene.Mutation):
     class Arguments:
         summary = graphene.String(required=True)
         description = graphene.String(required=True)
+        page = graphene.String(required=True)
 
     Output = graphene.String
 
     @staticmethod
-    def mutate(root, info, summary, description):
-        current_app.logger.debug("CreateSupportRequest")
+    def mutate(root, info, summary, description, page):
+        current_app.logger.debug("CreateSupportRequest {} {} {}".format(summary, description, page))
 
         try:
             jsdconfig = json.loads(os.environ["JOWOMO_JSD_CONFIG"])
@@ -40,9 +41,10 @@ class CreateSupportRequest(graphene.Mutation):
                 jsdconfig["api_key"],
             )
             jsd_request_type = jsdconfig["request_type"]
+
         except Exception as e:
             current_app.logger.error("Failed to initialize JSD Client", e)
-            raise Exception("SupportDesk not avalaible")
+            raise Exception("Support Desk not available")
 
         user = jsd.create_or_find_user(
             "{} {}".format(g.principal.get_first_name(), g.principal.get_last_name()),
@@ -50,7 +52,14 @@ class CreateSupportRequest(graphene.Mutation):
         )
 
         result = jsd.create_request(
-            user["accountId"], jsd_request_type, summary, description
+            user["accountId"], 
+            jsd_request_type, 
+            { 
+                "summary": summary, 
+                "description": description,
+                "customfield_10054": os.environ["STAGE"],
+                "customfield_10053": page,
+            },
         )
 
         return result["_links"]["web"]
