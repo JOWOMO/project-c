@@ -10,23 +10,22 @@
         </div>
       </div>
 
-      <h1>{{ name }} wurde kontaktiert</h1>
-      <p>Wir haben {{ name }} benachrichtigt. Wenn es klappt könnt ihr Euch persönlich über alle weiteren Details austauschen.</p>
+      <h1>{{ $t('connect.title', {first, last}) }}</h1>
+      <p>{{ $t('connect.message', {first, last}) }}</p>
     </div>
     <div v-else>
-      <h1 class="error">Das hat leider nicht geklappt!</h1>
+      <h1 class="error">{{ $t('connect.errors.title') }}</h1>
       <p>{{error}}</p>
     </div>
 
     <div class="buttons">
-      <button class="primary" @click.prevent="dashboard">Meine Suchergebnisse</button>
+      <button class="primary" @click.prevent="dashboard">{{ $t('connect.button') }}</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 import {
   ConnectMutation,
@@ -38,7 +37,8 @@ import connectMutation from "@/apollo/mutations/connect.gql";
 
 export type ConnectParams = {
   match: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   flow: string;
   pictureUrl?: string;
   origin: string;
@@ -48,17 +48,14 @@ export type ConnectParams = {
   middleware: "authenticated"
 })
 export default class extends Vue {
-  name: string = "";
+  first: string = "";
+  last: string = "";
+
   error: string = "";
   route: string = "";
 
-  @Meta
-  head() {
-    return {};
-  }
-
   dashboard() {
-    this.$router.replace(this.route || "/welcome");
+    this.$router.replace(this.route || "/dashboard");
   }
 
   created() {
@@ -68,12 +65,14 @@ export default class extends Vue {
 
   async asyncData(context: Context) {
     try {
-      let result: Partial<Pick<this, "error" | "name" | "route">> = {};
+      let result: Partial<Pick<this, "error" | "first" | "last" | "route">> = {};
 
       const params: ConnectParams = JSON.parse(atob(context.params.pathMatch));
       console.debug('connect', params);
 
-      result.name = params.name;
+      result.first = params.firstName;
+      result.last = params.lastName;
+
       result.route = `/dashboard/match/${params.flow}/${params.origin}`;
 
       const client = context.app.apolloProvider!.defaultClient;
@@ -94,18 +93,18 @@ export default class extends Vue {
         mutation.errors &&
         mutation.errors[0].message == "TOO_MANY_RECIPIENT"
       ) {
-        result.error = `Du hast ${params.name} schon einmal wegen ${
-          "demand" ? "dieses Gesuchs" : "diesem Team"
-        } kontaktiert. Wir haben Deine Anfrage nicht noch einmal weitergleitet. Bitte hab etwas Geduld.`;
+        result.error = context.app.i18n.t('connect.errors.recipient_' + params.flow, result) as string;
       } else if (
         mutation.errors &&
         mutation.errors[0].message == "TOO_MANY_REQUESTS"
       ) {
-        result.error = `Du hast heute schon zu viele Anfragen gestellt. Bitte versuch es Morgen noch einmal.`;
+        result.error = context.app.i18n.t('connect.errors.stop') as string;
       } else if (
         mutation.errors
       ) {
-        result.error = `Es ist ein unbekannter Fehler aufgetreten: ` + mutation.errors[0].message;
+        result.error = context.app.i18n.t('connect.errors.unkown', {
+          error: mutation.errors[0].message,
+        }) as string;
       }
 
       return result;

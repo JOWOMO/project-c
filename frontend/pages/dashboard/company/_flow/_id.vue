@@ -72,7 +72,8 @@ export default class Details extends Vue {
       flow: this.$route.params.flow === 'supply' ? 'demand' : 'supply',
       origin: this.$route.query.id as string,
       match: party.id,
-      name: party.name,
+      firstName: party.firstName,
+      lastName: party.lastName,
       pictureUrl: party.pictureUrl
     };
 

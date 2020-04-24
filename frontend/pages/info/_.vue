@@ -20,7 +20,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 
 import leftNav from "@/components/pages/navbar-left.vue";
@@ -41,19 +40,22 @@ import sponsor from "@/components/about/sponsor.vue";
 })
 export default class extends Vue {
   title: string = "";
+  seo: string = "";
   description: string = "";
   content: string = "";
   menu: any;
 
-  @Meta
   head() {
-    return {};
-    // return {
-    //   title: this.title,
-    //   meta: [
-    //     { hid: "description", name: "description", content: this.description }
-    //   ]
-    // };
+    return {
+      title: this.seo,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.description
+        }
+      ]
+    };
   }
 
   created() {
@@ -74,6 +76,7 @@ export default class extends Vue {
       return {
         title: content.attributes?.title,
         description: content.attributes?.description,
+        seo: content.attributes?.seo || content.attributes?.title,
         content: other,
         menu: content.attributes?.menu || {}
       };

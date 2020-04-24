@@ -1,6 +1,7 @@
 ---
 title: Über uns
-description: GemeinsamArbeitSchützen - Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. 
+seo: 'JOWOMO: Unsere Mission ist es gemeinsam Arbeit zu schützen – durch Personalpartnerschaften'
+description: Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen.
 menu: 
   label: Über uns
   items:
@@ -13,7 +14,7 @@ menu:
 
     - 
       label: Über uns
-      to: '#about'
+      to: '#team'
 
     -   
       label: Sponsoren und Kooperationspartner

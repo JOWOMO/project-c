@@ -1,6 +1,7 @@
 ---
 title: Fragen & Antworten
-description: Fragen zur Nutzung
+seo: 'JOWOMO: Die häufigsten Fragen und Antworten zu Personalpartnerschaften in der Krise'
+description: Ob Du wissen möchtest, wie Du ein geeignetes Partnerunternehmen findest oder wie man eine Personalpartnerschaft rechtlich umsetzen kann – hier findest Du die passende Antwort.
 menu: 
   label: Fragen und Antworten
   items:

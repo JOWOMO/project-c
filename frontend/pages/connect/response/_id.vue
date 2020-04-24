@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 import {
   SetMatchStateMutation,
@@ -50,11 +49,6 @@ export type ConnectParams = {
 })
 export default class extends Vue {
   data!: MatchDetails;
-
-  @Meta
-  head() {
-    return {};
-  }
 
   faq() {
     this.$track('connect', 'faq');

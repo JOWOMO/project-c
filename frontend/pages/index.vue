@@ -165,7 +165,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { IState } from "@/store";
 import imprint from "@/components/imprint.vue";
 
@@ -189,7 +188,6 @@ export default class extends Vue {
     this.$router.push({ path: "/register/supply" });
   }
 
-  @Meta
   head() {
     return {};
   }
