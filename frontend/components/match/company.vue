@@ -184,7 +184,11 @@ export default class extends Vue {
   connect() {
     return {
       id: this.match.id,
-      name: this.contact.firstName,
+      contact: this.contact,
+
+      // compat
+      firstName: this.contact.firstName,
+      lastName: this.contact.lastName,
       pictureUrl: this.contact.pictureUrl
     };
   }
