@@ -18,6 +18,11 @@ export default {
       user: 'Persönliche Daten',
       company: 'Dein Unternehmen',
 
+      notfinished: {
+        title: 'Du musst Deine Registrierung noch abschließen',
+        subtitle: "Bitte entscheide Dich auf der Startseite für 'Ich suche Mitarbeiter' oder 'Ich biete Mitarbeiter'. Danach kannst Du mit der Suche nach passenden Personalpartnern anfangen.",
+      },
+
       team: {
         add: 'Weiteres Team hinzufügen',
         ok: 'Abschließen',
@@ -36,6 +41,10 @@ export default {
           title: "Möchtest Du die Änderungen wirklich verwerfen?",
           subtitle: "Du hast die Bearbeitung {term} '{names}' nicht abgeschlossen. Bitte schließe die Bearbeitungsmaske mit 'Abbrechen' oder 'OK' ab, bevor Du fortfährst.",
           term: '- | des Teams | der Teams',
+        },
+
+        zero: {
+          title: "Du musst mindestens ein Team anlegen um Personalpartner zu finden.",
         },
       },
 

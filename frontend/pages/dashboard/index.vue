@@ -3,42 +3,50 @@
 
 <script lang="ts">
 import { Vue, Component, State } from "nuxt-property-decorator";
-import { InjectReactive } from "vue-property-decorator";
 import { IState } from "@/store";
 import { CognitoUser } from "@aws-amplify/auth";
+import { Context } from "@nuxt/types";
 
 @Component
 export default class extends Vue {
-  @State((s: IState) => s.auth.user)
-  user!: any;
+  // @State((s: IState) => s.auth.user)
+  // user!: any;
 
-  @InjectReactive("all-demands")
-  dem!: { id: string }[];
+  // @State((s: IState) => s.match.demands)
+  // dem!: { id: string }[];
 
-  @InjectReactive("all-supplies")
-  sup!: { id: string }[];
+  // @State((s: IState) => s.match.supplies)
+  // sup!: { id: string }[];
 
   async created() {
-    if (this.dem.length > 0) {
-      this.$router.replace(`/dashboard/match/demand/${this.dem[0].id}`);
+    await this.$swal.alert(
+      this.$t('register.notfinished.title') as string,
+      this.$t('register.notfinished.subtitle') as string,
+      'info'
+    );
+
+    this.$router.replace(`/`);
+  }
+
+  async asyncData(context: Context) {
+    console.debug('created called');
+
+    const state: IState = context.store.state;
+
+    if (state.match.demands.length > 0) {
+      context.redirect(301, `/dashboard/match/demand/${state.match.demands[0].id}`);
       return;
     }
 
-    if (this.sup.length > 0) {
-      this.$router.replace(`/dashboard/match/supply/${this.sup[0].id}`);
+    if (state.match.supplies.length > 0) {
+      context.redirect(301, `/dashboard/match/supply/${state.match.supplies[0].id}`);
       return;
     }
 
-    if (this.user && this.user?.attributes?.profile) {
-      this.$router.replace(`/register/${this.user?.attributes?.profile}`);
-    } else {
-      await this.$swal.alert(
-        'Du musst Deine Registrierung noch abschließen',
-        `Bitte entscheide Dich auf der Startseite für 'Ich suche Mitarbeiter' oder 'Ich biete Mitarbeiter'. Danach kannst Du mit der Suche nach passenden Personalpartnern anfangen.`,
-        'info'
-      );
-
-      this.$router.replace(`/`);
+    // @ts-ignore
+    if (state.auth.user && state.auth.user?.attributes?.profile) {
+      // @ts-ignore
+      this.$router.replace(`/register/${state.auth.user.attributes.profile}`);
     }
   }
 }

@@ -158,13 +158,13 @@ export default class extends Vue {
 
       updateQuery: (prev, { fetchMoreResult }) => {
         try {
-          console.debug(
-            "Received ",
-            prev.result.matches.map(m => m.match.id),
-            prev.result.pageInfo,
-            (fetchMoreResult?.result?.matches || []).map(m => m.match.id),
-            fetchMoreResult?.result?.pageInfo
-          );
+          // console.debug(
+          //   "Received ",
+          //   prev.result.matches.map(m => m.match.id),
+          //   prev.result.pageInfo,
+          //   (fetchMoreResult?.result?.matches || []).map(m => m.match.id),
+          //   fetchMoreResult?.result?.pageInfo
+          // );
 
           if (!fetchMoreResult) {
             $state.complete();

@@ -23,41 +23,28 @@ import { Context } from "@nuxt/types";
   layout: "main-left"
 })
 export default class extends Vue {
-  @ProvideReactive("me")
-  me: Pick<User, "firstName" | "lastName"> | null = null;
-
-  @ProvideReactive("all-demands")
-  demands: Demand[] = [];
-
-  @ProvideReactive("all-supplies")
-  supplies: Supply[] = [];
-
   created() {
     this.$store.commit("support/context", "zu Finde/Suche");
   }
 
+  // async fetch() {
+  //   console.debug('fetch called');
+
+  //   try {
+  //     await this.$store.dispatch('match/loadteams', this.$apollo);
+  //   } catch (e) {
+  //     console.error(e);
+  //     throw e;
+  //   }
+  // }
+
   async asyncData(context: Context) {
     console.debug('dashboard', 'asyncdata');
-    let data: Pick<this, "demands" | "supplies" | "me">;
-
     try {
       const client = context.app.apolloProvider!.defaultClient;
-      const result = await client.query<
-        DasboardTeamsQuery,
-        DasboardTeamsQueryVariables
-      >({
-        query: getTeams,
-        fetchPolicy: "network-only" // We could possible cache that for the duration of the session?
-      });
+      await context.store.dispatch('match/loadteams', client);
 
-      // @ts-ignore
-      data = {
-        demands: result.data.activeDemands,
-        supplies: result.data.activeSupplies,
-        me: result.data.me
-      };
-
-      return data;
+      return {};
     } catch (e) {
       console.error(e);
       context.error({ statusCode: 500, message: e.message });

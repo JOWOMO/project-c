@@ -99,7 +99,6 @@ import {
   RemoveSupplyMutation,
   RemoveSupplyMutationVariables
 } from "@/apollo/schema";
-import { InjectReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "@/components/loadinganimation";
 
@@ -246,6 +245,16 @@ export default class extends Vue {
       return;
     }
 
+    if (this.supplies.length == 0 && this.demands.length == 0) {
+       this.$swal.alert(
+        this.$t('register.team.zero.title') as string,
+        '',
+        'info',
+      );
+
+      return;
+    }
+
     this.$track("registration", "team");
 
     try {
@@ -287,6 +296,7 @@ export default class extends Vue {
         });
       }
 
+      await this.$store.dispatch('match/loadteams', this.$apollo);
       this.$router.push(`/welcome/${this.$route.params.flow}`);
     } catch (err) {
       console.error(err);
