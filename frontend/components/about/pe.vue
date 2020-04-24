@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="left">
+    <div v-if="!center" class="left">
       <div class="number-left">
         <slot v-if="number" name="number">{{number}}</slot>
         <slot name="number-left" />
@@ -14,7 +14,20 @@
       </div>
     </div>
 
-    <div class="right">
+    <div v-if="center" class="center">
+      <div class="number-center">
+        <slot v-if="number" name="number">{{number}}</slot>
+        <slot name="number-center" />
+      </div>
+      <div class="title">{{ title }}</div>
+      <div class="text">
+        <div>
+          <slot name="both" />
+        </div>
+      </div>
+    </div>
+
+    <div v-if="!center" class="right">
       <div class="number-right">
         <slot v-if="number" name="number">{{number}}</slot>
         <slot name="number-right" />
@@ -35,6 +48,8 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 
 @Component
 export default class extends Vue {
+  @Prop({default: false}) center!: boolean;
+
   @Prop() number!: number;
   @Prop() title!: string;
   @Prop() titleRight!: string;
@@ -57,11 +72,16 @@ export default class extends Vue {
 }
 
 .left,
-.right {
+.right,
+.center {
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 50%;
+}
+
+.center {
+  width: 100%;
 }
 
 .left {
