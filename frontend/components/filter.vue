@@ -26,7 +26,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch, State } from "nuxt-property-decorator";
 import { Company } from "@/apollo/schema";
-import { InjectReactive, Emit } from "vue-property-decorator";
+import { Emit } from "vue-property-decorator";
 import dropdown from "@/components/dropdown.vue";
 import { IState } from "../store";
 import { IMatchState } from "../store/match";
