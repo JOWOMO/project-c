@@ -46,7 +46,7 @@ export default class extends Vue {
     // @ts-ignore
     if (state.auth.user && state.auth.user?.attributes?.profile) {
       // @ts-ignore
-      this.$router.replace(`/register/${state.auth.user.attributes.profile}`);
+      context.redirect(301, `/register/${state.auth.user.attributes.profile}`);
     }
   }
 }

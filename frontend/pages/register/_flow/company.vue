@@ -137,7 +137,7 @@ export default class extends Vue {
           data.city = company.city;
           data.postalcode = company.postalCode;
 
-          // data.industry = company.industry?.id;
+          data.industry = company.industry?.id;
         }
       }
 
