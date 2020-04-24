@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 
 import sidebar from "@/components/pages/sidebar-register.vue";
 import topbar from "@/components/pages/topbar.vue";
@@ -40,11 +39,6 @@ export default class extends Vue {
   @State((s: IState) => s.register.position)
   position!: number;
 
-  @Meta
-  head() {
-    return {};
-  }
-
   created() {
     console.debug("register", "created");
 
@@ -61,7 +55,7 @@ export default class extends Vue {
 
     // @ts-ignore
     this.labels.push(this.$t(`register.company`));
-    
+
     // @ts-ignore
     this.labels.push(label);
   }

@@ -43,11 +43,11 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: 'JOWOMO - Die Plattform zur Personalpartnerschaft',
+    // title: 'JOWOMO: Deine Plattform für Personalpartnerschaften',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'JOWOMO vernetzt Unternehmen für einen temporären Austausch von Personal. Flexibel. Innovativ. Krisengerecht.' },
+      { hid: 'description', name: 'description', content: 'JOWOMO vernetzt Unternehmen mit freien Arbeitnehmerkapazitäten und Unternehmen mit aktuellem Mehrbedarf zielgerichtet miteinander, um eine Alternative zu Kurzarbeit zu bieten. Registriere Dein Unternehmen jetzt!' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

@@ -26,7 +26,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 import {
   ConnectMutation,
@@ -54,11 +53,6 @@ export default class extends Vue {
 
   error: string = "";
   route: string = "";
-
-  @Meta
-  head() {
-    return {};
-  }
 
   dashboard() {
     this.$router.replace(this.route || "/dashboard");

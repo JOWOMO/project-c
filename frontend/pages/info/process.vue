@@ -25,7 +25,9 @@
 
       <pe number="3" title="Stelle Team(s) ein">
         <template #left>Lass andere Unternehmen wissen, welche Arbeitskräfte Du suchst.</template>
-        <template #right>Lass andere Unternehmen wissen, welche Arbeitskräfte gerade bei Dir verfügbar sind.</template>
+        <template
+          #right
+        >Lass andere Unternehmen wissen, welche Arbeitskräfte gerade bei Dir verfügbar sind.</template>
       </pe>
 
       <pe number="4" title="Starte Deine Suche">
@@ -33,25 +35,32 @@
       </pe>
 
       <pe number="5" title="Wir verbinden Euch">
-        <template #both>
-          Hast Du einen passenden Personalpartner entdeckt? Sende per Klick direkt eine Anfrage, damit ihr Details besprechen könnt.
-        </template>
+        <template
+          #both
+        >Hast Du einen passenden Personalpartner entdeckt? Sende per Klick direkt eine Anfrage, damit ihr Details besprechen könnt.</template>
       </pe>
 
       <pe number="6" title="Match">
         <template #number>
           <img height="52px" src="/icons/logo.svg" />
         </template>
-        <template #both>
-        Glückwunsch! Ihr entscheidet Euch für die Partnerschaft und leitet die nächsten Schritte ein.</template>
+        <template
+          #both
+        >Glückwunsch! Ihr entscheidet Euch für die Partnerschaft und leitet die nächsten Schritte ein.</template>
       </pe>
 
       <pe number="7" title="Triff eine vertragliche Regelung">
         <template #both>
-        Es gibt verschiedene Möglichkeiten zur Umsetzung, die Du für Deinen Fall rechtlich prüfen lassen solltest. <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link></template>
+          Es gibt verschiedene Möglichkeiten zur Umsetzung, die Du für Deinen Fall rechtlich prüfen lassen solltest.
+          <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link>
+        </template>
       </pe>
 
-      <pe number="8" title="Übergebe deine Mitarbeiter:innen" titleRight="Lerne deine neuen Mitarbeiter:innen ein">
+      <pe
+        number="8"
+        title="Übergebe deine Mitarbeiter:innen"
+        titleRight="Lerne deine neuen Mitarbeiter:innen ein"
+      >
         <template #left>Hilf Deinen Arbeitskräften in der Übergangsphase.</template>
         <template #right>Hilf Deinen neuen Arbeitskräften sich in Deinem Betrieb wohl zu fühlen.</template>
       </pe>
@@ -75,9 +84,17 @@ export default class extends Vue {
   description: string = "";
   content: string = "";
 
-  @Meta
   head() {
-    return {};
+    return {
+      title: this.$t('process.seo.title'),
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.$t('process.seo.description'),
+        }
+      ],
+    };
   }
 
   created() {
@@ -106,6 +123,4 @@ h1 {
 p {
   padding-bottom: $gridsize;
 }
-
-
 </style>

@@ -21,7 +21,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { IState } from "@/store";
 import { CognitoUser } from "@aws-amplify/auth";
 import { Context } from "@nuxt/types";
@@ -37,11 +36,6 @@ import userQuery from "@/apollo/queries/registration/user.gql";
 })
 export default class extends Vue {
   name!: string;
-
-  @Meta
-  head() {
-    return {};
-  }
 
   get flow() {
     return this.$route.params.flow || 'demand';

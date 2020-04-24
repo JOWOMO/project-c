@@ -4,8 +4,6 @@
 
 <script lang="ts">
 import { Component, Vue, State } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
-
 import auth from "@/components/auth/index.vue";
 
 import { Check_StateQuery } from "@/apollo/schema";
@@ -21,11 +19,6 @@ import { IState } from "@/store";
 export default class extends Vue {
   @State((s: IState) => s.auth.user)
   user!: any;
-
-  @Meta
-  head() {
-    return {};
-  }
 
   async userAuthenticated() {
     const client = this.$apollo.getClient();
