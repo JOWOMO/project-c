@@ -11,7 +11,8 @@ import { InjectReactive } from "vue-property-decorator";
 @Component({
   components: {
     validate
-  }
+  },
+  middleware: "authenticated",
 })
 export default class extends Vue {
   @InjectReactive("workflow") workflow!: Workflow;

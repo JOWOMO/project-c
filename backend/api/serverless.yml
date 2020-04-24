@@ -33,6 +33,7 @@ provider:
     STAGE: ${self:custom.stage}
     MAX_CONTACT_REQUESTS: 10
     EMAIL_SENDER: ${ssm:/btb/${self:custom.stage}/emailsender}
+    JOWOMO_JSD_CONFIG: ${ssm:/btb/jsd~true}
     PYTHONIOENCODING: UTF8
     FRONTEND_URL: 
       Fn::Join:

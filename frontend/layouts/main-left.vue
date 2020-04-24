@@ -2,6 +2,7 @@
   <div>
     <nuxt class="overflow" />
     <cookies />
+    <support />
     <top :useBody="true" />
   </div>
 </template>
@@ -10,9 +11,11 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import cookies from "@/components/cookies.vue";
 import top from "@/components/goto-top.vue";
+import support from "@/components/support.vue";
 
 @Component({
-  components: { cookies, top }
+  components: { cookies, top, support, },
+  middleware: 'loaduser',
 })
 export default class extends Vue {}
 </script>

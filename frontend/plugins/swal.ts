@@ -15,12 +15,45 @@ const DEFAULT_OPTIONS: SweetAlertOptions = {
   customClass: {
     title:'swal-title',
     content: 'swal-subtitle',
-  
+
     closeButton: 'swal-button primary',
     confirmButton: 'swal-button primary',
     cancelButton: 'swal-button secondary',
   }
 };
+
+function feedback(
+  title = 'Was können wir besser machen? Hat etwas nicht geklappt?',
+  html?: string,
+  inputPlaceholder?: string,
+): Promise<SweetAlertResult> {
+  return Swal.fire({
+    ...DEFAULT_OPTIONS,
+    title,
+    html,
+
+    icon: 'question',
+
+    customClass: {
+      ...DEFAULT_OPTIONS.customClass,
+      icon: 'swal-icon-primary',
+    },
+
+    cancelButtonText: 'Abbrechen',
+    confirmButtonText: 'Absenden',
+    showCancelButton: true,
+
+    inputAutoTrim: true,
+
+    inputValidator: (r) => !r ? 'Leider hast Du nichts eingegeben?' : null,
+
+    // icon: 'question',
+    // html: subtitle,
+    input: "textarea",
+    inputPlaceholder: inputPlaceholder || 'Wir sind für jeden Hinweis dankbar. Die Details kannst Du hier eingeben.',
+  });
+}
+
 
 function alert(title: string, subtitle?: string, icon?: SweetAlertIcon): Promise<SweetAlertResult> {
   return Swal.fire({
@@ -51,6 +84,7 @@ function confirm(title: string, subtitle?: string, destructive?: boolean): Promi
 interface ISwal {
   alert: typeof alert;
   confirm: typeof confirm;
+  feedback: typeof feedback;
 }
 
 declare module "vue/types/vue" {
@@ -63,6 +97,7 @@ const plugin: Plugin  = (_, inject) => {
   inject('swal', {
     alert,
     confirm,
+    feedback,
   });
 }
 

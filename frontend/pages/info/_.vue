@@ -56,6 +56,10 @@ export default class extends Vue {
     // };
   }
 
+  created() {
+    this.$store.commit('support/context', `zu '${this.title}'`);
+  }
+
   async asyncData(context: Context) {
     try {
       let content = await import(`~/content/${context.params.pathMatch}.md`);

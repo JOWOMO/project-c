@@ -63,6 +63,7 @@ export default class extends Vue {
         this.$route.params.flow == "demand" ? "Ich suche" : "Ich biete"
     };
 
+    this.$store.commit('support/context', `zur Registrierung (${this.providedWorfklow.displayName})`);
     this.labels.push(this.providedWorfklow.displayName);
   }
 }

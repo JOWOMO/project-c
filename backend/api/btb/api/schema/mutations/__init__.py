@@ -4,3 +4,4 @@ from .updatesupply import UpdateSupply, RemoveSupply
 from .updateuser import UpdateUser, StartUploadPicture
 from .contact import ContactMatch, MatchType
 from .match import SetMatchState
+from .createsupportrequest import CreateSupportRequest

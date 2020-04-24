@@ -43,6 +43,10 @@ export default class extends Vue {
     return {};
   }
 
+  created() {
+    this.$store.commit('support/context', `zur Begrüßung`);
+  }
+
   dashboard() {
     this.$router.push("/dashboard");
   }

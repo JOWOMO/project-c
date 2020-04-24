@@ -37,6 +37,7 @@ from btb.api.schema.mutations import (
     StartUploadPicture,
     ContactMatch,
     SetMatchState,
+    CreateSupportRequest
 )
 
 
@@ -105,6 +106,8 @@ class Mutation(ObjectType):
     contact_match = ContactMatch.Field()
 
     set_match_state = SetMatchState.Field()
+
+    create_support_request = CreateSupportRequest.Field()
 
 
 executableSchema = Schema(query=Query, mutation=Mutation)
