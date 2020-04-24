@@ -58,7 +58,7 @@ export default class extends Vue {
   }
 
   dashboard() {
-    this.$router.replace(this.route || "/welcome");
+    this.$router.replace(this.route || "/dashboard");
   }
 
   created() {

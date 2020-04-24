@@ -99,13 +99,19 @@ export default {
           {
             code: 'de',
             iso: 'de',
+            file: 'de.js',
             isCatchallLocale: true // This one will be used as catchall locale
           },
         ],
+
+        lazy: true,
+        langDir: 'lang/',
+
+        vueI18nLoader: false,
         defaultLocale: 'de',
+
         vueI18n: {
           fallbackLocale: 'de',
-          messages: {}
         }
       }
     ],

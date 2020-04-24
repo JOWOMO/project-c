@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>{{ workflow.displayName }}</h1>
-    <p>Gib hier an, welche Mitarbeiter:innen Du aktuell {{ subject }}. Fasse bitte alle Mitarbeiter:innen mit der gleichen Tätigkeit in ein Team zusammen. Solltest Du Mitarbeiter:innen aus unterschiedlichen Bereichen {{ verb }}, lege bitte mehrere Teams an (z.B. Team 01 Service, Team 02 Küche).</p>
+    <h1>{{ $t('register.' + $route.params.flow + '.team.title') }}</h1>
+    <p>{{ $t('register.' + $route.params.flow + '.team.subtitle') }}</p>
 
     <div v-for="(team, idx) in supplies" :key="idx">
       <div class="team-container">
@@ -52,12 +52,12 @@
         <img src="/icons/circle.svg" />
       </div>
 
-      <span>Weiteres Team hinzufügen</span>
+      <span>{{ $t('register.team.add') }}</span>
     </button>
 
     <div class="buttons">
-      <button class="secondary" @click.prevent="back">Zurück</button>
-      <button class="primary" @click.prevent="save">Abschließen</button>
+      <button class="secondary" @click.prevent="back">{{ $t('register.team.back') }}</button>
+      <button class="primary" @click.prevent="save">{{ $t('register.team.ok') }}</button>
     </div>
   </div>
 </template>
@@ -100,8 +100,6 @@ import {
   RemoveSupplyMutationVariables
 } from "@/apollo/schema";
 import { InjectReactive } from "vue-property-decorator";
-
-import { RegistrationFlow, Workflow } from "../../register.vue";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "@/components/loadinganimation";
 
@@ -118,26 +116,12 @@ const EMPTY_TEAM: TeamDetails = {
   middleware: "authenticated"
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: Workflow;
-
   company!: Pick<Company, "id">;
 
   demands: TeamDetails[] = [];
   supplies: TeamDetails[] = [];
   skills: Pick<Skill, "id" | "name">[] = [];
   topics: string[] = [];
-
-  get verb() {
-    return this.workflow.type === 'supply'
-      ? 'anbieten können'
-      : 'suchen';
-  }
-
-  get subject() {
-    return this.workflow.type === 'supply'
-      ? 'zur Verfügung stellen kannst'
-      : 'suchst';
-  }
 
   counter = 0;
   addTeam() {
@@ -148,7 +132,7 @@ export default class extends Vue {
 
     record.expanded = true;
 
-    if (this.workflow.type === RegistrationFlow.demand) {
+    if (this.$route.params.flow === 'demand') {
       this.demands.push(record);
     } else {
       this.supplies.push(record);
@@ -177,8 +161,8 @@ export default class extends Vue {
     const array = type === "supply" ? this.supplies : this.demands;
 
     const action = await this.$swal.confirm(
-      `Möchtest Du das Team '${array[idx].name}' wirklich löschen?`,
-      "Diese Aktion kann nicht rückgängig gemacht werden.",
+      this.$t('register.team.remove.title', {name: array[idx].name}) as string,
+      this.$t('register.team.remove.subtitle') as string,
       true
     );
 
@@ -218,8 +202,14 @@ export default class extends Vue {
       this.$track("registration", "modified", "Zurück");
 
       const result = await this.$swal.confirm(
-        `Möchtest Du die Änderungen wirklich verwerfen?`,
-        `Du hast die Bearbeitung ${names.length > 1 ? 'der' : 'des'} Teams '${names.join(', ')}' nicht abgeschlossen. Bitte schließe die Bearbeitungsmaske mit 'Abbrechen' oder 'OK' ab, bevor Du fortfährst.`,
+        this.$t('register.team.discard.title') as string,
+        this.$t(
+          'register.team.discard.subtitle',
+          {
+            term: this.$tc('register.team.discard.term', names.length),
+            names: names.join(', '),
+          }
+        ) as string,
       );
 
       // user canceled the dialog
@@ -228,7 +218,7 @@ export default class extends Vue {
       }
     }
 
-    this.$router.push(`/register/${this.workflow.type}/company`);
+    this.$router.push(`/register/${this.$route.params.flow}/company`);
   }
 
   @LoadingAnimation
@@ -242,9 +232,15 @@ export default class extends Vue {
       this.$track("registration", "modified", "Abschließen");
 
       this.$swal.alert(
-        `Noch nicht fertig?`,
-        `Du hast die Bearbeitung ${names.length > 1 ? 'der' : 'des'} Teams '${names.join(', ')}' nicht abgeschlossen. Bitte schließe die Bearbeitungsmaske mit 'Abbrechen' oder 'OK' ab, bevor Du fortfährst.`,
-        'question'
+        this.$t('register.team.close.title') as string,
+        this.$t(
+          'register.team.discard.subtitle',
+          {
+            term: this.$tc('register.team.discard.term', names.length),
+            names: names.join(', '),
+          }
+        ) as string,
+        'question',
       );
 
       return;
@@ -291,7 +287,7 @@ export default class extends Vue {
         });
       }
 
-      this.$router.push(`/welcome`);
+      this.$router.push(`/welcome/${this.$route.params.flow}`);
     } catch (err) {
       console.error(err);
       this.$swal.alert("Das hat nicht geklappt", err.message, "error");
@@ -314,7 +310,7 @@ export default class extends Vue {
 
     // NO ACCESS to this context here
     try {
-      const flow: RegistrationFlow = context.params.flow as RegistrationFlow;
+      const flow = context.params.flow;
 
       const client = context.app.apolloProvider!.defaultClient;
       const result = await client.query<GetTeamsQuery, GetTeamsQueryVariables>({
@@ -343,7 +339,7 @@ export default class extends Vue {
         } as TeamDetails;
       };
 
-      if (flow === RegistrationFlow.demand) {
+      if (flow === 'demand') {
         // @ts-ignore
         data.demands = (data.company.demands || []).map(map);
 
@@ -370,13 +366,8 @@ export default class extends Vue {
     }
   }
 
-  @Emit("selectelement")
-  setElement() {
-    return 2;
-  }
-
   mounted() {
-    this.setElement();
+    this.$store.commit('register/position', 2);
   }
 }
 </script>

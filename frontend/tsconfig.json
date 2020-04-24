@@ -28,6 +28,7 @@
         "@nuxt/types",
         "vue-apollo/types",
         "@types/vuelidate",
+        "nuxt-i18n",
         "./types"
       ]
     },

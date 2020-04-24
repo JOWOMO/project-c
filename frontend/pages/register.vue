@@ -1,33 +1,30 @@
 <template>
   <div class="page">
     <mq-layout mq="lg+">
-      <sidebar :labels="labels" :selectedElement="selectedIndex" class="sidebar" />
+      <sidebar :labels="labels" :selectedElement="position" class="sidebar" />
     </mq-layout>
+
     <mq-layout :mq="['sm', 'md']">
       <topbar class="top" :hideMenu="true" />
     </mq-layout>
-    <nuxt-child @selectelement="selectElement" class="screen-right" />
+
+    <nuxt-child class="screen-right" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { ProvideReactive, Watch } from "vue-property-decorator";
+import { Component, Vue, Provide, State } from "nuxt-property-decorator";
 import { Meta } from "@/components/decorator";
 
 import sidebar from "@/components/pages/sidebar-register.vue";
 import topbar from "@/components/pages/topbar.vue";
 import auth from "@/components/auth/index.vue";
+import { IState } from "../store";
 
 export enum RegistrationFlow {
   demand = "demand",
   supply = "supply"
 }
-
-export type Workflow = {
-  type: RegistrationFlow;
-  displayName: string;
-};
 
 @Component({
   components: {
@@ -38,33 +35,35 @@ export type Workflow = {
   layout: "registration"
 })
 export default class extends Vue {
-  labels = ["Persönliche Daten", "Dein Unternehmen"];
-  selectedIndex = 0;
+  labels = [];
 
-  @ProvideReactive("workflow")
-  providedWorfklow: Workflow | null = null;
+  @State((s: IState) => s.register.position)
+  position!: number;
 
   @Meta
   head() {
     return {};
   }
 
-  selectElement(value: any) {
-    console.debug("register", "selectElement", value);
-    this.selectedIndex = value;
-  }
-
   created() {
     console.debug("register", "created");
 
-    this.providedWorfklow = {
-      type: this.$route.params.flow as RegistrationFlow,
-      displayName:
-        this.$route.params.flow == "demand" ? "Ich suche" : "Ich biete"
-    };
+    const flow = this.$route.params.flow;
 
-    this.$store.commit('support/context', `zur Registrierung (${this.providedWorfklow.displayName})`);
-    this.labels.push(this.providedWorfklow.displayName);
+    // @ts-ignore
+    const label = this.$t(`register.${flow}.label`);
+
+    // this.$store.commit('register/track', flow);
+    this.$store.commit('support/context', `zur Registrierung (${label})`);
+
+    // @ts-ignore
+    this.labels.push(this.$t(`register.user`));
+
+    // @ts-ignore
+    this.labels.push(this.$t(`register.company`));
+    
+    // @ts-ignore
+    this.labels.push(label);
   }
 }
 </script>
