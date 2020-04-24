@@ -6,11 +6,11 @@
     <div v-for="(team, idx) in supplies" :key="idx">
       <div class="team-container">
         <div class="action" v-if="!team.expanded">
-          <div class="button">
-            <div @click="toggleVisibility('supply', idx)" class="img edit" />
+          <div class="button" @click="toggleVisibility('supply', idx)">
+            <div class="img edit" />
           </div>
-          <div class="button">
-            <div @click="remove('supply', idx)" class="img rm" />
+          <div class="button" @click="remove('supply', idx)">
+            <div class="img rm" />
           </div>
         </div>
 
@@ -28,11 +28,11 @@
     <div v-for="(team, idx) in demands" :key="idx">
       <div class="team-container">
         <div class="action" v-if="!team.expanded">
-          <div class="button">
-            <div @click="toggleVisibility('demand', idx)" class="img edit" />
+          <div class="button" @click="toggleVisibility('demand', idx)">
+            <div class="img edit" />
           </div>
-          <div class="button">
-            <div @click="remove('demand', idx)" class="img rm" />
+          <div class="button" @click="remove('demand', idx)">
+            <div class="img rm" />
           </div>
         </div>
 
