@@ -32,6 +32,7 @@
         </row>
       </layout>
     </div>
+    <support :position="'tag'" />
   </div>
 </template>
 
@@ -53,6 +54,8 @@ import { remove, find } from "lodash";
 import layout from "@/components/layout/layout.vue";
 import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
+import support from "@/components/support.vue";
+
 import { groupBy, sortBy, toPairs } from "lodash";
 
 type KeyValuePair = {
@@ -66,7 +69,8 @@ type KeyValuePair = {
     tag,
     layout,
     column,
-    row
+    row,
+    support
   }
 })
 export default class extends Vue {
