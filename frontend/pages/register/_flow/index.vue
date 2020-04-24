@@ -33,8 +33,8 @@
         <formCheckbox :id="'agb'" :label="'Bitte akzeptiere unsere AGB'" v-model="agb">
           <template>
             Ja, ich habe die
-            <nuxt-link to="/info/agb">Nutzungsbedingungen</nuxt-link>und die
-            <nuxt-link to="/info/privacy">Datenschutzerklärung</nuxt-link>gelesen und akzeptiert.
+            <nuxt-link to="/info/agb">Nutzungsbedingungen</nuxt-link> und die
+            <nuxt-link to="/info/privacy">Datenschutzerklärung</nuxt-link> gelesen und akzeptiert.
           </template>
         </formCheckbox>
       </div>

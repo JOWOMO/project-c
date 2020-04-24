@@ -9,7 +9,7 @@
       </div>
 
       <div class="form-group half-width right">
-        <formSelect :id="industry" :label="'Industrie'" :values="industries" v-model="industry" />
+        <formSelect :id="'industry'" :label="'Industrie'" :values="industries" v-model="industry" />
       </div>
 
       <div class="form-group">
@@ -137,7 +137,7 @@ export default class extends Vue {
           data.city = company.city;
           data.postalcode = company.postalCode;
 
-          data.industry = company.industry?.id;
+          // data.industry = company.industry?.id;
         }
       }
 
@@ -159,6 +159,8 @@ export default class extends Vue {
     this.$emit("validate");
 
     if (this.$v.$invalid) {
+      console.debug(this.$v);
+
       return;
     }
 
