@@ -57,7 +57,7 @@ export default class extends Vue {
         >({
           mutation: supportMutation,
           variables: {
-            summary: `Dein Feedback ${this.context ?? 'zu'} JOWOMO`,
+            summary: `Dein Feedback ${this.context ?? 'zu JOWOMO'}`,
             description: result.value,
             page: window.location.origin + this.$route.fullPath,
           }

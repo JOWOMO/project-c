@@ -43,7 +43,7 @@ class CreateSupportRequest(graphene.Mutation):
             jsd_request_type = jsdconfig["request_type"]
 
         except Exception as e:
-            current_app.logger.error("Failed to initialize JSD Client", e)
+            current_app.logger.error("Failed to initialize JSD Client {}".format(e))
             raise Exception("Support Desk not available")
 
         user = jsd.create_or_find_user(
