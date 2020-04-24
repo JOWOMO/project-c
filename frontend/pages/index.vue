@@ -379,6 +379,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 .process {
   padding: $gridsize * 2 $gridsize;
   img {
+    width: 100%;
     max-width: $breakpoint_md;
   }
 }
@@ -473,6 +474,14 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 //     }
 //   }
 // }
+
+@media only screen and (max-width: $breakpoint_sm) {
+  .process {
+    img {
+      max-width: 100%;
+    }
+  }
+}
 
 @media only screen and (max-width: $breakpoint_vl) {
   .left {
