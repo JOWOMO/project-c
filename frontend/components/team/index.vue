@@ -58,8 +58,16 @@
             :id="'editTeam.description'"
             v-model="editTeam.description"
             name="editTeam.description"
+
+            :class="{ 'is-invalid': $v.editTeam.description.$error }"
           />
-          <label for="editTeam.description">Hier kannst Du das Team noch detailierter beschreiben</label>
+          <label for="editTeam.description">Bitte beschreibe hier Dein Team noch etwas detailierter</label>
+
+          <validations
+            :label="'Beschreibung'"
+            :validation="$v.editTeam.description"
+            :submitted="true"
+          />
         </div>
 
         <div class="form-group lbl">
@@ -198,6 +206,9 @@ export default class extends Vue {
         skills: {
           required,
           minLength: minLength(3)
+        },
+        description: {
+          required,
         }
       }
     };
