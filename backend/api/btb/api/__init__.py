@@ -11,11 +11,11 @@ from btb.api.datasources import instanciate_datasources
 from flask_cors import CORS
 
 import logging
-
+from flask.logging import default_handler
 
 def create_app():
     app = Flask(__name__)
-
+    
     cors = CORS(
         app,
         resources={r"/*": {"origins": "*"}},
@@ -27,7 +27,7 @@ def create_app():
     # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     log = logging.getLogger("werkzeug")
-    log.setLevel(logging.DEBUG)
+    log.setLevel(logging.DEBUG)    
 
     db.init_app(app)
 
@@ -44,6 +44,17 @@ def create_app():
         XRayMiddleware(app, xray_recorder)
         # Setup X-Ray psycopg2, boto3 (aws sdk) Integration
         patch(["psycopg2", "boto3"])
+
+        # this is the defautl lambda logger
+        LOGGER = logging.getLogger()
+        HANDLER = LOGGER.handlers[0]
+        # HANDLER.setFormatter(
+        #     logging.Formatter("[%(levelname)s]\t%(asctime)s.%(msecs)dZ\t%(aws_request_id)s\t%(message)s\n", "%Y-%m-%d %H:%M:%S")
+        # )
+
+        app.logger.removeHandler(default_handler)
+        app.logger.addHandler(HANDLER)
+
 
     @app.route("/")
     def index():
