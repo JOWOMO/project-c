@@ -69,4 +69,24 @@ export default {
         }
       },
     },
+
+    connect: {
+      title: '{first} {last} wurde kontaktiert',
+
+      message: 'Wir haben {first} {last} per E-Mail benachrichtigt, dass Du Interesse daran hast, Dich zu einer möglichen Partnerschaft auszutauschen. {first} {last} kann nun Deine Kontaktdaten einsehen und auf Dich zukommen um persönlich alle weiteren Details zu besprechen.',
+
+      button: 'Suchergebnisse anzeigen',
+
+      errors: {
+        'title': 'Das hat leider nicht geklappt.',
+
+        recipient_supply: "Du hast {first} {last} schon einmal wegen dieses Angebots kontaktiert. Wir haben Deine Anfrage nicht noch einmal weitergleitet. Bitte hab etwas Geduld.",
+
+        recipient_demand: "Du hast {first} {last} schon einmal wegen dieser Suche kontaktiert. Wir haben Deine Anfrage nicht noch einmal weitergleitet. Bitte hab etwas Geduld.",
+
+        stop: 'Du hast heute schon zu viele Anfragen gestellt. Bitte versuch es Morgen noch einmal.',
+
+        unkown: 'Es ist ein unbekannter Fehler aufgetreten: {error}'
+      }
+    }
 };

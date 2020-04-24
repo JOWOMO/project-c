@@ -96,7 +96,8 @@ export default class extends Vue {
       flow: this.$route.params.flow,
       origin: this.$route.params.id,
       match: party.id,
-      name: party.name,
+      firstName: party.firstName,
+      lastName: party.lastName,
       pictureUrl: party.pictureUrl
     };
 
