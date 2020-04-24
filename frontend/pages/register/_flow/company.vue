@@ -41,7 +41,7 @@ import {
   State,
   Provide
 } from "nuxt-property-decorator";
-import { InjectReactive, Emit } from "vue-property-decorator";
+import { Emit } from "vue-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, numeric, minValue } from "vuelidate/lib/validators";
