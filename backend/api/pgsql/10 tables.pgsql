@@ -15,8 +15,12 @@ CREATE TABLE IF NOT EXISTS btb_data.skill
 (
     id uuid NOT NULL default uuid_generate_v4(),
     skill_group_id uuid NOT NULL,
+    skill_type text default 'tag',
+
     match_id integer NOT NULL,
     is_active boolean default true,
+    
+    hierarchy integer default 0,
     name text NOT NULL,
     
     CONSTRAINT skill_pkey PRIMARY KEY (id),

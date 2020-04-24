@@ -264,9 +264,9 @@ export default class extends Vue {
   color: $inputlabelcolor;
 }
 
-  .is-invalid {
-    border: 1px solid $error !important;
-  }
+.is-invalid {
+  border: 1px solid $error !important;
+}
 
 .team-header {
   display: flex;
@@ -329,16 +329,17 @@ export default class extends Vue {
 
   .tag {
     margin-right: 12px;
-    margin-bottom: 20px;
+    margin-bottom: $gridsize/4;
   }
 
   button {
     min-width: auto !important;
     width: auto !important;
 
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-right: 12px;
+    padding-left: $gridsize/2;
+    padding-right: $gridsize/2;
+    margin-right: $gridsize/4;
+    margin-bottom: $gridsize/4;
 
     span {
       margin-left: 10px;
