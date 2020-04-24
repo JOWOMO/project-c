@@ -14,7 +14,7 @@ menu:
 
     - 
       label: Über uns
-      to: '#about'
+      to: '#team'
 
     -   
       label: Sponsoren und Kooperationspartner
