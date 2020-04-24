@@ -105,5 +105,28 @@ export default {
 
         unkown: 'Es ist ein unbekannter Fehler aufgetreten: {error}'
       }
-    }
+    },
+
+    feedback: {
+      title: 'Was können wir besser machen?',
+      text: 'Erzählen uns von Deiner Idee für eine neue Funktion oder Verbesserung. Hat etwas nicht geklappt?',
+
+      message: 'Dein Feedback {context}',
+
+      tag: {
+        title: 'Benötigen wir noch weitere Fähigkeiten?',
+        text: 'Gib uns gerne Feedback, welche Föhigkeiten fehlen oder was zu viel ist.',
+
+        context: 'Fähigkeiten und Rahmenbedingungen',
+      },
+
+      success: {
+        title: 'Wir haben Dein Feedback erhalten!',
+        text: 'Vielen Dank für Deine Mühe, wir melden uns natürlich schnellstmöglich bei Dir zurück.',
+      },
+
+      error: {
+        title: 'Das hat nicht geklappt',
+      }
+    },
 };

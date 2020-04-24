@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAuthenticated" @click="openform" :class="'style primary ' + styles">
+  <div v-if="isAuthenticated" @click="openform" :class="'style ' + styles">
     <div class="text">Feedback</div>
   </div>
 </template>
@@ -27,10 +27,14 @@ export default class extends Vue {
   position!: string;
 
   get styles() {
+    if (this.position === 'tag') {
+      return 'help-tags cta';
+    }
+
     switch (this.$mq) {
       case "sm":
       case "md":
-        return "help-right";
+        return "help-right primary";
 
         // return "help-left-middle";
       // case "lg":
@@ -38,16 +42,20 @@ export default class extends Vue {
 
       default:
         // return this.position === 'nav' ?  "help-left-nav" : 'help-left';
-        return 'help-left';
+        return 'help-left primary';
     }
   }
 
   async openform() {
     const result = await this.$swal.feedback(
-      'Was können wir besser machen?',
+      this.$t(this.position === 'tag' ? 'feedback.tag.title' : 'feedback.title') as string,
       '',
-      'Erzählen uns von Deiner Idee für eine neue Funktion oder Verbesserung. Hat etwas nicht geklappt?'
+      this.$t(this.position === 'tag' ? 'feedback.tag.text' : 'feedback.text') as string,
     );
+
+    const context = this.position === 'tag'
+      ? this.$t('feedback.tag.context')
+      : this.context ?? 'zu JOWOMO';
 
     if (result.value) {
       try {
@@ -57,20 +65,20 @@ export default class extends Vue {
         >({
           mutation: supportMutation,
           variables: {
-            summary: `Dein Feedback ${this.context ?? 'zu JOWOMO'}`,
+            summary: this.$t('feedback.message', { context }) as string,
             description: result.value,
             page: window.location.origin + this.$route.fullPath,
           }
         });
 
         this.$swal.alert(
-          'Wir haben Deine Anfrage erhalten!',
-          'Vielen Dank für Deine Mühe, wir melden uns natürlich schnellstmöglich bei Dir zurück.',
+          this.$t('feedback.success.title') as string,
+          this.$t('feedback.success.texxt') as string,
           'info',
         );
       } catch (err) {
           console.error(err);
-          this.$swal.alert("Das hat nicht geklappt", err.message, "error");
+          this.$swal.alert(this.$t('feedback.error.title') as string, err.message, "error");
       }
     }
   }
@@ -131,9 +139,9 @@ export default class extends Vue {
 
   top: calc(50% - #{$gridsize});
 
-.text {
-    transform: rotate(-90deg);
-  }
+  .text {
+      transform: rotate(-90deg);
+    }
 }
 
 .help-left-nav {
@@ -148,6 +156,29 @@ export default class extends Vue {
 
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+
+.help-tags {
+  position: fixed;
+
+  width: $gridsize * 2 - 10px;
+  height: $gridsize/2;
+
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  right: 52px;
+  top: 119px;
+
+  // .text {
+  //   transform: rotate(-90deg);
+  // }
+}
+
+@media only screen and (max-width: $breakpoint_sm) {
+  .help-tags {
+    right: 28px;
+  }
 }
 
 // .help-left-middle {
