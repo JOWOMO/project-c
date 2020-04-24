@@ -40,7 +40,7 @@
         >Hast Du einen passenden Personalpartner entdeckt? Sende per Klick direkt eine Anfrage, damit ihr Details besprechen könnt.</template>
       </pe>
 
-      <pe number="6" title="Match">
+      <pe number="6" title="Match" :center="true">
         <template #number>
           <img height="52px" src="/icons/logo.svg" />
         </template>
