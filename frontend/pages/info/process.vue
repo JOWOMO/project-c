@@ -20,7 +20,7 @@
       </pe>
 
       <pe number="2" title="Erstelle Dein Profil">
-        <template #both>Registrier Dein Unternehmen bei JOWOMO.</template>
+        <template #both>Registriere Dein Unternehmen bei JOWOMO.</template>
       </pe>
 
       <pe number="3" title="Stelle Team(s) ein">
