@@ -696,7 +696,7 @@ export type GetTeamsQuery = (
   & Pick<Query, 'teamNames'>
   & { skills: Array<(
     { __typename?: 'Skill' }
-    & Pick<Skill, 'id' | 'name'>
+    & Pick<Skill, 'id' | 'name' | 'group'>
   )>, companies?: Maybe<Array<(
     { __typename?: 'Company' }
     & Pick<Company, 'id' | 'addressLine1' | 'addressLine2' | 'addressLine3'>
