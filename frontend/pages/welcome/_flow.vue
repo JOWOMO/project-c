@@ -9,20 +9,19 @@
       </div>
     </div>
 
-    <h1>Willkommen {{name}}!</h1>
-    <p>Du bist ab jetzt in der Suche auffindbar. Entdecke passende Personal Partner, die deinem Profil entsprechen. Deine Kriterien kannst du jederzeit anpassen.</p>
+    <h1>{{ $t('welcome.title', {name}) }}</h1>
+    <p>{{ $t('welcome.' + flow) }}</p>
 
     <div class="buttons">
       <!-- <button class="secondary" @click.prevent="profile">Profil ansehen</button> -->
-      <button class="primary" @click.prevent="dashboard">Personalpartner anzeigen</button>
+      <button class="primary" @click.prevent="dashboard">{{ $t('welcome.button') }}</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
-import { IState } from "../store";
+import { IState } from "@/store";
 import { CognitoUser } from "@aws-amplify/auth";
 import { Context } from "@nuxt/types";
 import {
@@ -38,9 +37,12 @@ import userQuery from "@/apollo/queries/registration/user.gql";
 export default class extends Vue {
   name!: string;
 
-  @Meta
-  head() {
-    return {};
+  get flow() {
+    return this.$route.params.flow || 'demand';
+  }
+
+  created() {
+    this.$store.commit('support/context', `zur Begrüßung`);
   }
 
   dashboard() {
@@ -61,7 +63,6 @@ export default class extends Vue {
 
         if (result.data && result.data.me) {
           const me = result.data.me;
-
           data.name = me.firstName;
         }
       }

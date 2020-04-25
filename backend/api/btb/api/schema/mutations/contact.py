@@ -226,12 +226,14 @@ and c.owner_external_id = :external_id
 
         data = {
             "match_id": id,
-            "name": origin["contact"]["first_name"],
+            "name": origin["contact"]["first_name"] + " " + origin["contact"]["last_name"],
 
             "team": origin["name"],
             "team_type": team_type,
             "team_id": origin["id"],
+
             "term": 'bietet' if match_type == 1 else 'sucht',
+            "subject": 'Gesuch' if match_type == 1 else 'Angebot',
 
             "external_id": match["external_id"],
             "your_team": match["name"],

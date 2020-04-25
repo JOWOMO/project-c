@@ -26,6 +26,7 @@ export default {
       type: [Number],
       'default': null
     },
+
     /*
      * Force !important for style properties
      */

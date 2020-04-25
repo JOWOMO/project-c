@@ -89,7 +89,7 @@
       <div class="fullrow">
         <div class="blue h-padding v-padding">
           Unternehmen, die von der Krise getroffen sind
-          und aktuell vor der Entscheidung stehen, ihr
+          und aktuell vor der Entscheidung stehen, ihre
           Mitarbeiter:innen in Kurzarbeit zu schicken
           oder sogar zu entlassen.
         </div>
@@ -153,7 +153,7 @@
           </div>
           <h3 class="padding">Support</h3>
           <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für dich da. Wenn Du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
-          <p></p>
+          <p><a href="mailto:info@jowomo.atlassian.net">info@jowomo.atlassian.net</a></p>
         </div>
       </div>
     </div>
@@ -165,7 +165,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { IState } from "@/store";
 import imprint from "@/components/imprint.vue";
 
@@ -189,7 +188,6 @@ export default class extends Vue {
     this.$router.push({ path: "/register/supply" });
   }
 
-  @Meta
   head() {
     return {};
   }
@@ -381,6 +379,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 .process {
   padding: $gridsize * 2 $gridsize;
   img {
+    width: 100%;
     max-width: $breakpoint_md;
   }
 }
@@ -475,6 +474,14 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 //     }
 //   }
 // }
+
+@media only screen and (max-width: $breakpoint_sm) {
+  .process {
+    img {
+      max-width: 100%;
+    }
+  }
+}
 
 @media only screen and (max-width: $breakpoint_vl) {
   .left {

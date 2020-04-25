@@ -1,27 +1,38 @@
 <template>
   <div class="tag-container">
     <div class="card">
-      <div class="head">
-        <h3>Eigenschaften bearbeiten</h3>
-        <p>{{ value.length }} Eigenschaften für das Team ausgewählt</p>
-      </div>
+      <layout :columns="false">
+        <row :height="94" class="taglist-head">
+          <div class="title">Eigenschaften bearbeiten</div>
+          <div class="subtitle">{{ value.length }} Eigenschaften für das Team ausgewählt</div>
+        </row>
 
-      <div class="taglist">
-        <tag
-          class="tag"
-          v-for="skill in tagsWithSelection"
-          :key="skill.id"
-          :name="skill.name"
-          @input="toggleTag(skill.id)"
-          clickable="true"
-          :selected="skill.selected"
-        />
-      </div>
+        <row class="tags" :height="'calc(100% - 188px)'">
+          <div class="group" v-for="group in groups" :key="group[0]">
+            <div class="title">
+              <h4>{{ group[0] }}</h4>
+            </div>
 
-      <div class="button">
-        <button class="primary" @click.prevent="closeDialog">Schließen</button>
-      </div>
+            <div class="taglist">
+              <tag
+                class="tag"
+                v-for="skill in group[1]"
+                :key="skill.id"
+                :name="skill.name"
+                @input="toggleTag(skill.id)"
+                clickable="true"
+                :selected="skill.selected"
+              />
+            </div>
+          </div>
+        </row>
+
+        <row :height="94" class="buttons">
+          <button class="primary" @click.prevent="closeDialog">Schließen</button>
+        </row>
+      </layout>
     </div>
+    <support :position="'tag'" />
   </div>
 </template>
 
@@ -40,13 +51,27 @@ import {
 import tag from "./skill.vue";
 import { remove, find } from "lodash";
 
+import layout from "@/components/layout/layout.vue";
+import column from "@/components/layout/column.vue";
+import row from "@/components/layout/row.vue";
+import support from "@/components/support.vue";
+
+import { groupBy, sortBy, toPairs } from "lodash";
+
 type KeyValuePair = {
   id: string;
   name: string;
+  group: string;
 };
 
 @Component({
-  components: { tag }
+  components: {
+    tag,
+    layout,
+    column,
+    row,
+    support
+  }
 })
 export default class extends Vue {
   @Prop({ type: Array, required: true, default: () => [] })
@@ -58,7 +83,6 @@ export default class extends Vue {
     if (!find(this.value, v => v == id)) {
       this.value.push(id);
     } else {
-
       // we must keep the array instance
       for (var i = 0; i < this.value.length; i++) {
         if (this.value[i] == id) {
@@ -71,6 +95,20 @@ export default class extends Vue {
     this.update();
   }
 
+  get tagsWithSelection() {
+    return this.skills.map(s => ({
+      ...s,
+      selected: this.value.find(v => v == s.id)
+    }));
+  }
+
+  get groups() {
+    return sortBy(
+      toPairs(groupBy(this.tagsWithSelection, s => s.group)),
+      p => p[0]
+    );
+  }
+
   @Emit("input")
   update() {
     return this.value;
@@ -79,13 +117,16 @@ export default class extends Vue {
   @Emit("close-dialog")
   closeDialog() {
     console.debug("close dialog");
+    window.document.body.style.overflow = this.saved || "";
   }
 
-  get tagsWithSelection() {
-    return this.skills.map(s => ({
-      ...s,
-      selected: this.value.find(v => v == s.id)
-    }));
+  saved?: string;
+
+  mounted() {
+    console.debug("mounted");
+
+    this.saved = window.document.body.style.overflow;
+    window.document.body.style.overflow = "hidden";
   }
 }
 </script>
@@ -93,20 +134,6 @@ export default class extends Vue {
 <style lang="scss" scoped>
 @import "assets/colors";
 @import "@/assets/scales";
-
-.taglist {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-
-  .tag {
-    margin-right: 12px;
-    margin-bottom: 22px;
-  }
-
-  margin-top: 22px;
-}
 
 .tag-container {
   position: fixed;
@@ -119,38 +146,117 @@ export default class extends Vue {
   background: #00000080;
   z-index: 3;
 
+  overflow: hidden;
+
   .card {
-    max-width: 1000px;
-    max-height: 700px;
+    overflow: hidden;
+
+    max-width: calc(100vw - #{$gridsize});
+    max-height: calc(100vh - #{$gridsize * 3});
+
+    border: 1px solid $border;
+    box-shadow: 0 10px 6px 0 rgba(#000000, 0.2);
+
     background: $background;
     position: relative;
 
-    top: calc(50% - 40px);
-    left: calc(50% - 40px);
+    top: calc(50% - #{$gridsize}* 2);
+    left: calc(50% - #{$gridsize});
     transform: translate(-50%, -50%);
 
     border-radius: 10px;
-    margin: 40px;
-    padding: 20px;
-    overflow-y: scroll;
+    margin: $gridsize;
 
     display: flex;
-    flex-direction: column;
+    flex: 1;
 
-    .head {
+    .taglist-head {
       display: flex;
       flex-direction: column;
 
-      h3 {
-        width: 100%;
+      justify-content: center;
+      align-items: flex-start;
+
+      margin: 0 $gridsize/2;
+
+      .title {
+        width: calc(100vw - #{$gridsize * 3});
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: $headercolor;
+        font-size: $h2FontSize;
+        font-weight: 500;
+      }
+
+      .subtitle {
+        width: calc(100vw - #{$gridsize * 3});
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: $textcolor;
       }
     }
 
-    .button {
-      padding-top: 10px;
+    .tags {
+      overflow-y: scroll;
+      padding: $gridsize/2;
+      // padding-top: 0;
+
+      width: 100%;
+      background: white;
+
+      .group {
+        display: flex;
+        flex-direction: column;
+        // flex-wrap: wrap;
+        justify-content: flex-start;
+
+        margin-top: $gridsize/4;
+
+        .title {
+          padding-bottom: $gridsize/4;
+        }
+      }
+
+      .taglist {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
+        .tag {
+          margin-right: $gridsize/4;
+          margin-bottom: $gridsize/4;
+        }
+
+        // margin-top: 22px;
+      }
+    }
+
+    .buttons {
       display: flex;
       flex-direction: row;
       justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+@media only screen and (max-width: $breakpoint_sm) {
+  .tag-container {
+    .card {
+      width: calc(100vw - #{$pageMarginMin});
+
+      .taglist-head {
+        .title {
+          width: calc(100vw - #{$pageMarginMin + $gridsize * 2});
+        }
+
+        .subtitle {
+          width: calc(100vw - #{$pageMarginMin + $gridsize * 2});
+        }
+      }
     }
   }
 }

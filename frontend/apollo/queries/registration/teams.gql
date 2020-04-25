@@ -2,6 +2,7 @@ query getTeams{
   skills {
     id
     name
+    group
   }
 
   teamNames

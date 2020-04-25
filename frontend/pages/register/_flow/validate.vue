@@ -5,33 +5,25 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from "nuxt-property-decorator";
 import validate from "@/components/auth/validate.vue";
-import { Workflow } from "../../register.vue";
-import { InjectReactive } from "vue-property-decorator";
 
 @Component({
   components: {
     validate
-  }
+  },
+  middleware: "authenticated",
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: Workflow;
-
-  @Emit('selectelement')
-  setElement() {
-    return 0;
-  }
-
   mounted() {
-   this.setElement();
+   this.$store.commit('register/position', 0);
   }
 
   @Emit("change-state")
   handleStateChange(event: string, value: any) {
     if (event === "redirect") {
       // user cannot go back here
-      this.$router.replace(`/register/${this.workflow.type}/company`);
+      this.$router.replace(`/register/${this.$route.params.flow}/company`);
     } else if (event === "back") {
-      this.$router.replace(`/register/${this.workflow.type}`);
+      this.$router.replace(`/register/${this.$route.params.flow}`);
     }
   }
 }

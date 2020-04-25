@@ -1,5 +1,5 @@
 <template>
-    <nuxt-child />
+  <nuxt-child />
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@ import {
   DasboardTeamsQueryVariables,
   User,
   Demand,
-  Supply,
+  Supply
 } from "@/apollo/schema";
 
 import getTeams from "@/apollo/queries/dashboard/teams.gql";
@@ -18,42 +18,33 @@ import { ProvideReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
 
 @Component({
-  components: {
-  },
+  components: {},
   middleware: "authenticated",
   layout: "main-left"
 })
 export default class extends Vue {
-  @ProvideReactive("me")
-  me: Pick<User, "firstName" | "lastName"> | null = null;
+  created() {
+    this.$store.commit("support/context", "zu Finde/Suche");
+  }
 
-  @ProvideReactive("all-demands")
-  demands: Demand[] = [];
+  // async fetch() {
+  //   console.debug('fetch called');
 
-  @ProvideReactive("all-supplies")
-  supplies: Supply[] = [];
+  //   try {
+  //     await this.$store.dispatch('match/loadteams', this.$apollo);
+  //   } catch (e) {
+  //     console.error(e);
+  //     throw e;
+  //   }
+  // }
 
   async asyncData(context: Context) {
-    let data: Pick<this, "demands" | "supplies" | "me">;
-
+    console.debug('dashboard', 'asyncdata');
     try {
       const client = context.app.apolloProvider!.defaultClient;
-      const result = await client.query<
-        DasboardTeamsQuery,
-        DasboardTeamsQueryVariables
-      >({
-        query: getTeams,
-        fetchPolicy: "network-only" // We could possible cache that for the duration of the session?
-      });
+      await context.store.dispatch('match/loadteams', client);
 
-      // @ts-ignore
-      data = {
-        demands: result.data.activeDemands,
-        supplies: result.data.activeSupplies,
-        me: result.data.me
-      };
-
-      return data;
+      return {};
     } catch (e) {
       console.error(e);
       context.error({ statusCode: 500, message: e.message });

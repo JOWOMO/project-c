@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Dein Unternehmen</h1>
-    <p>Bitte gib die Adresse des Standortes an, an dem Du Mitarbeiter:innen {{ verb }}. Das ist wichtig um einen passenden Personalpartner in Deiner Region zu finden.</p>
+    <h1>{{ $t('register.' + $route.params.flow + '.company.title') }}</h1>
+    <p>{{ $t('register.' + $route.params.flow + '.company.subtitle') }}</p>
 
     <form method="POST" novalidate>
       <div class="form-group half-width">
@@ -9,7 +9,7 @@
       </div>
 
       <div class="form-group half-width right">
-        <formSelect :id="industry" :label="'Industrie'" :values="industries" v-model="industry" />
+        <formSelect :id="'industry'" :label="'Industrie'" :values="industries" v-model="industry" />
       </div>
 
       <div class="form-group">
@@ -41,7 +41,7 @@ import {
   State,
   Provide
 } from "nuxt-property-decorator";
-import { InjectReactive, Emit } from "vue-property-decorator";
+import { Emit } from "vue-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, numeric, minValue } from "vuelidate/lib/validators";
@@ -60,7 +60,6 @@ import userQuery from "@/apollo/queries/registration/company.gql";
 
 import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
-import { Workflow } from "../../register.vue";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "~/components/loadinganimation";
 
@@ -72,8 +71,6 @@ import { LoadingAnimation } from "~/components/loadinganimation";
   middleware: "authenticated"
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: Workflow;
-
   industries?: { id: string; name: string }[] = [];
 
   id?: string;
@@ -81,12 +78,6 @@ export default class extends Vue {
   @Provide("validation")
   validation() {
     return this.$v;
-  }
-
-  get verb() {
-    return this.workflow.type === 'supply'
-      ? 'suchst'
-      : 'stellen kannst';
   }
 
   @Validate({ required })
@@ -138,7 +129,7 @@ export default class extends Vue {
         if (me.companies && me.companies.length > 0) {
           const company = me.companies[0];
 
-          console.log("found company", company);
+          console.debug("found company", company);
 
           data.id = company.id;
           data.name = company.name;
@@ -159,7 +150,7 @@ export default class extends Vue {
   }
 
   back() {
-    this.$router.push(`/register/${this.workflow.type}`);
+    this.$router.push(`/register/${this.$route.params.flow}`);
   }
 
   @LoadingAnimation
@@ -168,6 +159,8 @@ export default class extends Vue {
     this.$emit("validate");
 
     if (this.$v.$invalid) {
+      console.debug(this.$v);
+
       return;
     }
 
@@ -176,7 +169,7 @@ export default class extends Vue {
     try {
       const client = this.$apollo.getClient();
 
-      console.log(
+      console.debug(
         "Updating company whith",
         this.id,
         this.name,
@@ -201,20 +194,15 @@ export default class extends Vue {
         }
       });
 
-      this.$router.push(`/register/${this.workflow.type}/team`);
+      this.$router.push(`/register/${this.$route.params.flow}/team`);
     } catch (err) {
       console.error(err);
       this.$swal.alert("Das hat nicht geklappt", err.message, "error");
     }
   }
 
-  @Emit('selectelement')
-  setElement() {
-    return 1;
-  }
-
   mounted() {
-   this.setElement();
+    this.$store.commit('register/position', 1);
   }
 }
 </script>

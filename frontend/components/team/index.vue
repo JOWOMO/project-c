@@ -6,14 +6,14 @@
       </div>
 
       <div class="display">
-        <div class="row">
+        <div class="row max-250">
           <div class="field">Tätigkeit der Mitarbeiter:innen</div>
-          <div>{{ editTeam.name || '-' }}</div>
+          <div class="value">{{ editTeam.name || '-' }}</div>
         </div>
 
-        <div class="row">
-          <div>Anzahl Mitarbeiter</div>
-          <div>{{ editTeam.quantity }}</div>
+        <div class="row max-150">
+          <div class="field">Anzahl Mitarbeiter</div>
+          <div class="value">{{ editTeam.quantity }}</div>
         </div>
 
         <div class="nobr">
@@ -58,23 +58,33 @@
             :id="'editTeam.description'"
             v-model="editTeam.description"
             name="editTeam.description"
+            :class="{ 'is-invalid': $v.editTeam.description.$error }"
           />
-          <label for="editTeam.description">Hier kannst Du das Team noch detailierter beschreiben</label>
+          <label for="editTeam.description">Bitte beschreibe hier Dein Team noch etwas detailierter</label>
+
+          <validations
+            :label="'Beschreibung'"
+            :validation="$v.editTeam.description"
+            :submitted="true"
+          />
         </div>
 
         <div class="form-group lbl">
-          <b>Zentrale Fähigkeiten und Rahmenbedingungen:</b> Diese Angaben helfen uns einen passenden temporären Arbeitsgeber für Deine Mitarbeiter:innen zu finden. Bitte wähle mind. 3 Kriterien aus.
-
+          <b>Zentrale Fähigkeiten und Rahmenbedingungen:</b>
+ Diese Angaben helfen uns einen passenden temporären Arbeitsgeber für Deine Mitarbeiter:innen zu finden. Bitte wähle mind. 3 Kriterien aus.
           <validations
             :label="'Zentrale Fähigkeiten und Rahmenbedingungen'"
             :validation="$v.editTeam.skills"
             :submitted="true"
-            />
+          />
         </div>
 
         <div class="form-group">
           <div class="skills">
-            <button :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minLength }" @click.prevent="showTagCloud = !showTagCloud">
+            <button
+              :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minLength }"
+              @click.prevent="showTagCloud = !showTagCloud"
+            >
               Bitte wählen
               <span>+</span>
             </button>
@@ -192,12 +202,15 @@ export default class extends Vue {
           minValue: minValue(1)
         },
         name: {
-          required,
+          required
           // contains:this.contains
         },
         skills: {
           required,
           minLength: minLength(3)
+        },
+        description: {
+          required
         }
       }
     };
@@ -264,9 +277,9 @@ export default class extends Vue {
   color: $inputlabelcolor;
 }
 
-  .is-invalid {
-    border: 1px solid $error !important;
-  }
+.is-invalid {
+  border: 1px solid $error !important;
+}
 
 .team-header {
   display: flex;
@@ -289,7 +302,11 @@ export default class extends Vue {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+
+  .max-150 {
+    max-width: 130px;
+  }
 
   .row {
     flex-basis: 0;
@@ -303,6 +320,13 @@ export default class extends Vue {
 
     :first-child {
       font-size: 12px;
+    }
+
+    .value {
+      overflow-wrap: break-word;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -329,19 +353,28 @@ export default class extends Vue {
 
   .tag {
     margin-right: 12px;
-    margin-bottom: 20px;
+    margin-bottom: $gridsize/4;
   }
 
   button {
     min-width: auto !important;
     width: auto !important;
 
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-right: 12px;
+    padding-left: $gridsize/2;
+    padding-right: $gridsize/2;
+    margin-right: $gridsize/4;
+    margin-bottom: $gridsize/4;
 
     span {
       margin-left: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: $breakpoint_vl) {
+  .display {
+    .max-250 {
+      max-width: 250px;
     }
   }
 }

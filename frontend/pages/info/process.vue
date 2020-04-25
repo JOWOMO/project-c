@@ -20,12 +20,14 @@
       </pe>
 
       <pe number="2" title="Erstelle Dein Profil">
-        <template #both>Registrier Dein Unternehmen bei JOWOMO.</template>
+        <template #both>Registriere Dein Unternehmen bei JOWOMO.</template>
       </pe>
 
       <pe number="3" title="Stelle Team(s) ein">
         <template #left>Lass andere Unternehmen wissen, welche Arbeitskräfte Du suchst.</template>
-        <template #right>Lass andere Unternehmen wissen, welche Arbeitskräfte gerade bei Dir verfügbar sind.</template>
+        <template
+          #right
+        >Lass andere Unternehmen wissen, welche Arbeitskräfte gerade bei Dir verfügbar sind.</template>
       </pe>
 
       <pe number="4" title="Starte Deine Suche">
@@ -33,25 +35,32 @@
       </pe>
 
       <pe number="5" title="Wir verbinden Euch">
-        <template #both>
-          Hast Du einen passenden Personalpartner entdeckt? Sende per Klick direkt eine Anfrage, damit ihr Details besprechen könnt.
-        </template>
+        <template
+          #both
+        >Hast Du einen passenden Personalpartner entdeckt? Sende per Klick direkt eine Anfrage, damit ihr Details besprechen könnt.</template>
       </pe>
 
-      <pe number="6" title="Match">
+      <pe number="6" title="Match" :center="true">
         <template #number>
           <img height="52px" src="/icons/logo.svg" />
         </template>
-        <template #both>
-        Glückwunsch! Ihr entscheidet Euch für die Partnerschaft und leitet die nächsten Schritte ein.</template>
+        <template
+          #both
+        >Glückwunsch! Ihr entscheidet Euch für die Partnerschaft und leitet die nächsten Schritte ein.</template>
       </pe>
 
       <pe number="7" title="Triff eine vertragliche Regelung">
         <template #both>
-        Es gibt verschiedene Möglichkeiten zur Umsetzung, die Du für Deinen Fall rechtlich prüfen lassen solltest. <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link></template>
+          Es gibt verschiedene Möglichkeiten zur Umsetzung, die Du für Deinen Fall rechtlich prüfen lassen solltest.
+          <nuxt-link to="/info/faq">Siehe auch unsere FAQs</nuxt-link>
+        </template>
       </pe>
 
-      <pe number="8" title="Übergebe deine Mitarbeiter:innen" titleRight="Lerne deine neuen Mitarbeiter:innen ein">
+      <pe
+        number="8"
+        title="Übergebe deine Mitarbeiter:innen"
+        titleRight="Lerne deine neuen Mitarbeiter:innen ein"
+      >
         <template #left>Hilf Deinen Arbeitskräften in der Übergangsphase.</template>
         <template #right>Hilf Deinen neuen Arbeitskräften sich in Deinem Betrieb wohl zu fühlen.</template>
       </pe>
@@ -61,7 +70,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 
 import top from "@/components/pages/navbar-top.vue";
@@ -75,9 +83,21 @@ export default class extends Vue {
   description: string = "";
   content: string = "";
 
-  @Meta
   head() {
-    return {};
+    return {
+      title: this.$t('process.seo.title'),
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.$t('process.seo.description'),
+        }
+      ],
+    };
+  }
+
+  created() {
+    this.$store.commit('support/context', `zur Prozessdarstellung`);
   }
 }
 </script>
@@ -102,6 +122,4 @@ h1 {
 p {
   padding-bottom: $gridsize;
 }
-
-
 </style>

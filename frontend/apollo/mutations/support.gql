@@ -1,0 +1,3 @@
+mutation supportRequest($description: String!, $summary: String!, $page: String!) {
+  createSupportRequest(description: $description, summary: $summary, page: $page)
+}

@@ -1,7 +1,6 @@
 import Auth, { CognitoUser } from '@aws-amplify/auth';
-import { ActionContext, Store } from 'vuex';
+import { ActionContext } from 'vuex';
 import { IState } from '.';
-import { IRegistrationState } from './register';
 import { User } from './register';
 
 Auth.configure({

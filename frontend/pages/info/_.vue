@@ -20,7 +20,6 @@
 
 <script lang="ts">
 import { Component, Vue, Provide } from "nuxt-property-decorator";
-import { Meta } from "@/components/decorator";
 import { Context } from "@nuxt/types";
 
 import leftNav from "@/components/pages/navbar-left.vue";
@@ -41,19 +40,26 @@ import sponsor from "@/components/about/sponsor.vue";
 })
 export default class extends Vue {
   title: string = "";
+  seo: string = "";
   description: string = "";
   content: string = "";
   menu: any;
 
-  @Meta
   head() {
-    return {};
-    // return {
-    //   title: this.title,
-    //   meta: [
-    //     { hid: "description", name: "description", content: this.description }
-    //   ]
-    // };
+    return {
+      title: this.seo,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.description
+        }
+      ]
+    };
+  }
+
+  created() {
+    this.$store.commit('support/context', `zu '${this.title}'`);
   }
 
   async asyncData(context: Context) {
@@ -70,6 +76,7 @@ export default class extends Vue {
       return {
         title: content.attributes?.title,
         description: content.attributes?.description,
+        seo: content.attributes?.seo || content.attributes?.title,
         content: other,
         menu: content.attributes?.menu || {}
       };
@@ -82,86 +89,9 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors";
-@import "@/assets/scales";
-
 .sidebar {
   display: flex;
 }
 
-.markdown /deep/ {
-  color: $textcolor;
-  font-size: $textsize;
-
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  hyphens: auto;
-  text-align: center;
-
-  padding-bottom: $pageMarginBottom;
-
-  button {
-    margin-top: $gridsize/4 * 3;
-  }
-
-  h1 {
-    padding-bottom: $gridsize;
-    // color: $secondary;
-  }
-
-  .hl-secondary {
-    color: $secondary;
-  }
-
-  h2 {
-    padding-bottom: $gridsize/4 * 3;
-  }
-
-  .faq + h2 {
-    padding-top: $gridsize;
-  }
-
-  p + h2 {
-    padding-top: $gridsize/2;
-  }
-
-  h3 {
-    padding-bottom: $gridsize/4;
-  }
-
-  p {
-    padding-bottom: $gridsize/4;
-  }
-
-  table {
-    width: 100%;
-  }
-
-  th {
-    color: $headercolor;
-    font-size: $h3FontSize;
-    text-align: left;
-  }
-
-  td {
-    color: $textcolor;
-  }
-}
-
-@media only screen and (min-width: $breakpoint_md) {
-  .markdown /deep/ {
-    padding-right: 0;
-
-    align-items: flex-start;
-    text-align: left;
-
-    h1,
-    h2,
-    h3,
-    h4 {
-      text-align: left;
-    }
-  }
-}
+@import "./markdown.scss";
 </style>

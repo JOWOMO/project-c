@@ -10,10 +10,11 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import navbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
+import support from "@/components/support.vue";
 
 @Component({
   components: {
-    navbar, cookies
+    navbar, cookies, support,
   },
   middleware: "loaduser"
 })

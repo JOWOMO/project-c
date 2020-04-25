@@ -1,10 +1,19 @@
 import { StateChanger } from "vue-infinite-loading";
+import { User, Demand, Supply, DasboardTeamsQuery, DasboardTeamsQueryVariables } from "~/apollo/schema";
+import { ActionContext } from 'vuex';
+import { IState } from ".";
+import getTeams from "@/apollo/queries/dashboard/teams.gql";
+import { ApolloClient } from 'apollo-client';
 
 export type MatchFilter = {
   range: number
 }
 
 export interface IMatchState {
+  me?: Pick<User, "id" | "firstName" | "lastName"> | null,
+  demands: Demand[],
+  supplies: Supply[],
+
   filter: MatchFilter,
   spinnerid: number,
 
@@ -17,9 +26,11 @@ declare module "vuex" {
     (arg: 'match/more', payload: number): void;
     (arg: 'match/range', payload: StateChanger): void;
     (arg: 'match/newspinner'): void;
+    (arg: 'match/teams', payload: Pick<IMatchState, 'me' | 'demands' | 'supplies'>): void;
   }
 
   export interface Dispatch {
+    (arg: 'match/loadteams', payload: ApolloClient<any>): Promise<void>;
   }
 }
 
@@ -31,7 +42,10 @@ export const state = () => ({
 
   triggerLoadMore: 0,
   loadMore: null,
-} as IMatchState)
+
+  demands: [],
+  supplies: [],
+} as IMatchState);
 
 export const mutations = {
   range(state: IMatchState, payload: number) {
@@ -46,4 +60,30 @@ export const mutations = {
   newspinner(state: IMatchState) {
     state.spinnerid = state.spinnerid += 1;
   },
+
+  teams(state: IMatchState, payload: Pick<IMatchState, 'me' | 'demands' | 'supplies'>) {
+    console.debug('updating teams', payload);
+
+    state.me = payload.me;
+    state.demands = payload.demands;
+    state.supplies = payload.supplies;
+  },
+};
+
+export const actions = {
+  async loadteams({ commit }: ActionContext<IMatchState, IState>, client: ApolloClient<any>) {
+    const result = await client.query<
+      DasboardTeamsQuery,
+      DasboardTeamsQueryVariables
+    >({
+      query: getTeams,
+      fetchPolicy: "network-only"
+    });
+
+    commit('teams', {
+      demands: result.data.activeDemands,
+      supplies: result.data.activeSupplies,
+      me: result.data.me,
+    })
+  }
 }

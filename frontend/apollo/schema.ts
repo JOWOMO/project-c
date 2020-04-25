@@ -99,6 +99,7 @@ export type MatchDemandResult = {
 export type MatchDetails = {
    __typename?: 'MatchDetails';
   id: Scalars['ID'];
+  name: Scalars['String'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   pictureUrl?: Maybe<Scalars['String']>;
@@ -138,6 +139,7 @@ export type Mutation = {
   startUploadPicture?: Maybe<S3UploadGrant>;
   contactMatch?: Maybe<Scalars['Boolean']>;
   setMatchState?: Maybe<MatchDetails>;
+  createSupportRequest?: Maybe<Scalars['String']>;
 };
 
 
@@ -181,6 +183,13 @@ export type MutationContactMatchArgs = {
 export type MutationSetMatchStateArgs = {
   answer: MatchAnswer;
   id: Scalars['ID'];
+};
+
+
+export type MutationCreateSupportRequestArgs = {
+  description: Scalars['String'];
+  page: Scalars['String'];
+  summary: Scalars['String'];
 };
 
 export type PageInfo = {
@@ -355,7 +364,7 @@ export type SetMatchStateMutation = (
   { __typename?: 'Mutation' }
   & { setMatchState?: Maybe<(
     { __typename?: 'MatchDetails' }
-    & Pick<MatchDetails, 'id' | 'email' | 'firstName' | 'lastName' | 'pictureUrl' | 'addressLine1' | 'postalCode' | 'city'>
+    & Pick<MatchDetails, 'id' | 'name' | 'email' | 'firstName' | 'lastName' | 'pictureUrl' | 'addressLine1' | 'postalCode' | 'city'>
   )> }
 );
 
@@ -377,6 +386,18 @@ export type RemoveSupplyMutationVariables = {
 export type RemoveSupplyMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'removeSupply'>
+);
+
+export type SupportRequestMutationVariables = {
+  description: Scalars['String'];
+  summary: Scalars['String'];
+  page: Scalars['String'];
+};
+
+
+export type SupportRequestMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'createSupportRequest'>
 );
 
 export type UpdateDemandMutationVariables = {
@@ -675,7 +696,7 @@ export type GetTeamsQuery = (
   & Pick<Query, 'teamNames'>
   & { skills: Array<(
     { __typename?: 'Skill' }
-    & Pick<Skill, 'id' | 'name'>
+    & Pick<Skill, 'id' | 'name' | 'group'>
   )>, companies?: Maybe<Array<(
     { __typename?: 'Company' }
     & Pick<Company, 'id' | 'addressLine1' | 'addressLine2' | 'addressLine3'>

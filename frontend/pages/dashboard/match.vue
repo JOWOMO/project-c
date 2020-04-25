@@ -65,7 +65,7 @@ import {
 } from "@/apollo/schema";
 
 import { Vue, Component, Ref, State } from "nuxt-property-decorator";
-import { ProvideReactive, InjectReactive } from "vue-property-decorator";
+import { ProvideReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
 import { IState } from "../../store";
 
@@ -83,13 +83,13 @@ import { IState } from "../../store";
   layout: "main-left"
 })
 export default class extends Vue {
-  @InjectReactive("me")
+  @State((s: IState) => s.match.me)
   me!: Pick<User, "firstName" | "lastName"> | null;
 
-  @InjectReactive("all-demands")
+  @State((s: IState) => s.match.demands)
   demands!: Demand[];
 
-  @InjectReactive("all-supplies")
+  @State((s: IState) => s.match.supplies)
   supplies!: Supply[];
 
   @State((s: IState) => s.match.spinnerid)

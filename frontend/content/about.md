@@ -1,6 +1,7 @@
 ---
 title: Über uns
-description: GemeinsamArbeitSchützen - Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. 
+seo: 'JOWOMO: Unsere Mission ist es gemeinsam Arbeit zu schützen – durch Personalpartnerschaften'
+description: Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen.
 menu: 
   label: Über uns
   items:
@@ -13,7 +14,7 @@ menu:
 
     - 
       label: Über uns
-      to: '#about'
+      to: '#team'
 
     -   
       label: Sponsoren und Kooperationspartner
@@ -66,7 +67,7 @@ Viele Dinge gelingen nur mit dem richtigen Partnern. Diese Unternehmen und Mensc
 
 ### Weserbergland Aktiengesellschaft - Thomas Kexel
 
-Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG betreibt unsere Plattform. "Eine tolle Idee, genau zur richtigen Zeit. Wir versuchen stets mit kleveren Ideen Menschen und Unternehmen zu verbinden. Die Idee von JOWOMO passt perfekt in die aktuelle Zeit, das unterstützen wir gerne."
+Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG betreibt unsere Plattform. "Eine tolle Idee, genau zur richtigen Zeit. Wir versuchen stets mit cleveren Ideen Menschen und Unternehmen zu verbinden. Die Idee von JOWOMO passt perfekt in die aktuelle Zeit, das unterstützen wir gerne."
 
 [Mehr Informationen zur Weserbergland AG](https://weserberglandag.de/)
 
@@ -76,7 +77,7 @@ Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG
 
 ### Amazon Web Services - Robin d'Alquen
 
-Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, jomowo als Teil der #wirvsvirus Hackathon Community unterstützen zu können."
+Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, JOWOMO als Teil der #wirvsvirus Hackathon Community unterstützen zu können."
 
 [Mehr Informationen zu Amazon Web Services](https://aws.amazon.com/)
 

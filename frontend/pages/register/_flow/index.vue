@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Persönliche Daten</h1>
-    <p>Bitte registriere Dich hier als Kontaktperson für Dein Unternehmen.</p>
+    <h1>{{ $t('register.' + $route.params.flow + '.person.title') }}</h1>
+    <p>{{ $t('register.' + $route.params.flow + '.person.subtitle') }}</p>
 
     <form method="POST" @submit.prevent="register" novalidate>
       <div class="form-group half-width">
@@ -32,7 +32,9 @@
       <div v-if="!userExists" class="form-group">
         <formCheckbox :id="'agb'" :label="'Bitte akzeptiere unsere AGB'" v-model="agb">
           <template>
-            Ja, ich habe die <nuxt-link to="/info/agb">Nutzungsbedingungen</nuxt-link> und die <nuxt-link to="/info/privacy">Datenschutzerklärung</nuxt-link> gelesen und akzeptiert.
+            Ja, ich habe die
+            <nuxt-link to="/info/agb">Nutzungsbedingungen</nuxt-link> und die
+            <nuxt-link to="/info/privacy">Datenschutzerklärung</nuxt-link> gelesen und akzeptiert.
           </template>
         </formCheckbox>
       </div>
@@ -48,9 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Workflow } from "../../register.vue";
-import { InjectReactive, Emit } from "vue-property-decorator";
-
+import { Emit } from "vue-property-decorator";
 import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
 
 import { Validations } from "vuelidate-property-decorators";
@@ -69,7 +69,7 @@ import formCheckbox from "@/components/forms/checkbox.vue";
 import { formatMessage } from "@/components/auth/messages";
 import { Context } from "@nuxt/types";
 import { IState } from "@/store";
-import { LoadingAnimation } from '@/components/loadinganimation';
+import { LoadingAnimation } from "@/components/loadinganimation";
 
 @Component({
   components: {
@@ -78,8 +78,6 @@ import { LoadingAnimation } from '@/components/loadinganimation';
   }
 })
 export default class extends Vue {
-  @InjectReactive("workflow") workflow!: Workflow;
-
   userExists = false;
   firstName: string = "";
   lastName: string = "";
@@ -176,10 +174,10 @@ export default class extends Vue {
         password: this.password,
         firstName: this.firstName,
         lastName: this.lastName,
-        flow: this.workflow.type,
+        flow: this.$route.params.flow
       });
 
-      this.$router.push(`/register/${this.workflow.type}/validate`);
+      this.$router.push(`/register/${this.$route.params.flow}/validate`);
     } catch (err) {
       console.log("err: ", err);
       this.error = formatMessage(err);
@@ -205,10 +203,13 @@ export default class extends Vue {
         }
       });
 
-      console.log("first, last name", this.firstName, this.lastName)
-      await this.$store.dispatch('auth/updateUser', { firstName: this.firstName, lastName: this.lastName })
+      console.log("first, last name", this.firstName, this.lastName);
+      await this.$store.dispatch("auth/updateUser", {
+        firstName: this.firstName,
+        lastName: this.lastName
+      });
 
-      this.$router.push(`/register/${this.workflow.type}/company`);
+      this.$router.push(`/register/${this.$route.params.flow}/company`);
     } catch (err) {
       console.error(err);
       this.error = err.message;
@@ -223,7 +224,7 @@ export default class extends Vue {
     this.$v.$touch();
     this.$emit("validate");
 
-    this.$track('registration', 'user');
+    this.$track("registration", "user");
 
     if (this.$v.$invalid) {
       console.debug("invalid form", this.$v);
@@ -237,13 +238,8 @@ export default class extends Vue {
     }
   }
 
-  @Emit('selectelement')
-  setElement() {
-    return 0;
-  }
-
   mounted() {
-   this.setElement();
+    this.$store.commit("register/position", 0);
   }
 }
 </script>

@@ -96,7 +96,8 @@ export default class extends Vue {
       flow: this.$route.params.flow,
       origin: this.$route.params.id,
       match: party.id,
-      name: party.name,
+      firstName: party.firstName,
+      lastName: party.lastName,
       pictureUrl: party.pictureUrl
     };
 
@@ -157,13 +158,13 @@ export default class extends Vue {
 
       updateQuery: (prev, { fetchMoreResult }) => {
         try {
-          console.debug(
-            "Received ",
-            prev.result.matches.map(m => m.match.id),
-            prev.result.pageInfo,
-            (fetchMoreResult?.result?.matches || []).map(m => m.match.id),
-            fetchMoreResult?.result?.pageInfo
-          );
+          // console.debug(
+          //   "Received ",
+          //   prev.result.matches.map(m => m.match.id),
+          //   prev.result.pageInfo,
+          //   (fetchMoreResult?.result?.matches || []).map(m => m.match.id),
+          //   fetchMoreResult?.result?.pageInfo
+          // );
 
           if (!fetchMoreResult) {
             $state.complete();
