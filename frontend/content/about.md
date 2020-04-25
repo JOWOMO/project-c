@@ -67,7 +67,7 @@ Viele Dinge gelingen nur mit dem richtigen Partnern. Diese Unternehmen und Mensc
 
 ### Weserbergland Aktiengesellschaft - Thomas Kexel
 
-Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG betreibt unsere Plattform. "Eine tolle Idee, genau zur richtigen Zeit. Wir versuchen stets mit kleveren Ideen Menschen und Unternehmen zu verbinden. Die Idee von JOWOMO passt perfekt in die aktuelle Zeit, das unterstützen wir gerne."
+Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG betreibt unsere Plattform. "Eine tolle Idee, genau zur richtigen Zeit. Wir versuchen stets mit cleveren Ideen Menschen und Unternehmen zu verbinden. Die Idee von JOWOMO passt perfekt in die aktuelle Zeit, das unterstützen wir gerne."
 
 [Mehr Informationen zur Weserbergland AG](https://weserberglandag.de/)
 
