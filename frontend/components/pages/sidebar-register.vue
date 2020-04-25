@@ -27,4 +27,7 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
+/deep/ .section .element p {
+  width: auto;
+}
 </style>

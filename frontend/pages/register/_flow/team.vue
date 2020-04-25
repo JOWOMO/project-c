@@ -217,44 +217,13 @@ export default class extends Vue {
       }
     }
 
+    this.$track("registration", "team");
+    await this.saveChanges();
+    
     this.$router.push(`/register/${this.$route.params.flow}/company`);
   }
 
-  @LoadingAnimation
-  async save() {
-    console.log("supply :", this.supplies);
-
-    const names = this.checkModifiedTeams();
-
-    // check if one team is expanded and if list not empty
-    if (names.length > 0) {
-      this.$track("registration", "modified", "Abschließen");
-
-      this.$swal.alert(
-        this.$t('register.team.close.title') as string,
-        this.$t(
-          'register.team.discard.subtitle',
-          {
-            term: this.$tc('register.team.discard.term', names.length),
-            names: names.join(', '),
-          }
-        ) as string,
-        'question',
-      );
-
-      return;
-    }
-
-    if (this.supplies.length == 0 && this.demands.length == 0) {
-       this.$swal.alert(
-        this.$t('register.team.zero.title') as string,
-        '',
-        'info',
-      );
-
-      return;
-    }
-
+ async saveChanges() {
     this.$track("registration", "team");
 
     try {
@@ -302,6 +271,46 @@ export default class extends Vue {
       console.error(err);
       this.$swal.alert("Das hat nicht geklappt", err.message, "error");
     }
+  }
+
+
+  @LoadingAnimation
+  async save() {
+    console.log("supply :", this.supplies);
+
+    const names = this.checkModifiedTeams();
+
+    // check if one team is expanded and if list not empty
+    if (names.length > 0) {
+      this.$track("registration", "modified", "Abschließen");
+
+      this.$swal.alert(
+        this.$t('register.team.close.title') as string,
+        this.$t(
+          'register.team.discard.subtitle',
+          {
+            term: this.$tc('register.team.discard.term', names.length),
+            names: names.join(', '),
+          }
+        ) as string,
+        'question',
+      );
+
+      return;
+    }
+
+    if (this.supplies.length == 0 && this.demands.length == 0) {
+       this.$swal.alert(
+        this.$t('register.team.zero.title') as string,
+        '',
+        'info',
+      );
+
+      return;
+    }
+
+    this.$track("registration", "team");
+    await this.saveChanges();
   }
 
   async asyncData(context: Context) {
