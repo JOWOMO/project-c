@@ -50,7 +50,7 @@ jobs:
       if: endsWith(github.ref, '/master')
       run: |
         echo "::set-env name=STAGE::prod"
-          echo "::set-env name=USE_BETA_LOGO::true"
+          echo "::set-env name=USE_BETA_LOGO::false"
 
     - uses: chrislennon/action-aws-cli@v1.1
 
