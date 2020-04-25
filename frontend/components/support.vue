@@ -73,7 +73,7 @@ export default class extends Vue {
 
         this.$swal.alert(
           this.$t('feedback.success.title') as string,
-          this.$t('feedback.success.texxt') as string,
+          this.$t('feedback.success.text') as string,
           'info',
         );
       } catch (err) {
