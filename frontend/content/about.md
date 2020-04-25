@@ -77,7 +77,7 @@ Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG
 
 ### Amazon Web Services - Robin d'Alquen
 
-Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, jomowo als Teil der #wirvsvirus Hackathon Community unterstützen zu können."
+Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, JOWOMO als Teil der #wirvsvirus Hackathon Community unterstützen zu können."
 
 [Mehr Informationen zu Amazon Web Services](https://aws.amazon.com/)
 
