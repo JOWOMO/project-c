@@ -38,6 +38,7 @@ export default class extends Vue {
 
   async asyncData(context: Context) {
     try {
+      // @ts-ignore
       let content = await import('@/content/imprint.md');
 
       const other = {
