@@ -10,8 +10,11 @@
         <formInput :id="'password'" :label="'Passwort'" v-model="password" :type="'password'" />
       </div>
 
-      <div class="link-wrapper">
-        <a @click="resetPassword" class="link">Passwort vergessen?</a>
+      <div class="form-group">
+        <div class="link-wrapper">
+          <a @click="create" class="link">Neues Konto erstellen?</a>
+          <a @click="resetPassword" class="link">Passwort vergessen?</a>
+        </div>
       </div>
 
       <!-- <span id="error">{{error}}</span> -->
@@ -34,8 +37,7 @@ import { AuthErrorCodes, formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
 
 @Component({
-  components: { formInput },
-  
+  components: { formInput }
 })
 export default class extends Vue {
   @Validate({ required, email })
@@ -59,6 +61,16 @@ export default class extends Vue {
     this.$emit("change-state", "reset");
   }
 
+  create() {
+    this.$swal.alert(
+      "Schön, dass Du bei uns bist!",
+      "Wir haben Dich zur Startseite umgeleitet. Bitte entscheide Dich hier für 'Ich biete Mitarbeiter:innen' oder 'Ich suche Mitarbeiter:innen'. Wir führen Dich dann durch die Registrierung.",
+      "info"
+    );
+
+    this.$router.replace('/');
+  }
+
   @LoadingAnimation
   async login() {
     this.$v.$touch();
@@ -68,12 +80,12 @@ export default class extends Vue {
       return;
     }
 
-    this.$track('authentication', 'login');
+    this.$track("authentication", "login");
 
     try {
       const user = {
         email: this.email,
-        password: this.password,
+        password: this.password
       };
 
       // we need to clone the object
@@ -91,16 +103,18 @@ export default class extends Vue {
         return;
       }
 
-      this.$swal.alert( 
-        "Das hat nicht geklappt", 
-        this.error, 
-        "error"
-      );
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/form-layout-single';
+@import "@/assets/form-layout-single";
+
+.link-wrapper {
+  justify-content: space-between;
+  display: flex;
+  flex: 1;
+}
 </style>
