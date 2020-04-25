@@ -89,86 +89,9 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/colors";
-@import "@/assets/scales";
-
 .sidebar {
   display: flex;
 }
 
-.markdown /deep/ {
-  color: $textcolor;
-  font-size: $textsize;
-
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  hyphens: auto;
-  text-align: center;
-
-  padding-bottom: $pageMarginBottom;
-
-  button {
-    margin-top: $gridsize/4 * 3;
-  }
-
-  h1 {
-    padding-bottom: $gridsize;
-    // color: $secondary;
-  }
-
-  .hl-secondary {
-    color: $secondary;
-  }
-
-  h2 {
-    padding-bottom: $gridsize/4 * 3;
-  }
-
-  .faq + h2 {
-    padding-top: $gridsize;
-  }
-
-  p + h2 {
-    padding-top: $gridsize/2;
-  }
-
-  h3 {
-    padding-bottom: $gridsize/4;
-  }
-
-  p {
-    padding-bottom: $gridsize/4;
-  }
-
-  table {
-    width: 100%;
-  }
-
-  th {
-    color: $headercolor;
-    font-size: $h3FontSize;
-    text-align: left;
-  }
-
-  td {
-    color: $textcolor;
-  }
-}
-
-@media only screen and (min-width: $breakpoint_md) {
-  .markdown /deep/ {
-    padding-right: 0;
-
-    align-items: flex-start;
-    text-align: left;
-
-    h1,
-    h2,
-    h3,
-    h4 {
-      text-align: left;
-    }
-  }
-}
+@import "./markdown.scss";
 </style>
