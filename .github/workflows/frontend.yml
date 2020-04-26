@@ -84,6 +84,8 @@ jobs:
         USE_BETA_LOGO: ${{ env.USE_BETA_LOGO }}
         SENTRY_DSN: ${{ env.SENTRY_DSN }}
         SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         SENTRY_PUBLISH_RELEASE: ${{ env.SENTRY_PUBLISH_RELEASE }}
         VERSION_SUFFIX: ${{ env.VERSION_SUFFIX }}
 
