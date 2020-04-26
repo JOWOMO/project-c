@@ -103,7 +103,7 @@ export default {
 
         stop: 'Du hast heute schon zu viele Anfragen gestellt. Bitte versuch es Morgen noch einmal.',
 
-        unkown: 'Es ist ein unbekannter Fehler aufgetreten: {error}'
+        unkown: 'Es ist ein unbekannter Fehler aufgetreten ({error})'
       }
     },
 
@@ -122,7 +122,7 @@ export default {
 
       errors: {
         notfound: 'Der Datensatz konnte nicht gefunden werden.',
-        unknown: 'Es ist ein unbekannter Fehler aufgetreten: {error}'
+        unknown: 'Es ist ein unbekannter Fehler aufgetreten ({error})'
       },
 
       thanks: {
@@ -139,9 +139,14 @@ export default {
 
       tag: {
         title: 'Benötigen wir noch weitere Fähigkeiten?',
-        text: 'Gib uns gerne Feedback, welche Föhigkeiten fehlen oder was zu viel ist.',
+        text: 'Gib uns gerne Feedback, welche Fähigkeiten fehlen oder was zu viel ist. Bitte gib uns auch einen Kontext zu Deiner Branche.',
 
         context: 'Fähigkeiten und Rahmenbedingungen',
+      },
+
+      errorreport: {
+        title: 'Vielen Dank für Deine Hilfe!',
+        text: 'Gib bitte möglichst detailiert an, was nicht geklappt hat.',
       },
 
       success: {
@@ -153,4 +158,12 @@ export default {
         title: 'Das hat nicht geklappt',
       }
     },
+
+    errorpage: {
+      home: 'Zur Startseite',
+
+      notfound: 'Das hat nicht geklappt. Leider existiert diese Seite nicht bei uns.',
+      trace: "Das hat leider nicht geklappt. Wir haben den Fehler unter der Nummer '{code}' protokolliert.",
+      noservice: "Das hat leider nicht geklappt, unser Dienst ist aktuell nicht erreichbar.",
+    }
 };

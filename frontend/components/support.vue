@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, State } from "nuxt-property-decorator";
+import { Vue, Component, Prop, State, Watch } from "nuxt-property-decorator";
 
 import {
   SupportRequestMutation,
@@ -17,18 +17,29 @@ import { IState } from "../store";
 
 @Component
 export default class extends Vue {
+  @State((s: IState) => s.support.show)
+  show!: boolean;
+
   @State((s: IState) => s.support.context)
-  context!: boolean;
+  context!: string;
+
+  @State((s: IState) => s.support.isError)
+  isError!: boolean;
 
   @State((s: IState) => s.auth.isAuthenticated)
   isAuthenticated!: boolean;
 
-  @Prop({default: 'nav'})
+  @Watch('isAuthenticated', {immediate: true})
+  updateStore(val: boolean) {
+    this.$store.commit('support/available', val);
+  }
+
+  @Prop({ default: "nav" })
   position!: string;
 
   get styles() {
-    if (this.position === 'tag') {
-      return 'help-tags cta';
+    if (this.position === "tag") {
+      return "help-tags cta";
     }
 
     switch (this.$mq) {
@@ -36,26 +47,46 @@ export default class extends Vue {
       case "md":
         return "help-right primary";
 
-        // return "help-left-middle";
+      // return "help-left-middle";
       // case "lg":
       // case "vl":
 
       default:
         // return this.position === 'nav' ?  "help-left-nav" : 'help-left';
-        return 'help-left primary';
+        return "help-left primary";
+    }
+  }
+
+  @Watch('show', {immediate: true})
+  showChanged(newVal: boolean) {
+    if (newVal == true) {
+      this.openform();
     }
   }
 
   async openform() {
+    const title = this.isError
+      ? "feedback.errorreport.title"
+      : this.position === "tag"
+        ? "feedback.tag.title"
+        : "feedback.title";
+
+    const text = this.isError
+      ? "feedback.errorreport.text"
+      : this.position === "tag"
+        ? "feedback.tag.text"
+        : "feedback.text";
+
     const result = await this.$swal.feedback(
-      this.$t(this.position === 'tag' ? 'feedback.tag.title' : 'feedback.title') as string,
-      '',
-      this.$t(this.position === 'tag' ? 'feedback.tag.text' : 'feedback.text') as string,
+      this.$t(title) as string,
+      "",
+      this.$t(text) as string
     );
 
-    const context = this.position === 'tag'
-      ? this.$t('feedback.tag.context')
-      : this.context ?? 'zu JOWOMO';
+    const context =
+      this.position === "tag"
+        ? this.$t("feedback.tag.context")
+        : this.context ?? "zu JOWOMO";
 
     if (result.value) {
       try {
@@ -65,22 +96,28 @@ export default class extends Vue {
         >({
           mutation: supportMutation,
           variables: {
-            summary: this.$t('feedback.message', { context }) as string,
+            summary: this.$t("feedback.message", { context }) as string,
             description: result.value,
-            page: window.location.origin + this.$route.fullPath,
+            page: window.location.origin + this.$route.fullPath
           }
         });
 
         this.$swal.alert(
-          this.$t('feedback.success.title') as string,
-          this.$t('feedback.success.text') as string,
-          'info',
+          this.$t("feedback.success.title") as string,
+          this.$t("feedback.success.text") as string,
+          "info"
         );
       } catch (err) {
-          console.error(err);
-          this.$swal.alert(this.$t('feedback.error.title') as string, err.message, "error");
+        console.error(err);
+        this.$swal.alert(
+          this.$t("feedback.error.title") as string,
+          err.message,
+          "error"
+        );
       }
     }
+
+    this.$store.commit('support/close')
   }
 }
 </script>
@@ -109,6 +146,7 @@ export default class extends Vue {
   color: white;
 
   box-shadow: 0 3px 3px 0 rgba(#000000, 0.2);
+  z-index: 1000;
 }
 
 .help-right {
@@ -131,7 +169,8 @@ export default class extends Vue {
   }
 }
 
-.help-left-nav, .help-left {
+.help-left-nav,
+.help-left {
   position: fixed;
 
   width: $gridsize/2;
@@ -140,8 +179,8 @@ export default class extends Vue {
   top: calc(50% - #{$gridsize});
 
   .text {
-      transform: rotate(-90deg);
-    }
+    transform: rotate(-90deg);
+  }
 }
 
 .help-left-nav {

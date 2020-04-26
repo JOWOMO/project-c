@@ -8,7 +8,7 @@ import boto3
 import json
 from os import environ
 from btb.templates import match_template, send_email
-
+from btb.api.error import ApiError
 
 class MatchType(graphene.Enum):
     Supply = 1
@@ -74,7 +74,7 @@ limit 1
 
             # len 0 means 0 today
             if len(match) == 1:
-                raise ValueError("TOO_MANY_RECIPIENT")
+                raise ApiError("Too many contacts for the same recipient", code="TOO_MANY_RECIPIENT")
 
 
     @staticmethod
@@ -100,7 +100,8 @@ where external_id = :id
                     environ["MAX_CONTACT_REQUESTS"]) if "MAX_CONTACT_REQUESTS" in environ else 10
 
                 if (match[0]["count"] >= max_requests) and not(current_app.debug):
-                    raise ValueError("TOO_MANY_REQUESTS")
+                    # raise ValueError("TOO_MANY_REQUESTS")
+                    raise ApiError("Too many requests", code="TOO_MANY_REQUESTS")
 
 
     @staticmethod
@@ -184,7 +185,7 @@ and c.owner_external_id <> :external_id
         match = [m for m in conn.execute(
             match_sql, id=id, external_id=g.principal.get_id())]
         if len(match) != 1:
-            raise ValueError("NOT_FOUND")
+            raise ApiError("Record not found", code="NOT_FOUND")
 
         return match[0]
 
@@ -210,7 +211,7 @@ and c.owner_external_id = :external_id
             origin_sql, id=origin_id, external_id=g.principal.get_id())]
 
         if len(origin) != 1:
-            raise ValueError("NOT_FOUND")
+            raise ApiError("Record not found", code="NOT_FOUND")
 
         return origin[0]
 
