@@ -65,6 +65,8 @@ export default class extends Vue {
   }
 
   async openform() {
+    this.$track("support", "open");
+
     const title = this.isError
       ? "feedback.errorreport.title"
       : this.position === "tag"
@@ -89,6 +91,8 @@ export default class extends Vue {
         : this.context ?? "zu JOWOMO";
 
     if (result.value) {
+      this.$track("support", "ok");
+
       try {
         await this.$apollo.mutate<
           SupportRequestMutation,
@@ -108,13 +112,17 @@ export default class extends Vue {
           "info"
         );
       } catch (err) {
-        console.error(err);
+        this.$sentry.captureException(err);
+        this.$track("support", "failed");
+
         this.$swal.alert(
           this.$t("feedback.error.title") as string,
           err.message,
           "error"
         );
       }
+    } else {
+      this.$track("support", "cancel");
     }
 
     this.$store.commit('support/close')

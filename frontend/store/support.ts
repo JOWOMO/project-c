@@ -38,7 +38,7 @@ export const mutations = {
   },
 
   context(state: ISupportState, payload: string | { text: string, isError: boolean }) {
-    console.debug('context >', payload);
+    // console.debug('context >', payload);
 
     state.context = typeof payload === 'string' ? payload : (payload as any).text;
     state.isError = (payload as any).isError || false;

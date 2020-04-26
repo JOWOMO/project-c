@@ -32,7 +32,6 @@ import { LoadingAnimation } from "../loadinganimation";
   components: { formInput }
 })
 export default class extends Vue {
-  @State((s: IState) => s.register.user.email)
   @Validate({ required, email })
   email: string = "";
 
@@ -43,9 +42,14 @@ export default class extends Vue {
     return this.$v;
   }
 
-  @Emit('change-state')
+  @Emit("change-state")
   back() {
-    return 'login';
+    return "login";
+  }
+
+  mounted() {
+    this.$track("authentication", "reset:start");
+    this.email = (this.$store.state as IState).register.user.email || "";
   }
 
   @LoadingAnimation
@@ -53,12 +57,12 @@ export default class extends Vue {
     // stop here if form is invalid
     this.$v.$touch();
     this.$emit("validate");
+    this.$track("authentication", "reset:ok");
 
     if (this.$v.$invalid) {
+      this.$track("authentication", "reset:ok:invalid");
       return;
     }
-
-    this.$track('authentication', 'start-reset-password');
 
     try {
       await this.$store.dispatch("auth/startResetPassword", {
@@ -70,6 +74,8 @@ export default class extends Vue {
     } catch (err) {
       console.error(err);
       this.error = formatMessage(err);
+      this.$track("authentication", `reset:failed:${err.code}`);
+
       this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }

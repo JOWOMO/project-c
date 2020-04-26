@@ -68,6 +68,8 @@ export default class extends Vue {
   @LoadingAnimation
   async resend() {
     try {
+      this.$track("authentication", "validate:resend");
+
       await this.$store.dispatch("auth/resendcode", {
         email: this.email
       });
@@ -79,9 +81,13 @@ export default class extends Vue {
       );
     } catch (e) {
       console.error(e);
-
+      this.$track("authentication", `validate:resend:failed${e.code}`);
       this.$swal.alert("Das hat nicht geklappt", formatMessage(e), "error");
     }
+  }
+
+  created() {
+    this.$track("authentication", "validate:start");
   }
 
   @LoadingAnimation
@@ -89,18 +95,18 @@ export default class extends Vue {
     // stop here if form is invalid
     this.$v.$touch();
     this.$emit("validate");
+    this.$track("authentication", `validate:ok`);
 
     if (this.$v.$invalid) {
+      this.$track("authentication", `validate:ok:invalid`);
       return;
     }
-
-    this.$track('authentication', 'confirm');
 
     try {
       let user: any = {};
       await this.$store.dispatch("auth/confirm", {
         email: this.email,
-        code: this.code.trim(), // remove whitespace from copy&paste
+        code: this.code.trim() // remove whitespace from copy&paste
       });
 
       // https://github.com/amazon-archives/amazon-cognito-identity-js/issues/186#issuecomment-335690410
@@ -127,9 +133,10 @@ export default class extends Vue {
 
       this.$emit("change-state", "redirect");
     } catch (err) {
-      console.error("err: ", err);
-      this.error = formatMessage(err);
+      console.error(err);
+      this.$track("authentication", `validate:ok:failed:${err.code}`);
 
+      this.error = formatMessage(err);
       this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }

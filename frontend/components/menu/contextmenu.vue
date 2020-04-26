@@ -56,7 +56,7 @@ export default class extends Vue {
   }
 
   optionClicked(option: any) {
-    console.debug('click', option);
+    // console.debug('click', option);
     this.$emit("click", option);
   }
 }
@@ -103,7 +103,7 @@ ul, li {
     align-items: center;
 
     // border-radius: 0px 0px $radius/4 $radius/4;
-    
+
     &:hover {
       background-color: $primary;
       color: #ffffff;

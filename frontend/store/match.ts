@@ -67,7 +67,7 @@ export const mutations = {
   },
 
   teams(state: IMatchState, payload: Pick<IMatchState, 'me' | 'demands' | 'supplies'>) {
-    console.debug('updating teams', payload);
+    // console.debug('updating teams', payload);
 
     state.me = payload.me;
     state.demands = payload.demands;

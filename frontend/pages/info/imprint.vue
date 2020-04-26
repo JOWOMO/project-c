@@ -1,6 +1,6 @@
 <template>
   <top class="top">
-      <component class="markdown" :is="content" />
+    <component class="markdown" :is="content" />
   </top>
 </template>
 
@@ -21,41 +21,42 @@ export default class extends Vue {
 
   head() {
     return {
-      title: this.$t('process.seo.title'),
+      title: this.$t("process.seo.title"),
       meta: [
         {
-          hid: 'description',
-          name: 'description',
-          content: this.$t('process.seo.description'),
+          hid: "description",
+          name: "description",
+          content: this.$t("process.seo.description")
         }
-      ],
+      ]
     };
   }
 
   created() {
-    this.$store.commit('support/context', `zu '${this.title}'`);
+    this.$store.commit("support/context", `zu '${this.title}'`);
   }
 
   async asyncData(context: Context) {
     try {
       // @ts-ignore
-      let content = await import('@/content/imprint.md');
+      let content = await import("@/content/imprint.md");
 
       const other = {
         extends: content.vue.component,
-        components: {
-        }
+        components: {}
       };
 
       return {
         title: content.attributes?.title,
         description: content.attributes?.description,
         seo: content.attributes?.seo || content.attributes?.title,
-        content: other,
+        content: other
       };
     } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 404, message: e.message });
+      context.error({
+        statusCode: 404,
+        message: context.app.i18n.t("errorpage.notfound") as string
+      });
     }
   }
 }

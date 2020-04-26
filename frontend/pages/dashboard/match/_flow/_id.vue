@@ -49,8 +49,7 @@ import { IMatchState, MatchFilter } from "../../../../store/match";
 import { IState } from "../../../../store";
 
 @Component({
-  components: { companyCard },
-  scrollToTop: true
+  components: { companyCard }
 })
 export default class extends Vue {
   feed: {
@@ -58,6 +57,14 @@ export default class extends Vue {
     query?: ObservableQuery<DemandMatchesQuery, DemandMatchesQueryVariables>;
     data?: MatchDemandResult; // other type is equal
   } = {};
+
+  @Watch('$route.fullPath', {immediate: true})
+  scrollTop() {
+    const scroller = window.document.getElementById("scroller");
+    if (scroller) {
+      scroller.scrollTo(0, 0);
+    }
+  }
 
   get noRecords() {
     return !this.feed.data || this.feed.data.matches.length === 0;
@@ -101,7 +108,7 @@ export default class extends Vue {
       pictureUrl: party.pictureUrl
     };
 
-    console.log("onConnect", params);
+    // console.log("onConnect", params);
     this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
@@ -111,7 +118,7 @@ export default class extends Vue {
   @LoadingAnimation
   @Watch("filter", { deep: true })
   async reload(filter: MatchFilter) {
-    console.debug("filter changed", filter);
+    this.$track("dashboard", "filter", "KM", filter.range.toString());
 
     return new Promise((resolve, fail) =>
       this.feed
@@ -137,7 +144,7 @@ export default class extends Vue {
 
   @Watch("triggerLoadMore")
   onLoadMore() {
-    console.debug("child onLoadMore");
+    // console.debug("child onLoadMore");
     const $state = this.loadMore;
 
     if (!this.feed.data!.pageInfo.hasNextPage) {
@@ -221,15 +228,15 @@ export default class extends Vue {
           }, {} as any);
 
           feed.data = data.result;
-          context.store.commit('match/newspinner');
+          context.store.commit("match/newspinner");
 
           // we return first result this way
           resolve({ feed });
         },
 
-         error(e) {
-            fail(e);
-          }
+        error(e) {
+          fail(e);
+        }
       });
     });
   }

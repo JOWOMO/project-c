@@ -10,8 +10,8 @@
       <p class="highlighted">{{ teaser }} {{ match.quantity }} Mitarbeiter - {{ match.name }}</p>
 
       <div
-          :class="{'tags-label': true, 'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
-        >{{ percentage }}% passend zu {{ subject }}</div>
+        :class="{'tags-label': true, 'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
+      >{{ percentage }}% passend zu {{ subject }}</div>
 
       <div class="tags">
         <tag
@@ -61,7 +61,7 @@
         <div
           :class="{'full-match': percentage >= 90, 'partial-match': percentage > 60 && percentage < 90}"
         >{{ percentage }}% passend zu {{ subject }}</div>
-      </div> -->
+      </div>-->
     </div>
 
     <div class="middle">
@@ -141,12 +141,12 @@ export default class extends Vue {
 
   get matchingSkills() {
     if (!this.requestedSkills) return [];
-    return this.match.skills.filter((s) => this.requestedSkills[s.id] == true);
+    return this.match.skills.filter(s => this.requestedSkills[s.id] == true);
   }
 
   get additionalSkills() {
     if (!this.requestedSkills) return this.match.skills;
-    return this.match.skills.filter((s) => this.requestedSkills[s.id] != true);
+    return this.match.skills.filter(s => this.requestedSkills[s.id] != true);
   }
 
   get distance() {
@@ -173,15 +173,19 @@ export default class extends Vue {
 
   @Emit("showall")
   showAllTeams() {
+    this.$track("dashboard", "team:company", "Alle Verfügbarkeiten anzeigen");
+
     return {
       flow: this.flow,
       id: this.match.id,
-      company: this.company.id,
-    }
+      company: this.company.id
+    };
   }
 
   @Emit("connect")
   connect() {
+    this.$track("dashboard", "team:connect", "Jetzt verbinden");
+
     return {
       id: this.match.id,
       contact: this.contact,

@@ -1,6 +1,6 @@
 import { Plugin } from '@nuxt/types'
 
-type Category = 'authentication' | 'registration' | 'teams' | 'dashboard' | 'connect' | 'faq';
+type Category = 'authentication' | 'registration' | 'teams' | 'dashboard' | 'connect' | 'faq' | 'support';
 
 declare module '@nuxt/types' {
     interface Context {
@@ -18,7 +18,7 @@ declare module 'vue/types/vue' {
 
 const trackPlugin: Plugin = (context, inject) => {
     if (context.app.router) {
-        console.log('Registering tracking plugin');
+        // console.debug('Registering tracking plugin');
 
         context.app.router.afterEach((to) => {
             let name = to.name;

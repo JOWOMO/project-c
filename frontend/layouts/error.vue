@@ -90,12 +90,30 @@ export default class extends Vue {
     return this.error.message;
   }
 
+  capture() {
+    if (this.error.networkError) {
+      this.$sentry.captureException(this.error.networkError);
+    }
+
+    if (this.error.graphQLErrors) {
+      for (const err of this.error.graphQLErrors) {
+      }
+    }
+
+    if (this.error instanceof Error) {
+      this.$sentry.captureException(this.error);
+    }
+  }
+
   created() {
     console.error("Unhandeled exception", this.error);
+
     this.$store.commit("support/context", {
       text: `Fehler ${this.id}`,
       isError: true
     });
+
+    this.capture();
   }
 }
 </script>

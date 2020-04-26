@@ -67,7 +67,7 @@ export default class extends Vue {
     let result: Partial<Pick<this, "error" | "first" | "last" | "route">> = {};
 
     const params: ConnectParams = JSON.parse(atob(context.params.pathMatch));
-    console.debug('connect', params);
+    // console.debug('connect', params);
 
     result.first = params.firstName;
     result.last = params.lastName;

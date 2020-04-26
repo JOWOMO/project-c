@@ -10,19 +10,21 @@ import validate from "@/components/auth/validate.vue";
   components: {
     validate
   },
-  middleware: "authenticated",
+  middleware: "authenticated"
 })
 export default class extends Vue {
   mounted() {
-   this.$store.commit('register/position', 0);
+    this.$track("registration", "validate:start");
+    this.$store.commit("register/position", 0);
   }
 
   @Emit("change-state")
   handleStateChange(event: string, value: any) {
     if (event === "redirect") {
-      // user cannot go back here
+      this.$track("registration", "validate:ok");
       this.$router.replace(`/register/${this.$route.params.flow}/company`);
     } else if (event === "back") {
+      this.$track("registration", "validate:cancel");
       this.$router.replace(`/register/${this.$route.params.flow}`);
     }
   }

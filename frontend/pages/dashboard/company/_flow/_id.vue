@@ -55,7 +55,6 @@ import { ConnectParams } from "@/pages/connect/request/_.vue";
   components: {
     teamCard
   },
-  scrollToTop: true,
 })
 export default class Details extends Vue {
   company: any;
@@ -77,7 +76,7 @@ export default class Details extends Vue {
       pictureUrl: party.pictureUrl
     };
 
-    console.log("onConnect", params);
+    // console.log("onConnect", params);
     this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
