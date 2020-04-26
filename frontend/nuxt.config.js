@@ -181,8 +181,6 @@ export default {
   },
 
   sentry: {
-    dsn: process.env.SENTRY_DSN || '',
-    disabled: !process.env.SENTRY_DSN,
     config: {
       release: version,
     },
