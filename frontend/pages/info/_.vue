@@ -81,8 +81,10 @@ export default class extends Vue {
         menu: content.attributes?.menu || {}
       };
     } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 404, message: e.message });
+      context.error({
+        statusCode: 404,
+        message: context.app.i18n.t('errorpage.notfound') as string
+      });
     }
   }
 }

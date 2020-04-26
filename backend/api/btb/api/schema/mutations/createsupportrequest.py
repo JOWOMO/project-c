@@ -4,7 +4,7 @@ import os
 import graphene
 from flask import current_app, g
 from btb.jsd import JSDClient
-
+from btb.api.error import ApiError
 
 def setup_jsd_from_env():
     try:
@@ -44,7 +44,7 @@ class CreateSupportRequest(graphene.Mutation):
 
         except Exception as e:
             current_app.logger.error("Failed to initialize JSD Client {}".format(e))
-            raise Exception("Support Desk not available")
+            raise ApiError("Support Desk not available")
 
         user = jsd.create_or_find_user(
             "{} {}".format(g.principal.get_first_name(), g.principal.get_last_name()),

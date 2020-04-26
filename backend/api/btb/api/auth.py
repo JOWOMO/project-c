@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import g, request, redirect, url_for, current_app
 from werkzeug.wrappers import Request, Response, ResponseStream
+from .error import ApiError
 
 
 class Principal:
@@ -41,7 +42,7 @@ def load_principal_from_serverless():
 
     else:
         current_app.logger.error("failed to set auth principal")
-        # TODO: Should return an internal server error here
+        raise ApiError('No principal', code='NOT_AUTHORIZED')
 
 
 def auth_required(f):
@@ -54,7 +55,7 @@ def auth_required(f):
         user: Principal = g.principal
 
         if user is None:
-            return Response(u"Authorization failed", mimetype="text/plain", status=401)
+            return Response(u"{message: 'Authorization failed', code: 401}", mimetype="application/json", status=401)
 
         current_app.logger.debug("user id is {}".format(user.get_id()))
 

@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": ".venv/bin/python",
+    "python.pythonPath": "/Users/markus/Projects/project-c/backend/api/.venv/bin/python3",
     "python.formatting.provider": "black"
 }

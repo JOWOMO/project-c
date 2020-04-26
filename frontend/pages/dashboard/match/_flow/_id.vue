@@ -113,7 +113,7 @@ export default class extends Vue {
   async reload(filter: MatchFilter) {
     console.debug("filter changed", filter);
 
-    return new Promise(resolve =>
+    return new Promise((resolve, fail) =>
       this.feed
         .query!.refetch({
           id: this.$route.params.id,
@@ -125,7 +125,7 @@ export default class extends Vue {
           this.$set(this.feed, "data", data.data.result);
           resolve();
         })
-        .catch(resolve)
+        .catch(fail)
     );
   }
 
@@ -192,58 +192,46 @@ export default class extends Vue {
     const flow = context.params.flow;
     const id = context.params.id;
 
-    try {
-      const client = context.app.apolloProvider!.defaultClient;
-      const matchQuery = client.watchQuery<
-        DemandMatchesQuery,
-        DemandMatchesQueryVariables
-      >({
-        query: flow == "demand" ? getDemandMatch : getSupplyMatch,
-        variables: {
-          id
+    const client = context.app.apolloProvider!.defaultClient;
+    const matchQuery = client.watchQuery<
+      DemandMatchesQuery,
+      DemandMatchesQueryVariables
+    >({
+      query: flow == "demand" ? getDemandMatch : getSupplyMatch,
+      variables: {
+        id
+      },
+      fetchPolicy: "network-only"
+    });
+
+    return new Promise((resolve, fail) => {
+      const feed = {
+        skills: {},
+        query: matchQuery,
+        data: {}
+      };
+
+      matchQuery.subscribe({
+        next({ data }) {
+          // console.log("received", data);
+
+          feed.skills = (data.request?.skills || []).reduce((p, c) => {
+            p[c.id] = true;
+            return p;
+          }, {} as any);
+
+          feed.data = data.result;
+          context.store.commit('match/newspinner');
+
+          // we return first result this way
+          resolve({ feed });
         },
-        fetchPolicy: "network-only"
-      });
 
-      return new Promise((resolve, fail) => {
-        const feed = {
-          skills: {},
-          query: matchQuery,
-          data: {}
-        };
-
-        matchQuery.subscribe({
-          next({ data }) {
-            // console.log("received", data);
-
-            feed.skills = (data.request?.skills || []).reduce((p, c) => {
-              p[c.id] = true;
-              return p;
-            }, {} as any);
-
-            feed.data = data.result;
-
-            context.store.commit('match/newspinner');
-            // we return first result this way
-            resolve({ feed });
-          },
-
-          error(e) {
-            console.error(e);
-            context.error({
-              statusCode: 500,
-              message: "Leider hat das nicht geklappt"
-            });
-
-            resolve();
+         error(e) {
+            fail(e);
           }
-        });
       });
-    } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 500, message: e.message });
-      throw e;
-    }
+    });
   }
 }
 </script>

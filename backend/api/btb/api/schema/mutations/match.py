@@ -10,7 +10,7 @@ from os import environ
 from btb.templates import match_template, send_email
 from graphene import Field, ID, String, ObjectType
 from btb.api.schema.types import CompanyContact
-
+from btb.api.error import ApiError
 
 class MatchDetails(ObjectType):
     """This needs refactoring for all resource types: Address"""
@@ -88,7 +88,7 @@ where
             ).fetchone()
 
             if match is None:
-                raise ValueError("NOT_FOUND")
+                raise ApiError("Record not found", code="NOT_FOUND")
 
             if answer == MatchAnswer.Accept:
                 column = "date_accepted"
