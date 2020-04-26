@@ -10,7 +10,7 @@ from os import environ
 from btb.templates import match_template, send_email
 from graphene import Field, ID, String, ObjectType
 from btb.api.schema.types import CompanyContact
-
+from btb.api.error import ApiError
 
 class MatchDetails(ObjectType):
     """This needs refactoring for all resource types: Address"""
@@ -55,30 +55,46 @@ class SetMatchState(graphene.Mutation):
             match = conn.execute(
                 text(
                     """
-select c.*
+select 
+    c.*
 from
     btb_data.contact_request r
 
+    -- response
     left join btb.match_team_demand d
-      on
-            match_type = 'demand'
+        on
+            r.match_type = 'demand'
         and d.record_id = r.request_id
-        -- response must be from calling user
-        {escape} and d.external_id = :user
 
     left join btb.match_team_supply s
-      on
-            match_type = 'supply'
+        on
+            r.match_type = 'supply'
         and s.record_id = r.request_id
-        -- response must be from calling user
-        {escape} and s.external_id = :user
+
+    -- request
+    left join btb.match_team_demand rd
+        on
+            r.match_type = 'supply'
+        and rd.record_id = r.response_id
+        -- must be owned by calling user
+        {escape} and rd.external_id = :user
+
+    left join btb.match_team_supply rs
+        on
+            r.match_type = 'demand'
+        and rs.record_id = r.response_id
+        -- must be owned by calling user
+        {escape} and rs.external_id = :user
 
     join btb.company_with_contact c on
-      -- there will only be one
-      c.id = COALESCE(d.company_id, s.company_id)
+        -- there will only be one
+        c.id = COALESCE(d.company_id, s.company_id)
 
 where
-    r.id = :id
+        r.id = :id
+        -- must be owned by the user
+    and COALESCE(rd.record_id, rs.record_id) is not null
+;
             """.format(
                         escape="---" if DISABLE_CHECK else ""
                     )
@@ -88,7 +104,7 @@ where
             ).fetchone()
 
             if match is None:
-                raise ValueError("NOT_FOUND")
+                raise ApiError("Record not found", code="NOT_FOUND")
 
             if answer == MatchAnswer.Accept:
                 column = "date_accepted"

@@ -131,7 +131,7 @@ export default class extends Vue {
 
     record.expanded = true;
 
-    if (this.$route.params.flow === 'demand') {
+    if (this.$route.params.flow === "demand") {
       this.demands.push(record);
     } else {
       this.supplies.push(record);
@@ -139,12 +139,13 @@ export default class extends Vue {
   }
 
   toggleVisibility(type: "supply" | "demand", idx: number) {
+    this.$track("registration", "team:toggle");
     const array = type === "supply" ? this.supplies : this.demands;
     this.$set(array[idx], "expanded", true);
   }
 
   update(type: "supply" | "demand", idx: number, value: TeamDetails) {
-    console.log("Updating", type, idx, value);
+    this.$track("registration", "team:draft:update");
     const array = type === "supply" ? this.supplies : this.demands;
 
     // if the user canceled the dialog this way, he canceled a new item
@@ -157,16 +158,21 @@ export default class extends Vue {
   }
 
   async remove(type: "supply" | "demand", idx: number) {
+    this.$track("registration", "team:remove");
     const array = type === "supply" ? this.supplies : this.demands;
 
     const action = await this.$swal.confirm(
-      this.$t('register.team.remove.title', {name: array[idx].name}) as string,
-      this.$t('register.team.remove.subtitle') as string,
+      this.$t("register.team.remove.title", {
+        name: array[idx].name
+      }) as string,
+      this.$t("register.team.remove.subtitle") as string,
       true
     );
 
     // if .id is not set, the record has not been created yet, we can ignore that
     if (action.value == true && array[idx].id != null) {
+      this.$track("registration", "team:remove:ok");
+
       try {
         await this.$apollo.mutate<
           RemoveSupplyMutation, // types are equal
@@ -179,56 +185,69 @@ export default class extends Vue {
         array.splice(idx, 1);
       } catch (err) {
         console.error(err);
-        this.$swal.alert("Das hat leider nicht geklappt.", err.message, 'error');
+        this.$sentry.captureException(err);
+
+        this.$swal.alert(
+          "Das hat leider nicht geklappt.",
+          err.message,
+          "error"
+        );
       }
     } else if (action.value == true) {
+      this.$track("registration", "team:remove:ok");
       array.splice(idx, 1);
+    } else {
+      this.$track("registration", "team:remove:cancel");
     }
   }
 
   checkModifiedTeams() {
     return [
-      ...this.demands.filter(t => t.expanded).map(t => t.name || 'Team ' + t.number),
-      ...this.supplies.filter(t => t.expanded).map(t => t.name || 'Team ' + t.number)
-    ]
+      ...this.demands
+        .filter(t => t.expanded)
+        .map(t => t.name || "Team " + t.number),
+      ...this.supplies
+        .filter(t => t.expanded)
+        .map(t => t.name || "Team " + t.number)
+    ];
   }
 
   async back() {
+    this.$track("registration", "team:back");
     const names = this.checkModifiedTeams();
 
     // check if one team is expanded and if list not empty
     if (names.length > 0) {
-      this.$track("registration", "modified", "Zurück");
+      this.$track("registration", "team:back:modified");
 
       const result = await this.$swal.confirm(
-        this.$t('register.team.discard.title') as string,
-        this.$t(
-          'register.team.discard.subtitle',
-          {
-            term: this.$tc('register.team.discard.term', names.length),
-            names: names.join(', '),
-          }
-        ) as string,
+        this.$t("register.team.discard.title") as string,
+        this.$t("register.team.discard.subtitle", {
+          term: this.$tc("register.team.discard.term", names.length),
+          names: names.join(", ")
+        }) as string
       );
 
       // user canceled the dialog
       if (!result.value) {
+        this.$track("registration", "team:back:modified:cancel");
         return;
       }
+
+      this.$track("registration", "team:back:modified:ok");
     }
 
-    this.$track("registration", "team");
     await this.saveChanges();
-    
     this.$router.push(`/register/${this.$route.params.flow}/company`);
   }
 
- async saveChanges() {
-    this.$track("registration", "team");
+  async saveChanges() {
+    this.$track("registration", "team:update");
 
     try {
       for (const supply of this.supplies.filter(s => s.modified)) {
-        console.log("Saving", supply);
+        // console.log("Saving", supply);
+
         await this.$apollo.mutate<
           UpdateSupplyMutation,
           UpdateSupplyMutationVariables
@@ -247,7 +266,8 @@ export default class extends Vue {
       }
 
       for (const supply of this.demands.filter(s => s.modified)) {
-        console.log("Saving", supply);
+        // console.log("Saving", supply);
+
         await this.$apollo.mutate<
           UpdateDemandMutation,
           UpdateDemandMutationVariables
@@ -265,56 +285,55 @@ export default class extends Vue {
         });
       }
 
-      await this.$store.dispatch('match/loadteams', this.$apollo);
+      await this.$store.dispatch("match/loadteams", this.$apollo);
       this.$router.push(`/welcome/${this.$route.params.flow}`);
     } catch (err) {
       console.error(err);
+      this.$sentry.captureException(err);
+      this.$track("registration", "team:update:failed");
+
       this.$swal.alert("Das hat nicht geklappt", err.message, "error");
     }
   }
 
-
   @LoadingAnimation
   async save() {
-    console.log("supply :", this.supplies);
-
+    this.$track("registration", "team:update");
     const names = this.checkModifiedTeams();
 
     // check if one team is expanded and if list not empty
     if (names.length > 0) {
-      this.$track("registration", "modified", "Abschließen");
+      this.$track("registration", "team:update:invalid");
 
       this.$swal.alert(
-        this.$t('register.team.close.title') as string,
-        this.$t(
-          'register.team.discard.subtitle',
-          {
-            term: this.$tc('register.team.discard.term', names.length),
-            names: names.join(', '),
-          }
-        ) as string,
-        'question',
+        this.$t("register.team.close.title") as string,
+        this.$t("register.team.discard.subtitle", {
+          term: this.$tc("register.team.discard.term", names.length),
+          names: names.join(", ")
+        }) as string,
+        "question"
       );
 
       return;
     }
 
     if (this.supplies.length == 0 && this.demands.length == 0) {
-       this.$swal.alert(
-        this.$t('register.team.zero.title') as string,
-        '',
-        'info',
+      this.$track("registration", "team:update:empty");
+
+      this.$swal.alert(
+        this.$t("register.team.zero.title") as string,
+        "",
+        "info"
       );
 
       return;
     }
 
-    this.$track("registration", "team");
     await this.saveChanges();
   }
 
   async asyncData(context: Context) {
-    console.log("async data");
+    // console.log("async data");
     let data: Pick<
       this,
       "counter" | "demands" | "supplies" | "skills" | "company" | "topics"
@@ -327,66 +346,61 @@ export default class extends Vue {
       company: {} as Company
     };
 
-    // NO ACCESS to this context here
-    try {
-      const flow = context.params.flow;
+    const flow = context.params.flow;
 
-      const client = context.app.apolloProvider!.defaultClient;
-      const result = await client.query<GetTeamsQuery, GetTeamsQueryVariables>({
-        query: getTeams,
-        fetchPolicy: "network-only"
-      });
+    const client = context.app.apolloProvider!.defaultClient;
+    const result = await client.query<GetTeamsQuery, GetTeamsQueryVariables>({
+      query: getTeams,
+      fetchPolicy: "network-only"
+    });
 
-      const companies = result?.data?.companies;
-      if (!companies || companies.length == 0) {
-        throw new Error("we can't be here.");
-      }
-
-      data.skills = result.data?.skills;
-      data.topics = result.data?.teamNames;
-      data.company = companies[0]!;
-
-      const map = (r: Demand | Supply): TeamDetails => {
-        return {
-          number: ++data.counter,
-          id: r.id,
-          isActive: r.isActive,
-          name: r.name,
-          quantity: r.quantity,
-          skills: r.skills.map(s => s.id),
-          description: r.description || undefined
-        } as TeamDetails;
-      };
-
-      if (flow === 'demand') {
-        // @ts-ignore
-        data.demands = (data.company.demands || []).map(map);
-
-        if (data.demands.length === 0) {
-          ++data.counter;
-          data.demands.push(EMPTY_TEAM);
-          data.demands[0].expanded = true;
-        }
-      } else {
-        // @ts-ignore
-        data.supplies = (data.company.supplies || []).map(map);
-
-        if (data.supplies.length === 0) {
-          ++data.counter;
-          data.supplies.push(EMPTY_TEAM);
-          data.supplies[0].expanded = true;
-        }
-      }
-
-      return data;
-    } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 500, message: e.message });
+    const companies = result?.data?.companies;
+    if (!companies || companies.length == 0) {
+      throw new Error("we can't be here.");
     }
+
+    data.skills = result.data?.skills;
+    data.topics = result.data?.teamNames;
+    data.company = companies[0]!;
+
+    const map = (r: Demand | Supply): TeamDetails => {
+      return {
+        number: ++data.counter,
+        id: r.id,
+        isActive: r.isActive,
+        name: r.name,
+        quantity: r.quantity,
+        skills: r.skills.map(s => s.id),
+        description: r.description || undefined
+      } as TeamDetails;
+    };
+
+    if (flow === "demand") {
+      // @ts-ignore
+      data.demands = (data.company.demands || []).map(map);
+
+      if (data.demands.length === 0) {
+        ++data.counter;
+        data.demands.push(EMPTY_TEAM);
+        data.demands[0].expanded = true;
+      }
+    } else {
+      // @ts-ignore
+      data.supplies = (data.company.supplies || []).map(map);
+
+      if (data.supplies.length === 0) {
+        ++data.counter;
+        data.supplies.push(EMPTY_TEAM);
+        data.supplies[0].expanded = true;
+      }
+    }
+
+    return data;
   }
 
   mounted() {
-    this.$store.commit('register/position', 2);
+    this.$track("registration", "team:star");
+    this.$store.commit("register/position", 2);
   }
 }
 </script>
@@ -402,7 +416,7 @@ export default class extends Vue {
   }
 
   p {
-    padding-bottom: $gridsize*1.5;
+    padding-bottom: $gridsize * 1.5;
   }
 
   .buttons {

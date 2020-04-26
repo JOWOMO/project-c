@@ -39,7 +39,7 @@ export const mutations = {
   // },
 
   position(state: IRegistrationState, payload: number) {
-    console.debug('position', payload);
+    // console.debug('position', payload);
     state.position = payload;
   },
 }

@@ -97,6 +97,7 @@ export default class extends Vue {
   error = "";
 
   back() {
+    this.$track("registration", "user:back");
     this.$router.push("/");
   }
 
@@ -128,38 +129,32 @@ export default class extends Vue {
       "userExists" | "firstName" | "lastName" | "email"
     >> = {};
 
-    // NO ACCESS to this context here
-    try {
-      if ((context.store.state as IState).auth.isAuthenticated) {
-        const client = context.app.apolloProvider!.defaultClient;
-        const result = await client.query<RegistrationUserQuery>({
-          query: userQuery,
-          fetchPolicy: "network-only"
-        });
+    if ((context.store.state as IState).auth.isAuthenticated) {
+      const client = context.app.apolloProvider!.defaultClient;
+      const result = await client.query<RegistrationUserQuery>({
+        query: userQuery,
+        fetchPolicy: "network-only"
+      });
 
-        console.log("received", result);
+      // console.log("received", result);
 
-        if (result.data && result.data.me) {
-          const me = result.data.me;
+      if (result.data && result.data.me) {
+        const me = result.data.me;
 
-          data.userExists = true;
-          data.firstName = me.firstName;
-          data.lastName = me.lastName;
-          data.email = me.email;
-        }
-      } else {
-        data.userExists = false;
+        data.userExists = true;
+        data.firstName = me.firstName;
+        data.lastName = me.lastName;
+        data.email = me.email;
       }
-
-      return data;
-    } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 500, message: e.message });
+    } else {
+      data.userExists = false;
     }
+
+    return data;
   }
 
   async createUser() {
-    console.debug("createUser");
+    this.$track("registration", "user:create");
 
     this.$store.commit("register/user", {
       email: this.email,
@@ -179,18 +174,19 @@ export default class extends Vue {
 
       this.$router.push(`/register/${this.$route.params.flow}/validate`);
     } catch (err) {
-      console.log("err: ", err);
+      console.error(err);
+      this.$sentry.captureException(err);
+      this.$track("registration", "create:user:failed");
+
       this.error = formatMessage(err);
       this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 
   async updateUser() {
-    console.debug("updateUser");
+    this.$track("registration", "user:update");
 
     try {
-      console.log("Updating with", this.firstName, this.lastName, this.email);
-
       const result = await this.$apollo.mutate<
         UserAddMutation,
         UserAddMutationVariables
@@ -203,7 +199,6 @@ export default class extends Vue {
         }
       });
 
-      console.log("first, last name", this.firstName, this.lastName);
       await this.$store.dispatch("auth/updateUser", {
         firstName: this.firstName,
         lastName: this.lastName
@@ -212,6 +207,9 @@ export default class extends Vue {
       this.$router.push(`/register/${this.$route.params.flow}/company`);
     } catch (err) {
       console.error(err);
+      this.$sentry.captureException(err);
+      this.$track("registration", "user:update:failed");
+
       this.error = err.message;
       this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
@@ -219,15 +217,13 @@ export default class extends Vue {
 
   @LoadingAnimation
   register() {
-    console.log("register");
+    this.$track("registration", "user:next");
 
     this.$v.$touch();
     this.$emit("validate");
 
-    this.$track("registration", "user");
-
     if (this.$v.$invalid) {
-      console.debug("invalid form", this.$v);
+      this.$track("registration", "user:next:invalid");
       return;
     }
 
@@ -240,6 +236,7 @@ export default class extends Vue {
 
   mounted() {
     this.$store.commit("register/position", 0);
+    this.$track("registration", "user:start");
   }
 }
 </script>

@@ -92,16 +92,16 @@ export default class extends Vue {
   @Prop() match!: MatchDetails;
   @Prop() contact!: MatchContact;
   @Prop() requestedSkills!: { [id: string]: boolean };
-  @Prop({default: false}) disableConnect!: boolean;
+  @Prop({ default: false }) disableConnect!: boolean;
 
   get matchingSkills() {
     if (!this.requestedSkills) return [];
-    return this.match.skills.filter((s) => this.requestedSkills[s.id] == true);
+    return this.match.skills.filter(s => this.requestedSkills[s.id] == true);
   }
 
   get additionalSkills() {
     if (!this.requestedSkills) return this.match.skills;
-    return this.match.skills.filter((s) => this.requestedSkills[s.id] != true);
+    return this.match.skills.filter(s => this.requestedSkills[s.id] != true);
   }
 
   get teaserAll() {
@@ -114,6 +114,8 @@ export default class extends Vue {
 
   @Emit("connect")
   connect() {
+    this.$track("dashboard", "company:connect", "Jetzt verbinden");
+
     return {
       id: this.match.id,
       name: this.contact.firstName,

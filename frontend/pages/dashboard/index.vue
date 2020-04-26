@@ -29,7 +29,7 @@ export default class extends Vue {
   }
 
   async asyncData(context: Context) {
-    console.debug('created called');
+    // console.debug('created called');
 
     const state: IState = context.store.state;
 

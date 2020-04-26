@@ -59,59 +59,54 @@ export default class extends Vue {
   }
 
   created() {
-    this.$track('connect', this.error ? 'failed' : 'success', this.error);
+    this.$track('connect', this.error ? 'failed' : 'success');
     this.$store.commit('support/context', `zum Match`);
   }
 
   async asyncData(context: Context) {
-    try {
-      let result: Partial<Pick<this, "error" | "first" | "last" | "route">> = {};
+    let result: Partial<Pick<this, "error" | "first" | "last" | "route">> = {};
 
-      const params: ConnectParams = JSON.parse(atob(context.params.pathMatch));
-      console.debug('connect', params);
+    const params: ConnectParams = JSON.parse(atob(context.params.pathMatch));
+    // console.debug('connect', params);
 
-      result.first = params.firstName;
-      result.last = params.lastName;
+    result.first = params.firstName;
+    result.last = params.lastName;
 
-      result.route = `/dashboard/match/${params.flow}/${params.origin}`;
+    result.route = `/dashboard/match/${params.flow}/${params.origin}`;
 
-      const client = context.app.apolloProvider!.defaultClient;
-      const mutation = await client.mutate<
-        ConnectMutation,
-        ConnectMutationVariables
-      >({
-        mutation: connectMutation,
-        variables: {
-          id: params.match,
-          origin: params.origin,
-          type: params.flow === "demand" ? MatchType.Demand : MatchType.Supply
-        },
-        errorPolicy: "all"
-      });
+    const client = context.app.apolloProvider!.defaultClient;
+    const mutation = await client.mutate<
+      ConnectMutation,
+      ConnectMutationVariables
+    >({
+      mutation: connectMutation,
+      variables: {
+        id: params.match,
+        origin: params.origin,
+        type: params.flow === "demand" ? MatchType.Demand : MatchType.Supply
+      },
+      errorPolicy: "all"
+    });
 
-      if (
-        mutation.errors &&
-        mutation.errors[0].message == "TOO_MANY_RECIPIENT"
-      ) {
-        result.error = context.app.i18n.t('connect.errors.recipient_' + params.flow, result) as string;
-      } else if (
-        mutation.errors &&
-        mutation.errors[0].message == "TOO_MANY_REQUESTS"
-      ) {
-        result.error = context.app.i18n.t('connect.errors.stop') as string;
-      } else if (
-        mutation.errors
-      ) {
-        result.error = context.app.i18n.t('connect.errors.unkown', {
-          error: mutation.errors[0].message,
-        }) as string;
-      }
-
-      return result;
-    } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 500, message: e.message });
+    if (
+      mutation.errors &&
+      mutation.errors[0].extensions?.code == "TOO_MANY_RECIPIENT"
+    ) {
+      result.error = context.app.i18n.t('connect.errors.recipient_' + params.flow, result) as string;
+    } else if (
+      mutation.errors &&
+      mutation.errors[0].extensions?.code == "TOO_MANY_REQUESTS"
+    ) {
+      result.error = context.app.i18n.t('connect.errors.stop') as string;
+    } else if (
+      mutation.errors
+    ) {
+      result.error = context.app.i18n.t('connect.errors.unkown', {
+        error: mutation.errors[0].extensions?.requestid ?? mutation.errors[0].message,
+      }) as string;
     }
+
+    return result;
   }
 }
 </script>

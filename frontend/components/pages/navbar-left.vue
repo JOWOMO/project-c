@@ -5,7 +5,7 @@
         <row :height="TOPHEIGHT" class="header">
           <slot name="navbar" />
         </row>
-        <row :height="'calc(100vh - ' + TOPHEIGHT + 'px)'" class="scroller">
+        <row id="scroller" :height="'calc(100vh - ' + TOPHEIGHT + 'px)'" class="scroller">
           <slot name="body" />
         </row>
       </layout>

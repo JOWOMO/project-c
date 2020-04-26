@@ -39,25 +39,24 @@ export default class extends Vue {
   @Prop({ type: String, required: false, default: "login" })
   readonly start_component!: String;
 
-  @Prop({ type: String, required: false }) 
+  @Prop({ type: String, required: false })
   readonly target_route!: any;
 
-  @Prop({ type: Object, required: false }) 
+  @Prop({ type: Object, required: false })
   readonly registration!: any;
 
   state: String = '';
 
   mounted() {
     this.state = this.start_component;
+    this.$track("authentication", this.start_component as string);
   }
 
   handleStateChange(event: string, value?: string) {
-    console.debug("handleStateChange", event);
-
     this.$track('authentication', event, value);
 
     if (event === "redirect") {
-      console.log("target route", this.target_route);
+      // console.log("target route", this.target_route);
 
       if (!this.target_route) {
         this.$emit("user-authenticated");

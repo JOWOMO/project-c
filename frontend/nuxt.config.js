@@ -47,7 +47,7 @@ export default {
     title: 'JOWOMO: Deine Plattform für Personalpartnerschaften',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no, initial-scale=1' },
+      { name: 'viewport', content: 'minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no, initial-scale=1, viewport-fit=cover' },
       { name: 'apple-mobile-web-app-title', content: 'JOWOMO: Deine Plattform für Personalpartnerschaften' },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
       { hid: 'description', name: 'description', content: 'JOWOMO vernetzt Unternehmen mit freien Arbeitnehmerkapazitäten und Unternehmen mit aktuellem Mehrbedarf zielgerichtet miteinander, um eine Alternative zu Kurzarbeit zu bieten. Registriere Dein Unternehmen jetzt!' },
@@ -126,6 +126,7 @@ export default {
     identityPoolId: findAWSExport('CognitoIdentityPool'),
     userPoolWebClientId: findAWSExport('CognitoUserPoolClient'),
     useBetaLogo: process.env.USE_BETA_LOGO == 'true',
+    endpoint: findAWSExport('ApiGatewayRestApiId'),
   },
 
   /*
@@ -133,30 +134,16 @@ export default {
   ** See https://github.com/nuxt-community/apollo-module
   */
   apollo: {
-    includeNodeModules: true,
-    authenticationType: '',
-    // optional
-    watchLoading: '~/plugins/apollo-watch-loading-handler.js',
-    // optional
-    errorHandler: '~/plugins/apollo-error-handler.js',
     // required
     defaultOptions: {
       $query: {
         fetchPolicy: 'network-only',
       }
     },
+
     clientConfigs: {
-      default: {
-        cache: null,
-        httpEndpoint: findAWSExport('ApiGatewayRestApiId'),
-        httpLinkOptions: {
-          fetchOptions: {
-            mode: 'cors'
-          },
-        },
-        persisting: false,
-      }
-    },
+      default: '@/apollo/config.js',
+    }
   },
 
   gtm: {
@@ -181,9 +168,6 @@ export default {
   },
 
   sentry: {
-    dsn: process.env.SENTRY_DSN || '',
-    disabled: !process.env.SENTRY_DSN,
-    disableServerSide: true,
     config: {
       release: version,
     },

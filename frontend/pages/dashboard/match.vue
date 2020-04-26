@@ -96,7 +96,7 @@ export default class extends Vue {
   spinnerid!: number;
 
   onLoadMore(state: any) {
-    console.debug('parent onLoadMore', state);
+    // console.debug('parent onLoadMore', state);
     this.$store.commit('match/more', state);
   }
 

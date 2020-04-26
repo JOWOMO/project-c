@@ -32,7 +32,7 @@
         <formSwitch class="sw" :id="'editTeam.isActive'" v-model="editTeam.isActive" />
 
         <div class="lbl" v-if="editTeam.isActive">deaktivieren</div>
-        <div class="lbl" v-if="!editTeam.isActive">Angebot aktivieren</div>
+        <div class="lbl" v-if="!editTeam.isActive">aktivieren</div>
       </div>
 
       <form novalidate @submit.prevent>
@@ -83,7 +83,7 @@
           <div class="skills">
             <button
               :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minLength }"
-              @click.prevent="showTagCloud = !showTagCloud"
+              @click.prevent="showTags"
             >
               Bitte wählen
               <span>+</span>
@@ -228,6 +228,11 @@ export default class extends Vue {
     return result;
   }
 
+  showTags() {
+    this.$track("registration", "team:edit:tags:start");
+    this.showTagCloud = !this.showTagCloud;
+  }
+
   @Emit("input")
   update(team: any) {
     return team;
@@ -248,15 +253,19 @@ export default class extends Vue {
   }
 
   cancel() {
+    this.$track("registration", "team:edit:cancel");
     this.value.expanded = false;
     this.update(this.value);
   }
 
   confirm() {
+    this.$track("registration", "team:edit:ok");
+
     this.$v.$touch();
     this.$emit("validate");
 
     if (this.$v.$invalid) {
+      this.$track("registration", "team:edit:ok:invalid");
       return;
     }
 
@@ -371,6 +380,14 @@ export default class extends Vue {
   }
 }
 
+.save-buttons {
+  justify-self: end;
+
+  button + button {
+    margin-left: $gridsize / 2;
+  }
+}
+
 @media only screen and (max-width: $breakpoint_vl) {
   .display {
     .max-250 {
@@ -424,8 +441,12 @@ export default class extends Vue {
     display: flex;
     flex-direction: column-reverse;
 
+    button + button {
+      margin-left: 0;
+    }
+
     button {
-      margin-top: 21px;
+      margin-top: $gridsize/2;
       min-width: 100%;
     }
   }

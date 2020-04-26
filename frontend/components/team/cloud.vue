@@ -81,8 +81,11 @@ export default class extends Vue {
 
   toggleTag(id: string) {
     if (!find(this.value, v => v == id)) {
+      this.$track("registration", "team:edit:tags:toggle", "enable", id);
       this.value.push(id);
     } else {
+      this.$track("registration", "team:edit:tags:toggle", "disable", id);
+
       // we must keep the array instance
       for (var i = 0; i < this.value.length; i++) {
         if (this.value[i] == id) {
@@ -91,7 +94,7 @@ export default class extends Vue {
       }
     }
 
-    console.debug("Toggle", id, "result", this.value);
+    // console.debug("Toggle", id, "result", this.value);
     this.update();
   }
 
@@ -116,15 +119,18 @@ export default class extends Vue {
 
   @Emit("close-dialog")
   closeDialog() {
-    console.debug("close dialog");
+    this.$track("registration", "team:edit:tags:close");
+
+    // console.debug("close dialog");
     window.document.body.style.overflow = this.saved || "";
   }
 
   saved?: string;
 
   mounted() {
-    console.debug("mounted");
+    this.$track("registration", "team:edit:tags:start");
 
+    // console.debug("mounted");
     this.saved = window.document.body.style.overflow;
     window.document.body.style.overflow = "hidden";
   }

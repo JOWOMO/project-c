@@ -13,7 +13,6 @@
     <p>{{ $t('welcome.' + flow) }}</p>
 
     <div class="buttons">
-      <!-- <button class="secondary" @click.prevent="profile">Profil ansehen</button> -->
       <button class="primary" @click.prevent="dashboard">{{ $t('welcome.button') }}</button>
     </div>
   </div>
@@ -38,41 +37,36 @@ export default class extends Vue {
   name!: string;
 
   get flow() {
-    return this.$route.params.flow || 'demand';
+    return this.$route.params.flow || "demand";
   }
 
   created() {
-    this.$store.commit('support/context', `zur Begrüßung`);
+    this.$track("registration", "welcome:start");
+    this.$store.commit("support/context", `zur Begrüßung`);
   }
 
   dashboard() {
+    this.$track("registration", "welcome:dashboard");
     this.$router.push("/dashboard");
   }
 
   async asyncData(context: Context) {
     let data: Partial<Pick<this, "name">> = {};
 
-    // NO ACCESS to this context here
-    try {
-      if ((context.store.state as IState).auth.isAuthenticated) {
-        const client = context.app.apolloProvider!.defaultClient;
-        const result = await client.query<RegistrationUserQuery>({
-          query: userQuery,
-          fetchPolicy: "network-only"
-        });
+    if ((context.store.state as IState).auth.isAuthenticated) {
+      const client = context.app.apolloProvider!.defaultClient;
+      const result = await client.query<RegistrationUserQuery>({
+        query: userQuery,
+        fetchPolicy: "network-only"
+      });
 
-        if (result.data && result.data.me) {
-          const me = result.data.me;
-          data.name = me.firstName;
-        }
+      if (result.data && result.data.me) {
+        const me = result.data.me;
+        data.name = me.firstName;
       }
-
-      return data;
-    } catch (e) {
-      console.error(e);
-      // we keep going here, no problem (most likely later)
-      // context.error({ statusCode: 500, message: e.message });
     }
+
+    return data;
   }
 }
 </script>
@@ -154,9 +148,7 @@ p {
 }
 
 @media only screen and (max-width: $breakpoint_sm) {
- c
-
-  .buttons {
+  c .buttons {
     text-align: center;
 
     button {

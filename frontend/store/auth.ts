@@ -41,7 +41,7 @@ export const state = () => ({
 
 export const mutations = {
   set(state: IAuthState, user: CognitoUser) {
-    console.info('setting user state to', user);
+    // console.info('setting user state to', user);
 
     state.isAuthenticated = !!user
     state.user = user
@@ -51,7 +51,7 @@ export const mutations = {
 export const getters = {
 }
 
-async function getIdToken(): Promise<string> {
+async function internalGetIdToken(): Promise<string> {
   const currentSession = await Auth.currentSession();
   return currentSession.getIdToken().getJwtToken();
 }
@@ -66,7 +66,7 @@ async function signInAndToken(email: string, password: string): Promise<string> 
   await Auth.currentSession();
 
   // @ts-ignore
-  await this.$apolloHelpers.onLogin(await getIdToken());
+  // await this.$apolloHelpers.onLogin(await internalGetIdToken());
 
   return user;
 }
@@ -82,14 +82,18 @@ export const actions = {
       const user = await Auth.currentAuthenticatedUser();
       commit('set', user);
 
-      // @ts-ignore
-      await this.$apolloHelpers.onLogin(await getIdToken());
+      // // @ts-ignore
+      // await this.$apolloHelpers.onLogin(await internalGetIdToken());
 
       return user;
     } catch (e) {
       commit('set', null);
       return null;
     }
+  },
+
+  getIdToken() {
+    return internalGetIdToken();
   },
 
   // we preserve the login information to be able to
@@ -112,20 +116,20 @@ export const actions = {
       },
     });
 
-    console.log('auth', 'register', user);
+    // console.log('auth', 'register', user);
     commit('set', user.user);
     return user.user;
   },
 
   token() {
-    return getIdToken();
+    return internalGetIdToken();
   },
 
   async confirm(
     { }: ActionContext<IAuthState, IState>,
     { email, code }: Required<Pick<User, 'email'>> & { code: string },
   ) {
-    console.log("code:", code);
+    // console.log("code:", code);
 
     try {
       await Auth.confirmSignUp(email, code);
@@ -141,7 +145,7 @@ export const actions = {
     { }: ActionContext<IAuthState, IState>,
     { email }: Required<Pick<User, 'email'>>
   ) {
-    console.log("reset:", email);
+    // console.log("reset:", email);
     return await Auth.forgotPassword(email);
   },
 
@@ -184,13 +188,13 @@ export const actions = {
     await Auth.signOut();
 
     // @ts-ignore
-    await this.$apolloHelpers.onLogout();
+    // await this.$apolloHelpers.onLogout();k
 
     commit('set', null);
   },
 
   async updateUser({ commit }: ActionContext<IAuthState, IState>, { firstName, lastName }: Required<Pick<User, 'firstName' | 'lastName'>>) {
-    console.log("user payload", firstName, lastName)
+    // console.log("user payload", firstName, lastName)
 
     let user = await Auth.currentAuthenticatedUser();
 

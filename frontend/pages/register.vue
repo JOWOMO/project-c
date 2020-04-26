@@ -40,7 +40,7 @@ export default class extends Vue {
   position!: number;
 
   created() {
-    console.debug("register", "created");
+    // console.debug("register", "created");
 
     const flow = this.$route.params.flow;
 

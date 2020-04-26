@@ -49,8 +49,7 @@ import { IMatchState, MatchFilter } from "../../../../store/match";
 import { IState } from "../../../../store";
 
 @Component({
-  components: { companyCard },
-  scrollToTop: true
+  components: { companyCard }
 })
 export default class extends Vue {
   feed: {
@@ -58,6 +57,14 @@ export default class extends Vue {
     query?: ObservableQuery<DemandMatchesQuery, DemandMatchesQueryVariables>;
     data?: MatchDemandResult; // other type is equal
   } = {};
+
+  @Watch('$route.fullPath', {immediate: true})
+  scrollTop() {
+    const scroller = window.document.getElementById("scroller");
+    if (scroller) {
+      scroller.scrollTo(0, 0);
+    }
+  }
 
   get noRecords() {
     return !this.feed.data || this.feed.data.matches.length === 0;
@@ -101,7 +108,7 @@ export default class extends Vue {
       pictureUrl: party.pictureUrl
     };
 
-    console.log("onConnect", params);
+    // console.log("onConnect", params);
     this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
@@ -111,9 +118,9 @@ export default class extends Vue {
   @LoadingAnimation
   @Watch("filter", { deep: true })
   async reload(filter: MatchFilter) {
-    console.debug("filter changed", filter);
+    this.$track("dashboard", "filter", "KM", filter.range.toString());
 
-    return new Promise(resolve =>
+    return new Promise((resolve, fail) =>
       this.feed
         .query!.refetch({
           id: this.$route.params.id,
@@ -125,7 +132,7 @@ export default class extends Vue {
           this.$set(this.feed, "data", data.data.result);
           resolve();
         })
-        .catch(resolve)
+        .catch(fail)
     );
   }
 
@@ -137,7 +144,7 @@ export default class extends Vue {
 
   @Watch("triggerLoadMore")
   onLoadMore() {
-    console.debug("child onLoadMore");
+    // console.debug("child onLoadMore");
     const $state = this.loadMore;
 
     if (!this.feed.data!.pageInfo.hasNextPage) {
@@ -192,58 +199,46 @@ export default class extends Vue {
     const flow = context.params.flow;
     const id = context.params.id;
 
-    try {
-      const client = context.app.apolloProvider!.defaultClient;
-      const matchQuery = client.watchQuery<
-        DemandMatchesQuery,
-        DemandMatchesQueryVariables
-      >({
-        query: flow == "demand" ? getDemandMatch : getSupplyMatch,
-        variables: {
-          id
+    const client = context.app.apolloProvider!.defaultClient;
+    const matchQuery = client.watchQuery<
+      DemandMatchesQuery,
+      DemandMatchesQueryVariables
+    >({
+      query: flow == "demand" ? getDemandMatch : getSupplyMatch,
+      variables: {
+        id
+      },
+      fetchPolicy: "network-only"
+    });
+
+    return new Promise((resolve, fail) => {
+      const feed = {
+        skills: {},
+        query: matchQuery,
+        data: {}
+      };
+
+      matchQuery.subscribe({
+        next({ data }) {
+          // console.log("received", data);
+
+          feed.skills = (data.request?.skills || []).reduce((p, c) => {
+            p[c.id] = true;
+            return p;
+          }, {} as any);
+
+          feed.data = data.result;
+          context.store.commit("match/newspinner");
+
+          // we return first result this way
+          resolve({ feed });
         },
-        fetchPolicy: "network-only"
+
+        error(e) {
+          fail(e);
+        }
       });
-
-      return new Promise((resolve, fail) => {
-        const feed = {
-          skills: {},
-          query: matchQuery,
-          data: {}
-        };
-
-        matchQuery.subscribe({
-          next({ data }) {
-            // console.log("received", data);
-
-            feed.skills = (data.request?.skills || []).reduce((p, c) => {
-              p[c.id] = true;
-              return p;
-            }, {} as any);
-
-            feed.data = data.result;
-
-            context.store.commit('match/newspinner');
-            // we return first result this way
-            resolve({ feed });
-          },
-
-          error(e) {
-            console.error(e);
-            context.error({
-              statusCode: 500,
-              message: "Leider hat das nicht geklappt"
-            });
-
-            resolve();
-          }
-        });
-      });
-    } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 500, message: e.message });
-      throw e;
-    }
+    });
   }
 }
 </script>

@@ -107,77 +107,69 @@ export default class extends Vue {
       | "industry"
     >> = {};
 
-    // NO ACCESS to this context here
-    try {
-      const client = context.app.apolloProvider!.defaultClient;
+    const client = context.app.apolloProvider!.defaultClient;
 
-      const result = await client.query<
-        RegistrationCompanyQuery,
-        RegistrationCompanyQueryVariables
-      >({
-        query: userQuery,
-        fetchPolicy: "network-only"
-      });
+    const result = await client.query<
+      RegistrationCompanyQuery,
+      RegistrationCompanyQueryVariables
+    >({
+      query: userQuery,
+      fetchPolicy: "network-only"
+    });
 
-      if (result.data && result.data.industries) {
-        data.industries = result.data.industries;
-      }
-
-      if (result.data && result.data.me) {
-        const me = result.data.me;
-
-        if (me.companies && me.companies.length > 0) {
-          const company = me.companies[0];
-
-          console.debug("found company", company);
-
-          data.id = company.id;
-          data.name = company.name;
-          data.address = company.addressLine1;
-          data.city = company.city;
-          data.postalcode = company.postalCode;
-
-          data.industry = company.industry?.id;
-        }
-      }
-
-      // will be merged with local variables
-      return data;
-    } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 500, message: e.message });
+    if (result.data && result.data.industries) {
+      data.industries = result.data.industries;
     }
+
+    if (result.data && result.data.me) {
+      const me = result.data.me;
+
+      if (me.companies && me.companies.length > 0) {
+        const company = me.companies[0];
+
+        data.id = company.id;
+        data.name = company.name;
+        data.address = company.addressLine1;
+        data.city = company.city;
+        data.postalcode = company.postalCode;
+
+        data.industry = company.industry?.id;
+      }
+    }
+
+    // will be merged with local variables
+    return data;
   }
 
   back() {
+    this.$track("registration", "company:back");
     this.$router.push(`/register/${this.$route.params.flow}`);
   }
 
   @LoadingAnimation
   async updateCompany() {
+    this.$track("registration", "company:next");
+
     this.$v.$touch();
     this.$emit("validate");
 
     if (this.$v.$invalid) {
-      console.debug(this.$v);
-
+      this.$track("registration", "company:next:invalid");
       return;
     }
-
-    this.$track('registration', 'company');
 
     try {
       const client = this.$apollo.getClient();
 
-      console.debug(
-        "Updating company whith",
-        this.id,
-        this.name,
-        this.address,
-        this.postalcode,
-        this.city,
-        this.industry
-      );
+      // console.debug(
+      //   "Updating company whith",
+      //   this.id,
+      //   this.name,
+      //   this.address,
+      //   this.postalcode,
+      //   this.city,
+      //   this.industry
+      // );
 
       await this.$apollo.mutate<
         AddCompanyMutation,
@@ -197,12 +189,16 @@ export default class extends Vue {
       this.$router.push(`/register/${this.$route.params.flow}/team`);
     } catch (err) {
       console.error(err);
+      this.$sentry.captureException(err);
+      this.$track("registration", "company:update:failed");
+
       this.$swal.alert("Das hat nicht geklappt", err.message, "error");
     }
   }
 
   mounted() {
     this.$store.commit('register/position', 1);
+    this.$track("registration", "company:start");
   }
 }
 </script>

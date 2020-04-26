@@ -48,7 +48,7 @@ jobs:
         echo "::set-env name=STAGE::test"
         echo "::set-env name=USE_BETA_LOGO::true"
         echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
-        echo "::set-env name=SENTRY_PUBLISH_RELEASE::${{ secrets.SENTRY_DSN }}"
+        echo "::set-env name=SENTRY_PUBLISH_RELEASE::true"
         echo "::set-env name=VERSION_SUFFIX::-test"
         
     - name: Set env to production
@@ -57,7 +57,7 @@ jobs:
         echo "::set-env name=STAGE::prod"
         echo "::set-env name=USE_BETA_LOGO::false"
         echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
-        echo "::set-env name=SENTRY_PUBLISH_RELEASE::${{ secrets.SENTRY_DSN }}"
+        echo "::set-env name=SENTRY_PUBLISH_RELEASE::true"
         echo "::set-env name=VERSION_SUFFIX::"
 
     - uses: chrislennon/action-aws-cli@v1.1

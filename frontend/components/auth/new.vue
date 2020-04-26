@@ -19,7 +19,7 @@
         <formInput :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
       </div>
 
-      <span id="error" v-if="error">{{ error }}</span>
+      <!-- <span id="error" v-if="error">{{ error }}</span> -->
 
       <div class="buttons">
         <button class="secondary" @click.prevent="back">Zurück</button>
@@ -68,10 +68,12 @@ export default class extends Vue {
 
   mounted() {
     this.email = this.existingEMail || '';
+    this.$track('authentication', 'change:start');
   }
 
   @Emit('change-state')
   back() {
+    this.$track('authentication', 'change:back');
     return 'reset';
   }
 
@@ -79,12 +81,12 @@ export default class extends Vue {
   async resetPassword() {
     this.$v.$touch();
     this.$emit("validate");
+    this.$track('authentication', 'change:ok');
 
     if (this.$v.$invalid) {
+      this.$track('authentication', 'change:ok:invalid');
       return;
     }
-
-    this.$track('authentication', 'reset-password');
 
     try {
       const user = {
@@ -104,6 +106,9 @@ export default class extends Vue {
     } catch (err) {
       console.error(err);
       this.error = formatMessage(err);
+      this.$track('authentication', `change:failed:${err.code}`);
+
+      this.$swal.alert("Das hat nicht geklappt", this.error, "error");
     }
   }
 }

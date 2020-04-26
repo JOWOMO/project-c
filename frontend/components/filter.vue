@@ -43,7 +43,6 @@ export default class extends Vue {
   changeRange(option: string) {
     const range = parseInt(option.replace(/[^\d]/ig, ''), 10);
     this.$store.commit('match/range', range);
-    this.$track("dashboard", "filter", "KM", range.toString());
   }
 
   // @Emit("viewtype")
