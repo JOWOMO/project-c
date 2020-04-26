@@ -180,8 +180,8 @@ export default {
   },
 
   sentry: {
-    dsn: '',
-    disabled: true,
+    dsn: process.env.SENTRY_DSN || '',
+    disabled: !process.env.SENTRY_DSN,
     disableServerSide: true,
     config: {}, // Additional config
   },
