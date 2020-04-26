@@ -33,6 +33,9 @@ export default class extends Vue {
 
     const state: IState = context.store.state;
 
+    // wait for the parent to load data
+    await state.match.loaded;
+
     if (state.match.demands.length > 0) {
       context.redirect(301, `/dashboard/match/demand/${state.match.demands[0].id}`);
       return;

@@ -86,6 +86,7 @@ export type Industry = {
 
 
 export enum MatchAnswer {
+  Opened = 'Opened',
   Accept = 'Accept',
   Reject = 'Reject'
 }
@@ -357,6 +358,7 @@ export type ConnectMutation = (
 
 export type SetMatchStateMutationVariables = {
   id: Scalars['ID'];
+  answer: MatchAnswer;
 };
 
 

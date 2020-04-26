@@ -20,6 +20,7 @@ on:
 
 jobs:
   build:
+    if: github.repository == 'JOWOMO/project-c'
     runs-on: ubuntu-latest
 
     steps:

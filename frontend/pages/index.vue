@@ -153,7 +153,7 @@
           </div>
           <h3 class="padding">Support</h3>
           <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für dich da. Wenn Du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
-          <p><a href="mailto:info@jowomo.atlassian.net">info@jowomo.atlassian.net</a></p>
+          <p><a href="mailto:support@jowomo.de">support@jowomo.de</a></p>
         </div>
       </div>
     </div>

@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-var glob = require('glob');
-var Mode = require('frontmatter-markdown-loader/mode');
+const glob = require('glob');
+const Mode = require('frontmatter-markdown-loader/mode');
+const version = require('./package.json').version;
 
 if (!fs.existsSync('aws.json')) {
   console.error(`please run: npm run config:aws`);
@@ -180,10 +181,15 @@ export default {
   },
 
   sentry: {
-    dsn: '',
-    disabled: true,
+    dsn: process.env.SENTRY_DSN || '',
+    disabled: !process.env.SENTRY_DSN,
     disableServerSide: true,
-    config: {}, // Additional config
+    config: {
+      release: version,
+    },
+    webpackConfig: {
+      release: version,
+    }
   },
 
   /*

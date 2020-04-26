@@ -1,5 +1,5 @@
-mutation setMatchState($id: ID!) {
-  setMatchState(answer: Accept, id: $id) {
+mutation setMatchState($id: ID!, $answer: MatchAnswer!) {
+  setMatchState(answer: $answer, id: $id) {
     id
     name
     email

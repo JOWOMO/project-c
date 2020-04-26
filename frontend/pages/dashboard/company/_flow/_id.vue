@@ -6,7 +6,7 @@
 
     <!-- <h2 v-if="company.demands && company.demands.length > 0">Sucht</h2> -->
     <div class="list" v-if="company.demands && company.demands.length > 0">
-      <teamCarc
+      <teamCard
         class="company-card"
         flow="supply"
         v-for="demand in company.demands"
@@ -21,7 +21,7 @@
 
     <!-- <h2 v-if="company.supplies && company.supplies.length > 0">Bietet</h2> -->
     <div class="list" v-if="company.supplies && company.supplies.length > 0">
-      <teamCarc
+      <teamCard
         class="company-card"
         flow="demand"
         v-for="supply in company.supplies"
@@ -40,7 +40,7 @@
 import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 
-import teamCarc from "@/components/match/team.vue";
+import teamCard from "@/components/match/team.vue";
 import fromDemand from "@/apollo/queries/dashboard/company_demand.gql";
 import fromSupply from "@/apollo/queries/dashboard/company_supply.gql";
 
@@ -53,7 +53,7 @@ import { ConnectParams } from "@/pages/connect/request/_.vue";
 
 @Component({
   components: {
-    teamCarc
+    teamCard
   },
   scrollToTop: true,
 })
@@ -93,6 +93,15 @@ export default class Details extends Vue {
         origin: context.query.id as string,
       }
     });
+
+    if (!result.data.result?.company) {
+      context.error({
+          statusCode: 404,
+          message: 'Der Datensatz ist uns nicht bekannt' as string
+      });
+
+      return;
+    }
 
     const skills = (result.data.query?.skills || []).reduce((p, c) => {
         p[c.id] = true;

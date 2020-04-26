@@ -23,6 +23,6 @@ class DemandLoader(DataLoader):
 
 def demand_by_id(root, info, id=None):
     id = root["id"] if id is None else id
-    current_app.logger.debug("demand_by_id", id)
+    current_app.logger.debug("demand_by_id %s", id)
 
     return g.demand_loader.load(id)

@@ -1,11 +1,11 @@
 <template>
   <div class="root">
     <hdr>Ich suche</hdr>
-    <item v-for="(element) in demands" :key="'d_' + element.id">
+    <item v-for="(element) in demands" :key="element.id">
       <lnk
         :text="element.name"
         :target="'/dashboard/match/demand/' + element.id"
-        :selected="element.id == selected && flow == 'demand'"
+        :selected="element.id == selected"
       />
     </item>
     <item>
@@ -13,11 +13,11 @@
     </item>
 
     <hdr>Ich biete</hdr>
-    <item v-for="(element) in supplies" :key="'s_' + element.id">
+    <item v-for="(element) in supplies" :key="element.id">
       <lnk
         :text="element.name"
         :target="'/dashboard/match/supply/' + element.id"
-        :selected="element.id == selected && flow == 'supply'"
+        :selected="element.id == selected"
       />
     </item>
     <item>

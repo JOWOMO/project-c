@@ -1,26 +1,29 @@
 <template>
   <div class="container">
-    <div>
-      <div class="images">
-        <div class="frame">
-          <div class="img left" />
-        </div>
-        <div class="frame">
-          <div class="img right" />
-        </div>
+    <div class="images">
+      <div class="frame">
+        <div class="img left" />
       </div>
+      <div class="frame">
+        <div class="img right" />
+      </div>
+    </div>
 
-      <h1>{{data.firstName}} hat Dich gefunden!</h1>
+    <h1>{{ $t('response.title', {first: data.firstName, last: data.lastName}) }}</h1>
+    <h2>{{ $t('response.text', {first: data.firstName, last: data.lastName}) }}</h2>
 
-      <h2>{{data.firstName}} {{data.lastName}}</h2>
-      <p class="padding">{{data.name}}</p>
-      <p>{{data.addressLine1}}, {{data.postalCode}} {{data.city}}</p>
-      <p class="padding email">{{data.email}}</p>
+    <p class="padding2">{{data.name}}</p>
+    <p>{{data.firstName}} {{data.lastName}}</p>
+    <p>{{data.addressLine1}}, {{data.postalCode}} {{data.city}}</p>
+    <p class="padding email">{{data.email}}</p>
+
+    <div class="padding2 buttons">
+      <button class="cta" @click.prevent="email">{{ $t('response.answer') }}</button>
+      <button class="primary" @click.prevent="nomatch">{{ $t('response.no_match') }}</button>
     </div>
 
     <div class="buttons">
-      <button class="primary" @click.prevent="email">Per E-Mail antworten</button>
-      <button class="secondary" @click.prevent="faq">Fragen zur Abwicklung</button>
+      <button class="secondary" @click.prevent="faq">{{ $t('response.faq') }}</button>
     </div>
   </div>
 </template>
@@ -32,6 +35,7 @@ import {
   SetMatchStateMutation,
   SetMatchStateMutationVariables,
   MatchDetails,
+  MatchAnswer
 } from "@/apollo/schema";
 
 import connectMutation from "@/apollo/mutations/connect_state.gql";
@@ -51,23 +55,55 @@ export default class extends Vue {
   data!: MatchDetails;
 
   faq() {
-    this.$track('connect', 'faq');
-    this.$router.push('/info/faq');
+    this.$track("connect", "faq");
+    this.$router.push("/info/faq");
   }
 
-  email() {
-    this.$track('connect', 'mail');
-    window.open(`mailto:${this.data.email}?subject=Ihre Nachricht über JOWOMO!`)
+  async response(answer: MatchAnswer) {
+    const response = await this.$apollo.mutate<
+      SetMatchStateMutation,
+      SetMatchStateMutationVariables
+    >({
+      mutation: connectMutation,
+      variables: {
+        id: this.$route.params.id!,
+        answer: MatchAnswer.Accept,
+      },
+      errorPolicy: "all"
+    });
+
+    return response;
+  }
+
+  async email() {
+    this.$track("connect", "accept");
+    await this.response(MatchAnswer.Accept);
+
+    window.open(
+      `mailto:${this.data.email}?subject=${this.$t("response.mail")}`
+    );
   }
 
   created() {
-    this.$track('connect', 'response');
-    this.$store.commit('support/context', `zum Match`);
+    this.$track("connect", "open");
+    this.$store.commit("support/context", `zum Match`);
+  }
+
+  async nomatch() {
+    this.$track("connect", "reject");
+    await this.response(MatchAnswer.Reject);
+
+    this.$swal.alert(
+      this.$t('response.thanks.title') as string,
+      // this.$t('response.thanks.text', {first: this.data.firstName, last: this.data.lastName}) as string,
+      '',
+      'success'
+    );
   }
 
   async asyncData(context: Context) {
     try {
-      let result: Partial<Pick<this, "data" >> = {};
+      let result: Partial<Pick<this, "data">> = {};
 
       const client = context.app.apolloProvider!.defaultClient;
       const mutation = await client.mutate<
@@ -77,17 +113,23 @@ export default class extends Vue {
         mutation: connectMutation,
         variables: {
           id: context.params.id!,
+          answer: MatchAnswer.Opened
         },
         errorPolicy: "all"
       });
 
-      if (
-        mutation.errors &&
-        mutation.errors[0].message == "NOT_FOUND"
-      ) {
-        context.error({ statusCode: 404, message: 'Der Datensatz konnte nicht gefunden werden' });
+      if (mutation.errors && mutation.errors[0].message == "NOT_FOUND") {
+        context.error({
+          statusCode: 404,
+          message: context.app.i18n.t("response.errors.notfound") as string
+        });
       } else if (mutation.errors) {
-        context.error({ statusCode: 500, message: `Es ist ein unbekannter Fehler aufgetreten: ` + mutation.errors[0].message });
+        context.error({
+          statusCode: 500,
+          message: context.app.i18n.t("response.errors.unknown", {
+            error: mutation.errors[0].message
+          }) as string
+        });
       } else {
         result.data = mutation.data!.setMatchState!;
       }
@@ -106,7 +148,7 @@ export default class extends Vue {
 @import "@/assets/scales";
 
 .container {
-  display: flex;
+  display: block;
   flex-direction: column;
 
   justify-content: center;
@@ -117,8 +159,8 @@ export default class extends Vue {
 }
 
 h1 {
-  padding-top: 81px;
-  padding-bottom: 21px;
+  padding-top: $gridsize * 2;
+  padding-bottom: $gridsize/2;
   text-align: center;
 }
 
@@ -127,7 +169,6 @@ h2 {
 }
 
 p {
-  max-width: 600px;
   text-align: center;
 }
 
@@ -135,17 +176,32 @@ p {
   color: $headercolor;
 }
 
+.padding2 {
+  padding-top: $gridsize;
+}
+
 .padding {
   padding-top: $gridsize/2;
 }
 
+.padding3 {
+  padding-top: $gridsize * 1.5;
+}
+
 .buttons {
-  padding-top: 76px;
+  text-align: center;
 
   button {
     width: 260px;
-    margin-left: 24px;
   }
+
+  button + button {
+    margin-left: $gridsize/2;
+  }
+}
+
+.buttons + .buttons {
+  padding-top: $gridsize/2;
 }
 
 .images {
@@ -190,7 +246,7 @@ p {
 }
 
 @media only screen and (max-width: $breakpoint_sm) {
- .images {
+  .images {
     .frame {
       border: 3px solid $border;
       width: 150px !important;
@@ -209,6 +265,10 @@ p {
 
     button {
       margin-top: 12px;
+    }
+
+    button + button {
+      margin-left: 0;
     }
   }
 }

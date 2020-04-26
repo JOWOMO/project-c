@@ -15,7 +15,7 @@ Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG
 ## Kontakt
 
 Du hast Fragen zur Nutzung der Plattform oder über uns? Schreib uns, wir sind für dich da. 
-[info@jowomo.atlassian.net](mailto:info@jowomo.atlassian.net)
+[support@jowomo.de](mailto:support@jowomo.de)
 
 ## Betreiber
 

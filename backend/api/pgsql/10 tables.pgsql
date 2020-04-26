@@ -187,7 +187,12 @@ CREATE TABLE IF NOT EXISTS btb_data.contact_request
     response_id uuid not null,
     response jsonb not null,
 
+    date_opened timestamp with time zone,
     date_accepted timestamp with time zone,
     date_rejected timestamp with time zone
 );
 
+-- migration
+alter table btb_data.contact_request
+    add column if not exists  date_opened timestamp with time zone
+;

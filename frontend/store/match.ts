@@ -10,6 +10,7 @@ export type MatchFilter = {
 }
 
 export interface IMatchState {
+  loaded: Promise<void>;
   me?: Pick<User, "id" | "firstName" | "lastName"> | null,
   demands: Demand[],
   supplies: Supply[],
@@ -34,7 +35,11 @@ declare module "vuex" {
   }
 }
 
+let resolveLoaded: () => void;
+const loadedState = new Promise((resolve) => resolveLoaded = resolve);
+
 export const state = () => ({
+  loaded: loadedState,
   spinnerid: 0,
   filter: {
     range: 30,
@@ -84,6 +89,8 @@ export const actions = {
       demands: result.data.activeDemands,
       supplies: result.data.activeSupplies,
       me: result.data.me,
-    })
+    });
+
+    resolveLoaded();
   }
 }

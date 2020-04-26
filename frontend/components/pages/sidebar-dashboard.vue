@@ -6,7 +6,7 @@
         :key="team.id"
         :name="team.name"
         :to="'/dashboard/match/demand/' + team.id"
-        :selected="team.id == selected && flow == 'demand'"
+        :selected="team.id == selected"
       />
 
       <div class="manage">
@@ -20,7 +20,7 @@
         :key="team.id"
         :name="team.name"
         :to="'/dashboard/match/supply/' + team.id"
-        :selected="team.id == selected && flow == 'supply'"
+        :selected="team.id == selected"
       />
 
       <div class="manage">
