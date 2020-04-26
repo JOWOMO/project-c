@@ -102,43 +102,38 @@ export default class extends Vue {
   }
 
   async asyncData(context: Context) {
-    try {
-      let result: Partial<Pick<this, "data">> = {};
+    let result: Partial<Pick<this, "data">> = {};
 
-      const client = context.app.apolloProvider!.defaultClient;
-      const mutation = await client.mutate<
-        SetMatchStateMutation,
-        SetMatchStateMutationVariables
-      >({
-        mutation: connectMutation,
-        variables: {
-          id: context.params.id!,
-          answer: MatchAnswer.Opened
-        },
-        errorPolicy: "all"
+    const client = context.app.apolloProvider!.defaultClient;
+    const mutation = await client.mutate<
+      SetMatchStateMutation,
+      SetMatchStateMutationVariables
+    >({
+      mutation: connectMutation,
+      variables: {
+        id: context.params.id!,
+        answer: MatchAnswer.Opened
+      },
+      errorPolicy: "all"
+    });
+
+    if (mutation.errors && mutation.errors[0].extensions?.code == "NOT_FOUND") {
+      context.error({
+        statusCode: 404,
+        message: context.app.i18n.t("response.errors.notfound") as string
       });
-
-      if (mutation.errors && mutation.errors[0].message == "NOT_FOUND") {
-        context.error({
-          statusCode: 404,
-          message: context.app.i18n.t("response.errors.notfound") as string
-        });
-      } else if (mutation.errors) {
-        context.error({
-          statusCode: 500,
-          message: context.app.i18n.t("response.errors.unknown", {
-            error: mutation.errors[0].message
-          }) as string
-        });
-      } else {
-        result.data = mutation.data!.setMatchState!;
-      }
-
-      return result;
-    } catch (e) {
-      console.error(e);
-      context.error({ statusCode: 500, message: e.message });
+    } else if (mutation.errors) {
+      context.error({
+        statusCode: 500,
+        message: context.app.i18n.t("response.errors.unknown", {
+          error: mutation.errors[0].extensions?.requestid ?? mutation.errors[0].message
+        }) as string
+      });
+    } else {
+      result.data = mutation.data!.setMatchState!;
     }
+
+    return result;
   }
 }
 </script>
