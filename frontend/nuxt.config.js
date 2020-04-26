@@ -47,7 +47,7 @@ export default {
     title: 'JOWOMO: Deine Plattform für Personalpartnerschaften',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no, initial-scale=1' },
+      { name: 'viewport', content: 'minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no, initial-scale=1, viewport-fit=cover' },
       { name: 'apple-mobile-web-app-title', content: 'JOWOMO: Deine Plattform für Personalpartnerschaften' },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
       { hid: 'description', name: 'description', content: 'JOWOMO vernetzt Unternehmen mit freien Arbeitnehmerkapazitäten und Unternehmen mit aktuellem Mehrbedarf zielgerichtet miteinander, um eine Alternative zu Kurzarbeit zu bieten. Registriere Dein Unternehmen jetzt!' },

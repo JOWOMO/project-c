@@ -35,7 +35,7 @@ export default class extends Vue {
 
   hide() {
     if (this.background) this.background.style.visibility = "hidden";
-    if (this.menu) this.menu.style.right = "-70vw";
+    if (this.menu) this.menu.style.right = "-80vw";
 
     window.document.body.style.overflow = this.saved || '';
   }
@@ -63,7 +63,7 @@ $radius: 68px;
   user-select: none;
   background-color: rgba(#000000, 0.4);
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
@@ -84,13 +84,14 @@ $radius: 68px;
   user-select: none;
 
   top: 0;
-  right: -70vw;
-  width: 70vw;
+  right: -80vw;
+  width: 80vw;
 
   margin: 0;
   padding: 0;
+  padding-bottom: 120px;
 
-  position: absolute;
+  position: fixed;
   z-index: 9999;
 
   background-color: $uiComponent;
