@@ -36,7 +36,7 @@ export default class extends Vue {}
   height: 100vh;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-height: $breakpoint_sm) {
   .page {
     display: block;
   }
@@ -46,7 +46,7 @@ export default class extends Vue {}
   }
 }
 
-@media only screen and (max-height: $breakpoint_sm) {
+@media only screen and (max-width: $breakpoint_sm) {
   .page {
     display: block;
   }

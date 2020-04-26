@@ -241,6 +241,10 @@ and c.owner_external_id = :external_id
             "your_team_id": match["id"],
         }
 
+        current_app.logger.debug(
+            "Parameters %s", data,
+        )
+
         template = match_template(data)
         send_email(to_email, template)
 

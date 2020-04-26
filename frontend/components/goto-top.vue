@@ -31,7 +31,7 @@ export default class extends Vue {
       this.isVisible = false;
     }
 
-    console.debug('offset', offset, this.isVisible);
+    // console.debug('offset', offset, this.isVisible);
   }
 
   mounted(el: any) {

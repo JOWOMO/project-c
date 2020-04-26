@@ -29,8 +29,9 @@ class MatchDetails(ObjectType):
 
 
 class MatchAnswer(graphene.Enum):
-    Accept = 1
-    Reject = 2
+    Opened = 1
+    Accept = 2
+    Reject = 3
 
 
 DISABLE_CHECK = (
@@ -60,17 +61,17 @@ from
 
     left join btb.match_team_demand d
       on
-            match_type = 'supply'
-        and d.record_id = response_id
+            match_type = 'demand'
+        and d.record_id = r.request_id
         -- response must be from calling user
         {escape} and d.external_id = :user
 
     left join btb.match_team_supply s
       on
-            match_type = 'demand'
-        and s.record_id = response_id
+            match_type = 'supply'
+        and s.record_id = r.request_id
         -- response must be from calling user
-        {escape} and d.external_id = :user
+        {escape} and s.external_id = :user
 
     join btb.company_with_contact c on
       -- there will only be one
@@ -89,6 +90,13 @@ where
             if match is None:
                 raise ValueError("NOT_FOUND")
 
+            if answer == MatchAnswer.Accept:
+                column = "date_accepted"
+            elif answer == MatchAnswer.Opened:
+                column = "date_opened"
+            else:
+                column = "date_rejected"
+
             # store timestamp
             conn.execute(
                 text(
@@ -100,9 +108,7 @@ set
 where
     id = :id
 and {column} is null
-            """.format(
-                        column="date_accepted" if answer == 1 else "date_rejected"
-                    )
+            """.format(column=column)
                 ),
                 id=id,
             )

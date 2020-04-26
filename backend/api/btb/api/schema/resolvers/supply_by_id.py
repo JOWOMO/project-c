@@ -23,6 +23,6 @@ class SupplyLoader(DataLoader):
 
 def supply_by_id(root, info, id=None):
     id = root["id"] if id is None else id
-    current_app.logger.debug("supply_by_id", id)
+    current_app.logger.debug("supply_by_id %s", id)
 
     return g.supply_loader.load(id)

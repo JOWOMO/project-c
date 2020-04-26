@@ -6,16 +6,16 @@ menu:
   label: Fragen und Antworten
   items:
     - 
-      label: Fragen zur Nutzergruppe
+      label: zur Nutzergruppe
       to: '#fragen-zur-nutzergruppe'
 
     - 
-      label: Fragen zur Nutzung
+      label: zur Nutzung
       to: '#fragen-zur-nutzung'
 
     - 
-      label: Umsetzung der Partnerschaft
-      to: '#umsetzung-der-partnerschaft'
+      label: zur Personalpartnerschaft
+      to: '#fragen-zur-umsetzung-der-personalpartnerschaft'
 ---
 
 # Fragen und Antworten
@@ -90,7 +90,7 @@ Zudem freuen wir uns über Dein Feedback, welche konkreten Fähigkeiten Du in de
 
 </faq> 
 
-## Umsetzung der Partnerschaft
+## Fragen zur Umsetzung der Personalpartnerschaft
 
 <faq question="Ich habe ein potentielles Partnerunternehmen gefunden. Wie geht es weiter?"> 
 

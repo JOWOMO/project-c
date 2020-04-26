@@ -107,6 +107,30 @@ export default {
       }
     },
 
+    response: {
+      title: '{first} {last} hat reagiert!',
+
+      text: '{first} {last} möchte sich mit Dir vernetzen, um eine mögliche Personalpartnerschaft zu besprechen.',
+
+      answer: 'Super! Per E-Mail antworten',
+      no_match: 'Passt überhaupt nicht',
+
+      faq: 'Details zur Abwicklung',
+      mail: 'Ihre Nachricht über JOWOMO!',
+
+      judge: "Kannst Du uns eine Einschätzung des Matches geben?",
+
+      errors: {
+        notfound: 'Der Datensatz konnte nicht gefunden werden.',
+        unknown: 'Es ist ein unbekannter Fehler aufgetreten: {error}'
+      },
+
+      thanks: {
+        title: 'Vielen Dank für die Rückmeldung!',
+        text: 'Wir haben {first} {last} Deine Entscheidung mitgeteilt.',
+      }
+    },
+
     feedback: {
       title: 'Was können wir besser machen?',
       text: 'Erzählen uns von Deiner Idee für eine neue Funktion oder Verbesserung. Hat etwas nicht geklappt?',

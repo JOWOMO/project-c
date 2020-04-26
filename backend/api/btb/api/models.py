@@ -9,7 +9,12 @@ class DB:
 
         # lambda uses a single container per request model
         # we do the pooling via pgbouncer
-        self.engine = create_engine(url, echo=app.debug, poolclass=NullPool)
+        self.engine = create_engine(
+            url, 
+            echo=True, 
+            echo_pool=True,
+            poolclass=NullPool,
+        )
 
 
 db = DB()

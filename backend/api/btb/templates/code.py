@@ -8,7 +8,7 @@ def code_template(code):
     frontend = (
         environ["FRONTEND_URL"]
         if "FRONTEND_URL" in environ
-        else "http://localhost:5000"
+        else "http://localhost:3000"
     )
 
     subject = "JOWOMO: Bitte bestätige Deine E-Mail Adresse"

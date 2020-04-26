@@ -73,7 +73,7 @@ export default class extends Vue {
     color: $inputtextcolor;
 
     &:hover {
-      cursor: default;
+      // cursor: default;
       color: $inputtextcolor;
     }
   }
