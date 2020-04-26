@@ -20,6 +20,7 @@ on:
 
 jobs:
   build:
+    if: github.repository == 'JOWOMO/project-c'
     runs-on: ubuntu-latest
 
     steps:
@@ -53,7 +54,7 @@ jobs:
     - name: Set env to production
       if: endsWith(github.ref, '/master')
       run: |
-        echo "::set-env name=STAGE::prod"
+        echo "::set-env name=STAGE::prod"gith
         echo "::set-env name=USE_BETA_LOGO::false"
         echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
         echo "::set-env name=SENTRY_PUBLISH_RELEASE::${{ secrets.SENTRY_DSN }}"
