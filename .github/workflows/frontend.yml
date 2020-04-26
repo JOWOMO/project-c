@@ -46,6 +46,7 @@ jobs:
         echo "::set-env name=STAGE::test"
         echo "::set-env name=USE_BETA_LOGO::true"
         echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
+        echo "::set-env name=SENTRY_PUBLISH_RELEASE::${{ secrets.SENTRY_DSN }}"
         
     - name: Set env to production
       if: endsWith(github.ref, '/master')
@@ -53,6 +54,7 @@ jobs:
         echo "::set-env name=STAGE::prod"
         echo "::set-env name=USE_BETA_LOGO::false"
         echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
+        echo "::set-env name=SENTRY_PUBLISH_RELEASE::${{ secrets.SENTRY_DSN }}"
 
     - uses: chrislennon/action-aws-cli@v1.1
 
@@ -67,6 +69,8 @@ jobs:
 
     - name: Generate 
       run: |
+        PACKAGE_VERSION=$(node -p -e "require('./package.json').version.split('.').splice(0,2).join('.')")
+        npm version $PACKAGE_VERSION.$PACKAGE_VERSION-$NUXT_ENV_STAGE
         npx nuxt build
       working-directory: frontend
       env:
@@ -74,6 +78,7 @@ jobs:
         NUXT_ENV_STAGE: ${{ env.STAGE }}
         USE_BETA_LOGO: ${{ env.USE_BETA_LOGO }}
         SENTRY_DSN: ${{ env.SENTRY_DSN }}
+        SENTRY_PUBLISH_RELEASE: ${{ env.SENTRY_PUBLISH_RELEASE }}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
