@@ -70,7 +70,9 @@ jobs:
     - name: Generate 
       run: |
         PACKAGE_VERSION=$(node -p -e "require('./package.json').version.split('.').splice(0,2).join('.')")
-        npm version $PACKAGE_VERSION.$PACKAGE_VERSION-$NUXT_ENV_STAGE
+        VERSION=$PACKAGE_VERSION.$GITHUB_RUN_NUMBER-$NUXT_ENV_STAGE
+        echo $VERSION
+        npm version $VERSION
         npx nuxt build
       working-directory: frontend
       env:
