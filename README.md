@@ -1,7 +1,6 @@
 # ![JOWOMO Logo](frontend/static/images/logo.svg) 
 
-
-JOWOMO: Wir vernetzen Unternehmen für einen temporären Austausch von Personal.
+JOWOMO: Wir bringen Unternehmen für einen flexiblen, temporären Austausch von Personal zusammen.
 
 Unser Portal findet ihr auf [www.jowomo.de](https://jowomo.de)
 
