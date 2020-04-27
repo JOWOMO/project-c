@@ -17,5 +17,5 @@ TypeScript, Nuxt.js
 Setup siehe [README](frontend/readme.md)
 
 
-### Ein Projekt aus den #WirVsVirus Solution Enabler Programm
+### Ein Projekt aus dem #WirVsVirus [Solution Enabler Programm](https://wirvsvirushackathon.org/weiterfuehrung-2/)
 ![WirVsVirus Logo](frontend/static/images/sponsors/enabler.png)
