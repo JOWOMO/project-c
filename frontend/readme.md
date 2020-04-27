@@ -1,6 +1,4 @@
-# bee2bee_frontend
-
-> The web frontend for the bee2bee platform
+# JOWOMO Frontend
 
 ## Build Setup
 
