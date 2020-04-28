@@ -99,7 +99,7 @@ jobs:
     - name: Deploy 
       run: |
         npx serverless deploy --stage $STAGE
-        rm dist/_nuxt/*.map
+        rm dist/_nuxt/*.map || true
         npx serverless client deploy --no-confirm --no-policy-change --stage $STAGE
       working-directory: frontend
       env:
