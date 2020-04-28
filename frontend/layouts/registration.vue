@@ -13,7 +13,7 @@ import support from "@/components/support.vue";
 
 @Component({
   components: { cookies, support },
-  middleware: "loaduser"
+  middleware: ["loaduser", "ie"]
 })
 export default class extends Vue {}
 </script>

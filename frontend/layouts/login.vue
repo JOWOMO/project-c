@@ -16,7 +16,7 @@ import support from "@/components/support.vue";
   components: {
     navbar, cookies, support,
   },
-  middleware: "loaduser"
+  middleware: ["loaduser", "ie"]
 })
 export default class extends Vue {}
 </script>

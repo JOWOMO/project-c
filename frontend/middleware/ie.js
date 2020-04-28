@@ -4,4 +4,5 @@ export default () => {
 
   if(browser == 'Internet Explorer' && browserV <= 11) {
     return this.$router.replace('/ie')
+  }
 }
