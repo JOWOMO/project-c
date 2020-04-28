@@ -23,10 +23,27 @@
     </div>
   </div>
 </template>
-
+<script lang="ts">
+import { Component, Vue, Provide, State } from "nuxt-property-decorator";
+@Component({
+  layout: "ie"
+})
+export default class extends Vue {
+  
+}
+</script>
 <style lang="scss" scoped>
+@import "@/assets/colors";
+@import "@/assets/scales";
 .container {
   text-align: center;
+  flex-direction: column;
+  margin: 10px;
+
+  h1, h2 {
+    display: block;
+    margin: 20px 0;
+  }
 
   .browserList {
     display: flex;
@@ -35,6 +52,9 @@
     justify-content: center;
 
     .browser {
+      width: 50px;
+      margin: 10px;
+
       img {
         width: 40px;
         height: 40px;
