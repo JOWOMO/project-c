@@ -208,7 +208,7 @@ export default {
     optimizeCSS: {
     },
 
-    transpile: ['vue-clamp', 'resize-detector'],
+    transpile: ['vue-clamp', 'resize-detector', 'vuelidate-property-decorators'],
   },
   generate: {
     routes: async () => {
