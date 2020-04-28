@@ -21,7 +21,7 @@ import top from "@/components/goto-top.vue";
     cookies,
     top
   },
-  middleware: ["loaduser", "ie"]
+  middleware: ["ie","loaduser"]
 })
 export default class extends Vue {}
 </script>
