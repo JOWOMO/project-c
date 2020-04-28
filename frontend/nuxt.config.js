@@ -75,7 +75,8 @@ export default {
     '@/plugins/vuelidate.js',
     '@/plugins/swal.ts',
     '@/plugins/tracking.ts',
-    '@/plugins/mq.ts'
+    '@/plugins/mq.ts',
+    { src: '~/plugins/polyfills', mode: 'client' } // thanks to https://stackoverflow.com/a/57538219
   ],
   /*
   ** Nuxt.js dev-modules
