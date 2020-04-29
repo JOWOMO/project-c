@@ -28,7 +28,9 @@ Die branchenübergreifende Plattform richtet sich an alle Unternehmen und Organi
 
 Wenn Du Mitarbeitende in der Krise nicht voll beschäftigen kannst, dann bietet unsere Plattform die Möglichkeit diese als gut eingespielte Teams an Partnerunternehmen in der Region zu vermitteln, die deren Arbeitskraft gerade dringend brauchen.
 
-Wenn Du dringend Mitarbeitende suchst, findest Du hier wiederum gut eingespielte Teams, die Du (auch in Teilen) temporär von Partnerunternehmen übernehmen kannst. So hilfst Du diesen Unternehmen durch eine Personalpartnerschaft durch die Krise, und erhältst und stärkst damit die regionale Wirtschaft. 
+Wenn Du dringend Mitarbeitende suchst, findest Du hier wiederum gut eingespielte Teams, die Du (auch in Teilen) temporär von Partnerunternehmen übernehmen kannst. So hilfst Du diesen Unternehmen durch eine Personalpartnerschaft durch die Krise, und erhältst und stärkst damit die regionale Wirtschaft.
+
+Die Plattform richtet sich nicht an Zeitarbeitsfirmen. Daher musst du bei Erstellung eines Profils angeben, dass du keine Zeitarbeitsfirma bist. Profile, die sich dennoch als Zeitarbeitsfirmen herausstellen werden aktiv gelöscht.  
 
 </faq> 
 
