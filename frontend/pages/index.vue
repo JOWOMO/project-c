@@ -202,7 +202,10 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .container {
   height: $fullheight;
+
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
 
   display: block;
   text-align: center;
@@ -388,7 +391,10 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
   padding-top: $gridsize / 2;
   display: grid;
   width: 100vw;
+
   grid-auto-columns: 1fr $gridsize*2 1fr;
+
+
   color: white;
   position: relative;
 

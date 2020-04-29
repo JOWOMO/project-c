@@ -207,7 +207,11 @@ $radius: 8px;
 
   z-index: 999;
   max-height: 210px;
+
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+
   position: absolute;
   background: $uiComponent;
 
