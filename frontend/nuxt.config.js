@@ -94,6 +94,7 @@ export default {
     '@nuxtjs/apollo',
     // Doc: https://github.com/nuxt-community/gtm-module
     '@nuxtjs/gtm',
+    'nuxt-user-agent',
     // Doc: https://github.com/nuxt-community/nuxt-i18n
     [
       'nuxt-i18n',

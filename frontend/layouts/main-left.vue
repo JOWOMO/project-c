@@ -15,7 +15,7 @@ import support from "@/components/support.vue";
 
 @Component({
   components: { cookies, top, support, },
-  middleware: 'loaduser',
+  middleware: ["ie",'loaduser']
 })
 export default class extends Vue {}
 </script>

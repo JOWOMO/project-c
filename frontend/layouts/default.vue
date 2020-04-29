@@ -24,7 +24,10 @@ import support from "@/components/support.vue";
     top,
     support,
   },
-  middleware: "loaduser"
+  middleware: [
+    "ie",
+    "loaduser"
+  ]
 })
 export default class extends Vue {}
 </script>
