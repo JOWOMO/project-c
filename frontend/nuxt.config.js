@@ -58,16 +58,22 @@ export default {
     ]
   },
 
+  router: {
+    middleware: [ "ie", "loaduser" ],
+  },
+
   /*
   ** Customize the progress-bar color
   */
   loading: { color: '#25A6DA', height: '5px' },
+
   /*
   ** Global SCSS
   */
   css: [
     { src: '@/assets/global.scss', lang: "scss" }
   ],
+
   /*
   ** Plugins to load before mounting the App
   */
@@ -78,6 +84,7 @@ export default {
     '@/plugins/mq.ts',
     { src: '~/plugins/polyfills', mode: 'client' } // thanks to https://stackoverflow.com/a/57538219
   ],
+
   /*
   ** Nuxt.js dev-modules
   */
@@ -85,6 +92,7 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/gtm',
   ],
+
   /*
   ** Nuxt.js modules
   */
@@ -209,8 +217,13 @@ export default {
     optimizeCSS: {
     },
 
-    transpile: ['vue-clamp', 'resize-detector', 'vuelidate-property-decorators'],
+    transpile: [
+      'vue-clamp',
+      'resize-detector',
+      'vuelidate-property-decorators',
+    ],
   },
+
   generate: {
     routes: async () => {
       const info = await getDynamicPaths({

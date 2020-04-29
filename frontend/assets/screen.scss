@@ -1,11 +1,13 @@
 .screen-center {
     display: flex;
     flex: 1;
-  
+
     align-items: center;
     justify-content: center;
 
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .screen-top {
@@ -13,4 +15,6 @@
     flex: 1;
 
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
 }

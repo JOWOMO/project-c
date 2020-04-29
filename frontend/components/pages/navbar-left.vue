@@ -43,6 +43,7 @@ export default class extends Vue {
 .scroller {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
 
   padding: $gridsize;
   padding-top: 0px;

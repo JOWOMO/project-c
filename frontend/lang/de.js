@@ -165,5 +165,11 @@ export default {
       notfound: 'Das hat nicht geklappt. Leider existiert diese Seite nicht bei uns.',
       trace: "Das hat leider nicht geklappt. Wir haben den Fehler unter der Nummer '{code}' protokolliert.",
       noservice: "Das hat leider nicht geklappt, unser Dienst ist aktuell nicht erreichbar.",
+    },
+
+    ie: {
+      title: 'Dein Browser wird momentan leider nicht von unserer Plattform unterstützt.',
+      text: 'Über eine der folgenden Alternativen kannst Du schnell Deinen Personalpartner auf JOWOMO finden:',
+      mobile: 'Oder ruf jowomo.de einfach direkt auf Deinem Smartphone auf!'
     }
 };

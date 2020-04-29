@@ -1,6 +1,9 @@
 export default async function ({
   app, route, redirect, store
 }) {
+  if (route.path == '/ie') {
+    return;
+  }
 
   const browser = app.$ua.browser()
   const browserV = app.$ua.browserVersion()
