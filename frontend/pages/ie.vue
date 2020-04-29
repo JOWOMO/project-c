@@ -24,6 +24,13 @@
         <img src="/images/browser/opera.svg" alt="Opera">
         Opera</a>
       </div>
+            <div class="browser">
+        <a href="https://www.microsoft.com/de-de/edge">
+        <img src="/images/browser/edge.svg" alt="Edge">
+        Edge</a>
+      </div>
+
+      
     </div>
     <p class="highlight">Oder ruf jowomo.de einfach direkt auf Deinem Smartphone auf! </p>
   </div>
