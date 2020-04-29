@@ -206,6 +206,9 @@ export default class extends Vue {
 
     .tags {
       overflow-y: scroll;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+
       padding: $gridsize/2;
       // padding-top: 0;
 
