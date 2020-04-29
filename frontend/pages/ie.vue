@@ -1,26 +1,31 @@
 <template>
   <div class="container">
-    <h1>Zur Zeit unterstützen wir diesen Browser nicht</h1>
-    <h2>Bitte nutzen Sie einen der von uns unterstützen Browser</h2>
+    <h1>Internet Explorer 11 wird momentan nicht von unserer Plattform unterstützt.</h1>
+    <p>Aber über einen der folgenden Browser kannst Du schnell Deinen Personalpartner auf JOWOMO finden:</p>
 
     <div class="browserList">
       <div class="browser">
+        <a href="https://www.google.com/chrome/">
         <img src="/images/browser/chrome.svg" alt="Chrome browser">
-        <a href="https://www.google.com/chrome/">Chrome</a>
+        Chrome</a>
       </div>
       <div class="browser">
+        <a href="https://www.mozilla.org/de/firefox/new/">
         <img src="/images/browser/firefox.svg" alt="firefox browser">
-        <a href="https://www.mozilla.org/de/firefox/new/">Firefox</a>
+        Firefox</a>
       </div>
       <div class="browser">
+        <a href="https://www.apple.com/safari/">
         <img src="/images/browser/safari.svg" alt="Safari browser">
-        <a href="https://www.apple.com/safari/">Safari</a>
+        Safari</a>
       </div>
       <div class="browser">
+        <a href="https://www.opera.com/de">
         <img src="/images/browser/opera.svg" alt="Opera">
-        <a href="https://www.opera.com/de">Opera</a>
+        Opera</a>
       </div>
     </div>
+    <p class="highlight">Oder ruf jowomo.de einfach direkt auf Deinem Smartphone auf! </p>
   </div>
 </template>
 <script lang="ts">
@@ -44,7 +49,9 @@ export default class extends Vue {
     display: block;
     margin: 20px 0;
   }
-
+  .highlight {
+      color: black;
+  }
   .browserList {
     display: flex;
     flex-direction: row;
@@ -63,6 +70,7 @@ export default class extends Vue {
       a {
         font-size: 15px;
       }
+    
     }
   }
 }
