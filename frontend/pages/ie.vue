@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Internet Explorer 11 wird momentan nicht von unserer Plattform unterstützt.</h1>
+    <h1>Internet Explorer wird momentan nicht von unserer Plattform unterstützt.</h1>
     <p>Aber über einen der folgenden Browser kannst Du schnell Deinen Personalpartner auf JOWOMO finden:</p>
 
     <div class="browserList">
