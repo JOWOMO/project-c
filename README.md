@@ -1,21 +1,12 @@
-# ![JOWOMO Logo](frontend/static/images/logo.svg) 
+<a href="https://jowomo.de"><img src="frontend/static/images/logo.svg" height="80px" /></a>
 
-JOWOMO: Wir bringen Unternehmen für einen flexiblen, temporären Austausch von Personal zusammen.
+JOWOMO: Wir vernetzen Unternehmen um gewinnbringende Personalpartnerschaften zu bilden.
 
-Unser Portal findet ihr auf [www.jowomo.de](https://jowomo.de)
+Mitarbeiter:innen eines Unternehmen, das aktuell von eingeschränkten Betriebsbedingungen betroffen ist, können temporär in Unternehmen arbeiten, die einen aktuellen Mehrbedarf haben. Dies erlaubt eine Entlastung von Unternehmen und den Schutz von Arbeitsplätzen auf der einen Seite und eine schnelle Deckung des erhöhten Bedarfs auf der anderen Seite.
 
-## Backend
-
-Python, Flask, GraphQL
-
-Setup siehe [README](backend/api/README.md)
-
-## Frontend
-
-TypeScript, Nuxt.js
-
-Setup siehe [README](frontend/readme.md)
+Los geht's auf [jowomo.de](https://jowomo.de)
 
 
 ### Ein Projekt aus dem #WirVsVirus [Solution Enabler Programm](https://wirvsvirushackathon.org/weiterfuehrung-2/)
-![WirVsVirus Logo](frontend/static/images/sponsors/enabler.png)
+
+<img src="frontend/static/images/sponsors/enabler.png" height="50px" />
