@@ -38,6 +38,13 @@
           </template>
         </formCheckbox>
       </div>
+      <div v-if="!userExists" class="form-group">
+        <formCheckbox :id="'nota'" :label="'Bitte bestätige das Du keine Zeitarbeitsfirma vetrittst'" v-model="nota">
+          <template>
+            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <nuxt-link to="/info/faq">Siehe FAQ</nuxt-link>.    
+          </template>
+        </formCheckbox>
+      </div>
     </form>
 
     <!-- <span id="error" v-if="error">{{ error }}</span> -->
@@ -85,6 +92,7 @@ export default class extends Vue {
   password: string = "";
   confirmpwd: string = "";
   agb: boolean = false;
+  nota: boolean = false; // no temping agency / zeitarbeitsfirma
 
   @State(state => state.auth.user)
   authenticatedUser?: CognitoUser;
@@ -119,7 +127,8 @@ export default class extends Vue {
       password: { required, minLength: minLength(6) },
       confirmpwd: { sameAs: sameAs("password") },
 
-      agb: { required: sameAs(() => true) }
+      agb: { required: sameAs(() => true) },
+      nota: { required: sameAs(() => true) }
     };
   }
 
