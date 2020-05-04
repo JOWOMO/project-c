@@ -6,10 +6,10 @@
     <div v-if="visible" class="answer">
       <slot />
     </div>
-    <div v-if="!visible" class="icon">
+    <div @click="toggle"  v-if="!visible" class="icon">
       <img src="/icons/dropdown.svg" />
     </div>
-    <div v-else class="icon down">
+    <div @click="toggle"  v-else class="icon down">
       <img src="/icons/dropdown.svg" />
     </div>
   </div>
