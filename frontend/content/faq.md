@@ -119,23 +119,39 @@ Du solltest prüfen, welche Umsetzungsmöglichkeit (auch über die angesprochene
 Die Antwort auf diese Frage hängt von dem individuellen Fall und dem gewählten Umsetzungsmodell ab. Im Folgenden wollen wir Dir aber ein paar Punkte mitgeben, die Du für dich prüfen solltest.
 
 Als abgebendes Unternehmen sehen wir hier insbesondere Folgendes:
+
 - Klare Kommunikation an und Einverständnis deiner Mitarbeiter, um die es sich handelt
+
 - Klare Absprache mit dem aufnehmenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu deinen Mitarbeitern
+
 - Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
+
 - Bei befristeter Einstellung: Möglicherwiese eine Freistellungsvereinbarung und Abmeldung von der Sozialversicherung
+
 - Bei Regelung über Minijob: Genehmigung des Minijobs 
+
 - Wiedereingliederung deiner Mitarbeiter nach Ende der Personalpartnerschaft (z.B., Erinnerung an ersten Arbeitstag, Schichtplan, Mitarbeitergespräch) und möglicherwiese Anmeldung bei der Sozialversicherung
 
 Als aufnehmendes Unternehmen sehen wir hier insbesondere Folgendes:
+
 - Klare Absprache mit dem abgebenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu den Mitarbeitern
+
 - Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
+
 - Bei befristeter Einstellung: Befristete Arbeitsverträge und Anmeldung bei der Sozialversicherung
+
 - Bei Regelung über Minijob: Arbeitsvertrag über Minijob
+
 - Klare Kommunikation und Hilfestellung an die neuen Mitarbeiter
+
 _ Arbeitskleidung, Arbeitsplatz und weitere Bedarfe deiner neuen Mitarbeiter
+
 - Willkommen deiner neuen Mitarbeiter inklusive Vorstellung im Team
+
 - Einarbeitung und coaching deiner neuen Mitarbeiter
+
 - Informationen zu Ende der Personalpartnerschaft und Rückkehr zum ursprünglichen Arbeitgeber
+
 - Anmeldung der Mitarbeiter
 
 </faq> 
