@@ -144,7 +144,7 @@ Als aufnehmendes Unternehmen sehen wir hier insbesondere Folgendes:
 
 - Klare Kommunikation und Hilfestellung an die neuen Mitarbeiter
 
-_ Arbeitskleidung, Arbeitsplatz und weitere Bedarfe deiner neuen Mitarbeiter
+- Arbeitskleidung, Arbeitsplatz und weitere Bedarfe deiner neuen Mitarbeiter
 
 - Willkommen deiner neuen Mitarbeiter inklusive Vorstellung im Team
 
