@@ -1,5 +1,5 @@
   
-# BeeToBee Backend Api
+# JOWOMO Backend Api
 
 ## Setup
 
