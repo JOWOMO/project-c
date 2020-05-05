@@ -24,7 +24,9 @@
       </pe>
 
       <pe number="3" title="Stelle Team(s) ein">
-        <template #left>Lass andere Unternehmen wissen, welche Arbeitskräfte Du suchst.</template>
+        <template #left>Lass andere Unternehmen wissen, welche Arbeitskräfte gerade bei Dir verfügbar sind.</template>
+        <template #right>Lass andere Unternehmen wissen, welche Arbeitskräfte Du suchst.</template>
+       
         <template
           #right
         >Lass andere Unternehmen wissen, welche Arbeitskräfte gerade bei Dir verfügbar sind.</template>
