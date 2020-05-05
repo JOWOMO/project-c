@@ -104,9 +104,11 @@ Du erhältst von uns eine E-Mail über die Du mit dem potentiellen Partneruntern
 
 Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen und keine Rechtsberatung zur Umsetzung der Personalpartnerschaft. Wir wollen dir aber im Folgenden öffentlich verfügbare Informationen zur Verfügung stellen, die dir dabei hoffentlich helfen. Aus unserer Sicht gibt es verschiedene Modelle, eine solche Personalpartnerschaft umzusetzen:
 
-•	Arbeitnehmerüberlassung: Die Überlassung von Arbeitnehmern ist nach dem AÜG grundsätzlich erlaubnispflichtig. Hierzu gibt es aber gerade aktuell einige Ausnahmen, die dir bei einer unbürokratischen Umsetzung der Personalpartnerschaft helfen können. Diese gelten zum Beispiel, wenn die Überlassung nur gelegentlich erfolgt und der Arbeitnehmer nicht zum Zweck der Überlassung eingestellt und beschäftigt wird, aber auch für Betriebe mit weniger als 50 Mitarbeitern im Rahmen der “Kollegenhilfe” über eine einfache Anzeige bei der zuständigen Arbeitsagentur. Mehr Informationen hierzu findest du auf der Seite unseres Kooperationspartners GRAF-DETZER Rechtsanwälte (https://www.rechtsanwalts-kanzlei-wolfratshausen.de/corona-spezial-so-koennen-arbeitgeber-durch-erlaubnisfreie-arbeitnehmerueberlassung-kurzarbeit-reduzieren-und-entlassungen-vermeiden/). Zudem findest du hier grundsätzliche Informationen zur Arbeitnehmerüberlassung der Bundesagentur für Arbeit: https://www.arbeitsagentur.de/datei/dok_ba015249.pdf
-•	Befristete Einstellung: Je nach Situation können die Mitarbeitenden beim aufnehmenden Betrieb befristet eingestellt werden. Dieses Vorgehen wirkt komplexer, da in den uns bekannten Fällen die Mitarbeitenden im abgebenden Betrieb gleichzeitig freigestellt werden mussten. Ein Beispiel hierfür ist die Personalpartnerschaft von McDonalds und Aldi im März 2020. Schau hierzu zum Beispiel in diesen Zeitungsartikel: https://www.faz.net/aktuell/wirtschaft/unternehmen/wegen-corona-krise-mcdonald-s-verleiht-mitarbeiter-an-aldi-16688300.html.
-•	Einstellung als Minijob: Vertraglich relativ einfach zu realisieren sein, dürfte eine Einstellung in Form eines Minijobs. Das abgebende Unternehmen muss die Nebentätigkeit lediglich genehmigen. Das aufnehmende Unternehmen einen entsprechenden (befristeten) Vertrag aufsetzen. Vom 1. April bis zum 31. Oktober 2020 gilt dabei für in Kurzarbeit befindliche Mitarbeitende folgende Sonderregelung: Verdienste aus während der Kurzarbeit neu aufgenommenen Nebentätigkeiten in systemrelevanten Bereichen werden nicht auf das Kurzarbeitergeld angerechnet. Einzige Bedingung: Sie dürfen die Höhe des Lohns nicht überschreiten, den sie vor der Kurzarbeit bekommen haben. https://www.bmas.de/DE/Schwerpunkte/Informationen-Corona/Kurzarbeit/kurzarbeit.html#faq867018
+- **Arbeitnehmerüberlassung**: Die Überlassung von Arbeitnehmern ist nach dem AÜG grundsätzlich erlaubnispflichtig. Hierzu gibt es aber gerade aktuell einige Ausnahmen, die dir bei einer unbürokratischen Umsetzung der Personalpartnerschaft helfen können. Diese gelten zum Beispiel, wenn die Überlassung nur gelegentlich erfolgt und der Arbeitnehmer nicht zum Zweck der Überlassung eingestellt und beschäftigt wird, aber auch für Betriebe mit weniger als 50 Mitarbeitern im Rahmen der “Kollegenhilfe” über eine einfache Anzeige bei der zuständigen Arbeitsagentur. Mehr Informationen hierzu findest du auf der Seite unseres Kooperationspartners GRAF-DETZER Rechtsanwälte (https://www.rechtsanwalts-kanzlei-wolfratshausen.de/corona-spezial-so-koennen-arbeitgeber-durch-erlaubnisfreie-arbeitnehmerueberlassung-kurzarbeit-reduzieren-und-entlassungen-vermeiden/). Zudem findest du hier grundsätzliche Informationen zur Arbeitnehmerüberlassung der Bundesagentur für Arbeit: https://www.arbeitsagentur.de/datei/dok_ba015249.pdf
+
+- **Befristete Einstellung**: Je nach Situation können die Mitarbeitenden beim aufnehmenden Betrieb befristet eingestellt werden. Dieses Vorgehen wirkt komplexer, da in den uns bekannten Fällen die Mitarbeitenden im abgebenden Betrieb gleichzeitig freigestellt werden mussten. Ein Beispiel hierfür ist die Personalpartnerschaft von McDonalds und Aldi im März 2020. Schau hierzu zum Beispiel in diesen Zeitungsartikel: https://www.faz.net/aktuell/wirtschaft/unternehmen/wegen-corona-krise-mcdonald-s-verleiht-mitarbeiter-an-aldi-16688300.html.
+
+- **Einstellung als Minijob**: Vertraglich relativ einfach zu realisieren sein, dürfte eine Einstellung in Form eines Minijobs. Das abgebende Unternehmen muss die Nebentätigkeit lediglich genehmigen. Das aufnehmende Unternehmen einen entsprechenden (befristeten) Vertrag aufsetzen. Vom 1. April bis zum 31. Oktober 2020 gilt dabei für in Kurzarbeit befindliche Mitarbeitende folgende Sonderregelung: Verdienste aus während der Kurzarbeit neu aufgenommenen Nebentätigkeiten in systemrelevanten Bereichen werden nicht auf das Kurzarbeitergeld angerechnet. Einzige Bedingung: Sie dürfen die Höhe des Lohns nicht überschreiten, den sie vor der Kurzarbeit bekommen haben. https://www.bmas.de/DE/Schwerpunkte/Informationen-Corona/Kurzarbeit/kurzarbeit.html#faq867018
 
 Du solltest prüfen, welche Umsetzungsmöglichkeit (auch über die angesprochenen hinaus) für eure Situation die passende ist und dies im Zweifel mit einem Rechtsanwalt besprechen. Darüber hinaus kann eine steuerliche Beratung sinnvoll sein.
   
@@ -117,24 +119,24 @@ Du solltest prüfen, welche Umsetzungsmöglichkeit (auch über die angesprochene
 Die Antwort auf diese Frage hängt von dem individuellen Fall und dem gewählten Umsetzungsmodell ab. Im Folgenden wollen wir Dir aber ein paar Punkte mitgeben, die Du für dich prüfen solltest.
 
 Als abgebendes Unternehmen sehen wir hier insbesondere Folgendes:
-•	Klare Kommunikation an und Einverständnis deiner Mitarbeiter, um die es sich handelt
-•	Klare Absprache mit dem aufnehmenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu deinen Mitarbeitern
-•	Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
-•	Bei befristeter Einstellung: Möglicherwiese eine Freistellungsvereinbarung und Abmeldung von der Sozialversicherung
-•	Bei Regelung über Minijob: Genehmigung des Minijobs 
-•	Wiedereingliederung deiner Mitarbeiter nach Ende der Personalpartnerschaft (z.B., Erinnerung an ersten Arbeitstag, Schichtplan, Mitarbeitergespräch) und möglicherwiese Anmeldung bei der Sozialversicherung
+- Klare Kommunikation an und Einverständnis deiner Mitarbeiter, um die es sich handelt
+- Klare Absprache mit dem aufnehmenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu deinen Mitarbeitern
+- Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
+- Bei befristeter Einstellung: Möglicherwiese eine Freistellungsvereinbarung und Abmeldung von der Sozialversicherung
+- Bei Regelung über Minijob: Genehmigung des Minijobs 
+- Wiedereingliederung deiner Mitarbeiter nach Ende der Personalpartnerschaft (z.B., Erinnerung an ersten Arbeitstag, Schichtplan, Mitarbeitergespräch) und möglicherwiese Anmeldung bei der Sozialversicherung
 
 Als aufnehmendes Unternehmen sehen wir hier insbesondere Folgendes:
-•	Klare Absprache mit dem abgebenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu den Mitarbeitern
-•	Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
-•	Bei befristeter Einstellung: Befristete Arbeitsverträge und Anmeldung bei der Sozialversicherung
-•	Bei Regelung über Minijob: Arbeitsvertrag über Minijob
-•	Klare Kommunikation und Hilfestellung an die neuen Mitarbeiter
-•	Arbeitskleidung, Arbeitsplatz und weitere Bedarfe deiner neuen Mitarbeiter
-•	Willkommen deiner neuen Mitarbeiter inklusive Vorstellung im Team
-•	Einarbeitung und coaching deiner neuen Mitarbeiter
-•	Informationen zu Ende der Personalpartnerschaft und Rückkehr zum ursprünglichen Arbeitgeber
-•	Anmeldung der Mitarbeiter
+- Klare Absprache mit dem abgebenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu den Mitarbeitern
+- Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
+- Bei befristeter Einstellung: Befristete Arbeitsverträge und Anmeldung bei der Sozialversicherung
+- Bei Regelung über Minijob: Arbeitsvertrag über Minijob
+- Klare Kommunikation und Hilfestellung an die neuen Mitarbeiter
+_ Arbeitskleidung, Arbeitsplatz und weitere Bedarfe deiner neuen Mitarbeiter
+- Willkommen deiner neuen Mitarbeiter inklusive Vorstellung im Team
+- Einarbeitung und coaching deiner neuen Mitarbeiter
+- Informationen zu Ende der Personalpartnerschaft und Rückkehr zum ursprünglichen Arbeitgeber
+- Anmeldung der Mitarbeiter
 
 </faq> 
 
