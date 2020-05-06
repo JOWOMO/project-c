@@ -63,7 +63,7 @@ jobs:
     - uses: chrislennon/action-aws-cli@v1.1
 
     - name: Export aws config
-      run:
+      run: |
         aws cloudformation describe-stacks --stack-name bee-to-bee-api-${{ env.STAGE }} --query "Stacks[0].Outputs" > aws.json
         aws ssm get-parameter --name /btb/${{ env.STAGE }}/cloudfronturl --query Parameter.Value > aws_url.json
       working-directory: frontend
