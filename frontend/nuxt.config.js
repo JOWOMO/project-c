@@ -9,6 +9,14 @@ if (!fs.existsSync('aws.json')) {
   throw `No config file`;
 }
 
+if (!fs.existsSync('aws_url.json')) {
+  console.error(`please run: npm run config:url`);
+  throw `No config file`;
+}
+
+const urlConfig = JSON.parse(fs.readFileSync('aws_url.json'));
+const rootUrl = urlConfig.split(',')[0];
+
 // reads the dependencies from the cloudformation stack
 const awsConfig = JSON.parse(fs.readFileSync('aws.json'));
 function findAWSExport(setting) {
@@ -128,6 +136,8 @@ export default {
         }
       }
     ],
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
   ],
 
   env: {
@@ -137,6 +147,7 @@ export default {
     userPoolWebClientId: findAWSExport('CognitoUserPoolClient'),
     useBetaLogo: process.env.USE_BETA_LOGO == 'true',
     endpoint: findAWSExport('ApiGatewayRestApiId'),
+    rootUrl: `https://${rootUrl}`,
   },
 
   /*
@@ -231,10 +242,12 @@ export default {
       });
 
       const register = [
+        '/welcome/demand',
         '/register/demand',
         '/register/demand/company',
         '/register/demand/team',
         '/register/demand/validate',
+        '/welcome/supply',
         '/register/supply',
         '/register/supply/company',
         '/register/supply/team',
@@ -243,5 +256,30 @@ export default {
 
       return [...info, ...register];
     },
-  }
+  },
+
+  robots: [{
+    'Sitemap': `https://${rootUrl}/sitemap.xml`,
+    'User-agent': '*',
+    'Disallow': '',
+  }],
+
+  sitemap: {
+    hostname: `https://${rootUrl}`,
+
+    filter ({ routes }) {
+      return routes.filter(
+        route => {
+          const  url = route.url || route.path;
+
+          return true
+            && !url.startsWith('/dashboard')
+            && !url.startsWith('/welcome')
+            && !url.startsWith('/register/supply/')
+            && !url.startsWith('/register/demand/')
+          ;
+        }
+      );
+    }
+  },
 }
