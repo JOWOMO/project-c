@@ -187,10 +187,6 @@ export default class extends Vue {
   supply_register() {
     this.$router.push({ path: "/register/supply" });
   }
-
-  head() {
-    return {};
-  }
 }
 </script>
 

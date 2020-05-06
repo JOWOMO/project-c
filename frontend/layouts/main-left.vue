@@ -14,9 +14,18 @@ import top from "@/components/goto-top.vue";
 import support from "@/components/support.vue";
 
 @Component({
-  components: { cookies, top, support, },
+  components: { cookies, top, support }
 })
-export default class extends Vue {}
+export default class extends Vue {
+  head() {
+    let canonical = `${process.env.rootUrl}${this.$route.path}`;
+    const link = [{ rel: "canonical", href: canonical }];
+
+    return {
+      link
+    };
+  }
+}
 </script>
 
 <style lang="scss">

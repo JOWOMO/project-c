@@ -14,10 +14,21 @@ import support from "@/components/support.vue";
 
 @Component({
   components: {
-    navbar, cookies, support,
+    navbar,
+    cookies,
+    support
   }
 })
-export default class extends Vue {}
+export default class extends Vue {
+  head() {
+    let canonical = `${process.env.rootUrl}${this.$route.path}`;
+    const link = [{ rel: "canonical", href: canonical }];
+
+    return {
+      link
+    };
+  }
+}
 </script>
 
 <style lang="scss" scoped>

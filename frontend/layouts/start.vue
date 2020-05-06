@@ -20,9 +20,18 @@ import top from "@/components/goto-top.vue";
     topbar,
     cookies,
     top
-  },
+  }
 })
-export default class extends Vue {}
+export default class extends Vue {
+  head() {
+    let canonical = `${process.env.rootUrl}${this.$route.path}`;
+    const link = [{ rel: "canonical", href: canonical }];
+
+    return {
+      link
+    };
+  }
+}
 </script>
 
 <style lang="scss" scoped>
