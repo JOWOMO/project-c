@@ -16,7 +16,7 @@
       </pe>
 
       <pe number="1" title="Melde Dich an">
-        <template #both>Mit ein paar Clicks bei JOWOMO anmelden und E-Mail-Adresse bestätigen.</template>
+        <template #both>Mit ein paar Klicks bei JOWOMO anmelden und E-Mail-Adresse bestätigen.</template>
       </pe>
 
       <pe number="2" title="Erstelle Dein Profil">
