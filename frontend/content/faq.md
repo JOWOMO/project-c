@@ -28,7 +28,9 @@ Die branchenübergreifende Plattform richtet sich an alle Unternehmen und Organi
 
 Wenn Du Mitarbeitende in der Krise nicht voll beschäftigen kannst, dann bietet unsere Plattform die Möglichkeit diese als gut eingespielte Teams an Partnerunternehmen in der Region zu vermitteln, die deren Arbeitskraft gerade dringend brauchen.
 
-Wenn Du dringend Mitarbeitende suchst, findest Du hier wiederum gut eingespielte Teams, die Du (auch in Teilen) temporär von Partnerunternehmen übernehmen kannst. So hilfst Du diesen Unternehmen durch eine Personalpartnerschaft durch die Krise, und erhältst und stärkst damit die regionale Wirtschaft. 
+Wenn Du dringend Mitarbeitende suchst, findest Du hier wiederum gut eingespielte Teams, die Du (auch in Teilen) temporär von Partnerunternehmen übernehmen kannst. So hilfst Du diesen Unternehmen durch eine Personalpartnerschaft durch die Krise, und erhältst und stärkst damit die regionale Wirtschaft.
+
+Die Plattform richtet sich nicht an Zeitarbeitsfirmen. Daher musst du bei Erstellung eines Profils angeben, dass du keine Zeitarbeitsfirma bist. Profile, die sich dennoch als Zeitarbeitsfirmen herausstellen werden aktiv gelöscht.  
 
 </faq> 
 
@@ -94,30 +96,74 @@ Zudem freuen wir uns über Dein Feedback, welche konkreten Fähigkeiten Du in de
 
 <faq question="Ich habe ein potentielles Partnerunternehmen gefunden. Wie geht es weiter?"> 
 
-Du erhältst von uns eine E-Mail über die Du mit dem potentiellen Partnerunternehmen in Verbindung treten kannst, um letzte Einzelheiten zu klären. Wenn Ihr euch einig werdet, steht nun die Umsetzung an. Da die temporäre Weitergabe / Aufnahme von Mitarbeitern arbeitsrechtliche Fragestellungen beinhaltet, empfehlen wir dringend, die weiteren Schritte zur erfolgreichen Umsetzung mit einem Rechtsanwalt zu besprechen.  
+Du erhältst von uns eine E-Mail über die Du mit dem potentiellen Partnerunternehmen in Verbindung treten kannst, um letzte Einzelheiten zu klären. Wenn Ihr euch einig werdet, steht nun die Umsetzung an. In den folgenden Fragen haben wir einige öffentlich verfügbaren Informationen zu möglichen Modellen in der Umsetzung der Personalpartnerschaft zusammengestellt. Bei weitergehenden Fragen oder falls du eine Prüfung deines individuellen Falles wünschst, empfehlen wir dir, einen Rechtsanwalt zu kontaktieren. Beim Zusammenstellen dieser Informationen kooperieren wir zum Beispiel mit der Anwaltskanzlei GRAF-DETZER Rechtsanwälte, die auf diesem Gebiet sehr aktiv sind (https://www.rechtsanwalts-kanzlei-wolfratshausen.de/).  
 
 </faq> 
 
 <faq question="Was muss ich bei der rechtlichen Umsetzung der Personalpartnerschaft beachten?"> 
 
-Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen und keine Rechtsberatung zur Umsetzung der Personalpartnerschaft. Es gibt verschiedene Möglichkeiten zur Umsetzung, die rechtlich geprüft werden können. Eventuell könnten die aktuellen Regelungen zur Arbeitnehmerüberlassung in Verbindung mit Kurzarbeit für dich relevant sein. 
+Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen und keine Rechtsberatung zur Umsetzung der Personalpartnerschaft. Wir wollen dir aber im Folgenden öffentlich verfügbare Informationen zur Verfügung stellen, die dir dabei hoffentlich helfen. Aus unserer Sicht gibt es verschiedene Modelle, eine solche Personalpartnerschaft umzusetzen:
 
-Hier findest Du Informationen der Bundesagentur für Arbeit dazu: [https://www.arbeitsagentur.de/datei/dok_ba015249.pdf](https://www.arbeitsagentur.de/datei/dok_ba015249.pdf). 
+- **Arbeitnehmerüberlassung**: Die Überlassung von Arbeitnehmern ist nach dem AÜG grundsätzlich erlaubnispflichtig. Hierzu gibt es aber gerade aktuell einige Ausnahmen, die dir bei einer unbürokratischen Umsetzung der Personalpartnerschaft helfen können. Diese gelten zum Beispiel, wenn die Überlassung nur gelegentlich erfolgt und der Arbeitnehmer nicht zum Zweck der Überlassung eingestellt und beschäftigt wird, aber auch für Betriebe mit weniger als 50 Mitarbeitern im Rahmen der “Kollegenhilfe” über eine einfache Anzeige bei der zuständigen Arbeitsagentur. Mehr Informationen hierzu findest du auf der Seite unseres Kooperationspartners [GRAF-DETZER Rechtsanwälte](https://www.rechtsanwalts-kanzlei-wolfratshausen.de/corona-spezial-so-koennen-arbeitgeber-durch-erlaubnisfreie-arbeitnehmerueberlassung-kurzarbeit-reduzieren-und-entlassungen-vermeiden/). Zudem findest du hier grundsätzliche Informationen zur Arbeitnehmerüberlassung der Bundesagentur für Arbeit: [https://www.arbeitsagentur.de/datei/dok_ba015249.pdf](https://www.arbeitsagentur.de/datei/dok_ba015249.pdf)
 
-Vielleicht sind auch Informationen zu dem Fall von McDonalds und Aldi, die im März eine solche Personalpartnerschaft eingegangen sind für dich hilfreich. Schau hierzu zum Beispiel in diesen Zeitungsartikel: [https://www.faz.net/aktuell/wirtschaft/unternehmen/wegen-corona-krise-mcdonald-s-verleiht-mitarbeiter-an-aldi-16688300.html](https://www.faz.net/aktuell/wirtschaft/unternehmen/wegen-corona-krise-mcdonald-s-verleiht-mitarbeiter-an-aldi-16688300.html). 
+- **Befristete Einstellung**: Je nach Situation können die Mitarbeitenden beim aufnehmenden Betrieb befristet eingestellt werden. Dieses Vorgehen wirkt komplexer, da in den uns bekannten Fällen die Mitarbeitenden im abgebenden Betrieb gleichzeitig freigestellt werden mussten. Ein Beispiel hierfür ist die Personalpartnerschaft von McDonalds und Aldi im März 2020. Schau hierzu zum Beispiel in diesen Zeitungsartikel: [https://www.faz.net/aktuell/wirtschaft/unternehmen/wegen-corona-krise-mcdonald-s-verleiht-mitarbeiter-an-aldi-16688300.html](https://www.faz.net/aktuell/wirtschaft/unternehmen/wegen-corona-krise-mcdonald-s-verleiht-mitarbeiter-an-aldi-16688300.html).
 
-Am Ende handelt es sich aber um rechtliche Fragestellungen, die für Euren Fall spezifisch beantwortet werden müssen und wir empfehlen hierfür dringend, diese mit einem Rechtsanwalt zu besprechen.  
+- **Einstellung als Minijob**: Vertraglich relativ einfach zu realisieren sein, dürfte eine Einstellung in Form eines Minijobs. Das abgebende Unternehmen muss die Nebentätigkeit lediglich genehmigen. Das aufnehmende Unternehmen einen entsprechenden (befristeten) Vertrag aufsetzen. Vom 1. April bis zum 31. Oktober 2020 gilt dabei für in Kurzarbeit befindliche Mitarbeitende folgende Sonderregelung: Verdienste aus während der Kurzarbeit neu aufgenommenen Nebentätigkeiten in systemrelevanten Bereichen werden nicht auf das Kurzarbeitergeld angerechnet. Einzige Bedingung: Sie dürfen die Höhe des Lohns nicht überschreiten, den sie vor der Kurzarbeit bekommen haben. [https://www.bmas.de/DE/Schwerpunkte/Informationen-Corona/Kurzarbeit/kurzarbeit.html#faq867018](https://www.bmas.de/DE/Schwerpunkte/Informationen-Corona/Kurzarbeit/kurzarbeit.html#faq867018)
+
+Du solltest prüfen, welche Umsetzungsmöglichkeit (auch über die angesprochenen hinaus) für eure Situation die passende ist und dies im Zweifel mit einem Rechtsanwalt besprechen. Darüber hinaus kann eine steuerliche Beratung sinnvoll sein.
+  
+</faq> 
+
+<faq question="Ich habe mich mit einem anderen Unternehmen auf eine Personalpartnerschaft geeinigt. An was muss ich nun alles denken?"> 
+
+Die Antwort auf diese Frage hängt von dem individuellen Fall und dem gewählten Umsetzungsmodell ab. Im Folgenden wollen wir Dir aber ein paar Punkte mitgeben, die Du für dich prüfen solltest.
+
+Als abgebendes Unternehmen sehen wir hier insbesondere Folgendes:
+
+- Klare Kommunikation an und Einverständnis deiner Mitarbeiter, um die es sich handelt
+
+- Klare Absprache mit dem aufnehmenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu deinen Mitarbeitern
+
+- Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
+
+- Bei befristeter Einstellung: Möglicherwiese eine Freistellungsvereinbarung und Abmeldung von der Sozialversicherung
+
+- Bei Regelung über Minijob: Genehmigung des Minijobs 
+
+- Wiedereingliederung deiner Mitarbeiter nach Ende der Personalpartnerschaft (z.B., Erinnerung an ersten Arbeitstag, Schichtplan, Mitarbeitergespräch) und möglicherwiese Anmeldung bei der Sozialversicherung
+
+Als aufnehmendes Unternehmen sehen wir hier insbesondere Folgendes:
+
+- Klare Absprache mit dem abgebenden Unternehmen zum Zeitraum, Umsetzungsmodell, Kommunikationskanal, sowie Fähigkeiten, Arbeitszeiten und weitere Details zu den Mitarbeitern
+
+- Bei erlaubnisfreier Arbeitnehmerüberlassung: Überlassungsvertrag
+
+- Bei befristeter Einstellung: Befristete Arbeitsverträge und Anmeldung bei der Sozialversicherung
+
+- Bei Regelung über Minijob: Arbeitsvertrag über Minijob
+
+- Klare Kommunikation und Hilfestellung an die neuen Mitarbeiter
+
+- Arbeitskleidung, Arbeitsplatz und weitere Bedarfe deiner neuen Mitarbeiter
+
+- Willkommen deiner neuen Mitarbeiter inklusive Vorstellung im Team
+
+- Einarbeitung und coaching deiner neuen Mitarbeiter
+
+- Informationen zu Ende der Personalpartnerschaft und Rückkehr zum ursprünglichen Arbeitgeber
+
+- Anmeldung der Mitarbeiter
 
 </faq> 
 
 <faq question="Wer klärt Konflikte, die während der Partnerschaft auftreten, z.B. wenn die Fähigkeiten meiner Mitarbeitenden weniger gut auf die Bedarfe des Partnerunternehmens passen als erwartet?"> 
 
-Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen an. Neben Detailfragen zur rechtlichen Umsetzung der Personalpartnerschaft liegt auch die Zusammenarbeit innerhalb der Partnerschaft und die Klärung von Fragen oder Konflikten bei den Partnerunternehmen. Wir empfehlen auf jeden Fall vor Abschluss der Personalpartnerschaft alle wichtigen Details genau zu besprechen, um Uneinigkeiten im Nachhinein von vorneherein zu vermeiden. 
+Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen an. Neben Detailfragen zur rechtlichen Umsetzung der Personalpartnerschaft liegt auch die Zusammenarbeit innerhalb der Partnerschaft und die Klärung von Fragen oder Konflikten bei den Partnerunternehmen. Wir empfehlen auf jeden Fall vor Abschluss der Personalpartnerschaft alle wichtigen Details genau zu besprechen, um Uneinigkeiten während der Partnerschaft von vorneherein zu vermeiden. 
 
 </faq> 
 
 <faq question="Wer garantiert, dass die angebotenen Fähigkeiten auch tatsächlich vorhanden sind, z.B. CNC-Fräse bedienen, Risiko für Schaden an teurem Equipment?"> 
 
-Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein passendes Partnerunternehmen findest, kannst Du mit diesem in Kontakt treten. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen. Die Plattform JOWOMO ist weder Teil dieser Absprachen, noch der Partnerschaft. 
+Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein passendes Partnerunternehmen findest, kannst Du mit diesem in Kontakt treten. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen und die Plattform JOWOMO ist weder Teil dieser Absprachen, noch der Partnerschaft. 
 
 </faq>

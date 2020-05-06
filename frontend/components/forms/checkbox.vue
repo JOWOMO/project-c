@@ -1,6 +1,6 @@
 <template>
   <div class='outer'>
-    <label class="container">
+    <label class="checkbox-container">
       <slot v-bind:label="label">{{ label }}</slot>
 
       <input
@@ -248,8 +248,8 @@ label {
   all: unset;
 }
 
-/* The container */
-.container {
+/* The checkbox-container */
+.checkbox-container {
   display: block !important;
   position: relative !important;
 
@@ -267,7 +267,7 @@ label {
 }
 
 /* Hide the browser's default checkbox */
-.container input {
+.checkbox-container input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -291,12 +291,12 @@ label {
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.checkbox-container:hover input ~ .checkmark {
   border: 1px solid $primary;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.checkbox-container input:checked ~ .checkmark {
   background-color: $primary;
 }
 
@@ -308,12 +308,12 @@ label {
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.checkbox-container input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+.checkbox-container .checkmark:after {
   left: 15px;
   top: 2x;
 
