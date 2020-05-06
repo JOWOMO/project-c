@@ -5,7 +5,7 @@
       <nuxt class="screen-center" />
       <cookies />
     </div>
-    <support position='left' />
+    <support position="left" />
     <top :useBody="true" />
   </div>
 </template>
@@ -22,10 +22,19 @@ import support from "@/components/support.vue";
     topbar,
     cookies,
     top,
-    support,
+    support
   }
 })
-export default class extends Vue {}
+export default class extends Vue {
+  head() {
+    let canonical = `${process.env.rootUrl}${this.$route.path}`;
+    const link = [{ rel: "canonical", href: canonical }];
+
+    return {
+      link
+    };
+  }
+}
 </script>
 
 <style lang="scss" scoped>

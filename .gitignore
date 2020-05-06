@@ -1,6 +1,7 @@
 .vscode/
 .DS_Store
 aws.json
+aws_url.json
 
 # ----------- FRONTEND ------------
 
