@@ -88,7 +88,7 @@
 
       <div class="fullrow">
         <div class="blue h-padding v-padding">
-          Unternehmen, die von der Krise getroffen sind
+          Unternehmen, die von der Krise betroffen sind
           und aktuell vor der Entscheidung stehen, ihre
           Mitarbeiter:innen in Kurzarbeit zu schicken
           oder sogar zu entlassen.
