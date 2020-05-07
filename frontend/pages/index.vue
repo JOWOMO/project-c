@@ -66,7 +66,7 @@
 
       <h1>Unser Konzept</h1>
       <p>Wir vernetzen Unternehmen um gewinnbringende Personalpartnerschaften zu bilden.</p>
-      <p>Mitarbeiter:innen eines Unternehmen, das aktuell von eingeschränkten Betriebsbedingungen betroffen ist, können temporär in Unternehmen arbeiten, die einen aktuellen Mehrbedarf haben. Dies erlaubt eine Entlastung von Unternehmen und den Schutz von Arbeitsplätzen auf der einen Seite und eine schnelle Deckung des erhöhten Bedarfs auf der anderen Seite.</p>
+      <p>Mitarbeiter:innen eines Unternehmens, das aktuell von eingeschränkten Betriebsbedingungen betroffen ist, können temporär in Unternehmen arbeiten, die einen aktuellen Mehrbedarf haben. Dies erlaubt eine Entlastung von Unternehmen und den Schutz von Arbeitsplätzen auf der einen Seite und eine schnelle Deckung des erhöhten Bedarfs auf der anderen Seite.</p>
 
       <!-- <div class="two-columns grow padding">
         <div>
@@ -88,7 +88,7 @@
 
       <div class="fullrow">
         <div class="blue h-padding v-padding">
-          Unternehmen, die von der Krise getroffen sind
+          Unternehmen, die von der Krise betroffen sind
           und aktuell vor der Entscheidung stehen, ihre
           Mitarbeiter:innen in Kurzarbeit zu schicken
           oder sogar zu entlassen.
@@ -132,7 +132,7 @@
             <hr />
           </div>
           <h3 class="padding">Matching</h3>
-          <p>Unser Matching basiert auf krisentauglichen Merkmalen, die eine einfache und branchenübergreifende Vermittlung von Arbeitskräften ermöglichen. So schlagen wir dir relevante Personalpartner vor.</p>
+          <p>Unser Matching basiert auf krisentauglichen Merkmalen, die eine einfache und branchenübergreifende Vermittlung von Arbeitskräften ermöglichen. So schlagen wir Dir relevante Personalpartner vor.</p>
         </div>
         <div>
           <img class="icon" src="/icons/tipps.svg" />
@@ -152,7 +152,7 @@
             <hr />
           </div>
           <h3 class="padding">Support</h3>
-          <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für dich da. Wenn Du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
+          <p>Du hast Fragen zur Nutzung der Plattform? Wir sind für Dich da. Wenn Du deine Frage noch nicht in den FAQs beantwortet findest, schreib uns.</p>
           <p><a href="mailto:support@jowomo.de">support@jowomo.de</a></p>
         </div>
       </div>

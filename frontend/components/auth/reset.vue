@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Setzte Dein Password zurück</h1>
+    <h1>Setze Dein Password zurück</h1>
 
     <form method="POST" @submit.prevent="resetPassword" novalidate>
       <div class="form-group">

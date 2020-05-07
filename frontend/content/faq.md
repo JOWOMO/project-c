@@ -66,7 +66,7 @@ Wenn Du ein Angebot passend zu Deinem Gesuch findest und über die Plattform aus
 
 </faq> 
 
-<faq question="Wer kann meine Kontaktdaten/Emailadressen sehen? "> 
+<faq question="Wer kann meine Kontaktdaten/E-Mail-Adressen sehen? "> 
 
 Konkrete Kontaktdaten, wie Ansprechpartner und Emailadresse, sind für andere Unternehmen und Organisationen nicht frei einsehbar. Emailadressen werden lediglich dann geteilt, wenn Du einen potentiellen Personalpartner identifiziert hast und über “Jetzt verbinden” eine Anfrage an das entsprechende Partnerunternehmen sendest. Genaue Adressen werden ebenfalls nicht angezeigt, sondern lediglich die Entfernung zu einem Partnerunternehmen, das gerade Dein Angebot / Gesuch betrachtet, um die Umsetzbarkeit einer Personalpartnerschaft für die Mitarbeiter:innen einschätzen zu können. 
 
