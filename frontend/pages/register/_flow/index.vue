@@ -33,15 +33,15 @@
         <formCheckbox :id="'agb'" :label="'Bitte akzeptiere unsere AGB'" v-model="agb">
           <template>
             Ja, ich habe die
-            <nuxt-link to="/info/agb">Nutzungsbedingungen</nuxt-link> und die
-            <nuxt-link to="/info/privacy">Datenschutzerklärung</nuxt-link> gelesen und akzeptiert.
+            <a href="/info/agb" target="_blank" title="Nutzungsbedingungen in neuem Tab öffnen">Nutzungsbedingungen</a> und die
+            <a href="/info/privacy" target="_blank" title="Datenschutzerklärung in neuem Tab öffnen">Datenschutzerklärung</a> gelesen und akzeptiert.
           </template>
         </formCheckbox>
       </div>
       <div v-if="!userExists" class="form-group">
         <formCheckbox :id="'nota'" :label="'Bitte bestätige das Du keine Zeitarbeitsfirma vetrittst'" v-model="nota">
           <template>
-            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <nuxt-link to="/info/faq">Siehe FAQ</nuxt-link>.    
+            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <a href="/info/faq" target="_blank" title="FAQ in neuem Tab öffnen">Siehe FAQ</a>.    
           </template>
         </formCheckbox>
       </div>
