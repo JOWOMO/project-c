@@ -78,6 +78,8 @@ import { Context } from "@nuxt/types";
 import { IState } from "@/store";
 import { LoadingAnimation } from "@/components/loadinganimation";
 
+import { passwordComplexity} from '@/components/forms/passwordComplexity';
+
 @Component({
   components: {
     formInput,
@@ -124,8 +126,7 @@ export default class extends Vue {
       lastName: { required },
       email: { required, email },
 
-      password: { required, minLength: minLength(6) },
-      confirmpwd: { sameAs: sameAs("password") },
+      password: { passwordComplexity },
 
       agb: { required: sameAs(() => true) },
       nota: { required: sameAs(() => true) }

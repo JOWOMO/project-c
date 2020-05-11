@@ -171,5 +171,10 @@ export default {
       title: 'Dein Browser wird momentan leider nicht von unserer Plattform unterstützt.',
       text: 'Über eine der folgenden Alternativen kannst Du schnell Deinen Personalpartner auf JOWOMO finden:',
       mobile: 'Oder ruf jowomo.de einfach direkt auf Deinem Smartphone auf!'
+    },
+
+    validations: {
+      passwordComplexity: 'Bitte mindestens 6 Zeichen sowie Groß- und Kleinschreibung für Dein Passwort verwenden.'
     }
+
 };

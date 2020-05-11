@@ -29,7 +29,10 @@
       <div
         v-if="validation.contains != null && !validation.contains"
         class="field-validation"
-      >Bitte wähle eine {{label}} aus der Liste.</div>
+      <div
+        v-if="validation.passwordComplexity != null && !validation.passwordComplexity"
+        class="field-validation"
+      >{{ $t('validations.passwordComplexity'), {label} }}</div>
     </div>
   </div>
 </template>

@@ -40,6 +40,8 @@ import formInput from "@/components/forms/input.vue";
 import { formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
 
+import { passwordComplexity} from '@/components/forms/passwordComplexity';
+
 @Component({
   components: { formInput }
 })
@@ -53,7 +55,7 @@ export default class extends Vue {
   @Validate({ required })
   code: string = "";
 
-  @Validate({ required, minLength: minLength(6) })
+  @Validate({ required, passwordComplexity })
   password: string = "";
 
   @Validate({ sameAs: sameAs("password") })
