@@ -67,7 +67,7 @@ export default {
   },
 
   router: {
-    middleware: [ "ie", "loaduser" ],
+    middleware: ["ie", "loaduser"],
   },
 
   /*
@@ -211,6 +211,7 @@ export default {
 
       const markdownIt = require('markdown-it');
       const anchor = require('markdown-it-anchor');
+      const externalLinks = require('markdown-it-external-links');
 
       // add frontmatter-markdown-loader
       config.module.rules.push({
@@ -219,7 +220,9 @@ export default {
         loader: "frontmatter-markdown-loader",
         options: {
           mode: [Mode.VUE_COMPONENT, Mode.META],
-          markdownIt: markdownIt({html: true}).use(anchor),
+          markdownIt: markdownIt({ html: true })
+            .use(anchor)
+            .use(externalLinks, { externalTarget: '_new' }),
         }
       });
     },
@@ -267,17 +270,17 @@ export default {
   sitemap: {
     hostname: `https://${rootUrl}`,
 
-    filter ({ routes }) {
+    filter({ routes }) {
       return routes.filter(
         route => {
-          const  url = route.url || route.path;
+          const url = route.url || route.path;
 
           return true
             && !url.startsWith('/dashboard')
             && !url.startsWith('/welcome')
             && !url.startsWith('/register/supply/')
             && !url.startsWith('/register/demand/')
-          ;
+            ;
         }
       );
     }
