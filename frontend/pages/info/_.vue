@@ -1,5 +1,5 @@
 <template>
-  <leftNav>
+  <leftNav v-if="menu">
     <template slot="navbar">
       <topBar :hideLogo="true" />
     </template>
@@ -16,6 +16,11 @@
       <component class="markdown" :is="content" />
     </template>
   </leftNav>
+
+  <div v-else class="container">
+    <component class="markdown" :is="content" />
+    <imprint class="imprint" :horizontal="true" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -33,10 +38,11 @@ import faq from "@/components/faq.vue";
 import about from "@/components/about/block.vue";
 import sponsor from "@/components/about/sponsor.vue";
 
+import imprint from "@/components/imprint.vue";
+import pe from "@/components/about/pe.vue";
 
 @Component({
-  components: { sidebar, item, sec, leftNav, topBar },
-  layout: "main-left"
+  components: { sidebar, item, sec, leftNav, topBar, imprint, pe },
 })
 export default class extends Vue {
   title: string = "";
@@ -44,6 +50,16 @@ export default class extends Vue {
   description: string = "";
   content: string = "";
   menu: any;
+
+  layout(context: Context) {
+    const content = require(`@/content/${context.params.pathMatch}.md`);
+
+    return content.attributes?.layout
+      ? content.attributes?.layout
+      : content.attributes?.menu != null
+        ? 'main-left'
+        : 'default';
+  }
 
   head() {
     return {
@@ -64,21 +80,22 @@ export default class extends Vue {
 
   async asyncData(context: Context) {
     try {
-      let content = await import(`~/content/${context.params.pathMatch}.md`);
+      let content = await import(`@/content/${context.params.pathMatch}.md`);
 
       const other = {
         extends: content.vue.component,
         components: {
-          faq, about, sponsor,
+          faq, about, sponsor, pe,
         }
       };
 
       return {
+        nav: content.attributes?.nav != false,
         title: content.attributes?.title,
         description: content.attributes?.description,
         seo: content.attributes?.seo || content.attributes?.title,
         content: other,
-        menu: content.attributes?.menu || {}
+        menu: content.attributes?.menu || null
       };
     } catch (e) {
       context.error({
@@ -91,9 +108,40 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scales";
+
 .sidebar {
   display: flex;
 }
 
+.imprint {
+  padding-bottom: 10px;
+  margin-left: -$gridsize;
+}
+
 @import "./markdown.scss";
+
+$fullheight: calc(100vh - #{$pageHeaderHeight});
+
+.container {
+  height: $fullheight;
+
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+
+  display: block;
+
+  padding-left: $gridsize;
+  padding-top: $gridsize;
+  padding-right: $pageMarginRight;
+}
+
+
+@media only screen and (max-width: $breakpoint_md) {
+  .container {
+    padding-left: $pageMarginMin;
+    padding-right: $pageMarginMin;
+  }
+}
 </style>

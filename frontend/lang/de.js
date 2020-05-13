@@ -1,12 +1,4 @@
 export default {
-    process: {
-      seo: {
-        title: 'JOWOMO: Unsere Mission ist es gemeinsam Arbeit zu schützen – durch Personalpartnerschaften',
-
-        description: 'Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen.',
-      },
-    },
-
     welcome: {
       title: 'Willkommen {name}!',
       supply: 'Dein Team ist jetzt in der Suche auffindbar. Entdecke passende Personalpartner, die Deine Mitarbeiter temporär beschäftigen könnten. Deine Angaben zum Team kannst du jederzeit anpassen.',

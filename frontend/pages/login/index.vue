@@ -14,7 +14,7 @@ import { IState } from "@/store";
   components: {
     auth
   },
-  layout: 'login',
+  layout: 'center',
 })
 export default class extends Vue {
   @State((s: IState) => s.auth.user)

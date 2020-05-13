@@ -16,11 +16,11 @@ if (!fs.existsSync('aws_url.json')) {
 
 const urlConfig = JSON.parse(fs.readFileSync('aws_url.json'));
 const rootUrl = urlConfig.split(',')[0];
+const envName = process.env.NUXT_ENV_STAGE || 'dev';
 
 // reads the dependencies from the cloudformation stack
 const awsConfig = JSON.parse(fs.readFileSync('aws.json'));
 function findAWSExport(setting) {
-  const envName = process.env.NUXT_ENV_STAGE || 'dev';
   const node = awsConfig.find((n) => n.ExportName === `${setting}-${envName}`);
   if (!node) throw `Setting ${setting} is not known`;
 
@@ -67,7 +67,7 @@ export default {
   },
 
   router: {
-    middleware: [ "ie", "loaduser" ],
+    middleware: ["ie", "loaduser"],
   },
 
   /*
@@ -211,6 +211,7 @@ export default {
 
       const markdownIt = require('markdown-it');
       const anchor = require('markdown-it-anchor');
+      const externalLinks = require('markdown-it-external-links');
 
       // add frontmatter-markdown-loader
       config.module.rules.push({
@@ -219,7 +220,9 @@ export default {
         loader: "frontmatter-markdown-loader",
         options: {
           mode: [Mode.VUE_COMPONENT, Mode.META],
-          markdownIt: markdownIt({html: true}).use(anchor),
+          markdownIt: markdownIt({ html: true })
+            .use(anchor)
+            .use(externalLinks, { externalTarget: '_blank' }),
         }
       });
     },
@@ -258,26 +261,34 @@ export default {
     },
   },
 
-  robots: [{
-    'Sitemap': `https://${rootUrl}/sitemap.xml`,
-    'User-agent': '*',
-    'Disallow': '',
-  }],
+  robots: [
+    // remove robots from non-production domains
+    envName != 'prod'
+      ? {
+        'User-agent': '*',
+        'Disallow': '/',
+      }
+      : {
+        'Sitemap': `https://${rootUrl}/sitemap.xml`,
+        'User-agent': '*',
+        'Disallow': '',
+      }
+  ],
 
   sitemap: {
     hostname: `https://${rootUrl}`,
 
-    filter ({ routes }) {
+    filter({ routes }) {
       return routes.filter(
         route => {
-          const  url = route.url || route.path;
+          const url = route.url || route.path;
 
           return true
             && !url.startsWith('/dashboard')
             && !url.startsWith('/welcome')
             && !url.startsWith('/register/supply/')
             && !url.startsWith('/register/demand/')
-          ;
+            ;
         }
       );
     }
