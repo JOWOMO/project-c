@@ -16,11 +16,11 @@ if (!fs.existsSync('aws_url.json')) {
 
 const urlConfig = JSON.parse(fs.readFileSync('aws_url.json'));
 const rootUrl = urlConfig.split(',')[0];
+const envName = process.env.NUXT_ENV_STAGE || 'dev';
 
 // reads the dependencies from the cloudformation stack
 const awsConfig = JSON.parse(fs.readFileSync('aws.json'));
 function findAWSExport(setting) {
-  const envName = process.env.NUXT_ENV_STAGE || 'dev';
   const node = awsConfig.find((n) => n.ExportName === `${setting}-${envName}`);
   if (!node) throw `Setting ${setting} is not known`;
 
@@ -261,11 +261,19 @@ export default {
     },
   },
 
-  robots: [{
-    'Sitemap': `https://${rootUrl}/sitemap.xml`,
-    'User-agent': '*',
-    'Disallow': '',
-  }],
+  robots: [
+    // remove robots from non-production domains
+    envName != 'prod'
+      ? {
+        'User-agent': '*',
+        'Disallow': '/',
+      }
+      : {
+        'Sitemap': `https://${rootUrl}/sitemap.xml`,
+        'User-agent': '*',
+        'Disallow': '',
+      }
+  ],
 
   sitemap: {
     hostname: `https://${rootUrl}`,
