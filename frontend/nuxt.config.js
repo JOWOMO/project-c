@@ -288,7 +288,7 @@ export default {
             && !url.startsWith('/welcome')
             && !url.startsWith('/register/supply/')
             && !url.startsWith('/register/demand/')
-            ;
+          ;
         }
       );
     }
