@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Bestätige deine Email Adresse</h1>
-    <p>Wir haben dir eine Email geschickt. Bitte füge den Verifizierungs-Code hier ein:</p>
+    <h1>Bestätige Deine Email Adresse</h1>
+    <p>Wir haben Dir eine Email geschickt. Bitte füge den Verifizierungs-Code hier ein:</p>
 
     <form method="POST" @submit.prevent="confirm" novalidate>
       <div class="form-group">

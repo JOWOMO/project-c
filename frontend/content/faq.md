@@ -56,19 +56,25 @@ Angebote und Gesuche können lediglich von hier registrierten Unternehmen und Or
 
 <faq question="Wie konkret sollte ich meine Angebote formulieren?"> 
 
-Basierend auf den Angaben in Deinem Angebot wird Dein Team anderen registrierten Unternehmen und Organisationen, die Mitarbeitende suchen, vorgeschlagen. Daher ist es wichtig, dass Du bei der Registrierung der Teams so konkrete Angaben wie möglich machst. Achte hier insbesondere auf die korrekte Angabe zu den Tätigkeiten und Fähigkeiten jedes Deiner Teams. Als Hilfestellung findest Du hier bereits Optionen zur Auswahl. 
+Basierend auf den Angaben in Deinem Angebot wird Dein Team anderen registrierten Unternehmen und Organisationen, die Mitarbeitende suchen, vorgeschlagen. Daher ist es wichtig, dass Du bei der Registrierung der Teams so konkrete Angaben wie möglich machst. 
+
+Achte hier insbesondere auf die korrekte Angabe zu den Tätigkeiten und Fähigkeiten jedes Deiner Teams. Als Hilfestellung findest Du hier bereits Optionen zur Auswahl. 
 
 </faq> 
 
 <faq question="Wie kann ich mit einem potentiellen Partnerunternehmen in Kontakt treten?"> 
 
-Wenn Du ein Angebot passend zu Deinem Gesuch findest und über die Plattform auswählst, erhält das Partnerunternehmen zu dem Angebot eine automatische E-Mail mit Deiner Anfrage, über die es mit dir in Kontakt treten kann. Nach diesem Erstkontakt steht es Dir und dem Partnerunternehmen natürlich frei, weitere Kontaktdaten auszutauschen und über die von Euch bevorzugten Kanäle zu kommunizieren. 
+Wenn Du ein Angebot passend zu Deinem Gesuch findest und über die Plattform auswählst, erhält das Partnerunternehmen zu dem Angebot eine automatische E-Mail mit Deiner Anfrage, über die es mit dir in Kontakt treten kann. 
+
+Nach diesem Erstkontakt steht es Dir und dem Partnerunternehmen natürlich frei, weitere Kontaktdaten auszutauschen und über die von Euch bevorzugten Kanäle zu kommunizieren. 
 
 </faq> 
 
 <faq question="Wer kann meine Kontaktdaten/E-Mail-Adressen sehen? "> 
 
-Konkrete Kontaktdaten, wie Ansprechpartner und Emailadresse, sind für andere Unternehmen und Organisationen nicht frei einsehbar. Emailadressen werden lediglich dann geteilt, wenn Du einen potentiellen Personalpartner identifiziert hast und über “Jetzt verbinden” eine Anfrage an das entsprechende Partnerunternehmen sendest. Genaue Adressen werden ebenfalls nicht angezeigt, sondern lediglich die Entfernung zu einem Partnerunternehmen, das gerade Dein Angebot / Gesuch betrachtet, um die Umsetzbarkeit einer Personalpartnerschaft für die Mitarbeiter:innen einschätzen zu können. 
+Konkrete Kontaktdaten, wie Ansprechpartner und Emailadresse, sind für andere Unternehmen und Organisationen nicht frei einsehbar. Emailadressen werden lediglich dann geteilt, wenn Du einen potentiellen Personalpartner identifiziert hast und über “Jetzt verbinden” eine Anfrage an das entsprechende Partnerunternehmen sendest.
+
+Genaue Adressen werden ebenfalls nicht angezeigt, sondern lediglich die Entfernung zu einem Partnerunternehmen, das gerade Dein Angebot / Gesuch betrachtet, um die Umsetzbarkeit einer Personalpartnerschaft für die Mitarbeiter:innen einschätzen zu können. 
 
 </faq> 
 
@@ -96,7 +102,11 @@ Zudem freuen wir uns über Dein Feedback, welche konkreten Fähigkeiten Du in de
 
 <faq question="Ich habe ein potentielles Partnerunternehmen gefunden. Wie geht es weiter?"> 
 
-Du erhältst von uns eine E-Mail über die Du mit dem potentiellen Partnerunternehmen in Verbindung treten kannst, um letzte Einzelheiten zu klären. Wenn Ihr euch einig werdet, steht nun die Umsetzung an. In den folgenden Fragen haben wir einige öffentlich verfügbaren Informationen zu möglichen Modellen in der Umsetzung der Personalpartnerschaft zusammengestellt. Bei weitergehenden Fragen oder falls du eine Prüfung deines individuellen Falles wünschst, empfehlen wir dir, einen Rechtsanwalt zu kontaktieren. Beim Zusammenstellen dieser Informationen kooperieren wir zum Beispiel mit der Anwaltskanzlei GRAF-DETZER Rechtsanwälte, die auf diesem Gebiet sehr aktiv sind (https://www.rechtsanwalts-kanzlei-wolfratshausen.de/).  
+Du erhältst von uns eine E-Mail über die Du mit dem potentiellen Partnerunternehmen in Verbindung treten kannst, um letzte Einzelheiten zu klären. Wenn Ihr euch einig werdet, steht nun die Umsetzung an. 
+
+In den folgenden Fragen haben wir einige öffentlich verfügbaren Informationen zu möglichen Modellen in der Umsetzung der Personalpartnerschaft zusammengestellt. Bei weitergehenden Fragen oder falls du eine Prüfung deines individuellen Falles wünschst, empfehlen wir dir, einen Rechtsanwalt zu kontaktieren. 
+
+Beim Zusammenstellen dieser Informationen kooperieren wir zum Beispiel mit der [Anwaltskanzlei GRAF-DETZER Rechtsanwälte](https://www.rechtsanwalts-kanzlei-wolfratshausen.de/), die auf diesem Gebiet sehr aktiv sind.  
 
 </faq> 
 
@@ -158,12 +168,16 @@ Als aufnehmendes Unternehmen sehen wir hier insbesondere Folgendes:
 
 <faq question="Wer klärt Konflikte, die während der Partnerschaft auftreten, z.B. wenn die Fähigkeiten meiner Mitarbeitenden weniger gut auf die Bedarfe des Partnerunternehmens passen als erwartet?"> 
 
-Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen an. Neben Detailfragen zur rechtlichen Umsetzung der Personalpartnerschaft liegt auch die Zusammenarbeit innerhalb der Partnerschaft und die Klärung von Fragen oder Konflikten bei den Partnerunternehmen. Wir empfehlen auf jeden Fall vor Abschluss der Personalpartnerschaft alle wichtigen Details genau zu besprechen, um Uneinigkeiten während der Partnerschaft von vorneherein zu vermeiden. 
+Die Plattform JOWOMO bietet zum aktuellen Zeitpunkt lediglich die Vermittlung der Partnerunternehmen an. Neben Detailfragen zur rechtlichen Umsetzung der Personalpartnerschaft liegt auch die Zusammenarbeit innerhalb der Partnerschaft und die Klärung von Fragen oder Konflikten bei den Partnerunternehmen. 
+
+Wir empfehlen auf jeden Fall vor Abschluss der Personalpartnerschaft alle wichtigen Details genau zu besprechen, um Uneinigkeiten während der Partnerschaft von vorneherein zu vermeiden. 
 
 </faq> 
 
 <faq question="Wer garantiert, dass die angebotenen Fähigkeiten auch tatsächlich vorhanden sind, z.B. CNC-Fräse bedienen, Risiko für Schaden an teurem Equipment?"> 
 
-Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein passendes Partnerunternehmen findest, kannst Du mit diesem in Kontakt treten. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen und die Plattform JOWOMO ist weder Teil dieser Absprachen, noch der Partnerschaft. 
+Die Partnerunternehmen tragen die Verantwortung für die Detailklärung und den Vollzug der Partnerschaft. Wenn Du ein passendes Partnerunternehmen findest, kannst Du mit diesem in Kontakt treten. Nun hast Du die Möglichkeit alle Fragen zu genauen Fähigkeiten oder anderen wichtigen Details zu klären, bevor die Partnerschaft zu Stande kommt. 
+
+Die Partnerschaft basiert somit auf den Absprachen zwischen den Partnerunternehmen und die Plattform JOWOMO ist weder Teil dieser Absprachen, noch der Partnerschaft. 
 
 </faq>

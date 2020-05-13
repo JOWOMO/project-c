@@ -222,7 +222,7 @@ export default {
           mode: [Mode.VUE_COMPONENT, Mode.META],
           markdownIt: markdownIt({ html: true })
             .use(anchor)
-            .use(externalLinks, { externalTarget: '_new' }),
+            .use(externalLinks, { externalTarget: '_blank' }),
         }
       });
     },

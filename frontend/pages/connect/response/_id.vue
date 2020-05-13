@@ -49,7 +49,8 @@ export type ConnectParams = {
 };
 
 @Component({
-  middleware: "authenticated"
+  middleware: "authenticated",
+  layout: "center",
 })
 export default class extends Vue {
   data!: MatchDetails;

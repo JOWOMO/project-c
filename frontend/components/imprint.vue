@@ -3,13 +3,13 @@
     <div class="links">
       <div v-if="horizontal">&copy; 2020 JOWOMO</div>
       <div>
-        <a href="/info/imprint" target="_blank" >Impressum</a>
+        <nuxt-link to="/info/imprint">Impressum</nuxt-link>
       </div>
       <div>
-        <a href="/info/privacy"  target="_blank">Datenschutz</a>
+        <nuxt-link to="/info/privacy">Datenschutz</nuxt-link>
       </div>
       <div>
-        <a href="/info/agb" target="_blank">AGB</a>
+        <nuxt-link to="/info/agb">AGB</nuxt-link>
       </div>
     </div>
     <div v-if="!horizontal" class="copy">&copy; 2020 JOWOMO</div>
