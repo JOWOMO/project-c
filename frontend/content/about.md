@@ -3,23 +3,31 @@ title: Über uns
 seo: 'JOWOMO: Unsere Mission ist es gemeinsam Arbeit zu schützen – durch Personalpartnerschaften'
 description: Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen.
 menu: 
-  label: Über uns
-  items:
-    - 
-      label: Unsere Vision
-      to: '#vision'
-    - 
-      label: Unsere Mission
-      to: '#mission'
+  - 
+    label: Über uns
+    items:
+      - 
+        label: Unsere Vision
+        to: '#vision'
+      - 
+        label: Unsere Mission
+        to: '#mission'
 
+      - 
+        label: Über uns
+        to: '#team'
+
+      -   
+        label: Sponsoren und Kooperationspartner
+        to: '#sponsors'
+
+  - 
+    label: Weitere Informationen
+    items:
     - 
-      label: Über uns
-      to: '#team'
-
-    -   
-      label: Sponsoren und Kooperationspartner
-      to: '#sponsors'
-
+      label: Presseinformationen
+      to: /info/about/press
+ 
 ---
 
 # JOWOMO ist Deine Plattform für Personalpartnerschaften</span>
