@@ -98,6 +98,12 @@ Zudem freuen wir uns über Dein Feedback, welche konkreten Fähigkeiten Du in de
 
 </faq> 
 
+<faq question="Was kostet mich eine Personalpartnerschaft über JOWOMO? "> 
+
+JOWOMO stellt die Plattform zur Verbindung von Unternehmen für Personalpartnerschaften kostenfrei zur Verfügung. Somit entstehen dir als Kosten lediglich die Kosten und die Zeit zur Umsetzung der Personalpartnerschaft (z.B., Verträge aufsetzen, Mitarbeiter einarbeiten). 
+
+</faq> 
+
 ## Fragen zur Umsetzung der Personalpartnerschaft
 
 <faq question="Ich habe ein potentielles Partnerunternehmen gefunden. Wie geht es weiter?"> 
@@ -156,6 +162,8 @@ Als aufnehmendes Unternehmen sehen wir hier insbesondere Folgendes:
 
 - Arbeitskleidung, Arbeitsplatz und weitere Bedarfe deiner neuen Mitarbeiter
 
+- Notwendige Zugänge zu Zeiterfassung, Leistungsnachweisen oder Systemen, die die Mitarbeiter benötigen 
+
 - Willkommen deiner neuen Mitarbeiter inklusive Vorstellung im Team
 
 - Einarbeitung und coaching deiner neuen Mitarbeiter
@@ -163,6 +171,18 @@ Als aufnehmendes Unternehmen sehen wir hier insbesondere Folgendes:
 - Informationen zu Ende der Personalpartnerschaft und Rückkehr zum ursprünglichen Arbeitgeber
 
 - Anmeldung der Mitarbeiter
+
+</faq> 
+
+<faq question="Wie sollte ich meine Mitarbeiter in die Umsetzung der Personalpartnerschaft einbinden?"> 
+
+Die Mitarbeiter sollten ohnehin frühzeitig informiert und eingebunden werden und einer Beteiligung an einer Partnerschaft grundsätzlich zustimmen. Auch wenn ein Partnerunternehmen gefunden ist, sollten sie dem spezifischen Einsatz zustimmen, da hier viele Faktoren eine Rolle spielen können, ob die Personalpartnerschaft für Mitarbeiter attraktiv ist (z.B., Einsatzgebiet, Lage des Partnerunternehmens, oder Arbeitszeit). Neben möglichen Zustimmungspflichten solltest du als Arbeitgeber alleine für die zukünftige Zusammenarbeit nach der Personalpartnerschaft hier sehr stark die Bedürfnisse deiner Mitarbeiter mit einbeziehen. 
+
+</faq> 
+
+<faq question="Für welchen Zeitraum gilt eine solche Personalpartnerschaft?"> 
+
+Die Absprachen über Dauer und Umsetzung der Personalpartnerschaft obliegen natürlich den beiden Unternehmen und hängen vom jeweiligen Angebot und Bedarf ab. Beachtet allerdings, dass es je nach Umsetzungsmodell, z.B. im Bereich der Ausnahmegenehmigungen zur Arbeitnehmerüberlassung, zeitliche Grenzen gibt und sich die Personalpartnerschaft nur auf die aktuelle Krisensituation beziehen darf. Achtet bei den Absprachen über den Zeitraum auch auf Regelungen zur vorzeitigen Beendigung der Personalpartnerschaft, wenn die Mitarbeiter wieder bei ihrem ursprünglichen Arbeitgeber eingesetzt werden können. Trefft alle relevanten Regelungen hier im Vorhinein, um Missverständnisse zu vermeiden und haltet sie in euren Verträgen fest.
 
 </faq> 
 
