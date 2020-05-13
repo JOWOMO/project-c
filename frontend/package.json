@@ -16,7 +16,7 @@
     "generate-types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@aws-amplify/auth": "^2.1.8",
+    "@aws-amplify/auth": "^3.2.6",
     "@nuxtjs/apollo": "^4.0.0-rc19",
     "@nuxtjs/gtm": "^2.2.3",
     "@nuxtjs/robots": "^2.4.2",
