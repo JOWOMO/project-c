@@ -127,6 +127,7 @@ export default class extends Vue {
       email: { required, email },
 
       password: { passwordComplexity },
+      confirmpwd: { samePassword: sameAs("password") },
 
       agb: { required: sameAs(() => true) },
       nota: { required: sameAs(() => true) }

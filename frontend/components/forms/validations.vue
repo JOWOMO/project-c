@@ -3,32 +3,37 @@
     <div
       v-if="validation.required != null && !validation.required"
       class="field-validation"
-    >{{ label }} ist erforderlich.</div>
+    >{{ $t('validations.required', { label }) }}</div>
 
     <div v-if="validation.required == null || validation.required">
       <div
         v-if="validation.email != null && !validation.email"
         class="field-validation"
-      >{{ label }} ist keine gültige E-Mail Adresse.</div>
+      >{{ $t('validations.email') }}</div>
       <div
         v-if="validation.sameAs != null && !validation.sameAs"
         class="field-validation"
-      >{{ label }} stimmt nicht überein.</div>
+      >{{ $t('validations.sameAs', { label }) }}</div>
+      <div
+        v-if="validation.samePassword != null && !validation.samePassword"
+        class="field-validation"
+      >{{ $t('validations.samePassword') }}</div>
       <div
         v-if="validation.between != null && !validation.between"
         class="field-validation"
-      >{{ label }} muss zwischen {{validation.$params.between.min}} und {{validation.$params.between.max}} sein.</div>
+      >{{ $t('validations.between', { label, min:validation.$params.between.min, max: validation.$params.between.max}) }}</div>
       <div
         v-if="validation.minLength != null && !validation.minLength"
         class="field-validation"
-      >Es müssen mindestens {{validation.$params.minLength.min}} {{ label }} sein.</div>
+      >{{ $t('validations.minLength', { label, min: validation.$params.minLength.min }) }}</div>
       <div
         v-if="validation.minValue != null && !validation.minValue"
         class="field-validation"
-      >{{ label }} darf nicht kleiner als {{validation.$params.minValue.min}} sein.</div>
+      >{{ $t('validations.minValue', { label, min: validation.$params.minValue.min }) }}</div>
       <div
         v-if="validation.contains != null && !validation.contains"
         class="field-validation"
+      >{{ $t('validations.contains', { label }) }}</div>
       <div
         v-if="validation.passwordComplexity != null && !validation.passwordComplexity"
         class="field-validation"

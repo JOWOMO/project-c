@@ -15,7 +15,7 @@ export default {
     },
 
     register: {
-      user: 'Persönliche Daten',
+      user: 'Persönliche Daten', 
       company: 'Dein Unternehmen',
 
       notfinished: {
@@ -174,7 +174,15 @@ export default {
     },
 
     validations: {
-      passwordComplexity: 'Bitte mindestens 6 Zeichen sowie Groß- und Kleinschreibung für Dein Passwort verwenden.'
+      required: "{label} ist erforderlich.",
+      email: "Bitte eine gültige E-Mail Adresse eingeben.",
+      minLength: 'Es müssen mindestens {min} Zeichen sein.',
+      minValue: '{label} darf nicht kleiner als {min} sein.',
+      sameAs: "{label} stimmt nicht überein.",
+      between: '{label} muss zwischen {min} und {max} sein.',
+      contains: 'Bitte wähle eine {label} aus der Liste',
+      passwordComplexity: 'Bitte mindestens 6 Zeichen sowie Groß- und Kleinschreibung für Dein Passwort verwenden.',
+      samePassword: 'Die Passwörter stimmen nicht überein.'
     }
 
 };

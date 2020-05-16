@@ -58,7 +58,7 @@ export default class extends Vue {
   @Validate({ required, passwordComplexity })
   password: string = "";
 
-  @Validate({ sameAs: sameAs("password") })
+  @Validate({ samePassword: sameAs("password") })
   confirmpwd: string = "";
 
   error = "";
