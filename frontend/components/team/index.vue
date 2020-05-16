@@ -17,7 +17,7 @@
         </div>
 
         <div class="nobr">
-          <formSwitch class="sw" :id="'editTeam.isActive'" disabled v-model="editTeam.isActive" />
+          <formSwitch class="sw" :id="'editTeam.isActive'" @input="toggleIsActive" v-model="editTeam.isActive" />
 
           <div class="lbl" v-if="editTeam.isActive">aktiviert</div>
           <div class="lbl" v-if="!editTeam.isActive">deaktiviert</div>
@@ -256,6 +256,12 @@ export default class extends Vue {
     this.$track("registration", "team:edit:cancel");
     this.value.expanded = false;
     this.update(this.value);
+  }
+
+  toggleIsActive() {
+    this.editTeam.isActive != this.editTeam.isActive;
+    this.editTeam.modified = true;
+    this.update(this.editTeam);
   }
 
   confirm() {
