@@ -176,7 +176,7 @@ export default {
     validations: {
       required: "{label} ist erforderlich.",
       email: "Bitte eine gültige E-Mail Adresse eingeben.",
-      minSkillCount: 'Wähle bitte mindestens {min} aus.',
+      minSkillCount: 'Wähle bitte mindestens {min} Kriterien aus.',
       minValue: '{label} darf nicht kleiner als {min} sein.',
       sameAs: "{label} stimmt nicht überein.",
       between: '{label} muss zwischen {min} und {max} sein.',

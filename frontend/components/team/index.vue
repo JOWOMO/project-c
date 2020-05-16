@@ -82,7 +82,7 @@
         <div class="form-group">
           <div class="skills">
             <button
-              :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minSkillCount }"
+              :class="{'third': true, 'is-invalid': $v.editTeam.skills.$error  }"
               @click.prevent="showTags"
             >
               Bitte wählen

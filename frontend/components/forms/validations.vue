@@ -25,7 +25,7 @@
       <div
         v-if="validation.minSkillCount != null && !validation.minSkillCount"
         class="field-validation"
-      >{{ $t('validations.minSkillCount', { label, min: validation.$params.minLength.min }) }}</div>
+      >{{ $t('validations.minSkillCount', { label, min: validation.$params.minSkillCount.min }) }}</div>
       <div
         v-if="validation.minValue != null && !validation.minValue"
         class="field-validation"
