@@ -33,7 +33,7 @@
 import { Vue, Component, Provide, State, Emit } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
 
 import { IState } from '@/store'
 import formInput from "@/components/forms/input.vue";

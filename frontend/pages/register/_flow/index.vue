@@ -61,7 +61,7 @@ import { Emit } from "vue-property-decorator";
 import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
 
 import { Validations } from "vuelidate-property-decorators";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
 
 import { CognitoUser } from "@aws-amplify/auth";
 
