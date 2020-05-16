@@ -16,7 +16,7 @@
       </div>
 
       <div class="form-group">
-        <formInput :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
+        <formInput @keydown.native.enter="resetPassword" :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
       </div>
 
       <!-- <span id="error" v-if="error">{{ error }}</span> -->
