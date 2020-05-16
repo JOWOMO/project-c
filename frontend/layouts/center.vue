@@ -1,20 +1,21 @@
 <template>
   <div class="page">
-    <navbar class="nav" />
+    <topbar class="nav" />
     <nuxt class="screen-center" />
     <cookies />
+    <support position="left" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
-import navbar from "@/components/pages/topbar.vue";
+import topbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
 import support from "@/components/support.vue";
 
 @Component({
   components: {
-    navbar,
+    topbar,
     cookies,
     support
   }

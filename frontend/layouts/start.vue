@@ -19,7 +19,7 @@ import top from "@/components/goto-top.vue";
   components: {
     topbar,
     cookies,
-    top
+    top,
   }
 })
 export default class extends Vue {
