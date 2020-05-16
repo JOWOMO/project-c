@@ -82,7 +82,7 @@
         <div class="form-group">
           <div class="skills">
             <button
-              :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minLength }"
+              :class="{'third': true, 'is-invalid': $v.$error && $v.editTeam.skills.minSkillCount }"
               @click.prevent="showTags"
             >
               Bitte wählen
@@ -207,7 +207,7 @@ export default class extends Vue {
         },
         skills: {
           required,
-          minLength: minLength(3)
+          minSkillCount: minLength(3)
         },
         description: {
           required

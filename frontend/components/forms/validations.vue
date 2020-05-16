@@ -23,9 +23,9 @@
         class="field-validation"
       >{{ $t('validations.between', { label, min:validation.$params.between.min, max: validation.$params.between.max}) }}</div>
       <div
-        v-if="validation.minLength != null && !validation.minLength"
+        v-if="validation.minSkillCount != null && !validation.minSkillCount"
         class="field-validation"
-      >{{ $t('validations.minLength', { label, min: validation.$params.minLength.min }) }}</div>
+      >{{ $t('validations.minSkillCount', { label, min: validation.$params.minLength.min }) }}</div>
       <div
         v-if="validation.minValue != null && !validation.minValue"
         class="field-validation"
