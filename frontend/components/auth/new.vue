@@ -16,7 +16,7 @@
       </div>
 
       <div class="form-group">
-        <formInput :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
+        <formInput @keydown.native.enter="resetPassword" :id="'confirmpwd'" :label="'Passwort bestätigen'" v-model="confirmpwd" :type="'password'" />
       </div>
 
       <!-- <span id="error" v-if="error">{{ error }}</span> -->
@@ -33,12 +33,14 @@
 import { Vue, Component, Provide, State, Emit } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
 
 import { IState } from '@/store'
 import formInput from "@/components/forms/input.vue";
 import { formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
+
+import { passwordComplexity} from '@/components/forms/passwordComplexity';
 
 @Component({
   components: { formInput }
@@ -53,10 +55,10 @@ export default class extends Vue {
   @Validate({ required })
   code: string = "";
 
-  @Validate({ required, minLength: minLength(6) })
+  @Validate({ required, passwordComplexity })
   password: string = "";
 
-  @Validate({ sameAs: sameAs("password") })
+  @Validate({ samePassword: sameAs("password") })
   confirmpwd: string = "";
 
   error = "";

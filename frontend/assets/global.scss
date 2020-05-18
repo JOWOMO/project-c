@@ -81,44 +81,54 @@ a {
 .primary {
   background-color: $primary !important;
   color: #fff !important;
-
-  &:hover {
-    background-color: darken($primary, 10%) !important;
-  }
 }
 
 .secondary {
   background-color: transparent !important;
   border: 1px solid $primary !important;
   color: $primary !important;
-
-  &:hover {
-    color: #ffffff !important;
-    background-color: darken($primary, 10%) !important;
-  }
 }
 
 .third {
   background-color: white !important;
   border: 1px solid $border !important;
   color: #484848 !important;
-
-  &:hover {
-    color: #ffffff !important;
-    border: 1px solid darken($primary, 10%) !important;
-    background-color: darken($primary, 10%) !important;
-  }
 }
 
 .cta {
   background-color: $secondary !important;
   border: 1px solid $secondary !important;
   color: #ffffff !important;
+}
 
-  &:hover {
-    border: 1px solid darken($secondary, 10%) !important;
-    background-color: darken($secondary, 10%) !important;
+@media (hover: hover) {
+  .primary {
+    &:hover {
+      background-color: darken($primary, 10%) !important;
+    }
   }
+
+  .secondary {
+    &:hover {
+      color: #ffffff !important;
+      background-color: darken($primary, 10%) !important;
+    }
+  }
+  
+  .third {
+    &:hover {
+      color: #ffffff !important;
+      border: 1px solid darken($primary, 10%) !important;
+      background-color: darken($primary, 10%) !important;
+    }
+  }
+
+  .cta {
+    &:hover {
+      border: 1px solid darken($secondary, 10%) !important;
+      background-color: darken($secondary, 10%) !important;
+    }
+  }  
 }
 
 .profile_img {

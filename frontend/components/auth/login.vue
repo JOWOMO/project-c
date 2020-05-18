@@ -7,7 +7,7 @@
       </div>
 
       <div class="form-group">
-        <formInput :id="'password'" :label="'Passwort'" v-model="password" :type="'password'" />
+        <formInput @keydown.native.enter="login" :id="'password'" :label="'Passwort'" v-model="password" :type="'password'" />
       </div>
 
       <div class="form-group">

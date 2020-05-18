@@ -7,7 +7,7 @@ export default {
     },
 
     register: {
-      user: 'Persönliche Daten',
+      user: 'Persönliche Daten', 
       company: 'Dein Unternehmen',
 
       notfinished: {
@@ -163,5 +163,18 @@ export default {
       title: 'Dein Browser wird momentan leider nicht von unserer Plattform unterstützt.',
       text: 'Über eine der folgenden Alternativen kannst Du schnell Deinen Personalpartner auf JOWOMO finden:',
       mobile: 'Oder ruf jowomo.de einfach direkt auf Deinem Smartphone auf!'
+    },
+
+    validations: {
+      required: "{label} ist erforderlich.",
+      email: "Bitte eine gültige E-Mail Adresse eingeben.",
+      minSkillCount: 'Wähle bitte mindestens {min} Kriterien aus.',
+      minValue: '{label} darf nicht kleiner als {min} sein.',
+      sameAs: "{label} stimmt nicht überein.",
+      between: '{label} muss zwischen {min} und {max} sein.',
+      contains: 'Bitte wähle eine {label} aus der Liste',
+      passwordComplexity: 'Bitte mindestens 6 Zeichen sowie Groß- und Kleinschreibung für Dein Passwort verwenden.',
+      samePassword: 'Die Passwörter stimmen nicht überein.'
     }
+
 };

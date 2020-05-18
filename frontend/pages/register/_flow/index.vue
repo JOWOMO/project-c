@@ -61,7 +61,7 @@ import { Emit } from "vue-property-decorator";
 import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
 
 import { Validations } from "vuelidate-property-decorators";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
 
 import { CognitoUser } from "@aws-amplify/auth";
 
@@ -77,6 +77,8 @@ import { formatMessage } from "@/components/auth/messages";
 import { Context } from "@nuxt/types";
 import { IState } from "@/store";
 import { LoadingAnimation } from "@/components/loadinganimation";
+
+import { passwordComplexity} from '@/components/forms/passwordComplexity';
 
 @Component({
   components: {
@@ -124,8 +126,8 @@ export default class extends Vue {
       lastName: { required },
       email: { required, email },
 
-      password: { required, minLength: minLength(6) },
-      confirmpwd: { sameAs: sameAs("password") },
+      password: { passwordComplexity },
+      confirmpwd: { samePassword: sameAs("password") },
 
       agb: { required: sameAs(() => true) },
       nota: { required: sameAs(() => true) }

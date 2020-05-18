@@ -295,6 +295,11 @@ label {
   border: 1px solid $primary;
 }
 
+/* On input focus, add a grey background color */
+.checkbox-container input:focus ~ .checkmark{
+  border: 1px solid $primary;
+}
+
 /* When the checkbox is checked, add a blue background */
 .checkbox-container input:checked ~ .checkmark {
   background-color: $primary;
