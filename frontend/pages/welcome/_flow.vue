@@ -31,7 +31,8 @@ import {
 import userQuery from "@/apollo/queries/registration/user.gql";
 
 @Component({
-  middleware: "authenticated"
+  middleware: "authenticated",
+  layout: "center",
 })
 export default class extends Vue {
   name!: string;
@@ -148,7 +149,7 @@ p {
 }
 
 @media only screen and (max-width: $breakpoint_sm) {
-  c .buttons {
+  .buttons {
     text-align: center;
 
     button {

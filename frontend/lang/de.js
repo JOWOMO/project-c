@@ -1,12 +1,4 @@
 export default {
-    process: {
-      seo: {
-        title: 'JOWOMO: Unsere Mission ist es gemeinsam Arbeit zu schützen – durch Personalpartnerschaften',
-
-        description: 'Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen.',
-      },
-    },
-
     welcome: {
       title: 'Willkommen {name}!',
       supply: 'Dein Team ist jetzt in der Suche auffindbar. Entdecke passende Personalpartner, die Deine Mitarbeiter temporär beschäftigen könnten. Deine Angaben zum Team kannst du jederzeit anpassen.',
@@ -15,7 +7,7 @@ export default {
     },
 
     register: {
-      user: 'Persönliche Daten',
+      user: 'Persönliche Daten', 
       company: 'Dein Unternehmen',
 
       notfinished: {
@@ -171,5 +163,18 @@ export default {
       title: 'Dein Browser wird momentan leider nicht von unserer Plattform unterstützt.',
       text: 'Über eine der folgenden Alternativen kannst Du schnell Deinen Personalpartner auf JOWOMO finden:',
       mobile: 'Oder ruf jowomo.de einfach direkt auf Deinem Smartphone auf!'
+    },
+
+    validations: {
+      required: "{label} ist erforderlich.",
+      email: "Bitte eine gültige E-Mail Adresse eingeben.",
+      minSkillCount: 'Wähle bitte mindestens {min} Kriterien aus.',
+      minValue: '{label} darf nicht kleiner als {min} sein.',
+      sameAs: "{label} stimmt nicht überein.",
+      between: '{label} muss zwischen {min} und {max} sein.',
+      contains: 'Bitte wähle eine {label} aus der Liste',
+      passwordComplexity: 'Bitte mindestens 6 Zeichen sowie Groß- und Kleinschreibung für Dein Passwort verwenden.',
+      samePassword: 'Die Passwörter stimmen nicht überein.'
     }
+
 };

@@ -33,15 +33,15 @@
         <formCheckbox :id="'agb'" :label="'Bitte akzeptiere unsere AGB'" v-model="agb">
           <template>
             Ja, ich habe die
-            <nuxt-link to="/info/agb">Nutzungsbedingungen</nuxt-link> und die
-            <nuxt-link to="/info/privacy">Datenschutzerklärung</nuxt-link> gelesen und akzeptiert.
+            <a href="/info/agb" target="_blank" title="Nutzungsbedingungen in neuem Tab öffnen">Nutzungsbedingungen</a> und die
+            <a href="/info/privacy" target="_blank" title="Datenschutzerklärung in neuem Tab öffnen">Datenschutzerklärung</a> gelesen und akzeptiert.
           </template>
         </formCheckbox>
       </div>
       <div v-if="!userExists" class="form-group">
         <formCheckbox :id="'nota'" :label="'Bitte bestätige das Du keine Zeitarbeitsfirma vetrittst'" v-model="nota">
           <template>
-            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <nuxt-link to="/info/faq">Siehe FAQ</nuxt-link>.    
+            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <a href="/info/faq" target="_blank" title="FAQ in neuem Tab öffnen">Siehe FAQ</a>.    
           </template>
         </formCheckbox>
       </div>
@@ -61,7 +61,7 @@ import { Emit } from "vue-property-decorator";
 import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
 
 import { Validations } from "vuelidate-property-decorators";
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
 
 import { CognitoUser } from "@aws-amplify/auth";
 
@@ -77,6 +77,8 @@ import { formatMessage } from "@/components/auth/messages";
 import { Context } from "@nuxt/types";
 import { IState } from "@/store";
 import { LoadingAnimation } from "@/components/loadinganimation";
+
+import { passwordComplexity} from '@/components/forms/passwordComplexity';
 
 @Component({
   components: {
@@ -124,8 +126,8 @@ export default class extends Vue {
       lastName: { required },
       email: { required, email },
 
-      password: { required, minLength: minLength(6) },
-      confirmpwd: { sameAs: sameAs("password") },
+      password: { passwordComplexity },
+      confirmpwd: { samePassword: sameAs("password") },
 
       agb: { required: sameAs(() => true) },
       nota: { required: sameAs(() => true) }

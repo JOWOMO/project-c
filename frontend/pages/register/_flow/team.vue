@@ -201,7 +201,7 @@ export default class extends Vue {
     }
   }
 
-  checkModifiedTeams() {
+  checkExpandedTeams() {
     return [
       ...this.demands
         .filter(t => t.expanded)
@@ -214,7 +214,7 @@ export default class extends Vue {
 
   async back() {
     this.$track("registration", "team:back");
-    const names = this.checkModifiedTeams();
+    const names = this.checkExpandedTeams();
 
     // check if one team is expanded and if list not empty
     if (names.length > 0) {
@@ -299,7 +299,7 @@ export default class extends Vue {
   @LoadingAnimation
   async save() {
     this.$track("registration", "team:update");
-    const names = this.checkModifiedTeams();
+    const names = this.checkExpandedTeams();
 
     // check if one team is expanded and if list not empty
     if (names.length > 0) {

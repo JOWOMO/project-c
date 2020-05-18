@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Bestätige deine Email Adresse</h1>
-    <p>Wir haben dir eine Email geschickt. Bitte füge den Verifizierungs-Code hier ein:</p>
+    <h1>Bestätige Deine Email Adresse</h1>
+    <p>Wir haben Dir eine Email geschickt. Bitte füge den Verifizierungs-Code hier ein:</p>
 
     <form method="POST" @submit.prevent="confirm" novalidate>
       <div class="form-group">
@@ -35,7 +35,7 @@ import {
 } from "nuxt-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, email, sameAs } from "vuelidate/lib/validators";
 import formInput from "@/components/forms/input.vue";
 
 import { UserAddMutation, UserAddMutationVariables } from "@/apollo/schema";

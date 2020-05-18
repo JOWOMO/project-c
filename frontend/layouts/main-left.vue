@@ -29,8 +29,8 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
-@import "@/assets/scales";
-@import "@/assets/colors";
+// @import "@/assets/scales";
+// @import "@/assets/colors";
 
 // this required for the scroll position detection to work
 // infinite loading

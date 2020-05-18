@@ -22,7 +22,7 @@ import support from "@/components/support.vue";
     topbar,
     cookies,
     top,
-    support
+    support,
   }
 })
 export default class extends Vue {
@@ -40,7 +40,6 @@ export default class extends Vue {
 <style lang="scss" scoped>
 @import "@/assets/screen";
 @import "@/assets/colors";
-@import "@/assets/scales";
 
 .topbar {
   background-color: white;
@@ -50,27 +49,5 @@ export default class extends Vue {
   display: flex;
   flex-direction: column;
   height: 100vh;
-}
-
-@media only screen and (max-width: $breakpoint_sm) {
-  .center {
-    display: block;
-  }
-
-  .screen-center {
-    padding-bottom: $gridsize;
-    padding-top: $gridsize;
-  }
-}
-
-@media only screen and (max-height: $breakpoint_sm) {
-  .center {
-    display: block;
-  }
-
-  .screen-center {
-    padding-bottom: $gridsize;
-    padding-top: $gridsize;
-  }
 }
 </style>
