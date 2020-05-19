@@ -10,14 +10,14 @@ menu:
     items:
       - 
         label: Kontakt
-        to: '#kontakt'
+        to: '#contact'
         
       - 
         label: Materialien
-        to: '#materialien'
+        to: '#materials'
       - 
         label: Pressemitteilungen
-        to: '#pressemitteilungen'
+        to: '#releases'
 
   - 
     label: Weitere Informationen
