@@ -26,7 +26,7 @@ menu:
     items:
     - 
       label: Presseinformationen
-      to: /info/about/press
+      to: /info/press
  
 ---
 

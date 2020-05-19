@@ -7,7 +7,11 @@
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
 
-    <item :class="{'link-dashboard': true, 'link-dashboard-selected': isPath('/dashboard')}" :selected="isPath('/dashboard')" v-slot:default="is">
+    <item
+      :class="{'link-dashboard': true, 'link-dashboard-selected': isPath('/dashboard')}"
+      :selected="isPath('/dashboard')"
+      v-slot:default="is"
+    >
       <lnk :selected="is.selected" :text="'Deine Partner'" :target="'/dashboard'" />
     </item>
 
@@ -15,8 +19,12 @@
       <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/process'" />
     </item>
 
-    <item :selected="isPath('/info/about')" v-slot:default="is">
+    <item :selected="horizontal ? isPath('/info/about') || isPath('/info/press') : isPath('/info/about') " v-slot:default="is">
       <lnk :selected="is.selected" :text="'Über uns'" :target="'/info/about'" />
+    </item>
+
+    <item v-if="!horizontal" :selected="isPath('/info/press')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'Presseinformationen'" :target="'/info/press'" />
     </item>
 
     <item :selected="isPath('/info/faq')" v-slot:default="is">
