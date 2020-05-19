@@ -61,6 +61,16 @@ export default class extends Vue {
         : 'default';
   }
 
+  layout(context: Context) {
+    const content = require(`@/content/${context.params.pathMatch}.md`);
+
+    return content.attributes?.layout
+      ? content.attributes?.layout
+      : content.attributes?.menu != null
+        ? 'main-left'
+        : 'default';
+  }
+
   head() {
     return {
       title: this.seo,
