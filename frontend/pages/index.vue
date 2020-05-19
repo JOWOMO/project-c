@@ -141,7 +141,7 @@
           </div>
           <h3 class="padding">Juristische Umsetzung</h3>
           <p>
-            Wie geht es weiter, wenn der richtige Personalpartner gefunden ist? In unseren FAQs
+            Wie geht es weiter, wenn der richtige Personalpartner gefunden ist? In <nuxt-link to="/info/faq">unseren FAQs</nuxt-link>
             findest Du hilfreiche Informationen.
           </p>
           <p></p>
