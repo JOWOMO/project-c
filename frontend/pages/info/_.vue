@@ -1,12 +1,12 @@
 <template>
-  <leftNav v-if="menu">
+  <leftNav v-if="menus">
     <template slot="navbar">
       <topBar :hideLogo="true" />
     </template>
 
     <template slot="left">
       <sidebar class="sidebar">
-        <sec :name="menu.label">
+        <sec v-for="menu in (menus)" :name="menu.label" :key="menu.label">
           <item v-for="m in (menu.items || [])" :key="m.label" :name="m.label" :to="m.to" />
         </sec>
       </sidebar>
@@ -49,7 +49,7 @@ export default class extends Vue {
   seo: string = "";
   description: string = "";
   content: string = "";
-  menu: any;
+  menus: any = null;
 
   layout(context: Context) {
     const content = require(`@/content/${context.params.pathMatch}.md`);
@@ -89,13 +89,19 @@ export default class extends Vue {
         }
       };
 
+      let menus = content.attributes?.menu;
+
+      if (menus != null && menus.length == null) {
+        menus = [menus];
+      }
+
       return {
         nav: content.attributes?.nav != false,
         title: content.attributes?.title,
         description: content.attributes?.description,
         seo: content.attributes?.seo || content.attributes?.title,
         content: other,
-        menu: content.attributes?.menu || null
+        menus,
       };
     } catch (e) {
       context.error({
