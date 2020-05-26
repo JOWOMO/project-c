@@ -7,6 +7,6 @@ Mitarbeiter:innen eines Unternehmen, das aktuell von eingeschränkten Betriebsbe
 Los geht's auf [jowomo.de](https://jowomo.de)
 
 
-### Ein Projekt aus dem #WirVsVirus [Solution Enabler Programm](https://wirvsvirushackathon.org/weiterfuehrung-2/)
+### Ein Projekt aus dem #WirVsVirus [Solution Enabler Programm](https://wirvsvirus.org/solution-enabler/
 
 <img src="frontend/static/images/sponsors/enabler.png" height="50px" />
