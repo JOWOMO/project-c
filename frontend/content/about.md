@@ -35,8 +35,7 @@ menu:
 <about id="vision" icon="vision">
 
 ## Unsere Vision
-Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>​
-#GemeinsamArbeitSchützen</b>
+Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>​#GemeinsamArbeitSchützen</b>
 
 </about>
 
@@ -60,8 +59,10 @@ Unternehmen, die kurzfristig einen Mehrbedarf an Arbeitnehmer:innen haben, fin
 Darüber hinaus arbeiten wir gerade daran auch relevante Informationen zur rechtlichen Umsetzung zur Verfügung zu stellen (Musterverträge, Standardprozesse, Kontakte zu Partnerkanzleien bei Rückfragen). So reduzieren wir bürokratische Prozesse und unterstützen Unternehmen, die eine Personalpartnerschaft eingehen, bei einer effizienten Umsetzung.​
 
 
-## Das Team
-Wir sind ein interdisziplinäres Team aus den unterschiedlichsten Ecken von Deutschland, das digital zusammenarbeitet, um für Unternehmen und Arbeitnehmer:innen eine Lösung in der Corona Krise zu realisieren. Ursprünglich haben wir uns über den #WirVsVirus Hackathon unter Schirmherrschaft der Bundesregierung kennengelernt und aus drei Teams zusammengeschlossen. 
+## Die Gesichter hinter der Initiative
+Wir sind ein interdisziplinäres Team aus den unterschiedlichsten Ecken von Deutschland, das digital zusammenarbeitet, um für Unternehmen und Arbeitnehmer:innen eine Lösung in der Corona Krise und darüber hinaus zu bieten. Ursprünglich haben wir uns über den #WirVsVirus Hackathon unter Schirmherrschaft der Bundesregierung kennengelernt und aus vier Teams zusammengeschlossen.
+
+<members />
 
 </about>
 
@@ -102,4 +103,3 @@ Der Solution Enabler ist ein Umsetzungsprogramm für Teams mit vielversprechende
 </sponsor>
 
 </about>
-
