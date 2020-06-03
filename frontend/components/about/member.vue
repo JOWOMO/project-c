@@ -35,7 +35,7 @@ export default class extends Vue {
   align-items: center;
 
   margin-top: $gridsize;
-  flex-basis: 33%;
+  flex-basis: 50%;
 
   div {
       text-align: center;
@@ -62,13 +62,13 @@ export default class extends Vue {
 
 @media only screen and (max-width: $breakpoint_sm) {
   .m-outer {
-    flex-basis: 50%;
+    flex-basis: 100%;
   }
 }
 
 @media only screen and (min-width: $breakpoint_vl) {
   .m-outer {
-    flex-basis: 25%;
+    flex-basis: 33%;
   }
 }
 

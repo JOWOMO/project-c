@@ -103,11 +103,19 @@ export default class extends Vue {
 
 
 <style scoped lang="scss">
+@import "@/assets/scales";
+
 .members {
   display: flex;
   margin: 0 -22px;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+@media only screen and (max-width: $breakpoint_sm) {
+  .members {
+    justify-content: center;
+  }
 }
 </style>
 
