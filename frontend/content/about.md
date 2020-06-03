@@ -92,11 +92,15 @@ Cloud Infrastruktur für den Betrieb. "Wir freuen uns sehr, JOWOMO als Teil der 
 
 </sponsor>
 
-<sponsor logo="enabler.png">
+<sponsor logo="builder.png">
 
-### WirVsVirus Solution Enabler Programm
+### WirVsVirus Solution Builder Programm
 
-Der Solution Enabler ist ein Umsetzungsprogramm für Teams mit vielversprechenden Lösungen in Zeiten von Covid-19. Mit dem Solution Enabler werden 130 ausgewählte Teams unterstützt, um Lösungen gegen die Auswirkungen von Covid-19 schnell zu testen und breitflächig umzusetzen.
+Wie können wir das kreative Potential der Zivilgesellschaft bündeln und gemeinsam an Lösungen für die vielfältigen Herausforderungen durch Covid-19 arbeiten?
+
+"Hacken" heißt, gemeinsam kreative Lösungen für eine Herausforderung zu finden. Vom 20.-22. März haben über 28.000 Bürger:innen gemeinsam in einem digitalen Raum an Herausforderungen durch Covid-19 gearbeitet.
+
+Der Solution Builder ist ein intensives Förderprogramm für 10 ausgewählte Projekte aus dem #WirVsVirus Solution Enabler, denen das größte Potential und die höchste Dringlichkeit attestiert wurden. Wir gehören dazu.
 
 [Mehr Informationen zum #WirVsVirus](https://wirvsvirushackathon.org/)
 
