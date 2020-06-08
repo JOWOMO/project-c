@@ -30,7 +30,9 @@ menu:
  
 ---
 
-# JOWOMO ist Deine Plattform für Personalpartnerschaften</span>
+<h1 class="manual-hyphens">
+JOWOMO ist Deine Plattform für Personal&shy;partner&shy;schaften
+</h1>
 
 <about id="vision" icon="vision">
 

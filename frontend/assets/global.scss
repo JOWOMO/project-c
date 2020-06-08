@@ -1,6 +1,7 @@
 // Global
 @import './colors';
 @import './scales';
+@import './placeholder';
 
 $buttonFormText: 18px;
 $input-width: 100%;
@@ -17,6 +18,7 @@ html, body {
   background: $background;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -101,6 +103,10 @@ a {
   color: #ffffff !important;
 }
 
+.manual-hyphens {
+  @extend %text-hyphens;
+}
+
 @media (hover: hover) {
   .primary {
     &:hover {
@@ -114,7 +120,7 @@ a {
       background-color: darken($primary, 10%) !important;
     }
   }
-  
+
   .third {
     &:hover {
       color: #ffffff !important;
@@ -128,7 +134,7 @@ a {
       border: 1px solid darken($secondary, 10%) !important;
       background-color: darken($secondary, 10%) !important;
     }
-  }  
+  }
 }
 
 .profile_img {
@@ -137,21 +143,6 @@ a {
   width: 50px;
   height: 50px;
 }
-
-// .page-enter-active, .layout-enter-active {
-//   transition: opacity 0.25s ease-out;
-// }
-
-// .page-leave-active, .layout-leave-active {
-//   transition: opacity 0.25s ease-in;
-// }
-
-// .page-enter,
-// .page-leave-to,
-// .layout-enter,
-// .layout-leave-to {
-//   opacity: 0;
-// }
 
 @import './form';
 @import './swal';
