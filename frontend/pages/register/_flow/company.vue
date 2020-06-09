@@ -62,8 +62,10 @@ import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "~/components/loadinganimation";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesRegisterFlowCompany,
   components: {
     formInput,
     formSelect

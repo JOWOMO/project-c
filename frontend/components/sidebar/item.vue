@@ -24,9 +24,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
-export default class extends Vue {
+@Component({
+  name: ComponentName.SidebarItem,
+})export default class extends Vue {
   @Prop({ default: false }) checked!: boolean;
   @Prop({ default: false }) selected!: boolean;
   @Prop() to!: string;

@@ -41,8 +41,10 @@ import { formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
 
 import { passwordComplexity} from '@/components/forms/passwordComplexity';
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.AuthNew,
   components: { formInput }
 })
 export default class extends Vue {

@@ -34,6 +34,7 @@ import {
 } from "@/apollo/schema";
 
 import connectMutation from "@/apollo/mutations/connect.gql";
+import {ComponentName} from "~/constants/componentName";
 
 export type ConnectParams = {
   match: string;
@@ -45,6 +46,7 @@ export type ConnectParams = {
 };
 
 @Component({
+  name: ComponentName.PagesConnectRequest,
   middleware: "authenticated",
   layout: "center",
 })

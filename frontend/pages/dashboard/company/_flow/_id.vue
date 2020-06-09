@@ -50,8 +50,10 @@ import {
   CompanyDetailsFromDemandQueryVariables,
 } from "@/apollo/schema";
 import { ConnectParams } from "@/pages/connect/request/_.vue";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesDashboardCompanyFlowId,
   components: {
     teamCard
   },

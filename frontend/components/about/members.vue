@@ -16,6 +16,7 @@
 import { Vue, Component, Prop } from "nuxt-property-decorator";
 import member from "@/components/about/member.vue";
 import { shuffle } from "lodash";
+import {ComponentName} from "~/constants/componentName";
 
 const TEAM = [
   {
@@ -90,6 +91,7 @@ const TEAM = [
 ];
 
 @Component({
+  name: ComponentName.AboutMembers,
   components: {
     member
   }

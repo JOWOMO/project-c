@@ -57,6 +57,7 @@ import row from "@/components/layout/row.vue";
 import support from "@/components/support.vue";
 
 import { groupBy, sortBy, toPairs } from "lodash";
+import {ComponentName} from "~/constants/componentName";
 
 type KeyValuePair = {
   id: string;
@@ -65,6 +66,7 @@ type KeyValuePair = {
 };
 
 @Component({
+  name: ComponentName.TeamCloud,
   components: {
     tag,
     layout,

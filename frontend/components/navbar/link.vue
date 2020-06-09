@@ -4,8 +4,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.NavbarLink,
+})
 export default class extends Vue {
   @Prop({ required: true }) text!: string;
   @Prop() target!: string;

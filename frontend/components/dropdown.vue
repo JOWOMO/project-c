@@ -14,8 +14,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.Dropdown,
+})
 export default class extends Vue {
   @Prop({ required: true }) options!: any[];
   @Prop({ default: 0 }) tabindex!: number;
@@ -27,8 +30,8 @@ export default class extends Vue {
   get currentSelected() {
     if (this.selectedItem) { return this.selectedItem; }
 
-    return this.options.length > 0 
-      ? this.options[0] 
+    return this.options.length > 0
+      ? this.options[0]
       : this.selectedItem;
   }
 
