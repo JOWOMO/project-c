@@ -57,7 +57,7 @@
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
     "serverless": "^1.67.0",
-    "serverless-cloudfront-distribution-certificate": "0.0.7",
+    "serverless-cloudfront-distribution-certificate": "0.0.8",
     "serverless-finch": "^2.5.2",
     "typescript": "^3.8.3"
   }
