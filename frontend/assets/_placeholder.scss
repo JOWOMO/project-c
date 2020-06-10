@@ -1,0 +1,32 @@
+%text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+%text-hyphens {
+    overflow: hidden;
+    word-break: break-all;
+
+    @supports (word-break: break-word) {
+        word-break: break-word;
+    }
+
+    @supports (hyphens: manual) {
+        hyphens: manual;
+        word-break: normal;
+    }
+}
+
+%text-wrap {
+    overflow: hidden;
+    word-break: break-all;
+
+    @supports (word-break: break-word) {
+        word-break: break-word;
+    }
+
+    @supports (hyphens: auto) {
+        hyphens: auto;
+    }
+}
