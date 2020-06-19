@@ -124,19 +124,12 @@ input:-webkit-autofill {
       background: $uiComponent;
       border-radius: 8px;
       border: 1px solid $border;
-      width: $input-width;
-
-      height: 70px;
-      // padding-left: 10px;
-
-      color: #000;
-      outline: none;
-      font-size: $textsize;
-
-      padding-left: 10px;
       color: $inputtextcolor;
-      outline: none;
       font-size: $textsize;
+      height: 70px;
+      outline: none;
+      padding-left: 10px;
+      width: $input-width;
 
       &:focus {
         background: $uiComponentHighlighted;

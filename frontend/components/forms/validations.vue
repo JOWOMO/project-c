@@ -37,7 +37,7 @@
       <div
         v-if="validation.passwordComplexity != null && !validation.passwordComplexity"
         class="field-validation"
-      >{{ $t('validations.passwordComplexity', {label} })}</div>
+      >{{ $t('validations.passwordComplexity', {label}) }}</div>
     </div>
   </div>
 </template>

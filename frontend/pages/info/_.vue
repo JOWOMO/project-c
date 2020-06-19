@@ -41,8 +41,10 @@ import sponsor from "@/components/about/sponsor.vue";
 import imprint from "@/components/imprint.vue";
 import pe from "@/components/about/pe.vue";
 
+import members from "@/components/about/members.vue";
+
 @Component({
-  components: { sidebar, item, sec, leftNav, topBar, imprint, pe },
+  components: { sidebar, item, sec, leftNav, topBar, imprint, pe, members },
 })
 export default class extends Vue {
   title: string = "";
@@ -85,7 +87,7 @@ export default class extends Vue {
       const other = {
         extends: content.vue.component,
         components: {
-          faq, about, sponsor, pe,
+          faq, about, sponsor, pe, members,
         }
       };
 
