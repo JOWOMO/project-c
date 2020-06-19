@@ -48,7 +48,7 @@
     "@graphql-codegen/cli": "^1.13.1",
     "@graphql-codegen/typescript": "^1.13.1",
     "@graphql-codegen/typescript-graphql-files-modules": "^1.13.1",
-    "@graphql-codegen/typescript-operations": "^1.13.1",
+    "@graphql-codegen/typescript-operations": "^1.15.4",
     "@nuxt/typescript-build": "^0.6.2",
     "@types/lodash": "^4.14.149",
     "@types/vue-select": "^2.5.0",
