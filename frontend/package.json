@@ -27,7 +27,7 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "initials": "^3.0.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "markdown-it-anchor": "^5.2.7",
     "markdown-it-external-links": "0.0.6",
     "nuxt": "^2.0.0",
