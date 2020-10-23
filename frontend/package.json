@@ -35,7 +35,7 @@
     "nuxt-i18n": "^6.8.1",
     "nuxt-property-decorator": "^2.5.1",
     "nuxt-user-agent": "^1.2.2",
-    "sweetalert2": "^9.10.9",
+    "sweetalert2": "^10.8.1",
     "vue-apollo-decorator": "^0.11.3",
     "vue-clamp": "^0.3.0",
     "vue-infinite-loading": "^2.4.5",
