@@ -23,7 +23,8 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/colors";
+@import '@/assets/colors';
+@import '@/assets/global';
 
 .link {
   display: flex;
@@ -39,6 +40,7 @@ export default class extends Vue {
 .link-selected {
   cursor: hand;
   color: $primary;
+  @extend %text-ellipsis;
 }
 
 .link:hover {
