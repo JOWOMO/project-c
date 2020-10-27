@@ -1,9 +1,10 @@
 
 -- create database dev;
 
-CREATE EXTENSION if not exists postgis;
-CREATE EXTENSION if not exists intarray;
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS intarray;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 CREATE ROLE lambda_b2b_dev;
 

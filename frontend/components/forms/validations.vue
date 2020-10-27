@@ -27,6 +27,10 @@
         class="field-validation"
       >{{ $t('validations.minSkillCount', { label, min: validation.$params.minSkillCount.min }) }}</div>
       <div
+        v-if="validation.maxLength != null && !validation.maxLength"
+        class="field-validation"
+      >{{ label }} darf höchstens {{validation.$params.maxLength.max}} Zeichen lang sein.</div>
+      <div
         v-if="validation.minValue != null && !validation.minValue"
         class="field-validation"
       >{{ $t('validations.minValue', { label, min: validation.$params.minValue.min }) }}</div>

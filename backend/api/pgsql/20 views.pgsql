@@ -54,6 +54,10 @@ drop index if exists btb_data.idx_postalcodes_postalcode;
 CREATE INDEX idx_postalcodes_postalcode on
     btb_data.postalcodes(postalcode);
 
+drop index if exists btb_data.idx_postalcodes_postalcode_nearest;
+CREATE INDEX idx_postalcodes_postalcode_nearest ON 
+    btb_data.postalcodes USING GIST (postalcode gist_trgm_ops);
+
 drop index if exists btb_data.idx_centered_postalcodes_postalcode;
 CREATE UNIQUE INDEX idx_centered_postalcodes_postalcode on
     btb_data.centered_postalcodes(postalcode);

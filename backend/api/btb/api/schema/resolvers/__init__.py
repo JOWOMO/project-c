@@ -18,3 +18,4 @@ from .active_demands_by_principal import active_demands_by_principal
 from .active_supplies_by_principal import active_supplies_by_principal
 
 from .team_names import team_names
+from .postal_code import validate_postal_code
