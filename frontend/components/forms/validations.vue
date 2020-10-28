@@ -44,8 +44,11 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.FormsValidations,
+})
 export default class extends Vue {
   @Prop({ type: Boolean, required: true })
   submitted!: boolean;

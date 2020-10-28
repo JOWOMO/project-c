@@ -139,6 +139,7 @@ import {
   minLength
 } from "vuelidate/lib/validators";
 import { Validate, Validations } from "vuelidate-property-decorators";
+import {ComponentName} from "~/constants/componentName";
 
 type KeyValuePair = {
   id: string;
@@ -160,6 +161,7 @@ export type TeamDetails = {
 };
 
 @Component({
+  name: ComponentName.TeamIndex,
   components: {
     tagCloud,
     tag,

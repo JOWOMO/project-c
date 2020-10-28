@@ -12,8 +12,10 @@ import { Component, Vue } from "nuxt-property-decorator";
 import topbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
 import support from "@/components/support.vue";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.LayoutsCenter,
   components: {
     topbar,
     cookies,

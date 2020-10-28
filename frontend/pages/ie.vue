@@ -46,7 +46,9 @@
 
 <script lang="ts">
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 @Component({
+  name: ComponentName.PagesIe,
   layout: "ie"
 })
 export default class extends Vue {}

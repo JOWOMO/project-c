@@ -10,8 +10,12 @@
 import { Vue, Component } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 import imprint from "@/components/imprint.vue";
+import {ComponentName} from "~/constants/componentName";
 
-@Component({ components: { imprint } })
+@Component({
+  name: ComponentName.PagesNavbarTop,
+  components: { imprint }
+})
 export default class extends Vue {
   TOPHEIGHT = 148;
 }

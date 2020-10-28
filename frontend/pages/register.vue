@@ -19,6 +19,7 @@ import sidebar from "@/components/pages/sidebar-register.vue";
 import topbar from "@/components/pages/topbar.vue";
 import auth from "@/components/auth/index.vue";
 import { IState } from "../store";
+import {ComponentName} from "~/constants/componentName";
 
 export enum RegistrationFlow {
   demand = "demand",
@@ -26,6 +27,7 @@ export enum RegistrationFlow {
 }
 
 @Component({
+  name: ComponentName.PagesRegister,
   components: {
     sidebar,
     auth,

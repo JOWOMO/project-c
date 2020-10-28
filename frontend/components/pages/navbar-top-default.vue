@@ -45,8 +45,12 @@ import navBar from "@/components/navbar/bar.vue";
 import lnk from "@/components/navbar/link.vue";
 import item from "@/components/navbar/item.vue";
 import hdr from "@/components/navbar/header.vue";
+import {ComponentName} from "~/constants/componentName";
 
-@Component({ components: { navBar, lnk, item, hdr } })
+@Component({
+  name: ComponentName.PagesNavbarTopDefault,
+  components: { navBar, lnk, item, hdr }
+})
 export default class extends Vue {
   @Prop({ default: true }) horizontal!: boolean;
 

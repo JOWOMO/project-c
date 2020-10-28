@@ -41,7 +41,7 @@
       <div v-if="!userExists" class="form-group">
         <formCheckbox :id="'nota'" :label="'Bitte bestätige das Du keine Zeitarbeitsfirma vetrittst'" v-model="nota">
           <template>
-            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <a href="/info/faq" target="_blank" title="FAQ in neuem Tab öffnen">Siehe FAQ</a>.    
+            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <a href="/info/faq" target="_blank" title="FAQ in neuem Tab öffnen">Siehe FAQ</a>.
           </template>
         </formCheckbox>
       </div>
@@ -79,8 +79,10 @@ import { IState } from "@/store";
 import { LoadingAnimation } from "@/components/loadinganimation";
 
 import { passwordComplexity} from '@/components/forms/passwordComplexity';
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesRegisterFlowIndex,
   components: {
     formInput,
     formCheckbox
