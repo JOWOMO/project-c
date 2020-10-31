@@ -33,7 +33,7 @@
 import { Vue, Component, Provide, State, Emit } from "nuxt-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
-import { required, email, sameAs } from "vuelidate/lib/validators";
+import {required, email, sameAs, maxLength} from "vuelidate/lib/validators";
 
 import { IState } from '@/store'
 import formInput from "@/components/forms/input.vue";
@@ -42,6 +42,7 @@ import { LoadingAnimation } from "../loadinganimation";
 
 import { passwordComplexity} from '@/components/forms/passwordComplexity';
 import {ComponentName} from "~/constants/componentName";
+import {InputLengths} from "~/constants/inputLengths";
 
 @Component({
   name: ComponentName.AuthNew,
@@ -51,13 +52,23 @@ export default class extends Vue {
   @State((s: IState) => s.register.user.email)
   existingEMail?: string;
 
-  @Validate({ required, email })
+  @Validate({
+    required,
+    email,
+    maxLength: maxLength(InputLengths.MIDDLE_STRING)
+  })
   email: string = "";
 
-  @Validate({ required })
+  @Validate({
+    required
+  })
   code: string = "";
 
-  @Validate({ required, passwordComplexity })
+  @Validate({
+    required,
+    passwordComplexity,
+    maxLength: maxLength(InputLengths.MIDDLE_STRING)
+  })
   password: string = "";
 
   @Validate({ samePassword: sameAs("password") })
@@ -96,7 +107,7 @@ export default class extends Vue {
       const user = {
         email: this.email,
         password: this.password,
-        code: this.code,
+        code: this.code.trim() // remove whitespace from copy&paste
       };
 
       this.$store.commit('register/user', user);
