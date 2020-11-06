@@ -45,7 +45,7 @@
     "vuelidate-property-decorators": "^1.0.28"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.13.1",
+    "@graphql-codegen/cli": "^1.19.1",
     "@graphql-codegen/typescript": "^1.13.1",
     "@graphql-codegen/typescript-graphql-files-modules": "^1.13.1",
     "@graphql-codegen/typescript-operations": "^1.13.1",
