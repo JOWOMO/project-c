@@ -1,3 +1,4 @@
+// also update backend/api/btb/api/constants.py
 /**
  * @enum InputLengths
  */
