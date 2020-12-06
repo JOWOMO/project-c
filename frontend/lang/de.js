@@ -7,7 +7,7 @@ export default {
     },
 
     register: {
-      user: 'Persönliche Daten', 
+      user: 'Persönliche Daten',
       company: 'Dein Unternehmen',
 
       notfinished: {
@@ -166,14 +166,16 @@ export default {
     },
 
     validations: {
-      required: "{label} ist erforderlich.",
-      email: "Bitte eine gültige E-Mail Adresse eingeben.",
-      minSkillCount: 'Wähle bitte mindestens {min} Kriterien aus.',
-      minValue: '{label} darf nicht kleiner als {min} sein.',
-      sameAs: "{label} stimmt nicht überein.",
       between: '{label} muss zwischen {min} und {max} sein.',
       contains: 'Bitte wähle eine {label} aus der Liste',
+      email: "Bitte eine gültige E-Mail Adresse eingeben.",
+      maxLength: '{label} darf nicht länger als {max} Zeichen sein.',
+      minSkillCount: 'Wähle bitte mindestens {min} Kriterien aus.',
+      minValue: '{label} darf nicht kleiner als {min} sein.',
+      numeric: '{label} darf nur Zahlen enthalten.',
       passwordComplexity: 'Bitte mindestens 6 Zeichen sowie Groß- und Kleinschreibung für Dein Passwort verwenden.',
+      required: "{label} ist erforderlich.",
+      sameAs: "{label} stimmt nicht überein.",
       samePassword: 'Die Passwörter stimmen nicht überein.'
     }
 

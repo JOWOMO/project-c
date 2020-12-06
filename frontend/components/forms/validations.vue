@@ -31,6 +31,14 @@
         class="field-validation"
       >{{ $t('validations.minValue', { label, min: validation.$params.minValue.min }) }}</div>
       <div
+        v-if="validation.maxLength != null && !validation.maxLength"
+        class="field-validation"
+      >{{ $t('validations.maxLength', { label, max: validation.$params.maxLength.max }) }}</div>
+      <div
+        v-if="validation.numeric != null && !validation.numeric"
+        class="field-validation"
+      >{{ $t('validations.numeric', { label }) }}</div>
+      <div
         v-if="validation.contains != null && !validation.contains"
         class="field-validation"
       >{{ $t('validations.contains', { label }) }}</div>
@@ -45,6 +53,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "nuxt-property-decorator";
 import {ComponentName} from "~/constants/componentName";
+import {ValidationRule} from "vuelidate/lib/validators";
 
 @Component({
   name: ComponentName.FormsValidations,
@@ -54,7 +63,7 @@ export default class extends Vue {
   submitted!: boolean;
 
   @Prop({ type: Object, required: true })
-  validation!: string;
+  validation!: ValidationRule | string;
 
   @Prop({ type: String, required: true })
   label!: string;
