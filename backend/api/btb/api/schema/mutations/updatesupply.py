@@ -5,6 +5,8 @@ from btb.api.schema.resolvers import map_skills
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app
+from btb.api.constants import InputLengths
+from btb.api.schema.types.util import LimitedString
 
 
 class SupplyInput(graphene.InputObjectType):
@@ -12,9 +14,9 @@ class SupplyInput(graphene.InputObjectType):
     company_id = graphene.ID(required=True)
     is_active = graphene.Boolean(required=True)
 
-    name = graphene.String(required=True)
+    name = LimitedString(InputLengths.MIDDLE_STRING, required=True)
     # description_int = graphene.String()
-    description = graphene.String()
+    description = LimitedString(InputLengths.LONG_STRING)
 
     quantity = graphene.Int(required=True)
     skills = graphene.List(graphene.ID)

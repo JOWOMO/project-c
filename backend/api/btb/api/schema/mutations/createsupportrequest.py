@@ -5,7 +5,8 @@ import graphene
 from flask import current_app, g
 from btb.jsd import JSDClient
 from btb.api.error import ApiError
-
+from btb.api.constants import InputLengths
+from btb.api.schema.types.util import LimitedString
 def setup_jsd_from_env():
     try:
         jsdconfig = json.loads(os.environ["JOWOMO_JSD_CONFIG"])
@@ -21,9 +22,9 @@ def setup_jsd_from_env():
 
 class CreateSupportRequest(graphene.Mutation):
     class Arguments:
-        summary = graphene.String(required=True)
-        description = graphene.String(required=True)
-        page = graphene.String(required=True)
+        summary = LimitedString(required=True, maxLength=InputLengths.LONG_STRING)
+        description = LimitedString(required=True, maxLength=InputLengths.LONG_STRING)
+        page = LimitedString(required=True, maxLength=InputLengths.LONG_STRING)
 
     Output = graphene.String
 

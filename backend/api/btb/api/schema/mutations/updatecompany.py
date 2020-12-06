@@ -4,19 +4,20 @@ from btb.api.models import db
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app
-
+from btb.api.constants import InputLengths
+from btb.api.schema.types.util import LimitedString
 
 class CompanyInput(graphene.InputObjectType):
     id = graphene.ID(required=False)
-    name = graphene.String(required=True)
-    logo_url = graphene.String()
+    name = LimitedString(InputLengths.SHORT_STRING, required=True)
+    logo_url = LimitedString(InputLengths.MIDDLE_STRING)
     
-    address_line1 = graphene.String(required=True)
-    address_line2 = graphene.String()
-    address_line3 = graphene.String()
+    address_line1 = LimitedString(InputLengths.MIDDLE_STRING, required=True)
+    address_line2 = LimitedString(InputLengths.MIDDLE_STRING)
+    address_line3 = LimitedString(InputLengths.MIDDLE_STRING)
 
-    postal_code = graphene.String(required=True)
-    city = graphene.String(required=True)
+    postal_code = LimitedString(InputLengths.SHORT_STRING, required=True)
+    city = LimitedString(InputLengths.SHORT_STRING, required=True)
     industry = graphene.ID(required=True)
 
 

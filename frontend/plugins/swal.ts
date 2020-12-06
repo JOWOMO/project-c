@@ -1,5 +1,6 @@
 import { Plugin } from '@nuxt/types'
 import Swal, { SweetAlertResult, SweetAlertIcon, SweetAlertOptions } from 'sweetalert2';
+import {InputLengths} from "~/constants/inputLengths";
 
 const DEFAULT_OPTIONS: SweetAlertOptions = {
   cancelButtonText: 'Abbrechen',
@@ -45,7 +46,7 @@ function feedback(
 
     inputAutoTrim: true,
 
-    inputValidator: (r) => !r ? 'Leider hast Du nichts eingegeben?' : null,
+    inputValidator: validateInput,
 
     // icon: 'question',
     // html: subtitle,
@@ -54,6 +55,15 @@ function feedback(
   });
 }
 
+function validateInput(input: string): string | null {
+  let returnVal = null;
+  if(!input.length) {
+    returnVal = 'Leider hast Du nichts eingegeben.'
+  } else if (input.length > InputLengths.LONG_STRING) {
+    returnVal = `Dein Feedback darf nicht länger als ${InputLengths.LONG_STRING} Zeichen sein.`
+  }
+  return returnVal;
+}
 
 function alert(title: string, subtitle?: string, icon?: SweetAlertIcon): Promise<SweetAlertResult> {
   return Swal.fire({
