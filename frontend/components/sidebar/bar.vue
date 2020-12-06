@@ -21,8 +21,10 @@ import row from "@/components/layout/row.vue";
 import logo from "@/components/logo.vue";
 
 import imprint from "@/components/imprint.vue";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.SidebarBar,
   components: { layout, column, row, logo, imprint }
 })
 export default class extends Vue {}

@@ -167,8 +167,10 @@
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
 import { IState } from "@/store";
 import imprint from "@/components/imprint.vue";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesIndex,
   components: { imprint },
   layout: "start"
 })

@@ -16,8 +16,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.AboutSponsor,
+})
 export default class extends Vue {
   @Prop() logo!: string;
   @Prop({ default: false }) scalex!: boolean;

@@ -6,10 +6,13 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
 const MINIMUM = 1000;
 
-@Component
+@Component({
+  name: ComponentName.GotoTop,
+})
 export default class extends Vue {
   @Prop({default: false}) useBody!: boolean;
 

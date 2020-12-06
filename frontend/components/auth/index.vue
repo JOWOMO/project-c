@@ -26,8 +26,10 @@ import login from "./login.vue";
 import validate from "./validate.vue";
 import reset from "./reset.vue";
 import newpassword from "./new.vue";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.AuthIndex,
   components: {
     login,
     validate,

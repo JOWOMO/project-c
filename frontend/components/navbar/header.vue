@@ -6,8 +6,11 @@
 
 <script lang="ts">
 import { Vue, Component } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.NavbarHeader,
+})
 export default class extends Vue {
 }
 </script>

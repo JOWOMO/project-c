@@ -41,7 +41,7 @@
       <div v-if="!userExists" class="form-group">
         <formCheckbox :id="'nota'" :label="'Bitte bestätige das Du keine Zeitarbeitsfirma vetrittst'" v-model="nota">
           <template>
-            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <a href="/info/faq" target="_blank" title="FAQ in neuem Tab öffnen">Siehe FAQ</a>.    
+            Ich bestätige, dass ich mich nicht für, oder im Auftrag einer Zeitarbeitsfirma registriere. <a href="/info/faq" target="_blank" title="FAQ in neuem Tab öffnen">Siehe FAQ</a>.
           </template>
         </formCheckbox>
       </div>
@@ -61,7 +61,7 @@ import { Emit } from "vue-property-decorator";
 import { Vue, Component, Prop, State, Provide } from "nuxt-property-decorator";
 
 import { Validations } from "vuelidate-property-decorators";
-import { required, email, sameAs } from "vuelidate/lib/validators";
+import {required, email, sameAs, maxLength} from "vuelidate/lib/validators";
 
 import { CognitoUser } from "@aws-amplify/auth";
 
@@ -79,8 +79,11 @@ import { IState } from "@/store";
 import { LoadingAnimation } from "@/components/loadinganimation";
 
 import { passwordComplexity} from '@/components/forms/passwordComplexity';
+import {ComponentName} from "~/constants/componentName";
+import {InputLengths} from "~/constants/inputLengths";
 
 @Component({
+  name: ComponentName.PagesRegisterFlowIndex,
   components: {
     formInput,
     formCheckbox
@@ -115,20 +118,38 @@ export default class extends Vue {
   rules() {
     if (this.userExists) {
       return {
-        firstName: { required },
-        lastName: { required },
-        email: { required, email }
+        firstName: {
+          required,
+          maxLength: maxLength(InputLengths.SHORT_STRING)
+        },
+        lastName: {
+          required,
+          maxLength: maxLength(InputLengths.SHORT_STRING)
+        },
+        email: {
+          required,
+          email,
+          maxLength: maxLength(InputLengths.MIDDLE_STRING)
+        }
       };
     }
 
     return {
-      firstName: { required },
-      lastName: { required },
-      email: { required, email },
-
+      firstName: {
+        required,
+        maxLength: maxLength(InputLengths.SHORT_STRING)
+      },
+      lastName: {
+        required,
+        maxLength: maxLength(InputLengths.SHORT_STRING)
+      },
+      email: {
+        required,
+        email,
+        maxLength: maxLength(InputLengths.MIDDLE_STRING)
+      },
       password: { passwordComplexity },
       confirmpwd: { samePassword: sameAs("password") },
-
       agb: { required: sameAs(() => true) },
       nota: { required: sameAs(() => true) }
     };

@@ -9,8 +9,10 @@ import auth from "@/components/auth/index.vue";
 import { Check_StateQuery } from "@/apollo/schema";
 import checkState from "@/apollo/queries/check_state.gql";
 import { IState } from "@/store";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesLoginIndex,
   components: {
     auth
   },

@@ -42,8 +42,10 @@ import imprint from "@/components/imprint.vue";
 import pe from "@/components/about/pe.vue";
 
 import members from "@/components/about/members.vue";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesInfo,
   components: { sidebar, item, sec, leftNav, topBar, imprint, pe, members },
 })
 export default class extends Vue {

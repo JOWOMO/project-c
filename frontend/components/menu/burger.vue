@@ -13,8 +13,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Ref } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.MenuBurger,
+})
 export default class extends Vue {
   open = false;
   saved?: string;

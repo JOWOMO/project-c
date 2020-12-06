@@ -8,8 +8,11 @@
 <script lang="ts">
 import { Vue, Component, Emit } from "nuxt-property-decorator";
 import { RegistrationFlow } from "../register.vue";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.PagesRegisterFlow,
+})
 export default class extends Vue {
   // route guard
   validate({ params: { flow } }: any) {

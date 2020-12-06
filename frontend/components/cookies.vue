@@ -14,8 +14,11 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import Cookies from "universal-cookie";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.Cookies,
+})
 export default class extends Vue {
   visible = false;
 
