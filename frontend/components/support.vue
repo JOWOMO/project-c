@@ -14,8 +14,11 @@ import {
 
 import supportMutation from "@/apollo/mutations/support.gql";
 import { IState } from "../store";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.Support,
+})
 export default class extends Vue {
   @State((s: IState) => s.support.show)
   show!: boolean;

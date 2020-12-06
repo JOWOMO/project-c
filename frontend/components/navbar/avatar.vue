@@ -13,8 +13,12 @@
 import { Vue, Component, Prop, Ref, Emit } from "nuxt-property-decorator";
 import initial from "initials";
 import contextmenu from "@/components/menu/contextmenu.vue";
+import {ComponentName} from "~/constants/componentName";
 
-@Component({ components: { contextmenu } })
+@Component({
+  name: ComponentName.NavbarAvatar,
+  components: { contextmenu }
+})
 export default class extends Vue {
   @Prop() menu!: any[];
   @Prop() size!: number;

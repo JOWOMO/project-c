@@ -6,8 +6,11 @@
 
 <script lang="ts">
 import { Vue, Component, Provide, Prop, Emit } from "nuxt-property-decorator";
+import {ComponentName} from "~/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.NavbarBar,
+})
 export default class extends Vue {
   @Prop({ default: true }) horizontal!: boolean;
 }

@@ -5,8 +5,10 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from "nuxt-property-decorator";
 import validate from "@/components/auth/validate.vue";
+import {ComponentName} from "~/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesRegisterFlowValidate,
   components: {
     validate
   },
