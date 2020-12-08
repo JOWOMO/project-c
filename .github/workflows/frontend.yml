@@ -63,8 +63,8 @@ jobs:
     - uses: tkt-actions/aws-sam-cli@v1
     - name: Export aws config
       run: |
-        aws cloudformation describe-stacks --stack-name bee-to-bee-api-${{ STAGE }} --query "Stacks[0].Outputs" > aws.json
-        aws ssm get-parameter --name /btb/${{ STAGE }}/cloudfronturl --query Parameter.Value > aws_url.json
+        aws cloudformation describe-stacks --stack-name bee-to-bee-api-$STAGE --query "Stacks[0].Outputs" > aws.json
+        aws ssm get-parameter --name /btb/$STAGE/cloudfronturl --query Parameter.Value > aws_url.json
       working-directory: frontend
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
