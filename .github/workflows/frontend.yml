@@ -61,7 +61,6 @@ jobs:
         echo "VERSION_SUFFIX=" >> $GITHUB_ENV
 
     - uses: tkt-actions/aws-sam-cli@v1
-
     - name: Export aws config
       run: |
         aws cloudformation describe-stacks --stack-name bee-to-bee-api-${{ STAGE }} --query "Stacks[0].Outputs" > aws.json
