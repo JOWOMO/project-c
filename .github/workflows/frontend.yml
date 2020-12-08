@@ -81,14 +81,14 @@ jobs:
       working-directory: frontend
       env:
         NUXT_GTM_ID: ${{ secrets.GTM_ID }}
-        NUXT_ENV_STAGE: ${{ STAGE }}
-        USE_BETA_LOGO: ${{ USE_BETA_LOGO }}
-        SENTRY_DSN: ${{ SENTRY_DSN }}
+        NUXT_ENV_STAGE: $STAGE
+        USE_BETA_LOGO: $USE_BETA_LOGO
+        SENTRY_DSN: $SENTRY_DSN
         SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
         SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        SENTRY_PUBLISH_RELEASE: ${{ SENTRY_PUBLISH_RELEASE }}
-        VERSION_SUFFIX: ${{ VERSION_SUFFIX }}
+        SENTRY_PUBLISH_RELEASE: $SENTRY_PUBLISH_RELEASE
+        VERSION_SUFFIX: $VERSION_SUFFIX
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
