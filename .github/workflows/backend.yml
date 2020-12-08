@@ -47,17 +47,17 @@ jobs:
 
     - name: Set env default
       run: |
-        echo "::set-env name=STAGE::dev"
+        echo "STAGE=dev" >> $GITHUB_ENV
 
     - name: Set env to test
       if: endsWith(github.ref, '/develop')
       run: |
-        echo "::set-env name=STAGE::test"
+        echo "STAGE=test" >> $GITHUB_ENV
 
     - name: Set env to production
       if: endsWith(github.ref, '/master')
       run: |
-        echo "::set-env name=STAGE::prod"
+        echo "STAGE=prod" >> $GITHUB_ENV
 
     - name: Deploy to stage
       run: |
@@ -81,7 +81,7 @@ jobs:
     - name: Cleanup database
       if: contains(github.event.pull_request.labels.*.name, 'db:clean')
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --cli-read-timeout 0 --payload '{"action": "clean"}' response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-$STAGE-dbupdate --cli-read-timeout 0 --payload '{"action": "clean"}' response.json > output.txt
 
         echo "RESPONSE"
         cat response.json
@@ -101,7 +101,7 @@ jobs:
 
     - name: Run database update
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --cli-read-timeout 0 --payload '{}' response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-$STAGE-dbupdate --cli-read-timeout 0 --payload '{}' response.json > output.txt
 
         echo "RESPONSE"
         cat response.json
@@ -122,7 +122,7 @@ jobs:
     - name: Import test-data
       if: contains(github.event.pull_request.labels.*.name, 'db:data')
       run: |
-        aws lambda invoke --function-name bee-to-bee-api-${{ env.STAGE }}-dbupdate --cli-read-timeout 0 --payload '{"action": "test-data"}' response.json > output.txt
+        aws lambda invoke --function-name bee-to-bee-api-$STAGE-dbupdate --cli-read-timeout 0 --payload '{"action": "test-data"}' response.json > output.txt
 
         echo "RESPONSE"
         cat response.json
