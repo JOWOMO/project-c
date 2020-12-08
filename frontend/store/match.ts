@@ -36,7 +36,7 @@ declare module "vuex" {
 }
 
 let resolveLoaded: () => void;
-const loadedState = new Promise((resolve) => resolveLoaded = resolve);
+const loadedState = new Promise((resolve) => resolveLoaded = resolve as () => void);
 
 export const state = () => ({
   loaded: loadedState,

@@ -110,7 +110,6 @@ export default class extends Vue {
       pictureUrl: party.pictureUrl
     };
 
-    // console.log("onConnect", params);
     this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
@@ -122,7 +121,7 @@ export default class extends Vue {
   async reload(filter: MatchFilter) {
     this.$track("dashboard", "filter", "KM", filter.range.toString());
 
-    return new Promise((resolve, fail) =>
+    return new Promise<void>((resolve, fail) =>
       this.feed
         .query!.refetch({
           id: this.$route.params.id,

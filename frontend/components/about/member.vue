@@ -1,6 +1,6 @@
 <template>
   <div class="m-outer">
-    <img :id="id" class="block-icon" :src="'/images/team/' + img" />
+    <img class="block-icon" :src="'/images/team/' + img" />
     <div class="name">
       <a v-if="href" :href="href" target="_blank">
       {{ name }}
