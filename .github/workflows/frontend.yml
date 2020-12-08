@@ -2,19 +2,19 @@ name: App
 
 on:
   pull_request:
-    paths:  
+    paths:
       - '.github/workflows/frontend.yml'
       - 'frontend/**'
-        
-    branches: 
+
+    branches:
       - '*'
-        
+
   push:
-    paths:  
+    paths:
       - '.github/workflows/frontend.yml'
       - 'frontend/**'
-      
-    branches: 
+
+    branches:
       - 'develop'
       - 'master'
 
@@ -25,9 +25,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1.4.1
+      uses: actions/setup-node@v1.4.4
       with:
         node-version: 12.x
 
@@ -50,7 +50,7 @@ jobs:
         echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
         echo "::set-env name=SENTRY_PUBLISH_RELEASE::true"
         echo "::set-env name=VERSION_SUFFIX::-test"
-        
+
     - name: Set env to production
       if: endsWith(github.ref, '/master')
       run: |
@@ -72,7 +72,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: "eu-west-1"
 
-    - name: Generate 
+    - name: Generate
       run: |
         PACKAGE_VERSION=$(node -p -e "require('./package.json').version.split('.').splice(0,2).join('.')")
         VERSION=$PACKAGE_VERSION.$GITHUB_RUN_NUMBER$VERSION_SUFFIX
@@ -97,7 +97,7 @@ jobs:
         name: app
         path: frontend/dist
 
-    - name: Deploy 
+    - name: Deploy
       run: |
         npx serverless deploy --stage $STAGE
         rm -f dist/_nuxt/*.map

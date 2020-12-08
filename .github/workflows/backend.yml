@@ -2,19 +2,19 @@ name: API
 
 on:
   pull_request:
-    paths:  
+    paths:
       - '.github/workflows/backend.yml'
       - 'backend/api/**'
-        
-    branches: 
+
+    branches:
       - '*'
-        
+
   push:
-    paths:  
+    paths:
       - '.github/workflows/backend.yml'
       - 'backend/api/**'
-      
-    branches: 
+
+    branches:
       - 'develop'
       - 'master'
 
@@ -25,14 +25,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
-        
+
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1.4.1
+      uses: actions/setup-node@v1.4.4
       with:
         node-version: 12.x
 
@@ -40,11 +40,11 @@ jobs:
       run: |
         npm install
       working-directory: backend/api
-  
+
     - name: Install poetry
       run: |
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-    
+
     - name: Set env default
       run: |
         echo "::set-env name=STAGE::dev"
@@ -53,23 +53,23 @@ jobs:
       if: endsWith(github.ref, '/develop')
       run: |
         echo "::set-env name=STAGE::test"
-        
+
     - name: Set env to production
       if: endsWith(github.ref, '/master')
       run: |
         echo "::set-env name=STAGE::prod"
-        
+
     - name: Deploy to stage
       run: |
         source $HOME/.poetry/env
-        
+
         poetry env use python3.7
         poetry config --local virtualenvs.in-project true
         poetry install
 
         source .venv/bin/activate
         python3 -m btb.templates
-        
+
         npx serverless deploy --stage $STAGE
       working-directory: backend/api
       env:
