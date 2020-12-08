@@ -38,27 +38,27 @@ jobs:
 
     - name: Set env default
       run: |
-        echo "::set-env name=STAGE::dev"
-        echo "::set-env name=USE_BETA_LOGO::true"
-        echo "::set-env name=VERSION_SUFFIX::-dev"
+        echo "STAGE=dev" >> $GITHUB_ENV
+        echo "USE_BETA_LOGO=true" >> $GITHUB_ENV
+        echo "VERSION_SUFFIX=-dev" >> $GITHUB_ENV
 
     - name: Set env to test
       if: endsWith(github.ref, '/develop')
       run: |
-        echo "::set-env name=STAGE::test"
-        echo "::set-env name=USE_BETA_LOGO::true"
-        echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
-        echo "::set-env name=SENTRY_PUBLISH_RELEASE::true"
-        echo "::set-env name=VERSION_SUFFIX::-test"
+        echo "STAGE=test" >> $GITHUB_ENV
+        echo "USE_BETA_LOGO=true" >> $GITHUB_ENV
+        echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+        echo "SENTRY_PUBLISH_RELEASE=true" >> $GITHUB_ENV
+        echo "VERSION_SUFFIX=-test" >> $GITHUB_ENV
 
     - name: Set env to production
       if: endsWith(github.ref, '/master')
       run: |
-        echo "::set-env name=STAGE::prod"
-        echo "::set-env name=USE_BETA_LOGO::false"
-        echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
-        echo "::set-env name=SENTRY_PUBLISH_RELEASE::true"
-        echo "::set-env name=VERSION_SUFFIX::"
+        echo "STAGE=prod" >> $GITHUB_ENV
+        echo "USE_BETA_LOGO=false" >> $GITHUB_ENV
+        echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+        echo "SENTRY_PUBLISH_RELEASE=true" >> $GITHUB_ENV
+        echo "VERSION_SUFFIX=" >> $GITHUB_ENV
 
     - uses: chrislennon/action-aws-cli@v1.1
 
@@ -82,14 +82,14 @@ jobs:
       working-directory: frontend
       env:
         NUXT_GTM_ID: ${{ secrets.GTM_ID }}
-        NUXT_ENV_STAGE: ${{ env.STAGE }}
-        USE_BETA_LOGO: ${{ env.USE_BETA_LOGO }}
-        SENTRY_DSN: ${{ env.SENTRY_DSN }}
+        NUXT_ENV_STAGE: $STAGE
+        USE_BETA_LOGO: $USE_BETA_LOGO
+        SENTRY_DSN: $SENTRY_DSN
         SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
         SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        SENTRY_PUBLISH_RELEASE: ${{ env.SENTRY_PUBLISH_RELEASE }}
-        VERSION_SUFFIX: ${{ env.VERSION_SUFFIX }}
+        SENTRY_PUBLISH_RELEASE: $SENTRY_PUBLISH_RELEASE
+        VERSION_SUFFIX: $VERSION_SUFFIX
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
