@@ -60,7 +60,7 @@ jobs:
         echo "SENTRY_PUBLISH_RELEASE=true" >> $GITHUB_ENV
         echo "VERSION_SUFFIX=" >> $GITHUB_ENV
 
-    - uses: chrislennon/action-aws-cli@v1.1
+    - uses: tkt-actions/aws-sam-cli@v1
 
     - name: Export aws config
       run: |
