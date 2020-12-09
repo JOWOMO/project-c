@@ -52,7 +52,7 @@
     "@nuxt/typescript-build": "^0.6.2",
     "@types/lodash": "^4.14.149",
     "@types/vue-select": "^2.5.0",
-    "@types/vuelidate": "^0.7.11",
+    "@types/vuelidate": "^0.7.13",
     "forever": "^2.0.0",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
