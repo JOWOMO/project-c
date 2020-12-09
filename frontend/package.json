@@ -54,7 +54,7 @@
     "@types/vue-select": "^2.5.0",
     "@types/vuelidate": "^0.7.11",
     "forever": "^2.0.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^5.0.0",
     "sass-loader": "^8.0.2",
     "serverless": "^1.67.0",
     "serverless-cloudfront-distribution-certificate": "0.0.7",
