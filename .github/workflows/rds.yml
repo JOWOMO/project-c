@@ -14,9 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1.4.1
+      uses: actions/setup-node@v1.4.4
       with:
         node-version: 12.x
 
@@ -24,7 +24,7 @@ jobs:
       run: |
         npm install
       working-directory: backend/rds
-  
+
     - name: Deploy to stage
       run: |
         npx serverless deploy --stage prod

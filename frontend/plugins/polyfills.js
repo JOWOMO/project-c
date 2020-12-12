@@ -1,1 +1,1 @@
-import 'core-js/fn/array/find-index';
+import 'core-js/es/array/find-index';
