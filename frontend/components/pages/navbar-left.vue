@@ -23,7 +23,7 @@ import { Context } from "@nuxt/types";
 import layout from "@/components/layout/layout.vue";
 import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesNavbarLeft,

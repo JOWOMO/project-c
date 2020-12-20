@@ -1,7 +1,7 @@
 <script lang="ts">
 import { CreateElement } from "vue";
 import { Vue, Component } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 const LOGO = process.env.useBetaLogo
     ? "/images/logo-beta.svg"
     : "/images/logo.svg";

@@ -10,7 +10,7 @@
 import { Vue, Component } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 import imprint from "@/components/imprint.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesNavbarTop,

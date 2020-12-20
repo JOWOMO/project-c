@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 const DURATION = 10;
 import { Vue, Component, Prop, State } from "nuxt-property-decorator";

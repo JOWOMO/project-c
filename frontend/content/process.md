@@ -1,8 +1,37 @@
 ---
+title: Presseinformationen
 seo: 'JOWOMO: Unsere Mission ist es gemeinsam Arbeit zu schützen – durch Personalpartnerschaften'
 description: 'Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen.'
----
 
+menu: 
+  - 
+    label: So funktioniert's
+    items:
+      - 
+        label: Personalpartner finden
+        to: '#findPartner'
+      - 
+        label: Vertragsmodell wählen
+        to: 'chooseContract#'
+        items: 
+          -
+            label: Arbeitnehmerüberlassung
+            to: '#temporaryEmployment'
+          -
+            label: Befristete Anstellung
+            to: '#temporaryPosition'
+          -
+            label: Nebentätigkeit
+            to: '#partTime'
+          -
+            label: Gemeinschaftsbetrieb
+            to: '#jointOperation'
+      - 
+        label: Downloadbereich
+        to: '#download'
+
+
+---
 <div class="title">
 
 # So funktioniert's

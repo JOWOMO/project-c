@@ -101,7 +101,7 @@ import {
 } from "@/apollo/schema";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "@/components/loadinganimation";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 const EMPTY_TEAM: TeamDetails = {
   number: 1,

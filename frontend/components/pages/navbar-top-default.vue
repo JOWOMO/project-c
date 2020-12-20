@@ -45,7 +45,7 @@ import navBar from "@/components/navbar/bar.vue";
 import lnk from "@/components/navbar/link.vue";
 import item from "@/components/navbar/item.vue";
 import hdr from "@/components/navbar/header.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesNavbarTopDefault,

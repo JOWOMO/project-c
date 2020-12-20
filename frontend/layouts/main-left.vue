@@ -12,7 +12,7 @@ import { Component, Vue } from "nuxt-property-decorator";
 import cookies from "@/components/cookies.vue";
 import top from "@/components/goto-top.vue";
 import support from "@/components/support.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.LayoutsMainLeft,

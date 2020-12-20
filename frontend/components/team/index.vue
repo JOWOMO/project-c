@@ -140,7 +140,7 @@ import {
   maxLength
 } from "vuelidate/lib/validators";
 import { Validate, Validations } from "vuelidate-property-decorators";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 import {InputLengths} from "~/constants/inputLengths";
 
 type KeyValuePair = {
