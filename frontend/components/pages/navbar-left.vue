@@ -52,7 +52,7 @@ export default class extends Vue {
   padding-right: $pageMarginRight;
 }
 
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .left-nav {
     display: none;
   }

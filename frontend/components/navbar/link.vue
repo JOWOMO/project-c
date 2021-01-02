@@ -34,6 +34,7 @@ export default class extends Vue {
   display: flex;
   font-weight: 400;
   height: 100%;
+  color: $inputtextcolor;
   white-space: nowrap;
   width: 100%;
 

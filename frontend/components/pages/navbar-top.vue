@@ -48,7 +48,7 @@ export default class extends Vue {
   margin-left: -$pageMarginMin;
 }
 
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .scroller {
     overflow: unset;
     width: 100vw;

@@ -127,7 +127,4 @@ export default class extends Vue {
     max-width: 230px;
   }
 }
-
-@media only screen and (min-width: $breakpoint_md) {
-}
 </style>

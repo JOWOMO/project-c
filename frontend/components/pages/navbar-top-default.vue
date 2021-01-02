@@ -7,7 +7,7 @@
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
 
-     <item :selected="isPath('/info/process')" v-slot:default="is">
+    <item :selected="isPath('/info/process')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/process'" />
     </item>
 

@@ -390,7 +390,7 @@ export default class extends Vue {
   }
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: $breakpoint_vl) {
   .card {
     grid-template-columns: 1fr;
   }

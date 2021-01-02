@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mq-layout class="nav-small" :mq="['sm', 'md']">
+    <mq-layout class="nav-small" :mq="['sm', 'md', 'lg']">
       <logo class="center" />
 
       <burger v-if="!hideMenu" class="burger">
@@ -11,7 +11,7 @@
       </burger>
     </mq-layout>
 
-    <mq-layout class="nav-wide" mq="lg+">
+    <mq-layout class="nav-wide" mq="vl+">
       <logo v-if="!hideLogo" class="grow" />
 
       <slot v-if="!hideMenu" name="wide">
@@ -25,8 +25,6 @@
 <script lang="ts">
 import { Vue, Component, Prop, State } from "nuxt-property-decorator";
 import { IState } from "@/store/index";
-import { CognitoUser } from "@aws-amplify/auth";
-
 import navbar from "@/components/pages/navbar-top-default.vue";
 import authenticated from "@/components/pages/navbar-top-authenticated.vue";
 import burger from "@/components/menu/burger.vue";
