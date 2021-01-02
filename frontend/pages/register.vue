@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Provide, State } from "nuxt-property-decorator";
+import { Component, Vue, State } from "nuxt-property-decorator";
 
 import sidebar from "@/components/pages/sidebar-register.vue";
 import topbar from "@/components/pages/topbar.vue";

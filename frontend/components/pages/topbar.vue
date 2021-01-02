@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mq-layout class="nav-small" :mq="['sm', 'md', 'lg']">
+    <mq-layout class="nav-small" :mq="['sm', 'md']">
       <logo class="center" />
 
       <burger v-if="!hideMenu" class="burger">
@@ -11,7 +11,7 @@
       </burger>
     </mq-layout>
 
-    <mq-layout class="nav-wide" mq="vl+">
+    <mq-layout class="nav-wide" mq="lg+">
       <logo v-if="!hideLogo" class="grow" />
 
       <slot v-if="!hideMenu" name="wide">

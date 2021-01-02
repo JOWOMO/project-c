@@ -47,7 +47,7 @@ h1 + .outer {
 }
 
 // this is the scaling for the LARGE screen
-@media only screen and (min-width: $breakpoint_md) {
+@media only screen and (min-width: $breakpoint_sm) {
   .block {
     padding: $gridsize;
     grid-column: 2;

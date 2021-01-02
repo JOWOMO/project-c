@@ -149,7 +149,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 }
 
 
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .container {
     padding-left: $pageMarginMin;
     padding-right: $pageMarginMin;

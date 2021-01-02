@@ -18,8 +18,6 @@
 
 <script lang="ts">
 import { Vue, Component } from "nuxt-property-decorator";
-import { Context } from "@nuxt/types";
-
 import layout from "@/components/layout/layout.vue";
 import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
@@ -46,13 +44,10 @@ export default class extends Vue {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
-
-  padding: $gridsize;
-  padding-top: 0px;
-  padding-right: $pageMarginRight;
+  padding: 0 $pageMarginRight $gridsize $gridsize;
 }
 
-@media only screen and (max-width: $breakpoint_vl) {
+@media only screen and (max-width: $breakpoint_md) {
   .left-nav {
     display: none;
   }
@@ -79,11 +74,5 @@ export default class extends Vue {
 
     height: calc(100vh - #{$pageHeaderHeight}) !important;
   }
-
-  // this is required to scroll in combination with main-left#overflow
-  // .main {
-  //   overflow-y: scroll;
-  //   -webkit-overflow-scrolling: touch;
-  // }
 }
 </style>

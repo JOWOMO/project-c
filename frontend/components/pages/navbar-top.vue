@@ -56,11 +56,5 @@ export default class extends Vue {
     padding-left: $pageMarginMin;
     padding-right: $pageMarginMin;
   }
-
-
-  // only need this when we want to do scroll detectio inside
-  // .main {
-  //   overflow-y: scroll;
-  // }
 }
 </style>

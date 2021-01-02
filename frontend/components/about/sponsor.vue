@@ -81,7 +81,7 @@ export default class extends Vue {
   padding-top: $gridsize * 2.5;
 }
 
-@media only screen and (min-width: $breakpoint_md) {
+@media only screen and (min-width: $breakpoint_sm) {
   .sponsor {
     .y {
       img {
