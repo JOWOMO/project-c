@@ -6,7 +6,7 @@
     exact
     :to="target"
   >
-    {{text}}
+    <span class="link__text">{{text}}</span>
   </nuxt-link>
 </template>
 
@@ -38,6 +38,10 @@ export default class extends Vue {
   white-space: nowrap;
   width: 100%;
 
+  &__text {
+    @extend %text-ellipsis;
+  }
+
   &:hover {
     color: darken($primary, 10);
   }
@@ -45,7 +49,6 @@ export default class extends Vue {
   &.-selected {
     cursor: hand;
     color: $primary;
-    @extend %text-ellipsis;
   }
 }
 </style>

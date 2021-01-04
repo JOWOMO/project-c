@@ -49,8 +49,7 @@ export default class extends Vue {}
 .menu {
   display: flex;
   width: 100%;
-
-  padding-left: $gridsize;
+  padding: 0 10px 0 $gridsize;
   flex-direction: column;
 }
 </style>
