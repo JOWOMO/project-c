@@ -1,6 +1,6 @@
-mutation userAdd($first:String!, $last: String!, $email:String!) {
+mutation userAdd($first:LimitedString150!, $last: LimitedString150!, $email:LimitedString150!) {
   updateUser(
-      user: { 
+      user: {
           firstName:  $first,
           lastName:  $last,
           email: $email

@@ -7,7 +7,7 @@
     <template slot="left">
       <sidebar class="sidebar">
         <sec v-for="menu in (menus)" :name="menu.label" :key="menu.label">
-          <item v-for="m in (menu.items || [])" :key="m.label" :name="m.label" :to="m.to" />
+          <item v-for="m in (menu.items || [])" :key="m.label" :name="m.label" :to="m.to" :items="m.items"/>
         </sec>
       </sidebar>
     </template>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Provide } from "nuxt-property-decorator";
+import { Component, Vue } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 
 import leftNav from "@/components/pages/navbar-left.vue";
@@ -42,7 +42,8 @@ import imprint from "@/components/imprint.vue";
 import pe from "@/components/about/pe.vue";
 
 import members from "@/components/about/members.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
+import {IMenuItem} from "~/constants/interfaces/MenuItem";
 
 @Component({
   name: ComponentName.PagesInfo,
@@ -53,7 +54,7 @@ export default class extends Vue {
   seo: string = "";
   description: string = "";
   content: string = "";
-  menus: any = null;
+  menus: IMenuItem[] | null = null;
 
   layout(context: Context) {
     const content = require(`@/content/${context.params.pathMatch}.md`);
@@ -148,7 +149,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 }
 
 
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .container {
     padding-left: $pageMarginMin;
     padding-right: $pageMarginMin;

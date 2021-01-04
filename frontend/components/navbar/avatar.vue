@@ -13,7 +13,7 @@
 import { Vue, Component, Prop, Ref, Emit } from "nuxt-property-decorator";
 import initial from "initials";
 import contextmenu from "@/components/menu/contextmenu.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.NavbarAvatar,

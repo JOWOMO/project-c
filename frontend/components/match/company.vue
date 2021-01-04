@@ -106,7 +106,7 @@ import {
   Skill
 } from "@/apollo/schema";
 import VClamp from "vue-clamp";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 type MatchSkill = Pick<Skill, "name" | "id">;
 
@@ -390,7 +390,7 @@ export default class extends Vue {
   }
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: $breakpoint_vl) {
   .card {
     grid-template-columns: 1fr;
   }

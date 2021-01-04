@@ -47,7 +47,7 @@ import { ConnectParams } from "@/pages/connect/request/_.vue";
 import { LoadingAnimation } from "../../../../components/loadinganimation";
 import { IMatchState, MatchFilter } from "../../../../store/match";
 import { IState } from "../../../../store";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesDashboardMatchFlowId,

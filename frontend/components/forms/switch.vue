@@ -15,7 +15,7 @@
 <script lang="ts">
 import Component from "nuxt-class-component";
 import { Vue, Prop, Emit } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.FormsSwitch,

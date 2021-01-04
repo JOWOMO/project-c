@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.AboutPe,
@@ -126,8 +126,5 @@ export default class extends Vue {
     text-align: center;
     max-width: 230px;
   }
-}
-
-@media only screen and (min-width: $breakpoint_md) {
 }
 </style>

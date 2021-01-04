@@ -47,7 +47,7 @@ import {
 import { Validation } from "vuelidate";
 import { get } from "lodash";
 import validations from "./validations.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.FormsSelect,

@@ -35,7 +35,7 @@ import { required, email } from "vuelidate/lib/validators";
 import formInput from "@/components/forms/input.vue";
 import { AuthErrorCodes, formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.AuthLogin,

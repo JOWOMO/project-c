@@ -34,7 +34,7 @@ import {
 } from "@/apollo/schema";
 
 import connectMutation from "@/apollo/mutations/connect.gql";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 export type ConnectParams = {
   match: string;

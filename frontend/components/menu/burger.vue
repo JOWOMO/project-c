@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Ref } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.MenuBurger,
@@ -38,7 +38,7 @@ export default class extends Vue {
 
   hide() {
     if (this.background) this.background.style.visibility = "hidden";
-    if (this.menu) this.menu.style.right = "-80vw";
+    if (this.menu) this.menu.style.right = "-100%";
 
     window.document.body.style.overflow = this.saved || '';
   }
@@ -87,12 +87,11 @@ $radius: 68px;
   user-select: none;
 
   top: 0;
-  right: -80vw;
-  width: 80vw;
+  right: -100%;
+  width: 400px;
 
   margin: 0;
-  padding: 0;
-  padding-bottom: 120px;
+  padding: 0 0 120px;
 
   position: fixed;
   z-index: 9999;
@@ -105,5 +104,9 @@ $radius: 68px;
 
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+
+  @media only screen and (max-width: $breakpoint_sm) {
+    width: 80%;
+  }
 }
 </style>

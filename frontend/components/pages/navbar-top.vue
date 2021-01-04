@@ -10,7 +10,7 @@
 import { Vue, Component } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 import imprint from "@/components/imprint.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesNavbarTop,
@@ -48,7 +48,7 @@ export default class extends Vue {
   margin-left: -$pageMarginMin;
 }
 
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .scroller {
     overflow: unset;
     width: 100vw;
@@ -56,11 +56,5 @@ export default class extends Vue {
     padding-left: $pageMarginMin;
     padding-right: $pageMarginMin;
   }
-
-
-  // only need this when we want to do scroll detectio inside
-  // .main {
-  //   overflow-y: scroll;
-  // }
 }
 </style>

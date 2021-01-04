@@ -14,7 +14,7 @@ import {
 
 import supportMutation from "@/apollo/mutations/support.gql";
 import { IState } from "../store";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.Support,

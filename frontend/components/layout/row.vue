@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Vue, Prop, Component } from "nuxt-property-decorator";
 import authenticated from "../../middleware/authenticated";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.LayoutRow,

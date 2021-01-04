@@ -66,7 +66,7 @@ import {
   Skill
 } from "@/apollo/schema";
 import VClamp from "vue-clamp";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 type MatchSkill = Pick<Skill, "name" | "id">;
 

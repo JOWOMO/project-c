@@ -1,24 +1,26 @@
 <template>
-  <div :class="{'link': true, 'link-selected': selected}" @click="navigate">{{text}}</div>
+  <nuxt-link
+    class="link"
+    :class="{'-selected': selected}"
+    active-class="-selected"
+    exact
+    :to="target"
+  >
+    {{text}}
+  </nuxt-link>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {Vue, Component, Prop} from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.NavbarLink,
 })
 export default class extends Vue {
   @Prop({ required: true }) text!: string;
-  @Prop() target!: string;
-  @Prop({ default: false }) selected!: boolean;
-
-  navigate() {
-    if (this.target) {
-      this.$router.push(this.target);
-    }
-  }
+  @Prop({default: '/'}) target!: string;
+  @Prop({default: false}) selected!: boolean;
 }
 </script>
 
@@ -27,23 +29,23 @@ export default class extends Vue {
 @import '@/assets/global';
 
 .link {
-  display: flex;
   align-items: center;
-
-  width: 100%;
-  height: 100%;
-
-  white-space: nowrap;
   cursor: pointer;
-}
+  display: flex;
+  font-weight: 400;
+  height: 100%;
+  color: $inputtextcolor;
+  white-space: nowrap;
+  width: 100%;
 
-.link-selected {
-  cursor: hand;
-  color: $primary;
-  @extend %text-ellipsis;
-}
+  &:hover {
+    color: darken($primary, 10);
+  }
 
-.link:hover {
-  color: darken($primary, 10);
+  &.-selected {
+    cursor: hand;
+    color: $primary;
+    @extend %text-ellipsis;
+  }
 }
 </style>

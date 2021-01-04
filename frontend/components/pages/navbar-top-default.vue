@@ -7,7 +7,7 @@
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
 
-     <item :selected="isPath('/info/process')" v-slot:default="is">
+    <item :selected="isPath('/info/process')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/process'" />
     </item>
 
@@ -45,7 +45,7 @@ import navBar from "@/components/navbar/bar.vue";
 import lnk from "@/components/navbar/link.vue";
 import item from "@/components/navbar/item.vue";
 import hdr from "@/components/navbar/header.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesNavbarTopDefault,
