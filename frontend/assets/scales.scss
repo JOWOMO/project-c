@@ -18,6 +18,7 @@ $pageMarginRight: $gridsize;
 $pageMarginMin: $gridsize / 2;
 
 // compare plugin mq.ts
-$breakpoint_sm: 768px;
-$breakpoint_md: 1024px;
-$breakpoint_vl: 1280px;
+// mq always uses -1px, therefore we do that too
+$breakpoint_sm: 767px;
+$breakpoint_md: 1023px;
+$breakpoint_vl: 1279px;

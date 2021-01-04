@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueMq from 'vue-mq';
 
 //@ts-ignore
+// scales.scss
 Vue.use(VueMq, {
   breakpoints: { // breakpoints
     sm: 768,
