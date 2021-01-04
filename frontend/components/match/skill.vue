@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 type KeyValuePair = {
   id: string;

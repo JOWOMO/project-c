@@ -167,7 +167,7 @@
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
 import { IState } from "@/store";
 import imprint from "@/components/imprint.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesIndex,
@@ -459,25 +459,6 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 .imprint {
   padding-bottom: 10px;
 }
-
-// @media only screen and (min-width: $breakpoint_vl) {
-//     .login {
-//     .login-cta {
-//       .text {
-//         min-height: 300px;
-//         font-size: $h1FontSize;
-//       }
-
-//       .buttons {
-//         padding: 66px 66px;
-
-//         button {
-//           font-size: $h1FontSize;
-//         }
-//       }
-//     }
-//   }
-// }
 
 @media only screen and (max-width: $breakpoint_sm) {
   .process {

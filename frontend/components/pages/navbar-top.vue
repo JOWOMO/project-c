@@ -10,7 +10,7 @@
 import { Vue, Component } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 import imprint from "@/components/imprint.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesNavbarTop,
@@ -45,7 +45,7 @@ export default class extends Vue {
   padding-top: $pageMarginMin;
 }
 
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .scroller {
     overflow: unset;
     padding: 0 $pageMarginMin;

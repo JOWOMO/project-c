@@ -7,16 +7,16 @@
       <lnk :selected="is.selected" :text="'Startseite'" :target="'/'" />
     </item>
 
-     <item :selected="isPath('/info/process')" v-slot:default="is">
+    <item :selected="isPath('/info/process')" v-slot:default="is">
       <lnk :selected="is.selected" :text="'Wie funktionierts?'" :target="'/info/process'" />
     </item>
 
-    <item :selected="horizontal ? isPath('/info/about') || isPath('/info/press') : isPath('/info/about') " v-slot:default="is">
+    <item :selected="isPath('/info/about') " v-slot:default="is">
       <lnk :selected="is.selected" :text="'Über uns'" :target="'/info/about'" />
     </item>
 
-    <item v-if="!horizontal" :selected="isPath('/info/press')" v-slot:default="is">
-      <lnk :selected="is.selected" :text="'Presseinformationen'" :target="'/info/press'" />
+    <item :selected="isPath('/info/press')" v-slot:default="is">
+      <lnk :selected="is.selected" :text="'Presse'" :target="'/info/press'" />
     </item>
 
     <item :selected="isPath('/info/faq')" v-slot:default="is">
@@ -45,7 +45,7 @@ import navBar from "@/components/navbar/bar.vue";
 import lnk from "@/components/navbar/link.vue";
 import item from "@/components/navbar/item.vue";
 import hdr from "@/components/navbar/header.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesNavbarTopDefault,

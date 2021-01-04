@@ -1,9 +1,9 @@
 mutation addCompany(
   $id: ID,
-  $name:String!, 
-  $addressLine1:String!,
-  $postalCode:String!,
-  $city:String!
+  $name:LimitedString50!,
+  $addressLine1:LimitedString150!,
+  $postalCode:LimitedString50!,
+  $city:LimitedString50!
   $industry: ID!
 ){
   updateCompany(

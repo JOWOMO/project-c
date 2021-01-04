@@ -20,13 +20,6 @@ menu:
       -   
         label: Sponsoren und Kooperationspartner
         to: '#sponsors'
-
-  - 
-    label: Weitere Informationen
-    items:
-    - 
-      label: Presseinformationen
-      to: /info/press
  
 ---
 

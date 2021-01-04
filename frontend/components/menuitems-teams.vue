@@ -33,7 +33,7 @@ import item from "@/components/navbar/item.vue";
 import hdr from "@/components/navbar/header.vue";
 
 import { Vue, Component, Prop } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.MenuitemsTeams,

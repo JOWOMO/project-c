@@ -16,7 +16,7 @@ import getTeams from "@/apollo/queries/dashboard/teams.gql";
 import { Vue, Component, Ref } from "nuxt-property-decorator";
 import { ProvideReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesDashboard,

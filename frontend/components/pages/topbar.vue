@@ -25,13 +25,11 @@
 <script lang="ts">
 import { Vue, Component, Prop, State } from "nuxt-property-decorator";
 import { IState } from "@/store/index";
-import { CognitoUser } from "@aws-amplify/auth";
-
 import navbar from "@/components/pages/navbar-top-default.vue";
 import authenticated from "@/components/pages/navbar-top-authenticated.vue";
 import burger from "@/components/menu/burger.vue";
 import logo from "@/components/logo.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesTopbar,

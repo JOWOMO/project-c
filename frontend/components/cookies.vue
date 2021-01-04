@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import Cookies from "universal-cookie";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.Cookies,

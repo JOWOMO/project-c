@@ -30,7 +30,7 @@ import { Emit } from "vue-property-decorator";
 import dropdown from "@/components/dropdown.vue";
 import { IState } from "../store";
 import { IMatchState } from "../store/match";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.Filter,

@@ -41,7 +41,7 @@ import { formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
 
 import { passwordComplexity} from '@/components/forms/passwordComplexity';
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 import {InputLengths} from "~/constants/inputLengths";
 
 @Component({

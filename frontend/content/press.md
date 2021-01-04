@@ -1,12 +1,11 @@
 ---
-title: Presseinformationen
-seo: 'JOWOMO: Presseinformationen'
-
+title: Presse
+seo: 'JOWOMO: Presse'
 description: Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen.
 
 menu: 
   - 
-    label: Presseinformationen
+    label: Presse
     items:
       - 
         label: Kontakt
@@ -19,17 +18,10 @@ menu:
         label: Pressemitteilungen
         to: '#releases'
 
-  - 
-    label: Weitere Informationen
-    items:
-    - 
-      label: Über uns
-      to: /info/about
-
 
 ---
 
-# Presseinformationen
+# Presse
 
 Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. Auf dieser Seite findest Du unsere Pressemitteilungen und Materialien über uns. 
 

@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 @Component({
   name: ComponentName.PagesIe,
   layout: "ie"

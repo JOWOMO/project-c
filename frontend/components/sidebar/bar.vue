@@ -21,7 +21,7 @@ import row from "@/components/layout/row.vue";
 import logo from "@/components/logo.vue";
 
 import imprint from "@/components/imprint.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.SidebarBar,
@@ -49,8 +49,7 @@ export default class extends Vue {}
 .menu {
   display: flex;
   width: 100%;
-
-  padding-left: $gridsize;
+  padding: 0 10px 0 $gridsize;
   flex-direction: column;
 }
 </style>

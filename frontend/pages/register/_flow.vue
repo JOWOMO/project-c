@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Vue, Component, Emit } from "nuxt-property-decorator";
 import { RegistrationFlow } from "../register.vue";
-import {ComponentName} from "~/constants/componentName";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
   name: ComponentName.PagesRegisterFlow,
