@@ -1,5 +1,5 @@
 export default async function ({
-  app, route, redirect, store
+  app, route, redirect
 }) {
   if (route.path == '/ie') {
     return;
@@ -8,7 +8,7 @@ export default async function ({
   const browser = app.$ua.browser()
   const browserV = app.$ua.browserVersion()
 
-  if(browser == 'Internet Explorer' || browserV <= 11) {
+  if(browser == 'Internet Explorer' && browserV <= 11) {
     redirect('/ie')
   }
 }
