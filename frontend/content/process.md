@@ -185,19 +185,7 @@ Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B. folgende 
 <panel :is-round="true" :is-blue="true" :has-shadow="false">
 
 ### Beispiel
-Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die FahrerInnen sind
-nicht ausgelastet. Die Supermarktkette Foods benötigt gleichzeitig zusätzliche
-FahrerInnen für Lebensmittellieferungen. Die beiden Unternehmen einigen sich
-auf eine Personalpartnerschaft erst mal für die nächsten zwei Monate und
-entschließen sich für das Modell der Arbeitnehmerüberlassung. Da Wheels
-nicht plant, dauerhaft als Überlasser tätig zu sein und die MitarberInnen nicht
-für eine Überlassung eingestellt wurde kann diese Arbeitnehmerüberlassung
-nach Zustimmung der MitarbeiterInnen aktuell ohne Erlaubnis nach dem AÜG
-stattfinden. Foods diskutiert die temporäre Aufnahme der MitarbeiterInnen
-mit dessen Betriebsrat und erhält Zustimmung und somit steht der
-Personalpartnerschaft nichts mehr im Wege. Wheels und Foods schließen einen
-Überlassungsvertrag, in dem sie auch Regelungen zur vorzeitigen Auflösungen,
-Abwerbung und Vertraulichkeit treffen, um auf der sicheren Seite zu sein.
+Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die FahrerInnen sind nicht ausgelastet. Die Supermarktkette Foods benötigt gleichzeitig zusätzliche FahrerInnen für Lebensmittellieferungen. Die beiden Unternehmen einigen sich auf eine Personalpartnerschaft erst mal für die nächsten zwei Monate und entschließen sich für das Modell der Arbeitnehmerüberlassung. Da Wheels nicht plant, dauerhaft als Überlasser tätig zu sein und die MitarberInnen nicht für eine Überlassung eingestellt wurde kann diese Arbeitnehmerüberlassung nach Zustimmung der MitarbeiterInnen aktuell  ohne Erlaubnis nach dem AÜG stattfinden. Foods diskutiert die temporäre Aufnahme der MitarbeiterInnen mit dessen Betriebsrat und erhält Zustimmung und somit steht der Personalpartnerschaft nichts mehr im Wege. Wheels und Foods schließen einen Überlassungsvertrag, in dem sie auch Regelungen zur vorzeitigen Auflösungen, Abwerbung und Vertraulichkeit treffen, um auf der sicheren Seite zu sein.
 
 </panel>
 
@@ -385,11 +373,11 @@ Text wird noch überarbeitet....
 
 Hier findest Du Vertragsvorlagen zu den oben genannten Umsetzungsmodellen. Die Unterlagen wurden für JOWOMO von der Buse 
 Rechtsanwälte Steuerberater Part GmbB pro bono zur Verfügung gestellt. Lade die Datei einfach herunter und fülle die in 
-Gelb markierten Felder der Anleitung entsprechend mit deinen Daten. Du kannst die Datei mit der Software Word von 
-Microsoft Office ([https://www.microsoft.com/de-de/microsoft-365](https://www.microsoft.com/de-de/microsoft-365)) 
-bearbeiten. Kostenlose Alternativen sind Open Office ([https://www.openoffice.de](https://www.openoffice.de)), 
-Microsoft Office Web ([https://www.microsoft.com/de-de/microsoft-365/free-office-online-for-the-web](https://www.microsoft.com/de-de/microsoft-365/free-office-online-for-the-web)) 
-und Google Docs ([https://workspace.google.com](https://workspace.google.com))."
+Gelb markierten Felder der Anleitung entsprechend mit deinen Daten. Du kannst die Datei mit der Software 
+[Word von Microsoft Office](https://www.microsoft.com/de-de/microsoft-365) bearbeiten. 
+Kostenlose Alternativen sind [Open Office](https://www.openoffice.de), 
+[Microsoft Office Web](https://www.microsoft.com/de-de/microsoft-365/free-office-online-for-the-web) 
+und [Google Docs](https://workspace.google.com).
 
 </div>
 
