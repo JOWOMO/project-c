@@ -6,7 +6,14 @@
     <div class="block -noPanel" v-if="noPanel">
       <slot />
     </div>
-    <panel v-else class="block" :has-shadow="isHighlightBox" :is-round="isHighlightBox">
+    <panel
+      v-else
+      class="block"
+      :has-shadow="isHighlightBox"
+      :is-round="isHighlightBox"
+      :is-expandable="isExpandable"
+      :max-height="maxHeight"
+    >
       <slot />
     </panel>
   </div>
@@ -22,8 +29,10 @@ import Panel from "@/components/layout/panel.vue";
   components: {Panel},
 })
 export default class extends Vue {
+  @Prop({default: false}) isExpandable!: boolean;
   @Prop({default: false}) noPanel!: boolean;
   @Prop({default: true}) isHighlightBox!: boolean;
+  @Prop({default: '300'}) maxHeight!: string;
   @Prop() id!: string;
   @Prop() icon!: string;
 }

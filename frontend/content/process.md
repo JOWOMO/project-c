@@ -85,7 +85,7 @@ menu:
 
 </headline>
 
-<process id="chooseContract" icon="logo" :noPanel="true">
+<process id="chooseContract" icon="logo" :no-panel="true">
     <process-panel icon="temporaryEmployment" link="#temporaryEmployment" title="Arbeitnehmerüberlassung">
         Arbeitnehmer:In bleibt bei abgebendem Unternehmen normal angestellt, wird jedoch einem anderen Arbeitgeber für einen begrenzten Zeitraum gegen ein Entgelt überlassen.
     </process-panel>
@@ -100,7 +100,7 @@ menu:
     </process-panel>
 </process>
 
-<process id="temporaryEmployment" icon="temporaryEmployment">
+<process id="temporaryEmployment" icon="temporaryEmployment" :is-expandable="true">
 
 <div class="innerBlock">
 
@@ -211,7 +211,7 @@ Abwerbung und Vertraulichkeit treffen, um auf der sicheren Seite zu sein.
 
 </process>
 
-<process id="temporaryPosition" icon="temporaryPosition">
+<process id="temporaryPosition" icon="temporaryPosition" :is-expandable="true">
 
 <div class="innerBlock">
 
@@ -265,7 +265,7 @@ Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung
 </div>
 </process>
 
-<process id="partTime" icon="partTime">
+<process id="partTime" icon="partTime" :is-expandable="true">
 
 <div class="innerBlock">
 
@@ -320,7 +320,7 @@ folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit,
 
 </process>
 
-<process id="jointOperation" icon="partner">
+<process id="jointOperation" icon="partner" :is-expandable="true">
 
 <div class="innerBlock">
 
