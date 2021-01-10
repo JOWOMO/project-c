@@ -37,17 +37,32 @@ import sec from "@/components/sidebar/section.vue";
 import faq from "@/components/faq.vue";
 import about from "@/components/about/block.vue";
 import sponsor from "@/components/about/sponsor.vue";
-
-import imprint from "@/components/imprint.vue";
 import pe from "@/components/about/pe.vue";
-
 import members from "@/components/about/members.vue";
+import imprint from "@/components/imprint.vue";
+import bulletPoint from "~/components/process/bulletPoint.vue";
+import panel from "@/components/layout/panel.vue";
+import process from "@/components/process/block.vue";
+import processPanel from "@/components/process/panel.vue";
+import headline from "@/components/process/headline.vue";
+import numeration from "@/components/process/numeration.vue";
+import numerationItem from "@/components/process/numeration-item.vue";
+
 import {ComponentName} from "@/constants/componentName";
-import {IMenuItem} from "~/constants/interfaces/MenuItem";
+import {IMenuItem} from "@/constants/interfaces/MenuItem";
 
 @Component({
   name: ComponentName.PagesInfo,
-  components: { sidebar, item, sec, leftNav, topBar, imprint, pe, members },
+  components: {
+    sidebar,
+    item,
+    sec,
+    leftNav,
+    topBar,
+    imprint,
+    pe,
+    members
+  },
 })
 export default class extends Vue {
   title: string = "";
@@ -90,9 +105,21 @@ export default class extends Vue {
       const other = {
         extends: content.vue.component,
         components: {
-          faq, about, sponsor, pe, members,
+          about,
+          faq,
+          headline,
+          members,
+          numeration,
+          numerationItem,
+          panel,
+          pe,
+          bulletPoint,
+          process,
+          processPanel,
+          sponsor,
         }
       };
+
 
       let menus = content.attributes?.menu;
 

@@ -1,5 +1,5 @@
 import { StateChanger } from "vue-infinite-loading";
-import { User, Demand, Supply, DasboardTeamsQuery, DasboardTeamsQueryVariables } from "~/apollo/schema";
+import { User, Demand, Supply, DasboardTeamsQuery, DasboardTeamsQueryVariables } from "@/apollo/schema";
 import { ActionContext } from 'vuex';
 import { IState } from ".";
 import getTeams from "@/apollo/queries/dashboard/teams.gql";

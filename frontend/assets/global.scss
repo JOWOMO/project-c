@@ -44,6 +44,17 @@ h4 {
   font-weight: 500;
 }
 
+ul {
+  display: block;
+  list-style-type: disc;
+  margin: 0;
+  padding: 0 20px;
+}
+
+li {
+  padding-bottom: $gridsize / 4;
+}
+
 p {
   font-size: $textsize;
   line-height: $textsize*1.5;

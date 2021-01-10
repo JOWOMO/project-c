@@ -80,7 +80,7 @@ import { LoadingAnimation } from "@/components/loadinganimation";
 
 import { passwordComplexity} from '@/components/forms/passwordComplexity';
 import {ComponentName} from "@/constants/componentName";
-import {InputLengths} from "~/constants/inputLengths";
+import {InputLengths} from "@/constants/inputLengths";
 
 @Component({
   name: ComponentName.PagesRegisterFlowIndex,

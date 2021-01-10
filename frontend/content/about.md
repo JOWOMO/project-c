@@ -102,3 +102,9 @@ Der Solution Builder ist ein intensives Förderprogramm für 10 ausgewählte Pro
 </sponsor>
 
 </about>
+
+<style>
+button {
+  margin-top: 36px;
+}
+</style>

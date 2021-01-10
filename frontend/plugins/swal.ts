@@ -1,6 +1,6 @@
 import { Plugin } from '@nuxt/types'
 import Swal, { SweetAlertResult, SweetAlertIcon, SweetAlertOptions } from 'sweetalert2';
-import {InputLengths} from "~/constants/inputLengths";
+import {InputLengths} from "@/constants/inputLengths";
 
 const DEFAULT_OPTIONS: SweetAlertOptions = {
   cancelButtonText: 'Abbrechen',
