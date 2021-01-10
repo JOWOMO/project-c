@@ -147,34 +147,25 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/scales";
+@import "./markdown.scss";
 
 .sidebar {
   display: flex;
 }
 
 .imprint {
-  padding-bottom: 10px;
   margin-left: -$gridsize;
+  padding-bottom: 10px;
 }
-
-@import "./markdown.scss";
-
-$fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .container {
-  height: $fullheight;
-
-  overflow-y: scroll;
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
-
   display: block;
-
-  padding-left: $gridsize;
-  padding-top: $gridsize;
-  padding-right: $pageMarginRight;
+  height: calc(100vh - #{$pageHeaderHeight});
+  overflow-y: scroll;
+  padding: $gridsize $gridsize 0;
 }
-
 
 @media only screen and (max-width: $breakpoint_vl) {
   .container {

@@ -2,12 +2,12 @@
   <layout :columns="true">
     <column :order="2">
       <layout :columns="false" class="main">
-        <row :height="TOPHEIGHT" class="header">
+        <div class="header">
           <slot name="navbar" />
-        </row>
-        <row id="scroller" :height="'calc(100vh - ' + TOPHEIGHT + 'px)'" class="scroller">
+        </div>
+        <div id="scroller" class="scroller">
           <slot name="body" />
-        </row>
+        </div>
       </layout>
     </column>
     <column :width="330" :order="1" class="left-nav">
@@ -32,7 +32,6 @@ import {ComponentName} from "@/constants/componentName";
   }
 })
 export default class extends Vue {
-  TOPHEIGHT = 148;
 }
 </script>
 
@@ -40,11 +39,16 @@ export default class extends Vue {
 @import "@/assets/scales";
 @import "@/assets/colors";
 
+.header {
+  height: $pageHeaderHeightWithPadding;
+}
+
 .scroller {
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
-  padding: 0 $pageMarginRight $gridsize $gridsize;
+  -webkit-overflow-scrolling: touch;
+  height: calc(100vh - #{$pageHeaderHeightWithPadding});
+  overflow-y: scroll;
+  padding: 0 $gridsize $gridsize;
 }
 
 @media only screen and (max-width: $breakpoint_md) {
@@ -53,26 +57,22 @@ export default class extends Vue {
   }
 
   .header {
-    width: 100vw;
+    align-items: center;
     background-color: white;
-
     display: flex;
     flex-direction: row;
+    height: $pageHeaderHeight;
     justify-content: flex-start;
-    align-items: center;
-
-    height: $pageHeaderHeight !important;
+    width: 100vw;
   }
 
   .scroller {
+    height: calc(100vh - #{$pageHeaderHeight});
     overflow: unset;
-    width: 100vw;
-
     padding-left: $pageMarginMin;
-    padding-top: $gridsize;
     padding-right: $pageMarginMin;
-
-    height: calc(100vh - #{$pageHeaderHeight}) !important;
+    padding-top: $gridsize;
+    width: 100vw;
   }
 }
 </style>
