@@ -53,6 +53,14 @@ ul {
 
 li {
   padding-bottom: $gridsize / 4;
+
+  ul {
+    padding-top: $gridsize / 4;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
 }
 
 p {

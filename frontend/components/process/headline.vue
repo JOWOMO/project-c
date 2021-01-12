@@ -1,5 +1,5 @@
 <template>
-  <div class="headline">
+  <div class="headline" :id="id">
     <slot />
   </div>
 </template>
@@ -7,16 +7,14 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
 import {ComponentName} from "@/constants/componentName";
-import Panel from "@/components/layout/panel.vue";
 
 @Component({
   name: ComponentName.ProcessHeadline,
-  components: {Panel},
+  components: {},
 })
 export default class extends Vue {
   @Prop({default: false}) noPanel!: boolean;
   @Prop() id!: string;
-  @Prop() icon!: string;
 }
 </script>
 

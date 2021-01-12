@@ -12,6 +12,7 @@
     <slot />
     <div
       class="panel__expandableButton"
+      :class="{'-hasShadow': !open}"
       v-if="isExpandable"
       @click="toggleExpand"
     >
@@ -52,6 +53,9 @@ export default class extends Vue {
   private toggleExpand() {
     this.open = !this.open;
     this.panel.style.maxHeight = this.open ? `${this.panel.scrollHeight + this.maxHeightAdditionalAmount}px` : `${this.maxHeight}px`;
+    if (!this.open) {
+      this.panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }
 </script>
@@ -64,22 +68,25 @@ $toggle-size: 50px;
 
 .panel {
   background-color: $secondbackground;
-  position: relative;
-  padding: $gridsize / 2;
   overflow: hidden;
+  padding: $gridsize / 2;
+  position: relative;
 
   &__expandableButton {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #FFFFFF;
-    box-shadow: 0 0 26px 3px rgba(0,0,0,0.39);
-    display: flex;
-    justify-content: center;
     align-items: center;
-    height: $toggle-size;
+    background: #FFFFFF;
+    bottom: 0;
     cursor: pointer;
+    display: flex;
+    height: $toggle-size;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    width: 100%;
+
+    &.-hasShadow {
+      box-shadow: 0 0 26px 3px rgba(0,0,0,0.39);
+    }
   }
 
   &__arrow {

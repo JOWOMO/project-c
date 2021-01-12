@@ -14,12 +14,11 @@
 
           <div class="buttons">
             <button @click="supply_register" class="primary">
-              <div>
-                Ich
-                <b>biete</b>
+              <span>
+                Ich <b>biete</b>
                 <br />Mitarbeiter:innen
-              </div>
-              <div class="arrow" />
+              </span>
+              <span class="arrow" />
             </button>
           </div>
         </div>
@@ -36,12 +35,11 @@
 
           <div class="buttons">
             <button @click="demand_register" class="cta">
-              <div>
-                Ich
-                <b>suche</b>
+              <span>
+                Ich <b>suche</b>
                 <br />Mitarbeiter:innen
-              </div>
-              <div class="arrow" />
+              </span>
+              <span class="arrow" />
             </button>
           </div>
         </div>
@@ -352,7 +350,6 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
     .buttons {
       padding: $gridsize $gridsize*1.5;
       width: 100%;
-
       display: flex;
       justify-content: center;
 
@@ -360,7 +357,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
         text-align: left;
         width: 100%;
         max-width: 350px;
-        height: auto;
+        height: 100%;
 
         font-weight: 100;
         font-size: $h2FontSize;
