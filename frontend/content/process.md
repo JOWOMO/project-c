@@ -154,6 +154,8 @@ Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B. folgende 
   - Überlassung zwischen Arbeitgebern desselben Wirtschaftszweiges zur Vermeidung von Kurzarbeit oder Entlassungen (§ 1 Abs. 3 Nr. 1 AÜG)
   - Überlassung zwischen Konzernunternehmen, wenn der Arbeitnehmer nicht zum Zweck der Überlassung eingestellt wurde (§ 1 Abs. 3 Nr. 2 AÜG)
 
+<br />
+
 **Überlassung in der aktuellen Corona Krise vereinfacht unter folgenden Voraussetzungen**
 
 - Verleiher beabsichtigt nicht, dauerhaft als Arbeitnehmerüberlasser tätig zu sein
@@ -393,7 +395,7 @@ folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit, Vertraulich
 
 <div class="innerBlock">
 
-## Voraussetzungen
+### Voraussetzungen
 - (Befristeter) Arbeitsvertrag mit dem aufnehmenden Unternehmen)
 - Genehmigung des Hauptarbeitgebers
 - Bei Bezug von Kurzarbeitergeld: Keine Anrechnung bis Nettoverdienst (Ausnahmeregelung bis 31.12.2020)
@@ -405,14 +407,14 @@ folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit, Vertraulich
 
 <div class="innerBlock">
 
-## Zustimmung der Mitarbeitenden
+### Zustimmung der Mitarbeitenden
 - Arbeitnehmer muss der Aufnahme der Nebenbeschäftigung zustimmen
 
 </div>
 
 <div class="innerBlock">
 
-## Beendigung der Personalpartnerschaft
+### Beendigung der Personalpartnerschaft
 - Kündigung oder Ablauf der Befristung
 - Keine Beendigung zwischen den Arbeitgebern notwendig
 
@@ -431,14 +433,14 @@ Die Sicherheitsfirma Secure stellt unter anderem Nachtclubs Sicherheitspersonal 
 
 <div class="innerBlock">
 
-## Beteiligung des Betriebsrats
+### Beteiligung des Betriebsrats
 - Bei Einstellung des Nebenbeschäftigten Zustimmung erforderlich (§ 99 BetrVG)
 
 </div>
 
 <div class="innerBlock">
 
-## Wichtige Elemente der Kooperationsvereinbarung
+### Wichtige Elemente der Kooperationsvereinbarung
 - Vertrag zwischen Arbeitgebern nicht erforderlich
 
 </div>

@@ -12,13 +12,13 @@
     <slot />
     <div
       class="panel__expandableButton"
-      :class="{'-hasShadow': !open}"
+      :class="{'-hasShadow': !isOpen}"
       v-if="isExpandable"
       @click="toggleExpand"
     >
       <img
         class="panel__arrow"
-        :class="{'-up': open}"
+        :class="{'-up': isOpen}"
         src="/icons/arrow.svg"
         alt="Erweitern"
       />
@@ -41,21 +41,34 @@ export default class extends Vue {
   @Prop({default: false}) isRound!: boolean;
   @Prop({default: '300'}) maxHeight!: string;
 
-  private open = true;
+  private isOpen = true;
   private maxHeightAdditionalAmount = 98; // $toggle-size + $gridsize for padding
 
   private mounted() {
     if (this.isExpandable) {
-      this.toggleExpand();
+      this.close(true);
     }
   }
 
   private toggleExpand() {
-    this.open = !this.open;
-    this.panel.style.maxHeight = this.open ? `${this.panel.scrollHeight + this.maxHeightAdditionalAmount}px` : `${this.maxHeight}px`;
-    if (!this.open) {
+    if (this.isOpen) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  private close(initial?: boolean) {
+    this.isOpen = false;
+    this.panel.style.maxHeight = `${this.maxHeight}px`;
+    if (!initial) {
       this.panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }
+
+  private open() {
+    this.isOpen = true;
+    this.panel.style.maxHeight = `${this.panel.scrollHeight + this.maxHeightAdditionalAmount}px`;
   }
 }
 </script>

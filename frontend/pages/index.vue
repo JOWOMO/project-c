@@ -288,7 +288,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .section {
   min-height: $fullheight;
-  min-width: 100vw;
+  width: 100%;
   justify-content: center;
 }
 
@@ -385,7 +385,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 .fullrow {
   padding-top: $gridsize / 2;
   display: grid;
-  width: 100vw;
+  width: 100%;
 
   grid-auto-columns: 1fr $gridsize*2 1fr;
 
