@@ -38,7 +38,7 @@ menu:
 
 </headline>
 
-<process :is-highlight-box="false">
+<process :is-highlight-box="true">
 
 <pe title="Arbeitskräfte anbieten" titleRight="Arbeitskräfte suchen" :h2="true">
   <template #number-left>

@@ -112,7 +112,7 @@ $toggle-size: 50px;
   }
 
   &.-hasShadow {
-    box-shadow: 0 0 26px 3px rgba(0,0,0,0.39);
+    box-shadow: 0 1px 12px 1px transparentize(#000, 0.8);
   }
 
   &.-isBlue {
