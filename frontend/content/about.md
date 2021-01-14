@@ -77,6 +77,17 @@ Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG
 
 </sponsor>
 
+<sponsor logo="buse.svg" person="buse_person.jpg" scalex="true">
+
+### Buse Rechtsanwälte Steuerberater PartG mbB - Jan Tibor Lelley
+
+Buse ist Ihre Partnerin in allen Fragen des nationalen und internationalen Wirtschafts- und Steuerrechts.  
+„Die Idee von JOWOMO hat uns sofort mitgerissen! Mutig, pragmatisch und das Wichtige des Geschäftsalltags für Unternehmen und Arbeitnehmer:innen im Blick. Das passt hervorragend zu unserer Beratungsphilosophie bei Buse. Daher sind wir sehr stolz, hier mithelfen zu dürfen.“
+
+[Mehr Informationen zu Buse](https://buse.de/)
+
+</sponsor>
+
 <sponsor logo="aws.png" person="aws_person.jpg">
 
 ### Amazon Web Services - Robin d'Alquen

@@ -100,7 +100,7 @@ menu:
     </process-panel>
 </process>
 
-<process id="temporaryEmployment" icon="temporaryEmployment" :is-expandable="true">
+<process id="temporaryEmployment" icon="temporaryEmployment" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -231,7 +231,7 @@ Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die FahrerInnen s
 
 </process>
 
-<process id="temporaryPosition" icon="temporaryPosition" :is-expandable="true">
+<process id="temporaryPosition" icon="temporaryPosition" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -340,7 +340,7 @@ Das Hotel Visit darf auf absehbare Zeit keine Gäste aus touristischen Gründen 
 
 </process>
 
-<process id="partTime" icon="partTime" :is-expandable="true">
+<process id="partTime" icon="partTime" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -447,7 +447,7 @@ Die Sicherheitsfirma Secure stellt unter anderem Nachtclubs Sicherheitspersonal 
 
 </process>
 
-<process id="jointOperation" icon="partner" :is-expandable="true">
+<process id="jointOperation" icon="partner" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
