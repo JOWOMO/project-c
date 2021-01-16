@@ -73,7 +73,7 @@ menu:
         </template>
     </numeration-item>
     <numeration-item title="Match" svg="logo.svg">
-    Glückwunsch! Ihr Entscheidet Euch für eine Partnerschaft.
+    Glückwunsch! Ihr entscheidet Euch für eine Partnerschaft.
     </numeration-item>
 </numeration>
 
