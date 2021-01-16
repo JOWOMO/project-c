@@ -51,7 +51,7 @@ menu:
 
 <numeration>
     <numeration-item title="Anmelden">
-    Mit ein paar Clicks bei Jowomo anmelden und E-MailAdresse bestätigen
+    Mit ein paar Klicks bei JOWOMO anmelden und E-Mail-Adresse bestätigen.
     </numeration-item>
     <numeration-item title="Profil erstellen">
     Registriere Dein Unternehmen bei JOWOMO.
@@ -66,14 +66,14 @@ menu:
     </numeration-item>
     <numeration-item :timeline="true" title="Anfrage" titleRight="Kontakt&shy;aufnahme">
         <template #text-left>
-            Eine Firma möchte Dein Team einstellen. Hier habt Ihr die Gelegenheit Details zu besprechen.
+            Eine Firma möchte Dein Team einstellen. Hier habt Ihr die Gelegenheit über Details zu sprechen.
         </template>
         <template #text-right>
             Stelle die Anfrage an Dein Match! Hier habt Ihr die Gelegenheit Details zu besprechen.
         </template>
     </numeration-item>
     <numeration-item title="Match" svg="logo.svg">
-    Glückwunsch! Ihr Entscheidet euch für das Match.
+    Glückwunsch! Ihr Entscheidet Euch für eine Partnerschaft.
     </numeration-item>
 </numeration>
 
@@ -87,7 +87,7 @@ menu:
 
 <process icon="logo" :no-panel="true">
     <process-panel icon="temporaryEmployment" link="#temporaryEmployment" title="Arbeitnehmerüberlassung">
-        Arbeitnehmer:In bleibt bei abgebendem Unternehmen normal angestellt, wird jedoch einem anderen Arbeitgeber für einen begrenzten Zeitraum gegen ein Entgelt überlassen
+        Arbeitnehmer:In bleibt bei abgebendem Unternehmen normal angestellt, wird jedoch einem anderen Arbeitgeber für einen begrenzten Zeitraum gegen ein Entgelt überlassen.
     </process-panel>
     <process-panel icon="temporaryPosition" link="#temporaryPosition" title="Befristete Einstellung">
         Abgebendes Unternehmen stellt den Arbeitsvertrag ruhend und Arbeitnehmer:In unterschreibt einen befristeten Arbeitsvertrag bei einem anderen Arbeitgeber
@@ -125,7 +125,7 @@ Allgemeine rechtliche Informationen für die Umsetzung einer Personalpartnerscha
     Arbeitsverhältnis mit Verleiher bleibt unberührt bestehen
 </bullet-point>
 <bullet-point icon="positive">
-    Aktuelle Ausnahmeregelungen im Rahmen der Covid-Krise
+    Aktuelle Ausnahmeregelungen im Rahmen der COVID-Krise
 </bullet-point>
 <bullet-point icon="negative">
     Komplexes Vertragswerk erforderlich
@@ -140,7 +140,7 @@ Allgemeine rechtliche Informationen für die Umsetzung einer Personalpartnerscha
 ### Wir empfehlen dieses Modell,
 
 wenn die Voraussetzungen für eine erlaubnisfreie Arbeitnehmerüberlassung gegeben sind und sich die Parteien auf die Konditionen der Überlassung einigen können (z.B. Überlassungsentgelt).  
-Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B. folgende Dinge zu regeln: Gleichstellungsklauseln, Qualifikation der überlassenen ArbeitnehmerInnen, vorzeitige Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung, Haftungsausschlüsse z.B. bzgl. Nichtleistung 
+Für eine erfolgreiche Umsetzung dieses Modells, denkt daran z.B. folgende Dinge zu regeln: Gleichstellungsklauseln, Qualifikation der überlassenen Arbeitnehmer:Innen, vorzeitige Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung, Haftungsausschlüsse z.B. bzgl. Nichtleistung.
 
 </panel>
 
@@ -149,18 +149,15 @@ Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B. folgende 
 <div class="innerBlock">
 
 ### Voraussetzungen
-- Erlaubnis nach dem AÜG durch die Agentur für Arbeit oder Vorliegen einer Ausnahme
-- zur Erlaubnispflicht, z.B.
+- Erlaubnis nach dem AÜG durch die Agentur für Arbeit oder Vorliegen einer Ausnahme zur Erlaubnispflicht, z.B.
   - Überlassung zwischen Arbeitgebern desselben Wirtschaftszweiges zur Vermeidung von Kurzarbeit oder Entlassungen (§ 1 Abs. 3 Nr. 1 AÜG)
   - Überlassung zwischen Konzernunternehmen, wenn der Arbeitnehmer nicht zum Zweck der Überlassung eingestellt wurde (§ 1 Abs. 3 Nr. 2 AÜG)
-
-<br />
 
 **Überlassung in der aktuellen Corona Krise vereinfacht unter folgenden Voraussetzungen**
 
 - Verleiher beabsichtigt nicht, dauerhaft als Arbeitnehmerüberlasser tätig zu sein
 - Betroffene Mitarbeitende wurden nicht zum Zwecke der Überlassung eingestellt
-- Mitarbeitende haben der Überlassung zugestimmt haben
+- Mitarbeitende haben der Überlassung zugestimmt
 - Überlassung erfolgt zeitlich begrenzt auf die aktuelle Krisensituation
 
 </div>
@@ -278,7 +275,7 @@ wenn eine klare Trennung herrschen soll, die Dauer der Personalpartnerschaft
 etwas länger ist und die Voraussetzungen für eine erlaubnisfreie
 Arbeitnehmerüberlassung nicht gegeben sind. Für eine erfolgreiche Umsetzung
 dieses Modells, denkt auch daran z.B. folgende Dinge zu regeln: Vorzeitige
-Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung
+Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung.
 
 </panel>
 
@@ -387,7 +384,7 @@ wenn es sich um eine Teilzeitbeschäftigung handelt, bei der Höchstarbeitszeite
 Gesamtverdienst der Arbeitnehmer:In nicht über dem sonstigen Nettoverdienst
 liegt.  
 Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B.
-folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit, Vertraulichkeitsverpflichtung
+folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit, Vertraulichkeitsverpflichtung.
 
 </panel>
 
@@ -567,19 +564,19 @@ und [Google Docs](https://workspace.google.com).
 
 <div class="innerBlock">
 
-**[Ergänzungsvereinbarung zum Arbeitsvertrag zum Download](/downloads/Jowomo_Ergaenzungsvereinbarung_Arbeitsvertrag.docx)**
+**[Ergänzungsvereinbarung zum Arbeitsvertrag zum Download](/downloads/JOWOMO_Ergaenzungsvereinbarung_Arbeitsvertrag.docx)**
 
 </div>
 
 <div class="innerBlock">
 
-**[Befristeter Arbeitsvertrag zum Download](/downloads/Jowomo_Befristeter_Arbeitsvertrag.docx)**
+**[Befristeter Arbeitsvertrag zum Download](/downloads/JOWOMO_Befristeter_Arbeitsvertrag.docx)**
 
 </div>
 
 <div class="innerBlock">
 
-**[Nebentätigkeitsvereinbarung zum Download](/downloads/Jowomo_Nebentaeigkeitsvereinbarung.docx)**
+**[Nebentätigkeitsvereinbarung zum Download](/downloads/JOWOMO_Nebentaeigkeitsvereinbarung.docx)**
 
 </div>
 
