@@ -32,13 +32,13 @@ menu:
 
 
 ---
-<headline>
+<headline id="findPartner" >
 
 # Personalpartner finden
 
 </headline>
 
-<process id="findPartner" :is-highlight-box="false">
+<process :is-highlight-box="true">
 
 <pe title="Arbeitskräfte anbieten" titleRight="Arbeitskräfte suchen" :h2="true">
   <template #number-left>
@@ -79,28 +79,28 @@ menu:
 
 </process>
 
-<headline>
+<headline id="chooseContract">
 
 # Vertragsmodell wählen
 
 </headline>
 
-<process id="chooseContract" icon="logo" :no-panel="true">
+<process icon="logo" :no-panel="true">
     <process-panel icon="temporaryEmployment" link="#temporaryEmployment" title="Arbeitnehmerüberlassung">
-        Arbeitnehmer:In bleibt bei abgebendem Unternehmen normal angestellt, wird jedoch einem anderen Arbeitgeber für einen begrenzten Zeitraum gegen ein Entgelt überlassen.
+        Arbeitnehmer:In bleibt bei abgebendem Unternehmen normal angestellt, wird jedoch einem anderen Arbeitgeber für einen begrenzten Zeitraum gegen ein Entgelt überlassen
     </process-panel>
-    <process-panel icon="temporaryPosition" link="#temporaryPosition" title="Befristet Einstellung">
-        Abgebendes Unternehmen stellt den Arbeitsvertrag ruhend und Arbeitnehmer:In unterschreibt einen befristeten Arbeitsvertrag bei einem anderen Arbeitgeber.
+    <process-panel icon="temporaryPosition" link="#temporaryPosition" title="Befristete Einstellung">
+        Abgebendes Unternehmen stellt den Arbeitsvertrag ruhend und Arbeitnehmer:In unterschreibt einen befristeten Arbeitsvertrag bei einem anderen Arbeitgeber
     </process-panel>
     <process-panel icon="partTime" link="#partTime" title="Nebentätigkeit">
-        Arbeitnehmer:In geht einer Nebentätigkeit in einem anderen Unternehmen nach, die durch das abgebende Unternehmen genehmigt wird.
+        Arbeitnehmer:In geht einer Nebentätigkeit in einem anderen Unternehmen nach, die durch das abgebende Unternehmen genehmigt wird
     </process-panel>
-    <process-panel icon="partner" link="#jointOperation" title="Arbeitnehmerüberlassung">
-        Beide Unternehmen bilden einen gemeinsamen Betrieb unter einheitlicher Führung und gemeinsamer Nutzung von Betriebsmitteln.
+    <process-panel icon="partner" link="#jointOperation" title="Gemeinschaftsbetrieb">
+        Beide Unternehmen bilden einen gemeinsamen Betrieb unter einheitlicher Führung und gemeinsamer Nutzung von Betriebsmitteln
     </process-panel>
 </process>
 
-<process id="temporaryEmployment" icon="temporaryEmployment" :is-expandable="true">
+<process id="temporaryEmployment" icon="temporaryEmployment" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -149,9 +149,12 @@ Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B. folgende 
 <div class="innerBlock">
 
 ### Voraussetzungen
-- Erlaubnis nach dem AÜG durch die Agentur für Arbeit oder Vorliegen einer Ausnahme zur Erlaubnispflicht, z.B.
-- Überlassung zwischen Arbeitgebern desselben Wirtschaftszweiges zur Vermeidung von Kurzarbeit oder Entlassungen (§ 1 Abs. 3 Nr. 1 AÜG)
-- Überlassung zwischen Konzernunternehmen, wenn der Arbeitnehmer nicht zum Zweck der Überlassung eingestellt wurde (§ 1 Abs. 3 Nr. 2 AÜG)
+- Erlaubnis nach dem AÜG durch die Agentur für Arbeit oder Vorliegen einer Ausnahme
+- zur Erlaubnispflicht, z.B.
+  - Überlassung zwischen Arbeitgebern desselben Wirtschaftszweiges zur Vermeidung von Kurzarbeit oder Entlassungen (§ 1 Abs. 3 Nr. 1 AÜG)
+  - Überlassung zwischen Konzernunternehmen, wenn der Arbeitnehmer nicht zum Zweck der Überlassung eingestellt wurde (§ 1 Abs. 3 Nr. 2 AÜG)
+
+<br />
 
 **Überlassung in der aktuellen Corona Krise vereinfacht unter folgenden Voraussetzungen**
 
@@ -164,10 +167,8 @@ Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B. folgende 
 
 <div class="innerBlock">
 
-### Zustimmung und Mitbestimmung
+### Zustimmung der Mitarbeitenden
 - Zustimmung der Mitarbeitenden ist notwendig, sofern sich aus dem Arbeitsvertrag oder Tarifvertrag keine Pflicht zur Leistungserbringung für Dritte ergibt
-- Zustimmung des Betriebsrates bei Einstellung (§ 99 BetrVG) betrifft auch Leiharbeitnehmer
-- Die Überlassung im Betrieb des Verleihers unterliegt keiner Mitbestimmung
 
 </div>
 
@@ -185,9 +186,40 @@ Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B. folgende 
 <panel :is-round="true" :is-blue="true" :has-shadow="false">
 
 ### Beispiel
-Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die FahrerInnen sind nicht ausgelastet. Die Supermarktkette Foods benötigt gleichzeitig zusätzliche FahrerInnen für Lebensmittellieferungen. Die beiden Unternehmen einigen sich auf eine Personalpartnerschaft erst mal für die nächsten zwei Monate und entschließen sich für das Modell der Arbeitnehmerüberlassung. Da Wheels nicht plant, dauerhaft als Überlasser tätig zu sein und die MitarberInnen nicht für eine Überlassung eingestellt wurde kann diese Arbeitnehmerüberlassung nach Zustimmung der MitarbeiterInnen aktuell  ohne Erlaubnis nach dem AÜG stattfinden. Foods diskutiert die temporäre Aufnahme der MitarbeiterInnen mit dessen Betriebsrat und erhält Zustimmung und somit steht der Personalpartnerschaft nichts mehr im Wege. Wheels und Foods schließen einen Überlassungsvertrag, in dem sie auch Regelungen zur vorzeitigen Auflösungen, Abwerbung und Vertraulichkeit treffen, um auf der sicheren Seite zu sein.
+Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die FahrerInnen sind nicht ausgelastet. Die Supermarktkette Foods benötigt gleichzeitig zusätzliche FahrerInnen für Lebensmittellieferungen. Die beiden Unternehmen einigen sich auf eine Personalpartnerschaft erst mal für die nächsten zwei Monate und entschließen sich für das Modell der Arbeitnehmerüberlassung. Da Wheels nicht plant, dauerhaft als Überlasser tätig zu sein und die MitarberInnen nicht für eine Überlassung eingestellt wurde kann diese Arbeitnehmerüberlassung nach Zustimmung der MitarbeiterInnen aktuell ohne Erlaubnis nach dem AÜG stattfinden. Foods diskutiert die temporäre Aufnahme der MitarbeiterInnen mit dessen Betriebsrat und erhält Zustimmung und somit steht der Personalpartnerschaft nichts mehr im Wege. Wheels und Foods schließen einen Überlassungsvertrag, in dem sie auch Regelungen zu vorzeitigen Auflösungen, Abwerbung und Vertraulichkeit treffen, um auf der sicheren Seite zu sein.
 
 </panel>
+
+</div>
+
+<div class="innerBlock">
+
+### Beteiligung des Betriebsrats
+- Zustimmung bei Einstellung (§ 99 BetrVG) betrifft auch Leiharbeitnehmer
+- Die Überlassung im Betrieb des Verleihers unterliegt keiner Mitbestimmung
+
+</div>
+
+<div class="innerBlock">
+
+### Wichtige Elemente einer Kooperationsvereinbarung
+- Gleichstellungsklauseln (ggf. Ausgleich) 
+- Qualifikation der überlassenen Arbeitnehmer
+- Vorzeitige Auflösung
+- Abwerbeverbote oder Provisionsanspruch bei Übernahme
+- Vertraulichkeitsverpflichtungen
+- Haftungsausschlüsse bzgl. Nichtleistung/Unfähigkeit
+
+</div>
+
+<div class="innerBlock">
+
+### Ergänzende Infos / Tipps
+- Sozialversicherung trägt Verleiher, aber: gemäß § 28e Abs. 2 SGB IV bürgt der Entleiher (z.B. bei Insolvenz des Verleihers)
+- Bei Nichtleistung oder Unfähigkeit (nicht: Schlechtleistung) des Arbeitnehmers muss (je nach Vertragsgestaltung) der Verleiher haften. Tipp: Die geforderte Qualifikation der Arbeitnehmer vertraglich genau festlegen
+- Weiterführende Informationen zur Arbeitnehmerüberlassung findest du hier:
+  - [Bundesagentur für Arbeit](https://www.arbeitsagentur.de/datei/dok_ba015249.pdf)
+  - [Bundesministerium für Arbeit und Soziales](https://www.bmas.de/DE/Schwerpunkte/Informationen-Corona/Fragen-und-Antworten/Fragen-und-Antworten-corona/corona-virus-arbeitsrechtliche-auswirkungen.html)
 
 </div>
 
@@ -199,7 +231,7 @@ Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die FahrerInnen s
 
 </process>
 
-<process id="temporaryPosition" icon="temporaryPosition" :is-expandable="true">
+<process id="temporaryPosition" icon="temporaryPosition" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -251,9 +283,64 @@ Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung
 </panel>
 
 </div>
+
+<div class="innerBlock">
+
+### Voraussetzungen
+- Vereinbarung zwischen Arbeitnehmer und Arbeitgeber über Ruhen des Arbeitsverhältnisses
+  - Der Arbeitgeber verzichtet auf die Hauptleistungspflicht, der Arbeitnehmer auf seinen Vergütungsanspruch
+- Vereinbarung zwischen Arbeitnehmer und Kooperationsunternehmen
+  - Sachgrundlose Befristung bis zwei Jahre möglich, wenn nicht bereits zuvor ein Arbeitsverhältnis zwischen den Parteien bestand (§ 14 Abs. 2 TzBfG); ansonsten: Sachgrund aufgrund Corona-Pandemie
+
+</div>
+
+<div class="innerBlock">
+
+### Zustimmung der Mitarbeitenden
+- Zustimmung der Mitarbeitenden ist notwendig, sofern sich aus dem Arbeitsvertrag oder Tarifvertrag keine Pflicht zur Leistungserbringung für Dritte ergibt
+
+</div>
+
+<div class="innerBlock">
+
+### Beendigung der Personalpartnerschaft
+- Nach Zeitablauf: Wiederaufnahme des Hauptarbeitsverhältnisses und Beendigung des befristeten Neu-Vertrages 
+- Bei vorzeitiger Beendigung: Einigung erforderlich (u.U. kommt Kündigung des befristeten Arbeitsverhältnisses in Betracht)
+
+</div>
+
+<div class="innerBlock">
+
+<panel :is-round="true" :is-blue="true" :has-shadow="false">
+
+### Beispiel
+Das Hotel Visit darf auf absehbare Zeit keine Gäste aus touristischen Gründen aufnehmen und hat daher nur eine Auslastung von ungefähr 20%. Daher kann das Hotel einige Mitarbeiter nicht voll beschäftigen, unter anderem das Personal zur Zimmerreinigung. Die städtischen Verkehrsbetriebe der Stadt benötigen hingegen zusätzliche Reinigungskräfte, um die öffentlichen Verkehrsmittel in der aktuellen Zeit regelmäßiger reinigen und desinfizieren zu können. Da die Situation für eine längere Zeit bestehen wird, möchte das Hotel Visit eine Personalpartnerschaft über 5 Monate schließen, in der die Verkehrsbetriebe als aufnehmendes Unternehmen die volle Personalverantwortung haben. Sie entscheiden sich also dafür, die Verträge der Reinigungskräfte ruhend zu stellen, während diese für den gleichen Zeitraum bei den Verkehrsbetrieben befristet eingestellt werden. Die Reinigungskräfte werden bei Visit abgemeldet und bei den Verkehrsbetrieben für den Zeitraum der Personalpartnerschaft angemeldet. Ihr Gehalt erhalten die Reinigungskräfte nun direkt von den Verkehrsbetrieben. Nach Abschluss der 5 Monate läuft der befristete Vertrag der Reinigungskräfte bei den Verkehrsbetrieben aus und ihr Arbeitsvertrag bei Visit wird wieder aktiv. 
+
+</panel>
+
+</div>
+
+<div class="innerBlock">
+
+### Beteiligung des Betriebsrats
+- Zustimmung bei Einstellung (§ 99 BetrVG)
+- Das Ruhen ist nicht mitbestimmungspflichtig
+- Die Wiederaufnahme nur dann, wenn sich die Umstände der Beschäftigung grundlegend ändern
+
+</div>
+
+<div class="innerBlock">
+
+### Wichtige Elemente einer Kooperationsvereinbarung
+- Vorzeitige Auflösung
+- Abwerbeverbote oder Provisionsanspruch bei Übernahme
+- Vertraulichkeitsverpflichtungen
+
+</div>
+
 </process>
 
-<process id="partTime" icon="partTime" :is-expandable="true">
+<process id="partTime" icon="partTime" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -279,13 +366,13 @@ Allgemeine rechtliche Informationen für die Umsetzung einer Nebentätigkeit
     Geringer bürokratischer Aufwand
 </bullet-point>
 <bullet-point icon="negative">
-    Höchstarbeitszeiten nach ArbZG zu beachten
+    Höchstarbeitszeiten nach Arbeitszeitgesetz (ArbZG) zu beachten
 </bullet-point>
 <bullet-point icon="negative">
     Steuerklasse 6 ggf.
 </bullet-point>
 <bullet-point icon="negative">
-    Verdienst u.U. auf KuG anzurechnen
+    Verdienst unter Umständen auf Kurzarbeitergeld anzurechnen
 </bullet-point>
 
 </div>
@@ -300,15 +387,67 @@ wenn es sich um eine Teilzeitbeschäftigung handelt, bei der Höchstarbeitszeite
 Gesamtverdienst der Arbeitnehmer:In nicht über dem sonstigen Nettoverdienst
 liegt.  
 Für eine erfolgreiche Umsetzung dieses Modells, denkt auch daran z.B.
-folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit,
+folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit, Vertraulichkeitsverpflichtung
 
 </panel>
 
 </div>
 
+<div class="innerBlock">
+
+### Voraussetzungen
+- (Befristeter) Arbeitsvertrag mit dem aufnehmenden Unternehmen)
+- Genehmigung des Hauptarbeitgebers
+- Bei Bezug von Kurzarbeitergeld: Keine Anrechnung bis Nettoverdienst (Ausnahmeregelung bis 31.12.2020)
+- Sofern beim Hauptarbeitgeber noch Arbeitsleistung erbracht wird:
+  - Grenzen des Arbeitszeitgesetz (ArbZG) zu beachten
+  - Nebenverdienst über Steuerklasse 6
+
+</div>
+
+<div class="innerBlock">
+
+### Zustimmung der Mitarbeitenden
+- Arbeitnehmer muss der Aufnahme der Nebenbeschäftigung zustimmen
+
+</div>
+
+<div class="innerBlock">
+
+### Beendigung der Personalpartnerschaft
+- Kündigung oder Ablauf der Befristung
+- Keine Beendigung zwischen den Arbeitgebern notwendig
+
+</div>
+
+<div class="innerBlock">
+
+<panel :is-round="true" :is-blue="true" :has-shadow="false">
+
+### Beispiel
+Die Sicherheitsfirma Secure stellt unter anderem Nachtclubs Sicherheitspersonal zur Verfügung. In der aktuellen Zeit fallen diese Kunden fast vollständig weg, da Nachtclubs geschlossen sind. Secure hat daher die Mitarbeitenden auf 60% Kurzarbeit gesetzt und auf die verbleibenden Aufträge verteilt. Einige Mitarbeitende wollen sich jedoch mehr arbeiten und suchen sich Nebenbeschäftigungen für die Zeit ihrer Kurzarbeit. Mehrere von ihnen finden im Einkaufszentrum Mally die Möglichkeit in Hochzeiten stundenweise auszuhelfen, um die Einhaltung der zugelassenen Personen je Geschäft sicherzustellen. Die Mitarbeitenden lassen sich die Nebentätigkeit von Secure genehmigen. Secure und Mally sprechen sich ab bezüglich der maximalen Arbeitszeit der Sicherheitskräfte, um die Höchstarbeitszeiten einzuhalten. So können die Mitarbeitenden unbürokratisch ihre Arbeitszeit bei Mally auffüllen und allen ist geholfen.
+
+</panel>
+
+</div>
+
+<div class="innerBlock">
+
+### Beteiligung des Betriebsrats
+- Bei Einstellung des Nebenbeschäftigten Zustimmung erforderlich (§ 99 BetrVG)
+
+</div>
+
+<div class="innerBlock">
+
+### Wichtige Elemente der Kooperationsvereinbarung
+- Vertrag zwischen Arbeitgebern nicht erforderlich
+
+</div>
+
 </process>
 
-<process id="jointOperation" icon="partner" :is-expandable="true">
+<process id="jointOperation" icon="partner" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -346,22 +485,67 @@ Allgemeine rechtliche Informationen für die Umsetzung eines Gemeinschaftsbetrie
 
 <panel :is-round="true" :is-blue="true" :has-shadow="false">
 
-### Wir empfehlen dieses Modell,
-Text wird noch überarbeitet....
+### Wenn Sie Interesse an diesem Modell haben,
+empfehlen wir Ihnen dringend eine genaue Auseinandersetzung damit über eine Rechtsberatung. Unser Kooperationspartner, die Kanzlei Buse, hat zum Beispiel einschlägige Erfahrung in diesem Bereich.
 
 </panel>
 
 </div>
 
+<div class="innerBlock">
+
+### Voraussetzungen
+- Gemeinsamer Betrieb nach den Voraussetzungen des § 1 Abs. 2 Betriebsverfassungsgesetz (BetrVG) erforderlich
+  - Eine einheitliche Führung (für die Arbeitnehmer beider Unternehmen)
+  - Gemeinsame Nutzung von Betriebsmitteln
+
+</div>
+
+<div class="innerBlock">
+
+### Zustimmung der Mitarbeitenden
+- Zuweisung eines Arbeitnehmers nach billigem Ermessen gemäß § 106 Gewerbeordnung (GewO) in den gemeinsamen Betrieb möglich
+- Ausschluss durch Tarifvertrag oder Arbeitsvertrag möglich
+- Ggf. unbillig, wenn Entfernung zum Stamm-Betrieb zu weit
+
+</div>
+
+<div class="innerBlock">
+
+### Beendigung der Personalpartnerschaft
+- Klare Aufspaltung des Betriebs (Trennung von Leitung und Betriebsmitteln)
+- Wenn die Zuweisung ohne Zustimmung möglich ist (s.o.), trifft dies auch auf die Beendigung zu
+- Im Verhältnis zwischen den Arbeitgebern abhängig von der vertraglichen Abrede
+
+</div>
+
+<div class="innerBlock">
+
+### Beteiligung des Betriebsrats
+- Umsetzung wohl mitbestimmungspflichtig gemäß § 111 Betriebsverfassungsgesetz (BetrVG) (Ausnahme nur bei sehr kurzer Dauer)
+- Wahl eines neuen Betriebsrats des Gemeinschaftsbetriebs möglich
+
+</div>
+
+<div class="innerBlock">
+
+### Wichtige Elemente der Kooperationsvereinbarung
+- Abwerbeverbote oder Provisionsansprüchen bei Arbeitnehmerübernahmen
+- Auflösung des Gemeinschaftsbetriebs
+- Vertraulichkeitsverpflichtungen
+- Haftungsausschlüsse
+
+</div>
+
 </process>
 
-<headline>
+<headline id="download">
 
 # Downloadbereich
 
 </headline>
 
-<process id="download" icon="download">
+<process icon="download">
 
 <div class="innerBlock">
 

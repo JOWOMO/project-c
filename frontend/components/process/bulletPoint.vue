@@ -30,6 +30,7 @@ $icon-size: 20px;
 .bulletPoint {
   display: flex;
   margin-bottom: $gridsize / 4;
+  text-align: left;
 
   &__img {
     width: $icon-size;

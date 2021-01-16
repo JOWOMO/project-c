@@ -49,10 +49,19 @@ ul {
   list-style-type: disc;
   margin: 0;
   padding: 0 20px;
+  text-align: left;
 }
 
 li {
   padding-bottom: $gridsize / 4;
+
+  ul {
+    padding-top: $gridsize / 4;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
 }
 
 p {

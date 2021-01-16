@@ -12,12 +12,13 @@
     <slot />
     <div
       class="panel__expandableButton"
+      :class="{'-hasShadow': !isOpen}"
       v-if="isExpandable"
       @click="toggleExpand"
     >
       <img
         class="panel__arrow"
-        :class="{'-up': open}"
+        :class="{'-up': isOpen}"
         src="/icons/arrow.svg"
         alt="Erweitern"
       />
@@ -40,18 +41,34 @@ export default class extends Vue {
   @Prop({default: false}) isRound!: boolean;
   @Prop({default: '300'}) maxHeight!: string;
 
-  private open = true;
+  private isOpen = true;
   private maxHeightAdditionalAmount = 98; // $toggle-size + $gridsize for padding
 
   private mounted() {
     if (this.isExpandable) {
-      this.toggleExpand();
+      this.close(true);
     }
   }
 
   private toggleExpand() {
-    this.open = !this.open;
-    this.panel.style.maxHeight = this.open ? `${this.panel.scrollHeight + this.maxHeightAdditionalAmount}px` : `${this.maxHeight}px`;
+    if (this.isOpen) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  private close(initial?: boolean) {
+    this.isOpen = false;
+    this.panel.style.maxHeight = `${this.maxHeight}px`;
+    if (!initial) {
+      this.panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  private open() {
+    this.isOpen = true;
+    this.panel.style.maxHeight = `${this.panel.scrollHeight + this.maxHeightAdditionalAmount}px`;
   }
 }
 </script>
@@ -64,22 +81,25 @@ $toggle-size: 50px;
 
 .panel {
   background-color: $secondbackground;
-  position: relative;
-  padding: $gridsize / 2;
   overflow: hidden;
+  padding: $gridsize / 2;
+  position: relative;
 
   &__expandableButton {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #FFFFFF;
-    box-shadow: 0 0 26px 3px rgba(0,0,0,0.39);
-    display: flex;
-    justify-content: center;
     align-items: center;
-    height: $toggle-size;
+    background: #FFFFFF;
+    bottom: 0;
     cursor: pointer;
+    display: flex;
+    height: $toggle-size;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    width: 100%;
+
+    &.-hasShadow {
+      box-shadow: 0 0 26px 3px rgba(0,0,0,0.39);
+    }
   }
 
   &__arrow {
@@ -92,7 +112,7 @@ $toggle-size: 50px;
   }
 
   &.-hasShadow {
-    box-shadow: 0 0 26px 3px rgba(0,0,0,0.39);
+    box-shadow: 0 1px 12px 1px transparentize(#000, 0.8);
   }
 
   &.-isBlue {
