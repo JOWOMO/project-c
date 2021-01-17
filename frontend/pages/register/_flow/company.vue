@@ -61,10 +61,10 @@ import userQuery from "@/apollo/queries/registration/company.gql";
 import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
 import { Context } from "@nuxt/types";
-import { LoadingAnimation } from "~/components/loadinganimation";
+import { LoadingAnimation } from "@/components/loadinganimation";
 import {ComponentName} from "@/constants/componentName";
-import Validations from "~/components/forms/validations.vue";
-import {InputLengths} from "~/constants/inputLengths";
+import Validations from "@/components/forms/validations.vue";
+import {InputLengths} from "@/constants/inputLengths";
 
 @Component({
   name: ComponentName.PagesRegisterFlowCompany,

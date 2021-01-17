@@ -1,6 +1,8 @@
 <template>
-  <div class="outer">
-    <img :id="id" class="block-icon" :src="'/icons/' + icon + '.svg'" />
+  <div class="outer" :id="id">
+    <div class="block-icon" >
+      <img v-if="icon" :src="`/icons/${icon}.svg`" />
+    </div>
     <div class="block">
       <slot />
     </div>
@@ -26,7 +28,6 @@ export default class extends Vue {
 
 .block {
   padding: $gridsize / 2;
-
   background-color: white;
   min-width: 100%;
 }
@@ -34,7 +35,6 @@ export default class extends Vue {
 .block-icon {
   justify-self: center;
   width: $gridsize * 2;
-
   margin-bottom: $gridsize;
 }
 

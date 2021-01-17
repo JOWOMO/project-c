@@ -8,19 +8,12 @@
         width="16"
         src="/icons/arrow-right.svg"
       />
-      <a
-        class="element__link"
-        v-if="to && to.startsWith('#')"
-        :class="{'-selected': selected}"
-        :href="to"
-      >
-        {{ name }}
-      </a>
       <nuxt-link
         class="element__link"
-        v-else-if="to"
+        v-if="toRoute"
+        exact-active-class="-active"
         :class="{'-selected': selected}"
-        :to="to"
+        :to="toRoute"
       >
         {{ name }}
       </nuxt-link>
@@ -60,6 +53,20 @@ import {ComponentName} from "@/constants/componentName";
   @Prop() to!: string;
   @Prop({default: () => []}) items!: string;
   @Prop() name!: string;
+
+  private get toRoute() {
+    if (!this.to) return null;
+    if (this.to.startsWith('#')) {
+      return {
+        path: this.$router.currentRoute.path,
+        hash: this.to,
+      }
+    } else {
+      return {
+        path: this.to,
+      }
+    }
+  }
 }
 </script>
 
@@ -94,12 +101,10 @@ import {ComponentName} from "@/constants/componentName";
     color: $textcolor;
     font-size: $textsize;
     font-weight: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     width: 100%;
 
-    &:hover {
+    &:hover,
+    &.-active {
       color: darken($primary, 10);
     }
 
