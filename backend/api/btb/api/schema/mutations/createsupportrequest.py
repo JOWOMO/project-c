@@ -59,7 +59,7 @@ class CreateSupportRequest(graphene.Mutation):
                 "summary": summary, 
                 "description": description,
                 "customfield_10054": os.environ["STAGE"],
-                "customfield_10053": page,
+                "customfield_10053": page[:254] if len(page) > 254 else page
             },
         )
 
