@@ -68,12 +68,6 @@ const TEAM = [
     href: "http://linkedin.com/in/miriam-b-123876b7"
   },
   {
-    name: "Sarah Schulz",
-    img: "sarah_schulz.jpg",
-    // role: "Research & Vision",
-    href: "https://www.linkedin.com/in/sarah-schultz-2081ab41/"
-  },
-  {
     name: "Felix Borgmann",
     img: "felix_borgmann.jpg",
     href: "https://www.linkedin.com/in/felix-borgmann-bb2b2311b/"
