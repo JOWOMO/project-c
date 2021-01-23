@@ -25,7 +25,7 @@ import {ComponentName} from "@/constants/componentName";
 import Panel from "@/components/layout/panel.vue";
 
 @Component({
-  name: ComponentName.ProcessBlock,
+  name: ComponentName.Block,
   components: {Panel},
 })
 export default class extends Vue {

@@ -38,7 +38,7 @@ menu:
 
 </headline>
 
-<process :is-highlight-box="true">
+<block :is-highlight-box="true">
 
 <pe title="Arbeitskräfte anbieten" titleRight="Arbeitskräfte suchen" :h2="true">
   <template #number-left>
@@ -77,7 +77,7 @@ menu:
     </numeration-item>
 </numeration>
 
-</process>
+</block>
 
 <headline id="chooseContract">
 
@@ -85,7 +85,7 @@ menu:
 
 </headline>
 
-<process icon="logo" :no-panel="true">
+<block icon="logo" :no-panel="true">
     <process-panel icon="temporaryEmployment" link="#temporaryEmployment" title="Arbeitnehmerüberlassung">
         Arbeitnehmer:in bleibt bei abgebendem Unternehmen angestellt, wird jedoch einem anderen Arbeitgeber für einen begrenzten Zeitraum gegen ein Entgelt überlassen. 
     </process-panel>
@@ -98,9 +98,9 @@ menu:
     <process-panel icon="partner" link="#jointOperation" title="Gemeinschaftsbetrieb">
         Beide Unternehmen bilden einen gemeinsamen Betrieb unter einheitlicher Führung und gemeinsamer Nutzung von Betriebsmitteln.
     </process-panel>
-</process>
+</block>
 
-<process id="temporaryEmployment" icon="temporaryEmployment" :is-expandable="true" max-height="600">
+<block id="temporaryEmployment" icon="temporaryEmployment" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -140,7 +140,7 @@ Allgemeine rechtliche Informationen für die Umsetzung einer Personalpartnerscha
 ### Wir empfehlen dieses Modell,
 
 wenn die Voraussetzungen für eine erlaubnisfreie Arbeitnehmerüberlassung gegeben sind und sich die Parteien auf die Konditionen der Überlassung einigen können (z.B. Überlassungsentgelt).
-Für eine erfolgreiche Umsetzung dieses Modells denkt auch daran z.B. folgende Dinge zu regeln: Gleichstellungsklauseln, Qualifikation der überlassenen Arbeitnehmer:innen, vorzeitige Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung, Haftungsausschlüsse z.B. bei Nichtleistung. 
+Für eine erfolgreiche Umsetzung dieses Modells denkt auch daran z.B. folgende Dinge zu regeln: Gleichstellungsklauseln, Qualifikation der überlassenen Arbeitnehmer:innen, vorzeitige Auflösung, Abwerbeverbot, Vertraulichkeits&shy;verpflichtung, Haftungsausschlüsse z.B. bei Nichtleistung. 
 
 </panel>
 
@@ -208,7 +208,7 @@ Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die Fahrer:innen 
 - Qualifikation der überlassenen Arbeitnehmer:innen
 - Vorzeitige Auflösung
 - Abwerbeverbote oder Provisionsanspruch bei Übernahme
-- Vertraulichkeitsverpflichtungen
+- Vertraulichkeits&shy;verpflichtungen
 - Haftungsausschlüsse bei Nichtleistung/Unfähigkeit
 
 </div>
@@ -230,9 +230,9 @@ Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die Fahrer:innen 
 
 </div>
 
-</process>
+</block>
 
-<process id="temporaryPosition" icon="temporaryPosition" :is-expandable="true" max-height="600">
+<block id="temporaryPosition" icon="temporaryPosition" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -276,7 +276,7 @@ Allgemeine rechtliche Informationen für die Umsetzung einer befristeten Einstel
 
 ### Wir empfehlen dieses Modell,
 wenn die Dauer der Personalpartnerschaft etwas länger ist und die Voraussetzungen für eine erlaubnisfreie Arbeitnehmerüberlassung nicht gegeben sind.  
-Für eine erfolgreiche Umsetzung dieses Modells denkt auch daran z.B. folgende Dinge zu regeln: Vorzeitige Auflösung, Abwerbeverbot, Vertraulichkeitsverpflichtung.
+Für eine erfolgreiche Umsetzung dieses Modells denkt auch daran z.B. folgende Dinge zu regeln: Vorzeitige Auflösung, Abwerbeverbot, Vertraulichkeits&shy;verpflichtung.
 
 </panel>
 
@@ -332,13 +332,13 @@ Das Hotel Visit darf auf absehbare Zeit keine Gäste aus touristischen Gründen 
 ### Wichtige Elemente einer Kooperationsvereinbarung
 - Vorzeitige Auflösung
 - Abwerbeverbote oder Provisionsanspruch bei Übernahme
-- Vertraulichkeitsverpflichtungen
+- Vertraulichkeits&shy;verpflichtungen
 
 </div>
 
-</process>
+</block>
 
-<process id="partTime" icon="partTime" :is-expandable="true" max-height="600">
+<block id="partTime" icon="partTime" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -381,7 +381,7 @@ Der Hauptarbeitgeber (z.B. während des Bezugs von Kurzarbeitergeld) genehmigt d
 
 ### Wir empfehlen dieses Modell,
 wenn es sich um eine Teilzeitbeschäftigung handelt, bei der Höchstarbeitszeiten über beide Beschäftigungsverhältnisse hinweg eingehalten werden und der Gesamtverdienst der Arbeitnehmer:in nicht über dem sonstigen Nettoverdienst liegt.  
-Für eine erfolgreiche Umsetzung dieses Modells denkt auch daran z.B. folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit, Vertraulichkeitsverpflichtung.
+Für eine erfolgreiche Umsetzung dieses Modells denkt auch daran z.B. folgende Dinge zu regeln: Vorzeitige Beendigung der Nebentätigkeit, Vertraulichkeits&shy;verpflichtung.
 
 </panel>
 
@@ -439,9 +439,9 @@ Vertrag zwischen Arbeitgebern nicht erforderlich.
 
 </div>
 
-</process>
+</block>
 
-<process id="jointOperation" icon="partner" :is-expandable="true" max-height="600">
+<block id="jointOperation" icon="partner" :is-expandable="true" max-height="600">
 
 <div class="innerBlock">
 
@@ -526,12 +526,12 @@ Gemeinsamer Betrieb nach den Voraussetzungen des § 1 Abs. 2 Betriebsverfassungs
 ### Wichtige Elemente der Kooperationsvereinbarung
 - Abwerbeverbote oder Provisionsansprüchen bei Arbeitnehmerübernahmen
 - Auflösung des Gemeinschaftsbetriebs
-- Vertraulichkeitsverpflichtungen
+- Vertraulichkeits&shy;verpflichtungen
 - Haftungsausschlüsse
 
 </div>
 
-</process>
+</block>
 
 <headline id="download">
 
@@ -539,7 +539,7 @@ Gemeinsamer Betrieb nach den Voraussetzungen des § 1 Abs. 2 Betriebsverfassungs
 
 </headline>
 
-<process icon="download">
+<block icon="download">
 
 <div class="innerBlock">
 
@@ -577,7 +577,7 @@ und [Google Docs](https://workspace.google.com).
 
 </div>
 
-</process>
+</block>
 
 
 <style>

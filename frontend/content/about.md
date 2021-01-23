@@ -27,23 +27,23 @@ menu:
 JOWOMO ist Deine Plattform für Personal&shy;partner&shy;schaften
 </h1>
 
-<about id="vision" icon="vision">
+<block id="vision" icon="vision">
 
 ## Unsere Vision
 Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>​#GemeinsamArbeitSchützen</b>
 
-</about>
+</block>
 
-<about id="mission" icon="mission">
+<block id="mission" icon="mission">
 
 ## Unsere Mission
 Wir möchten die erste Anlaufstelle für Unternehmen mit temporären Kapazitätsänderungen sein. Durch  eine passgenaue Zusammenführung von Unternehmen und Unterstützung bei der rechtlichen Umsetzung sorgen wir für eine effiziente krisengerechte Kapazitätsverteilung. ​
 
 <button onclick="window.location.href='/register/supply';" class="cta">Jetzt mitmachen</button>
 
-</about>
+</block>
 
-<about id="team" icon="team">
+<block id="team" icon="team">
 
 ## Über uns
 Wir bringen Unternehmen für einen flexiblen temporären Austausch von Personal zusammen. ​
@@ -59,9 +59,9 @@ Wir sind ein interdisziplinäres Team aus den unterschiedlichsten Ecken von Deut
 
 <members />
 
-</about>
+</block>
 
-<about id="sponsors" icon="partner">
+<block id="sponsors" icon="partner">
 
 ## Sponsoren und Kooperationspartner
 
@@ -112,7 +112,7 @@ Der Solution Builder ist ein intensives Förderprogramm für 10 ausgewählte Pro
 
 </sponsor>
 
-</about>
+</block>
 
 <style>
 button {
