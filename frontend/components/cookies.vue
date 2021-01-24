@@ -54,7 +54,7 @@ export default class extends Vue {
   padding: $gridsize/2;
   color: $textcolor;
 
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;

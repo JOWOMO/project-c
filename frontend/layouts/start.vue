@@ -47,6 +47,5 @@ export default class extends Vue {
 .center {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 </style>

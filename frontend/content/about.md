@@ -115,7 +115,7 @@ Der Solution Builder ist ein intensives Förderprogramm für 10 ausgewählte Pro
 </about>
 
 <style>
-button {
+.markdown button {
   margin-top: 36px;
 }
 </style>

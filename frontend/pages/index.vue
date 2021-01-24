@@ -197,12 +197,6 @@ export default class extends Vue {
 $fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .container {
-  height: $fullheight;
-
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
-
   display: block;
   text-align: center;
 }
@@ -238,7 +232,6 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .two-rows {
   min-height: $fullheight;
-
   display: flex;
   flex-direction: column;
   position: relative;

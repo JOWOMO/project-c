@@ -67,7 +67,7 @@ export default class extends Vue {
   }
 
   .scroller {
-    height: calc(100vh - #{$pageHeaderHeight});
+    height: auto;
     overflow: unset;
     padding-left: $pageMarginMin;
     padding-right: $pageMarginMin;
