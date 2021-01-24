@@ -61,7 +61,7 @@ menu:
             Lege Teams an, die Du freistellen kannst und gebe ihre Fähigkeiten an.
         </template>
         <template #text-right>
-            Über die Suchleiste findest Du schnell Angebote in Deiner Umgebung. Du könntest aber auch ein Gesuche speichern, um benachrichtigt zu werden, sobald ein passendes Match für Sie gefunden wurde.
+            Über die Suchleiste findest Du schnell Angebote in Deiner Umgebung. Du könntest aber auch eine Suche speichern, um benachrichtigt zu werden, sobald ein passendes Match für Sie gefunden wurde.
         </template>
     </numeration-item>
     <numeration-item :timeline="true" title="Anfrage" titleRight="Kontakt&shy;aufnahme">
@@ -187,7 +187,7 @@ Zustimmung der Mitarbeitenden ist notwendig, sofern sich aus dem Arbeitsvertrag 
 <panel :is-round="true" :is-blue="true" :has-shadow="false">
 
 ### Beispiel
-Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die Fahrer:innen sind nicht ausgelastet. Die Supermarktkette Foods benötigt gleichzeitig zusätzliche Fahrer:innen für Lebensmittellieferungen. Die beiden Unternehmen einigen sich auf eine Personalpartnerschaft zunächst für die nächsten zwei Monate und entschließen sich für das Modell der Arbeitnehmerüberlassung. Da Wheels nicht plant, dauerhaft als Überlasser tätig zu sein und die Mitarbeiter:innen nicht für eine Überlassung eingestellt wurden, kann diese Arbeitnehmerüberlassung nach Zustimmung der Mitarbeitenden aktuell ohne Erlaubnis nach dem AÜG stattfinden. Foods diskutiert die temporäre Aufnahme der Mitarbeiter:innen mit dessen Betriebsrat und erhält Zustimmung; somit steht der Personalpartnerschaft nichts mehr im Wege. Wheels und Foods schließen einen Überlassungsvertrag, in dem sie auch Regelungen zur vorzeitigen Auflösung, Abwerbung und Vertraulichkeit treffen, um auf der sicheren Seite zu sein.
+Der Fahrdienstleister Wheels hat aktuell weniger Aufträge und die Fahrer:innen sind nicht ausgelastet. Die Supermarktkette Foods benötigt gleichzeitig zusätzliche Fahrer:innen für Lebensmittellieferungen. Die beiden Unternehmen einigen sich auf eine Personalpartnerschaft zunächst für die nächsten zwei Monate und entschließen sich für das Modell der Arbeitnehmerüberlassung. Da Wheels nicht plant, dauerhaft als Überlasser tätig zu sein und die Mitarbeiter:innen nicht für eine Überlassung eingestellt wurden, kann diese Arbeitnehmerüberlassung nach Zustimmung der Mitarbeitenden aktuell ohne Erlaubnis nach dem AÜG stattfinden. Foods diskutiert die temporäre Aufnahme der Mitarbeiter:innen mit ihrem Betriebsrat und erhält Zustimmung; somit steht der Personalpartnerschaft nichts mehr im Wege. Wheels und Foods schließen einen Überlassungsvertrag, in dem sie auch Regelungen zur vorzeitigen Auflösung, Abwerbung und Vertraulichkeit treffen, um auf der sicheren Seite zu sein.
 
 </panel>
 
@@ -392,7 +392,7 @@ Für eine erfolgreiche Umsetzung dieses Modells denkt auch daran z.B. folgende D
 ### Voraussetzungen
 - (Befristeter) Arbeitsvertrag mit dem aufnehmenden Unternehmen)
 - Genehmigung des Hauptarbeitgebers
-- Bei Bezug von Kurzarbeitergeld: Keine Anrechnung bis Nettoverdienst (Ausnahmeregelung bis 31.12.2020)
+- Bei Bezug von Kurzarbeitergeld: Keine Anrechnung bis zur Höhe des bisherigen Nettoentgelts. Minijobs (450 Euro) werden in voller Höhe nicht auf das Kurzarbeitergeld angerechnet (Ausnahmeregelung bis 31.12.20201) 
 - Sofern beim Hauptarbeitgeber noch Arbeitsleistung erbracht wird:
   - Grenzen des Arbeitszeitgesetz (ArbZG) zu beachten
   - Nebenverdienst über Steuerklasse 6
@@ -489,7 +489,7 @@ empfehlen wir Ihnen dringend eine genaue Auseinandersetzung damit über eine Rec
 <div class="innerBlock">
 
 ### Voraussetzungen
-Gemeinsamer Betrieb nach den Voraussetzungen des § 1 Abs. 2 Betriebsverfassungsgesetz (BetrVG) erforderlich
+Gemeinsamer Betrieb nach den Voraussetzungen des § 1 Abs. 2 BetrVG erforderlich
 - Eine einheitliche Führung (für die Arbeitnehmer:innen beider Unternehmen)
 - Gemeinsame Nutzung von Betriebsmitteln
 
@@ -498,7 +498,7 @@ Gemeinsamer Betrieb nach den Voraussetzungen des § 1 Abs. 2 Betriebsverfassungs
 <div class="innerBlock">
 
 ### Zustimmung der Mitarbeitenden
-- Zuweisung eines Arbeitnehmenden nach billigem Ermessen gemäß § 106 Gewerbeordnung (GewO) in den gemeinsamen Betrieb möglich
+- Zuweisung eines Arbeitnehmenden nach billigem Ermessen gemäß § 106 GewO in den gemeinsamen Betrieb möglich
 - Ausschluss durch Tarifvertrag oder Arbeitsvertrag möglich
 - Ggf. unbillig, wenn Entfernung zum Stamm-Betrieb zu weit
 
@@ -516,7 +516,7 @@ Gemeinsamer Betrieb nach den Voraussetzungen des § 1 Abs. 2 Betriebsverfassungs
 <div class="innerBlock">
 
 ### Beteiligung des Betriebsrats
-- Umsetzung mitbestimmungspflichtig gemäß § 111 Betriebsverfassungsgesetz (BetrVG) (Ausnahme nur bei sehr kurzer Dauer)
+- Umsetzung mitbestimmungspflichtig gemäß § 111 BetrVG (Ausnahme nur bei sehr kurzer Dauer)
 - Wahl eines neuen Betriebsrats des Gemeinschaftsbetriebs möglich
 
 </div>
