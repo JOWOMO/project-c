@@ -46,7 +46,6 @@ export default class extends Vue {
 .page {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 
 @media only screen and (max-height: $breakpoint_sm) {
