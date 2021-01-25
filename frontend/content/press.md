@@ -25,7 +25,7 @@ menu:
 
 Wir haben uns eine intelligente Verteilung von Arbeitskräften zum Ziel gesetzt, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. Auf dieser Seite findest Du unsere Pressemitteilungen und Materialien über uns. 
 
-<about id="contact" icon="press_contact">
+<block id="contact" icon="press_contact">
 
 ## Pressekontakt
 
@@ -35,9 +35,9 @@ Baha Jamous
 [+49 176 70776861](tel:004917670776861)  
 [E-Mail senden](mailto:support@jowomo.de)
 
-</about>
+</block>
 
-<about id="materials" icon="materials">
+<block id="materials" icon="materials">
 
 ## Materialien
 
@@ -45,10 +45,10 @@ Gerne kannst Du unser Logo und andere Markenressourcen in Deiner Berichterstattu
 
 * [Logo](/downloads/logo.zip)
 
-</about>
+</block>
 
 
-<about id="releases" icon="press_release">
+<block id="releases" icon="press_release">
 
 ## Pressemitteilungen
 
@@ -62,5 +62,5 @@ Personalpartnerschaften - JOWOMO - entstanden.
 
 [Pressemeldung zum Download](/downloads/20200329_Pressemeldung_JOWOMO.pdf)
 
-</about>
+</block>
 

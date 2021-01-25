@@ -62,7 +62,7 @@ export default class extends Vue {
 
   .x {
     img {
-      width: 250px;
+      width: 150px;
     }
   }
 
@@ -91,7 +91,7 @@ export default class extends Vue {
 
     .x {
       img {
-        width: 300px;
+        width: 200px;
       }
     }
 
