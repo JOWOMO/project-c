@@ -5,7 +5,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from "nuxt-property-decorator";
+import {Vue, Component, Prop} from "nuxt-property-decorator";
+import {throttle} from "lodash";
 import {ComponentName} from "@/constants/componentName";
 
 const MINIMUM = 1000;
@@ -14,17 +15,17 @@ const MINIMUM = 1000;
   name: ComponentName.GotoTop,
 })
 export default class extends Vue {
-  @Prop({default: false}) useBody!: boolean;
+  @Prop() target!: string;
 
   isVisible = false;
   scroller!: any;
 
   backToTop() {
-    this.scroller.scrollTo(0, 0);
+    this.scroller.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   scrolled(evt: any) {
-    const offset = this.scroller.scrollTop || this.scroller.scrollY;
+    const offset = this.scroller.scrollTop || this.scroller.scrollY || 0;
 
     if (!this.isVisible && offset > MINIMUM) {
       this.isVisible = true;
@@ -33,20 +34,18 @@ export default class extends Vue {
     if (this.isVisible && offset <= MINIMUM) {
       this.isVisible = false;
     }
-
-    // console.debug('offset', offset, this.isVisible);
   }
 
-  mounted(el: any) {
-    this.scroller = this.useBody ? window : this.$parent.$el;
-    // console.debug("mounted", this.scroller);
-    this.scroller.addEventListener("scroll", this.scrolled);
+  mounted() {
+    this.scroller = this.target ? document.getElementById(this.target) : document.body;
+    console.log(this.scroller);
+    this.scroller.addEventListener('scroll', throttle(this.scrolled, 1000));
   }
 
   destroyed() {
     if (this.scroller) {
-      // console.debug("destroyed");
-      this.scroller.removeEventListener("scroll", this.scrolled);
+      console.log('remove');
+      this.scroller.removeEventListener("scroll", throttle(this.scrolled, 1000));
     }
   }
 }

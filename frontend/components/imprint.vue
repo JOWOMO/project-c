@@ -50,6 +50,7 @@ export default class extends Vue {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
 
     div {
       margin-right: $pageMarginMin;

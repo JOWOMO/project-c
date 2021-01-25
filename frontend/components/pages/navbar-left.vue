@@ -6,6 +6,13 @@
           <slot name="navbar" />
         </div>
         <div id="scroller" class="scroller">
+          <mq-layout mq="lg+">
+            <top target="scroller" />
+          </mq-layout>
+
+          <mq-layout :mq="['sm', 'md']">
+            <top />
+          </mq-layout>
           <slot name="body" />
         </div>
       </layout>
@@ -21,6 +28,7 @@ import { Vue, Component } from "nuxt-property-decorator";
 import layout from "@/components/layout/layout.vue";
 import column from "@/components/layout/column.vue";
 import row from "@/components/layout/row.vue";
+import top from "@/components/goto-top.vue";
 import {ComponentName} from "@/constants/componentName";
 
 @Component({
@@ -29,6 +37,7 @@ import {ComponentName} from "@/constants/componentName";
     layout,
     column,
     row,
+    top,
   }
 })
 export default class extends Vue {
@@ -69,8 +78,8 @@ export default class extends Vue {
   .scroller {
     height: calc(100vh - #{$pageHeaderHeight});
     overflow: unset;
-    padding-left: $pageMarginMin;
-    padding-right: $pageMarginMin;
+    padding-left: $pageMarginMin / 2;
+    padding-right: $pageMarginMin / 2;
     padding-top: $gridsize;
     width: 100vw;
   }

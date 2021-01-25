@@ -486,7 +486,11 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
       }
 
       .buttons {
-        padding: $gridsize $pageMarginMin;
+        padding: $gridsize/2 $gridsize/4;
+
+        button {
+          font-size: $textsize;
+        }
       }
     }
   }

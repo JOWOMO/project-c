@@ -35,14 +35,15 @@ import item from "@/components/sidebar/item.vue";
 import sec from "@/components/sidebar/section.vue";
 
 import faq from "@/components/faq.vue";
-import about from "@/components/about/block.vue";
 import sponsor from "@/components/about/sponsor.vue";
 import pe from "@/components/about/pe.vue";
 import members from "@/components/about/members.vue";
 import imprint from "@/components/imprint.vue";
-import bulletPoint from "~/components/process/bulletPoint.vue";
+
 import panel from "@/components/layout/panel.vue";
-import process from "@/components/process/block.vue";
+import block from "@/components/layout/block.vue";
+
+import bulletPoint from "@/components/process/bulletPoint.vue";
 import processPanel from "@/components/process/panel.vue";
 import headline from "@/components/process/headline.vue";
 import numeration from "@/components/process/numeration.vue";
@@ -105,7 +106,8 @@ export default class extends Vue {
       const other = {
         extends: content.vue.component,
         components: {
-          about,
+          block,
+          bulletPoint,
           faq,
           headline,
           members,
@@ -113,8 +115,6 @@ export default class extends Vue {
           numerationItem,
           panel,
           pe,
-          bulletPoint,
-          process,
           processPanel,
           sponsor,
         }

@@ -25,7 +25,7 @@ import {ComponentName} from "@/constants/componentName";
 import Panel from "@/components/layout/panel.vue";
 
 @Component({
-  name: ComponentName.ProcessBlock,
+  name: ComponentName.Block,
   components: {Panel},
 })
 export default class extends Vue {
@@ -64,7 +64,7 @@ export default class extends Vue {
 
 .outer {
   width: 100%;
-  margin: 30px 0 40px;
+  margin: 30px 0 110px;
 }
 
 // this is the scaling for the LARGE screen
