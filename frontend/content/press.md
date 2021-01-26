@@ -52,6 +52,14 @@ Gerne kannst Du unser Logo und andere Markenressourcen in Deiner Berichterstattu
 
 ## Pressemitteilungen
 
+### *27.01.2021* JOWOMO veröffenlicht Handlungshilfen für rechtssichere Umsetzung von Personalpartnerschaften.
+
+Viele Unternehmen können seit der Pandemie ihre Mitarbeitenden nicht voll beschäftigen und sehen sich durch die Verlängerung des Lockdowns in ihrer Existenz bedroht. Andere verzeichnen eine erhöhte Nachfrage und suchen nach Arbeitskräften. Mit der digitalen Plattform JOWOMO können Unternehmen kurzfristig untereinander Personalüber- und unterkapazitäten im Rahmen einer Personalpartnerschaft ausgleichen. Um Unternehmen bei der rechtlichen Umsetzung zu unterstützen, stellt JOWOMO Handlungshilfen und Musterverträge kostenlos online. Die Wirtschaftskanzlei Buse ([buse.de](https://buse.de/)) hat JOWOMO hierbei pro bono arbeitsrechtlich beraten.
+
+[Pressemeldung zum Download](/downloads/20210127_Pressemeldung_JOWOMO.pdf)
+
+<br />
+<br />
 
 ### *29.04.2020* #WirVsVirus-Projekt JOWOMO startet digitale Plattform für Personalpartnerschaften.
 
