@@ -27,8 +27,10 @@ import formInput from "@/components/forms/input.vue";
 import { IState } from "@/store";
 import { formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.AuthReset,
   components: { formInput }
 })
 export default class extends Vue {

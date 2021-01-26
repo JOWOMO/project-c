@@ -6,8 +6,11 @@ import { Vue, Component, State } from "nuxt-property-decorator";
 import { IState } from "@/store";
 import { CognitoUser } from "@aws-amplify/auth";
 import { Context } from "@nuxt/types";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.PagesDashboardIndex,
+})
 export default class extends Vue {
   // @State((s: IState) => s.auth.user)
   // user!: any;

@@ -2,19 +2,19 @@ name: App
 
 on:
   pull_request:
-    paths:  
+    paths:
       - '.github/workflows/frontend.yml'
       - 'frontend/**'
-        
-    branches: 
+
+    branches:
       - '*'
-        
+
   push:
-    paths:  
+    paths:
       - '.github/workflows/frontend.yml'
       - 'frontend/**'
-      
-    branches: 
+
+    branches:
       - 'develop'
       - 'master'
 
@@ -25,9 +25,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Use Node.js 12.x
-      uses: actions/setup-node@v1.4.1
+      uses: actions/setup-node@v1.4.4
       with:
         node-version: 12.x
 
@@ -38,30 +38,29 @@ jobs:
 
     - name: Set env default
       run: |
-        echo "::set-env name=STAGE::dev"
-        echo "::set-env name=USE_BETA_LOGO::true"
-        echo "::set-env name=VERSION_SUFFIX::-dev"
+        echo "STAGE=dev" >> $GITHUB_ENV
+        echo "USE_BETA_LOGO=true" >> $GITHUB_ENV
+        echo "VERSION_SUFFIX=-dev" >> $GITHUB_ENV
 
     - name: Set env to test
       if: endsWith(github.ref, '/develop')
       run: |
-        echo "::set-env name=STAGE::test"
-        echo "::set-env name=USE_BETA_LOGO::true"
-        echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
-        echo "::set-env name=SENTRY_PUBLISH_RELEASE::true"
-        echo "::set-env name=VERSION_SUFFIX::-test"
-        
+        echo "STAGE=test" >> $GITHUB_ENV
+        echo "USE_BETA_LOGO=true" >> $GITHUB_ENV
+        echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+        echo "SENTRY_PUBLISH_RELEASE=true" >> $GITHUB_ENV
+        echo "VERSION_SUFFIX=-test" >> $GITHUB_ENV
+
     - name: Set env to production
       if: endsWith(github.ref, '/master')
       run: |
-        echo "::set-env name=STAGE::prod"
-        echo "::set-env name=USE_BETA_LOGO::false"
-        echo "::set-env name=SENTRY_DSN::${{ secrets.SENTRY_DSN }}"
-        echo "::set-env name=SENTRY_PUBLISH_RELEASE::true"
-        echo "::set-env name=VERSION_SUFFIX::"
+        echo "STAGE=prod" >> $GITHUB_ENV
+        echo "USE_BETA_LOGO=false" >> $GITHUB_ENV
+        echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> $GITHUB_ENV
+        echo "SENTRY_PUBLISH_RELEASE=true" >> $GITHUB_ENV
+        echo "VERSION_SUFFIX=" >> $GITHUB_ENV
 
-    - uses: chrislennon/action-aws-cli@v1.1
-
+    - uses: tkt-actions/aws-sam-cli@v1
     - name: Export aws config
       run: |
         aws cloudformation describe-stacks --stack-name bee-to-bee-api-${{ env.STAGE }} --query "Stacks[0].Outputs" > aws.json
@@ -72,7 +71,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: "eu-west-1"
 
-    - name: Generate 
+    - name: Generate
       run: |
         PACKAGE_VERSION=$(node -p -e "require('./package.json').version.split('.').splice(0,2).join('.')")
         VERSION=$PACKAGE_VERSION.$GITHUB_RUN_NUMBER$VERSION_SUFFIX
@@ -97,11 +96,11 @@ jobs:
         name: app
         path: frontend/dist
 
-    - name: Deploy 
+    - name: Deploy
       run: |
-        npx serverless deploy --stage $STAGE
+        npx serverless deploy --stage ${{ env.STAGE }}
         rm -f dist/_nuxt/*.map
-        npx serverless client deploy --no-confirm --no-policy-change --stage $STAGE
+        npx serverless client deploy --no-confirm --no-policy-change --stage ${{ env.STAGE }}
       working-directory: frontend
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

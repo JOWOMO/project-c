@@ -1,36 +1,72 @@
 <template>
-  <div :class="{'element': true, 'selected': selected}">
-    <slot>
-      <img v-if="selected" height="16" width="16" src="/icons/arrow-right.svg" />
-      <a
-        v-if="to && to.startsWith('#')"
-        :class="{'selected': selected}"
-        :href="to"
-      >
-        {{name}}
-      </a>
+  <div class="element" :class="{'-selected': selected}">
+    <div class="element__inner">
+      <img
+        class="element__img -arrow"
+        v-if="selected"
+        height="16"
+        width="16"
+        src="/icons/arrow-right.svg"
+      />
       <nuxt-link
-        v-else-if="to"
-        :class="{'selected': selected}"
-        :to="to"
+        class="element__link"
+        v-if="toRoute"
+        exact-active-class="-active"
+        :class="{'-selected': selected}"
+        :to="toRoute"
       >
-        {{name}}
+        {{ name }}
       </nuxt-link>
-      <p v-else>{{ name }}</p>
-      <img v-if="checked" height="18" width="18" src="/icons/checkmark.svg" />
-    </slot>
+      <p
+        v-else
+        class="element__text"
+      >{{ name }}</p>
+      <img
+        class="element__img -checkmark"
+        v-if="checked"
+        height="18"
+        width="18"
+        src="/icons/checkmark.svg"
+      />
+    </div>
+    <sidebar-item
+      class="-deep"
+      v-if="items.length"
+      v-for="item in (items || [])"
+      :key="item.label"
+      :name="item.label"
+      :to="item.to"
+      :items="item.items"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {Vue, Component, Prop} from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
-export default class extends Vue {
-  @Prop({ default: false }) checked!: boolean;
-  @Prop({ default: false }) selected!: boolean;
+@Component({
+  name: ComponentName.SidebarItem,
+})export default class extends Vue {
+  @Prop({default: false}) checked!: boolean;
+  @Prop({default: false}) selected!: boolean;
   @Prop() to!: string;
+  @Prop({default: () => []}) items!: string;
   @Prop() name!: string;
+
+  private get toRoute() {
+    if (!this.to) return null;
+    if (this.to.startsWith('#')) {
+      return {
+        path: this.$router.currentRoute.path,
+        hash: this.to,
+      }
+    } else {
+      return {
+        path: this.to,
+      }
+    }
+  }
 }
 </script>
 
@@ -39,43 +75,50 @@ export default class extends Vue {
 @import "@/assets/scales";
 
 .element {
-  display: flex;
-  flex-direction: row;
   cursor: pointer;
-
-  margin-top: 16px;
-
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
   overflow: hidden;
+  width: 100%;
 
-  img {
-    margin: 4px 0;
+  &__img {
+    margin-right: 5px;
+
+    &.-arrow {
+      width: 16px;
+      height: 16px;
+    }
   }
 
-  a, p {
-    color: $textcolor;
-    font-weight: normal;
-    font-size: $textsize;
-    margin-left: $gridsize/2;
-    margin-right: $gridsize/2;
+  &__inner {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+  }
 
-    &:hover {
+  &__link {
+    color: $textcolor;
+    font-size: $textsize;
+    font-weight: normal;
+    width: 100%;
+
+    &:hover,
+    &.-active {
       color: darken($primary, 10);
     }
 
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    &.-selected {
+      color: $inputtextcolor;
+
+      &:hover {
+        color: $inputtextcolor;
+      }
+    }
   }
 
-  a.selected {
-    color: $inputtextcolor;
-
-    &:hover {
-      // cursor: default;
-      color: $inputtextcolor;
-    }
+  &.-deep {
+    margin-left: 20px;
   }
 }
 </style>

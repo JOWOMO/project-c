@@ -14,8 +14,10 @@ import { Component, Vue } from "nuxt-property-decorator";
 import topbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
 import top from "@/components/goto-top.vue";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.LayoutsStart,
   components: {
     topbar,
     cookies,
@@ -45,6 +47,5 @@ export default class extends Vue {
 .center {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 </style>

@@ -18,8 +18,12 @@ import { Component, Vue, Prop, Watch } from "nuxt-property-decorator";
 import sidebar from "@/components/sidebar/bar.vue";
 import item from "@/components/sidebar/item.vue";
 import sec from "@/components/sidebar/section.vue";
+import {ComponentName} from "@/constants/componentName";
 
-@Component({ components: { sidebar, item, sec } })
+@Component({
+  name: ComponentName.PagesSidebarRegister,
+  components: { sidebar, item, sec }
+})
 export default class extends Vue {
   @Prop({ type: Number, required: true }) readonly selectedElement!: Number;
   @Prop({ type: Array, required: true }) readonly labels!: string[];

@@ -14,8 +14,11 @@
 <script lang="ts">
 import { Component, Vue } from "nuxt-property-decorator";
 import Cookies from "universal-cookie";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.Cookies,
+})
 export default class extends Vue {
   visible = false;
 
@@ -51,7 +54,7 @@ export default class extends Vue {
   padding: $gridsize/2;
   color: $textcolor;
 
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;

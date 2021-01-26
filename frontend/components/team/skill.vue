@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
 type KeyValuePair = {
   id: string;
@@ -17,7 +18,9 @@ type KeyValuePair = {
   active: boolean;
 };
 
-@Component
+@Component({
+  name: ComponentName.TeamSkill,
+})
 export default class extends Vue {
   @Prop({ required: true }) name!: string;
 

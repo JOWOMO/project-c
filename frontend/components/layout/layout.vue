@@ -6,8 +6,11 @@
 
 <script lang="ts">
 import { Vue, Prop, Component } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.Layout,
+})
 export default class extends Vue {
   @Prop({ type: Boolean, default: true }) columns!: boolean;
 }

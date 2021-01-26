@@ -43,8 +43,10 @@ import addUser from "@/apollo/mutations/add_user.gql";
 import { IState } from "@/store";
 import { formatMessage } from "./messages";
 import { LoadingAnimation } from "../loadinganimation";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.AuthValidate,
   components: { formInput }
 })
 export default class extends Vue {

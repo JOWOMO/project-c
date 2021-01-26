@@ -1,6 +1,6 @@
 <template>
   <div class="m-outer">
-    <img :id="id" class="block-icon" :src="'/images/team/' + img" />
+    <img class="block-icon" :src="'/images/team/' + img" />
     <div class="name">
       <a v-if="href" :href="href" target="_blank">
       {{ name }}
@@ -14,8 +14,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.AboutMember,
+})
 export default class extends Vue {
   @Prop() img!: string;
   @Prop() name!: string;

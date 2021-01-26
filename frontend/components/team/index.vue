@@ -136,9 +136,12 @@ import {
   required,
   numeric,
   minValue,
-  minLength
+  minLength,
+  maxLength
 } from "vuelidate/lib/validators";
 import { Validate, Validations } from "vuelidate-property-decorators";
+import {ComponentName} from "@/constants/componentName";
+import {InputLengths} from "@/constants/inputLengths";
 
 type KeyValuePair = {
   id: string;
@@ -160,6 +163,7 @@ export type TeamDetails = {
 };
 
 @Component({
+  name: ComponentName.TeamIndex,
   components: {
     tagCloud,
     tag,
@@ -202,7 +206,8 @@ export default class extends Vue {
           minValue: minValue(1)
         },
         name: {
-          required
+          required,
+          maxLength: maxLength(InputLengths.MIDDLE_STRING),
           // contains:this.contains
         },
         skills: {
@@ -210,7 +215,8 @@ export default class extends Vue {
           minSkillCount: minLength(3)
         },
         description: {
-          required
+          required,
+          maxLength: maxLength(InputLengths.LONG_STRING),
         }
       }
     };

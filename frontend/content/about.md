@@ -20,13 +20,6 @@ menu:
       -   
         label: Sponsoren und Kooperationspartner
         to: '#sponsors'
-
-  - 
-    label: Weitere Informationen
-    items:
-    - 
-      label: Presseinformationen
-      to: /info/press
  
 ---
 
@@ -34,23 +27,23 @@ menu:
 JOWOMO ist Deine Plattform für Personal&shy;partner&shy;schaften
 </h1>
 
-<about id="vision" icon="vision">
+<block id="vision" icon="vision">
 
 ## Unsere Vision
 Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>​#GemeinsamArbeitSchützen</b>
 
-</about>
+</block>
 
-<about id="mission" icon="mission">
+<block id="mission" icon="mission">
 
 ## Unsere Mission
 Wir möchten die erste Anlaufstelle für Unternehmen mit temporären Kapazitätsänderungen sein. Durch  eine passgenaue Zusammenführung von Unternehmen und Unterstützung bei der rechtlichen Umsetzung sorgen wir für eine effiziente krisengerechte Kapazitätsverteilung. ​
 
 <button onclick="window.location.href='/register/supply';" class="cta">Jetzt mitmachen</button>
 
-</about>
+</block>
 
-<about id="team" icon="team">
+<block id="team" icon="team">
 
 ## Über uns
 Wir bringen Unternehmen für einen flexiblen temporären Austausch von Personal zusammen. ​
@@ -66,9 +59,9 @@ Wir sind ein interdisziplinäres Team aus den unterschiedlichsten Ecken von Deut
 
 <members />
 
-</about>
+</block>
 
-<about id="sponsors" icon="partner">
+<block id="sponsors" icon="partner">
 
 ## Sponsoren und Kooperationspartner
 
@@ -81,6 +74,17 @@ Viele Dinge gelingen nur mit dem richtigen Partnern. Diese Unternehmen und Mensc
 Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG betreibt unsere Plattform. "Eine tolle Idee, genau zur richtigen Zeit. Wir versuchen stets mit cleveren Ideen Menschen und Unternehmen zu verbinden. Die Idee von JOWOMO passt perfekt in die aktuelle Zeit, das unterstützen wir gerne."
 
 [Mehr Informationen zur Weserbergland AG](https://weserberglandag.de/)
+
+</sponsor>
+
+<sponsor logo="buse.svg" person="buse_person.jpg" scalex="true">
+
+### Buse Rechtsanwälte Steuerberater PartG mbB - Jan Tibor Lelley
+
+Buse ist Ihre Partnerin in allen Fragen des nationalen und internationalen Wirtschafts- und Steuerrechts.  
+„Die Idee von JOWOMO hat uns sofort mitgerissen! Mutig, pragmatisch und das Wichtige des Geschäftsalltags für Unternehmen und Arbeitnehmer:innen im Blick. Das passt hervorragend zu unserer Beratungsphilosophie bei Buse. Daher sind wir sehr stolz, hier mithelfen zu dürfen.“
+
+[Mehr Informationen zu Buse](https://buse.de/)
 
 </sponsor>
 
@@ -108,4 +112,10 @@ Der Solution Builder ist ein intensives Förderprogramm für 10 ausgewählte Pro
 
 </sponsor>
 
-</about>
+</block>
+
+<style>
+.markdown button {
+  margin-top: 36px;
+}
+</style>

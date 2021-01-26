@@ -1,5 +1,5 @@
 <template>
-  <div :height="'calc(100vh - ' + TOPHEIGHT + 'px)'" class="scroller">
+  <div class="scroller">
     <slot />
     <div class="spacer" />
     <imprint class="imprint" :horizontal="true" />
@@ -10,10 +10,13 @@
 import { Vue, Component } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 import imprint from "@/components/imprint.vue";
+import {ComponentName} from "@/constants/componentName";
 
-@Component({ components: { imprint } })
+@Component({
+  name: ComponentName.PagesNavbarTop,
+  components: { imprint }
+})
 export default class extends Vue {
-  TOPHEIGHT = 148;
 }
 </script>
 
@@ -26,37 +29,27 @@ export default class extends Vue {
 }
 
 .scroller {
-  overflow-y: scroll;
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
-
-  padding: $gridsize;
-  padding-right: $pageMarginRight;
-
-  flex: 1;
-  align-items: unset;
   align-content: unset;
+  align-items: unset;
+  flex: 1;
+  overflow-y: scroll;
+  padding: $gridsize;
+  height: calc(100vh - #{$pageHeaderHeightWithPadding});
 }
 
 .imprint {
-  padding-top: $pageMarginMin;
   margin-bottom: -$pageMarginMin;
   margin-left: -$pageMarginMin;
+  padding-top: $pageMarginMin;
 }
 
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .scroller {
     overflow: unset;
+    padding: 0 $pageMarginMin;
     width: 100vw;
-
-    padding-left: $pageMarginMin;
-    padding-right: $pageMarginMin;
   }
-
-
-  // only need this when we want to do scroll detectio inside
-  // .main {
-  //   overflow-y: scroll;
-  // }
 }
 </style>

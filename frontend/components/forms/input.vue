@@ -59,8 +59,12 @@ import {
 import { Validation } from "vuelidate";
 import { get } from 'lodash';
 import  validations from "./validations.vue";
+import {ComponentName} from "@/constants/componentName";
 
-@Component({components: {validations}})
+@Component({
+  name: ComponentName.FormsInput,
+  components: {validations}
+})
 export default class extends Vue {
   @Inject("validation")
   validationAccessor!: any;

@@ -1,11 +1,14 @@
 <script lang="ts">
 import { CreateElement } from "vue";
 import { Vue, Component } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 const LOGO = process.env.useBetaLogo
     ? "/images/logo-beta.svg"
     : "/images/logo.svg";
 
-@Component
+@Component({
+  name: ComponentName.Logo,
+})
 export default class extends Vue {
   render(h: CreateElement) {
     return h(

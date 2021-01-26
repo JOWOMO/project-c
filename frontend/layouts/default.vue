@@ -6,7 +6,6 @@
       <cookies />
     </div>
     <support position="left" />
-    <top :useBody="true" />
   </div>
 </template>
 
@@ -14,14 +13,14 @@
 import { Component, Vue } from "nuxt-property-decorator";
 import topbar from "@/components/pages/topbar.vue";
 import cookies from "@/components/cookies.vue";
-import top from "@/components/goto-top.vue";
 import support from "@/components/support.vue";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.LayoutsDefault,
   components: {
     topbar,
     cookies,
-    top,
     support,
   }
 })
@@ -48,6 +47,5 @@ export default class extends Vue {
 .center {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 </style>

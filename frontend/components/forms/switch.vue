@@ -15,8 +15,11 @@
 <script lang="ts">
 import Component from "nuxt-class-component";
 import { Vue, Prop, Emit } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.FormsSwitch,
+})
 export default class extends Vue {
   @Prop({ type: Boolean, required: false, default: true })
   round!: string;

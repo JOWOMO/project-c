@@ -1,4 +1,7 @@
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -6,11 +9,92 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /**
+   * The LimitedString150 scalar type represents textual data, represented as UTF-8
+   * character sequences, with a max length of 150.
+   */
+  LimitedString150: any;
+  /**
+   * The LimitedString50 scalar type represents textual data, represented as UTF-8
+   * character sequences, with a max length of 50.
+   */
+  LimitedString50: any;
+  /**
+   * The LimitedString2000 scalar type represents textual data, represented as UTF-8
+   * character sequences, with a max length of 2000.
+   */
+  LimitedString2000: any;
+  /** Arbitrary JSON Properties for features */
   JSONScalar: any;
 };
 
+export type Query = {
+  __typename?: 'Query';
+  me: User;
+  companies?: Maybe<Array<Company>>;
+  activeDemands?: Maybe<Array<Maybe<Demand>>>;
+  activeSupplies?: Maybe<Array<Maybe<Supply>>>;
+  demand?: Maybe<Demand>;
+  supply?: Maybe<Supply>;
+  skills: Array<Skill>;
+  industries: Array<Industry>;
+  teamNames: Array<Scalars['String']>;
+  matchDemand: MatchSupplyResult;
+  matchSupply: MatchDemandResult;
+  matchSupplies: MatchSupplyResult;
+  matchDemands: MatchDemandResult;
+};
+
+
+export type QueryDemandArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QuerySupplyArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryMatchDemandArgs = {
+  cursor?: Maybe<CursorInput>;
+  id: Scalars['ID'];
+  radius?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryMatchSupplyArgs = {
+  cursor?: Maybe<CursorInput>;
+  id: Scalars['ID'];
+  radius?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryMatchSuppliesArgs = {
+  cursor?: Maybe<CursorInput>;
+  query: MatchQueryInput;
+};
+
+
+export type QueryMatchDemandsArgs = {
+  cursor?: Maybe<CursorInput>;
+  query: MatchQueryInput;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['ID'];
+  externalId: Scalars['ID'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  pictureUrl?: Maybe<Scalars['String']>;
+  companies?: Maybe<Array<Company>>;
+};
+
 export type Company = {
-   __typename?: 'Company';
+  __typename?: 'Company';
   id: Scalars['ID'];
   name: Scalars['String'];
   addressLine1?: Maybe<Scalars['String']>;
@@ -24,32 +108,22 @@ export type Company = {
   supplies?: Maybe<Array<Supply>>;
 };
 
+export type Industry = {
+  __typename?: 'Industry';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
 export type CompanyContact = {
-   __typename?: 'CompanyContact';
+  __typename?: 'CompanyContact';
   id: Scalars['ID'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   pictureUrl?: Maybe<Scalars['String']>;
 };
 
-export type CompanyInput = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
-  logoUrl?: Maybe<Scalars['String']>;
-  addressLine1: Scalars['String'];
-  addressLine2?: Maybe<Scalars['String']>;
-  addressLine3?: Maybe<Scalars['String']>;
-  postalCode: Scalars['String'];
-  city: Scalars['String'];
-  industry: Scalars['ID'];
-};
-
-export type CursorInput = {
-  offset?: Maybe<Scalars['Int']>;
-};
-
 export type Demand = {
-   __typename?: 'Demand';
+  __typename?: 'Demand';
   id: Scalars['ID'];
   isActive: Scalars['Boolean'];
   name: Scalars['String'];
@@ -60,54 +134,60 @@ export type Demand = {
   company: Company;
 };
 
-export type DemandInput = {
-  id?: Maybe<Scalars['ID']>;
-  companyId: Scalars['ID'];
+export type Skill = {
+  __typename?: 'Skill';
+  id: Scalars['ID'];
+  group: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type Supply = {
+  __typename?: 'Supply';
+  id: Scalars['ID'];
   isActive: Scalars['Boolean'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
+  skills: Array<Skill>;
   quantity: Scalars['Int'];
-  skills?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  maxHourlySalary?: Maybe<Scalars['Float']>;
+  hourlySalary?: Maybe<Scalars['Float']>;
+  company: Company;
 };
 
-export type DemandMatch = {
-   __typename?: 'DemandMatch';
+export type MatchSupplyResult = {
+  __typename?: 'MatchSupplyResult';
+  matches: Array<SupplyMatch>;
+  pageInfo: PageInfo;
+};
+
+export type SupplyMatch = {
+  __typename?: 'SupplyMatch';
   distance: Scalars['Int'];
   percentage: Scalars['Int'];
-  demand: Demand;
+  supply: Supply;
 };
 
-export type Industry = {
-   __typename?: 'Industry';
-  id: Scalars['ID'];
-  name: Scalars['String'];
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
+  pageSize: Scalars['Int'];
 };
 
-
-export enum MatchAnswer {
-  Opened = 'Opened',
-  Accept = 'Accept',
-  Reject = 'Reject'
-}
+export type CursorInput = {
+  offset?: Maybe<Scalars['Int']>;
+};
 
 export type MatchDemandResult = {
-   __typename?: 'MatchDemandResult';
+  __typename?: 'MatchDemandResult';
   matches: Array<DemandMatch>;
   pageInfo: PageInfo;
 };
 
-export type MatchDetails = {
-   __typename?: 'MatchDetails';
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  pictureUrl?: Maybe<Scalars['String']>;
-  email: Scalars['String'];
-  addressLine1: Scalars['String'];
-  postalCode: Scalars['String'];
-  city: Scalars['String'];
+export type DemandMatch = {
+  __typename?: 'DemandMatch';
+  distance: Scalars['Int'];
+  percentage: Scalars['Int'];
+  demand: Demand;
 };
 
 export type MatchQueryInput = {
@@ -118,19 +198,8 @@ export type MatchQueryInput = {
   minQuantity?: Maybe<Scalars['Int']>;
 };
 
-export type MatchSupplyResult = {
-   __typename?: 'MatchSupplyResult';
-  matches: Array<SupplyMatch>;
-  pageInfo: PageInfo;
-};
-
-export enum MatchType {
-  Supply = 'Supply',
-  Demand = 'Demand'
-}
-
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   updateUser?: Maybe<Scalars['String']>;
   updateCompany?: Maybe<Company>;
   updateDemand?: Maybe<Demand>;
@@ -188,140 +257,94 @@ export type MutationSetMatchStateArgs = {
 
 
 export type MutationCreateSupportRequestArgs = {
-  description: Scalars['String'];
-  page: Scalars['String'];
-  summary: Scalars['String'];
+  description: Scalars['LimitedString2000'];
+  page: Scalars['LimitedString2000'];
+  summary: Scalars['LimitedString2000'];
 };
 
-export type PageInfo = {
-   __typename?: 'PageInfo';
-  hasNextPage?: Maybe<Scalars['Boolean']>;
-  offset?: Maybe<Scalars['Int']>;
-  pageSize: Scalars['Int'];
-};
-
-export type Query = {
-   __typename?: 'Query';
-  me: User;
-  companies?: Maybe<Array<Company>>;
-  activeDemands?: Maybe<Array<Maybe<Demand>>>;
-  activeSupplies?: Maybe<Array<Maybe<Supply>>>;
-  demand?: Maybe<Demand>;
-  supply?: Maybe<Supply>;
-  skills: Array<Skill>;
-  industries: Array<Industry>;
-  teamNames: Array<Scalars['String']>;
-  matchDemand: MatchSupplyResult;
-  matchSupply: MatchDemandResult;
-  matchSupplies: MatchSupplyResult;
-  matchDemands: MatchDemandResult;
+export type UserInput = {
+  firstName: Scalars['LimitedString150'];
+  lastName: Scalars['LimitedString150'];
+  email: Scalars['LimitedString150'];
 };
 
 
-export type QueryDemandArgs = {
-  id: Scalars['ID'];
+export type CompanyInput = {
+  id?: Maybe<Scalars['ID']>;
+  name: Scalars['LimitedString50'];
+  logoUrl?: Maybe<Scalars['LimitedString150']>;
+  addressLine1: Scalars['LimitedString150'];
+  addressLine2?: Maybe<Scalars['LimitedString150']>;
+  addressLine3?: Maybe<Scalars['LimitedString150']>;
+  postalCode: Scalars['LimitedString50'];
+  city: Scalars['LimitedString50'];
+  industry: Scalars['ID'];
 };
 
 
-export type QuerySupplyArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryMatchDemandArgs = {
-  cursor?: Maybe<CursorInput>;
-  id: Scalars['ID'];
-  radius?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryMatchSupplyArgs = {
-  cursor?: Maybe<CursorInput>;
-  id: Scalars['ID'];
-  radius?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryMatchSuppliesArgs = {
-  cursor?: Maybe<CursorInput>;
-  query: MatchQueryInput;
-};
-
-
-export type QueryMatchDemandsArgs = {
-  cursor?: Maybe<CursorInput>;
-  query: MatchQueryInput;
-};
-
-export type S3UploadGrant = {
-   __typename?: 'S3UploadGrant';
-  url: Scalars['String'];
-  fields?: Maybe<Scalars['JSONScalar']>;
-};
-
-export type Skill = {
-   __typename?: 'Skill';
-  id: Scalars['ID'];
-  group: Scalars['String'];
-  name: Scalars['String'];
-};
-
-export type Supply = {
-   __typename?: 'Supply';
-  id: Scalars['ID'];
+export type DemandInput = {
+  id?: Maybe<Scalars['ID']>;
+  companyId: Scalars['ID'];
   isActive: Scalars['Boolean'];
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  skills: Array<Skill>;
+  name: Scalars['LimitedString150'];
+  description?: Maybe<Scalars['LimitedString2000']>;
   quantity: Scalars['Int'];
-  hourlySalary?: Maybe<Scalars['Float']>;
-  company: Company;
+  skills?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  maxHourlySalary?: Maybe<Scalars['Float']>;
 };
+
 
 export type SupplyInput = {
   id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];
   isActive: Scalars['Boolean'];
-  name: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
+  name: Scalars['LimitedString150'];
+  description?: Maybe<Scalars['LimitedString2000']>;
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Maybe<Scalars['ID']>>>;
   hourlySalary?: Maybe<Scalars['Float']>;
 };
 
-export type SupplyMatch = {
-   __typename?: 'SupplyMatch';
-  distance: Scalars['Int'];
-  percentage: Scalars['Int'];
-  supply: Supply;
+export type S3UploadGrant = {
+  __typename?: 'S3UploadGrant';
+  url: Scalars['String'];
+  fields?: Maybe<Scalars['JSONScalar']>;
 };
 
-export type User = {
-   __typename?: 'User';
+
+export enum MatchType {
+  Supply = 'Supply',
+  Demand = 'Demand'
+}
+
+/** This needs refactoring for all resource types: Address */
+export type MatchDetails = {
+  __typename?: 'MatchDetails';
   id: Scalars['ID'];
-  externalId: Scalars['ID'];
-  email: Scalars['String'];
   name: Scalars['String'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   pictureUrl?: Maybe<Scalars['String']>;
-  companies?: Maybe<Array<Company>>;
-};
-
-export type UserInput = {
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
   email: Scalars['String'];
-};
-
-export type AddCompanyMutationVariables = {
-  id?: Maybe<Scalars['ID']>;
-  name: Scalars['String'];
   addressLine1: Scalars['String'];
   postalCode: Scalars['String'];
   city: Scalars['String'];
-  industry: Scalars['ID'];
 };
+
+export enum MatchAnswer {
+  Opened = 'Opened',
+  Accept = 'Accept',
+  Reject = 'Reject'
+}
+
+export type AddCompanyMutationVariables = Exact<{
+  id?: Maybe<Scalars['ID']>;
+  name: Scalars['LimitedString50'];
+  addressLine1: Scalars['LimitedString150'];
+  postalCode: Scalars['LimitedString50'];
+  city: Scalars['LimitedString50'];
+  industry: Scalars['ID'];
+}>;
 
 
 export type AddCompanyMutation = (
@@ -332,11 +355,11 @@ export type AddCompanyMutation = (
   )> }
 );
 
-export type UserAddMutationVariables = {
-  first: Scalars['String'];
-  last: Scalars['String'];
-  email: Scalars['String'];
-};
+export type UserAddMutationVariables = Exact<{
+  first: Scalars['LimitedString150'];
+  last: Scalars['LimitedString150'];
+  email: Scalars['LimitedString150'];
+}>;
 
 
 export type UserAddMutation = (
@@ -344,11 +367,11 @@ export type UserAddMutation = (
   & Pick<Mutation, 'updateUser'>
 );
 
-export type ConnectMutationVariables = {
+export type ConnectMutationVariables = Exact<{
   id: Scalars['ID'];
   origin: Scalars['ID'];
   type: MatchType;
-};
+}>;
 
 
 export type ConnectMutation = (
@@ -356,10 +379,10 @@ export type ConnectMutation = (
   & Pick<Mutation, 'contactMatch'>
 );
 
-export type SetMatchStateMutationVariables = {
+export type SetMatchStateMutationVariables = Exact<{
   id: Scalars['ID'];
   answer: MatchAnswer;
-};
+}>;
 
 
 export type SetMatchStateMutation = (
@@ -370,9 +393,9 @@ export type SetMatchStateMutation = (
   )> }
 );
 
-export type RemoveDemandMutationVariables = {
+export type RemoveDemandMutationVariables = Exact<{
   id: Scalars['ID'];
-};
+}>;
 
 
 export type RemoveDemandMutation = (
@@ -380,9 +403,9 @@ export type RemoveDemandMutation = (
   & Pick<Mutation, 'removeDemand'>
 );
 
-export type RemoveSupplyMutationVariables = {
+export type RemoveSupplyMutationVariables = Exact<{
   id: Scalars['ID'];
-};
+}>;
 
 
 export type RemoveSupplyMutation = (
@@ -390,11 +413,11 @@ export type RemoveSupplyMutation = (
   & Pick<Mutation, 'removeSupply'>
 );
 
-export type SupportRequestMutationVariables = {
-  description: Scalars['String'];
-  summary: Scalars['String'];
-  page: Scalars['String'];
-};
+export type SupportRequestMutationVariables = Exact<{
+  description: Scalars['LimitedString2000'];
+  summary: Scalars['LimitedString2000'];
+  page: Scalars['LimitedString2000'];
+}>;
 
 
 export type SupportRequestMutation = (
@@ -402,15 +425,15 @@ export type SupportRequestMutation = (
   & Pick<Mutation, 'createSupportRequest'>
 );
 
-export type UpdateDemandMutationVariables = {
+export type UpdateDemandMutationVariables = Exact<{
   id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];
-  name: Scalars['String'];
+  name: Scalars['LimitedString150'];
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Scalars['ID']>>;
-  descriptionExt?: Maybe<Scalars['String']>;
+  descriptionExt?: Maybe<Scalars['LimitedString2000']>;
   active: Scalars['Boolean'];
-};
+}>;
 
 
 export type UpdateDemandMutation = (
@@ -425,15 +448,15 @@ export type UpdateDemandMutation = (
   )> }
 );
 
-export type UpdateSupplyMutationVariables = {
+export type UpdateSupplyMutationVariables = Exact<{
   id?: Maybe<Scalars['ID']>;
   companyId: Scalars['ID'];
-  name: Scalars['String'];
+  name: Scalars['LimitedString150'];
   quantity: Scalars['Int'];
   skills?: Maybe<Array<Scalars['ID']>>;
   active: Scalars['Boolean'];
-  descriptionExt?: Maybe<Scalars['String']>;
-};
+  descriptionExt?: Maybe<Scalars['LimitedString2000']>;
+}>;
 
 
 export type UpdateSupplyMutation = (
@@ -444,7 +467,7 @@ export type UpdateSupplyMutation = (
   )> }
 );
 
-export type Check_StateQueryVariables = {};
+export type Check_StateQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type Check_StateQuery = (
@@ -499,10 +522,10 @@ export type SupplyInfoFragment = (
   )> }
 );
 
-export type CompanyDetailsFromDemandQueryVariables = {
+export type CompanyDetailsFromDemandQueryVariables = Exact<{
   id: Scalars['ID'];
   origin: Scalars['ID'];
-};
+}>;
 
 
 export type CompanyDetailsFromDemandQuery = (
@@ -531,10 +554,10 @@ export type CompanyDetailsFromDemandQuery = (
   )> }
 );
 
-export type CompanyDetailsFromSupplyQueryVariables = {
+export type CompanyDetailsFromSupplyQueryVariables = Exact<{
   id: Scalars['ID'];
   origin: Scalars['ID'];
-};
+}>;
 
 
 export type CompanyDetailsFromSupplyQuery = (
@@ -563,11 +586,11 @@ export type CompanyDetailsFromSupplyQuery = (
   )> }
 );
 
-export type DemandMatchesQueryVariables = {
+export type DemandMatchesQueryVariables = Exact<{
   id: Scalars['ID'];
   radius?: Maybe<Scalars['Int']>;
   cursor?: Maybe<CursorInput>;
-};
+}>;
 
 
 export type DemandMatchesQuery = (
@@ -603,11 +626,11 @@ export type DemandMatchesQuery = (
   ) }
 );
 
-export type SupplyMatchesQueryVariables = {
+export type SupplyMatchesQueryVariables = Exact<{
   id: Scalars['ID'];
   radius?: Maybe<Scalars['Int']>;
   cursor?: Maybe<CursorInput>;
-};
+}>;
 
 
 export type SupplyMatchesQuery = (
@@ -643,7 +666,7 @@ export type SupplyMatchesQuery = (
   ) }
 );
 
-export type DasboardTeamsQueryVariables = {};
+export type DasboardTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type DasboardTeamsQuery = (
@@ -668,7 +691,7 @@ export type DasboardTeamsQuery = (
   )>>> }
 );
 
-export type RegistrationCompanyQueryVariables = {};
+export type RegistrationCompanyQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RegistrationCompanyQuery = (
@@ -690,7 +713,7 @@ export type RegistrationCompanyQuery = (
   ) }
 );
 
-export type GetTeamsQueryVariables = {};
+export type GetTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetTeamsQuery = (
@@ -720,7 +743,7 @@ export type GetTeamsQuery = (
   )>> }
 );
 
-export type RegistrationUserQueryVariables = {};
+export type RegistrationUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RegistrationUserQuery = (

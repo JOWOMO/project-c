@@ -7,7 +7,7 @@
     <template slot="left">
       <sidebar class="sidebar">
         <sec v-for="menu in (menus)" :name="menu.label" :key="menu.label">
-          <item v-for="m in (menu.items || [])" :key="m.label" :name="m.label" :to="m.to" />
+          <item v-for="m in (menu.items || [])" :key="m.label" :name="m.label" :to="m.to" :items="m.items"/>
         </sec>
       </sidebar>
     </template>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Provide } from "nuxt-property-decorator";
+import { Component, Vue } from "nuxt-property-decorator";
 import { Context } from "@nuxt/types";
 
 import leftNav from "@/components/pages/navbar-left.vue";
@@ -35,23 +35,42 @@ import item from "@/components/sidebar/item.vue";
 import sec from "@/components/sidebar/section.vue";
 
 import faq from "@/components/faq.vue";
-import about from "@/components/about/block.vue";
 import sponsor from "@/components/about/sponsor.vue";
-
-import imprint from "@/components/imprint.vue";
 import pe from "@/components/about/pe.vue";
-
 import members from "@/components/about/members.vue";
+import imprint from "@/components/imprint.vue";
+
+import panel from "@/components/layout/panel.vue";
+import block from "@/components/layout/block.vue";
+
+import bulletPoint from "@/components/process/bulletPoint.vue";
+import processPanel from "@/components/process/panel.vue";
+import headline from "@/components/process/headline.vue";
+import numeration from "@/components/process/numeration.vue";
+import numerationItem from "@/components/process/numeration-item.vue";
+
+import {ComponentName} from "@/constants/componentName";
+import {IMenuItem} from "@/constants/interfaces/MenuItem";
 
 @Component({
-  components: { sidebar, item, sec, leftNav, topBar, imprint, pe, members },
+  name: ComponentName.PagesInfo,
+  components: {
+    sidebar,
+    item,
+    sec,
+    leftNav,
+    topBar,
+    imprint,
+    pe,
+    members
+  },
 })
 export default class extends Vue {
   title: string = "";
   seo: string = "";
   description: string = "";
   content: string = "";
-  menus: any = null;
+  menus: IMenuItem[] | null = null;
 
   layout(context: Context) {
     const content = require(`@/content/${context.params.pathMatch}.md`);
@@ -87,9 +106,20 @@ export default class extends Vue {
       const other = {
         extends: content.vue.component,
         components: {
-          faq, about, sponsor, pe, members,
+          block,
+          bulletPoint,
+          faq,
+          headline,
+          members,
+          numeration,
+          numerationItem,
+          panel,
+          pe,
+          processPanel,
+          sponsor,
         }
       };
+
 
       let menus = content.attributes?.menu;
 
@@ -117,36 +147,27 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 @import "@/assets/scales";
+@import "./markdown.scss";
 
 .sidebar {
   display: flex;
 }
 
 .imprint {
-  padding-bottom: 10px;
   margin-left: -$gridsize;
+  padding-bottom: 10px;
 }
-
-@import "./markdown.scss";
-
-$fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .container {
-  height: $fullheight;
-
-  overflow-y: scroll;
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
-
   display: block;
-
-  padding-left: $gridsize;
-  padding-top: $gridsize;
-  padding-right: $pageMarginRight;
+  height: calc(100vh - #{$pageHeaderHeight});
+  overflow-y: scroll;
+  padding: $gridsize $gridsize 0;
 }
 
-
-@media only screen and (max-width: $breakpoint_md) {
+@media only screen and (max-width: $breakpoint_vl) {
   .container {
     padding-left: $pageMarginMin;
     padding-right: $pageMarginMin;

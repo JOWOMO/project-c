@@ -66,6 +66,7 @@ import {
   Skill
 } from "@/apollo/schema";
 import VClamp from "vue-clamp";
+import {ComponentName} from "@/constants/componentName";
 
 type MatchSkill = Pick<Skill, "name" | "id">;
 
@@ -86,7 +87,10 @@ type MatchDetails = Pick<Demand, "name" | "description" | "quantity" | "id"> & {
   skills: MatchSkill[];
 };
 
-@Component({ components: { tag, VClamp } })
+@Component({
+  name: ComponentName.MatchTeam,
+  components: { tag, VClamp }
+})
 export default class extends Vue {
   @Prop() flow!: string;
   @Prop() match!: MatchDetails;

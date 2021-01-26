@@ -27,10 +27,12 @@ import {
   RegistrationCompanyQuery,
   RegistrationCompanyQueryVariables,
   RegistrationUserQuery
-} from "~/apollo/schema";
+} from "@/apollo/schema";
 import userQuery from "@/apollo/queries/registration/user.gql";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesWelcomeFlow,
   middleware: "authenticated",
   layout: "center",
 })

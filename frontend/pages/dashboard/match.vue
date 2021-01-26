@@ -68,8 +68,10 @@ import { Vue, Component, Ref, State } from "nuxt-property-decorator";
 import { ProvideReactive } from "vue-property-decorator";
 import { Context } from "@nuxt/types";
 import { IState } from "../../store";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesDashboardMatch,
   components: {
     sidebar,
     filterElement,

@@ -101,6 +101,7 @@ import {
 } from "@/apollo/schema";
 import { Context } from "@nuxt/types";
 import { LoadingAnimation } from "@/components/loadinganimation";
+import {ComponentName} from "@/constants/componentName";
 
 const EMPTY_TEAM: TeamDetails = {
   number: 1,
@@ -111,6 +112,7 @@ const EMPTY_TEAM: TeamDetails = {
 };
 
 @Component({
+  name: ComponentName.PagesRegisterFlowTeam,
   components: { team },
   middleware: "authenticated"
 })

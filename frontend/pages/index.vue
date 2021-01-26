@@ -14,12 +14,11 @@
 
           <div class="buttons">
             <button @click="supply_register" class="primary">
-              <div>
-                Ich
-                <b>biete</b>
+              <span>
+                Ich <b>biete</b>
                 <br />Mitarbeiter:innen
-              </div>
-              <div class="arrow" />
+              </span>
+              <span class="arrow" />
             </button>
           </div>
         </div>
@@ -36,12 +35,11 @@
 
           <div class="buttons">
             <button @click="demand_register" class="cta">
-              <div>
-                Ich
-                <b>suche</b>
+              <span>
+                Ich <b>suche</b>
                 <br />Mitarbeiter:innen
-              </div>
-              <div class="arrow" />
+              </span>
+              <span class="arrow" />
             </button>
           </div>
         </div>
@@ -167,8 +165,10 @@
 import { Component, Vue, Provide, State } from "nuxt-property-decorator";
 import { IState } from "@/store";
 import imprint from "@/components/imprint.vue";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesIndex,
   components: { imprint },
   layout: "start"
 })
@@ -197,12 +197,6 @@ export default class extends Vue {
 $fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .container {
-  height: $fullheight;
-
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
-
   display: block;
   text-align: center;
 }
@@ -238,7 +232,6 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .two-rows {
   min-height: $fullheight;
-
   display: flex;
   flex-direction: column;
   position: relative;
@@ -288,7 +281,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 
 .section {
   min-height: $fullheight;
-  min-width: 100vw;
+  width: 100%;
   justify-content: center;
 }
 
@@ -350,7 +343,6 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
     .buttons {
       padding: $gridsize $gridsize*1.5;
       width: 100%;
-
       display: flex;
       justify-content: center;
 
@@ -358,7 +350,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
         text-align: left;
         width: 100%;
         max-width: 350px;
-        height: auto;
+        height: 100%;
 
         font-weight: 100;
         font-size: $h2FontSize;
@@ -386,7 +378,7 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
 .fullrow {
   padding-top: $gridsize / 2;
   display: grid;
-  width: 100vw;
+  width: 100%;
 
   grid-auto-columns: 1fr $gridsize*2 1fr;
 
@@ -458,25 +450,6 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
   padding-bottom: 10px;
 }
 
-// @media only screen and (min-width: $breakpoint_vl) {
-//     .login {
-//     .login-cta {
-//       .text {
-//         min-height: 300px;
-//         font-size: $h1FontSize;
-//       }
-
-//       .buttons {
-//         padding: 66px 66px;
-
-//         button {
-//           font-size: $h1FontSize;
-//         }
-//       }
-//     }
-//   }
-// }
-
 @media only screen and (max-width: $breakpoint_sm) {
   .process {
     img {
@@ -506,7 +479,11 @@ $fullheight: calc(100vh - #{$pageHeaderHeight});
       }
 
       .buttons {
-        padding: $gridsize $pageMarginMin;
+        padding: $gridsize/2 $gridsize/4;
+
+        button {
+          font-size: $textsize;
+        }
       }
     }
   }

@@ -6,8 +6,11 @@
 
 <script lang="ts">
 import { Vue, Component, Provide, Prop, Emit } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.NavbarBar,
+})
 export default class extends Vue {
   @Prop({ default: true }) horizontal!: boolean;
 }
@@ -29,15 +32,11 @@ nav {
   align-items: flex-start;
 
   /deep/ .item {
-    padding: 0 !important;
-    padding-left: 24px !important;
-
-    width: 100%;
-    height: 64px;
-    // background: red;
-
-    display: flex;
     align-items: center;
+    display: flex;
+    height: 64px;
+    padding: 0 10px 0 24px;
+    width: 100%;
 
     &:hover {
       background-color: darken($primary, 10%) !important;
@@ -50,7 +49,7 @@ nav {
   }
 
   /deep/ .item + .item {
-    margin: 0px;
+    margin: 0;
     border-top: 1px solid $border;
   }
 }

@@ -4,13 +4,15 @@ from btb.api.models import db
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy import text
 from flask import g, current_app
+from btb.api.constants import InputLengths
+from btb.api.schema.types.util import LimitedString
 import boto3
 
 
 class UserInput(graphene.InputObjectType):
-    first_name = graphene.String(required=True)
-    last_name = graphene.String(required=True)
-    email = graphene.String(required=True)
+    first_name = LimitedString(InputLengths.MIDDLE_STRING, required=True)
+    last_name = LimitedString(InputLengths.MIDDLE_STRING, required=True)
+    email = LimitedString(InputLengths.MIDDLE_STRING, required=True)
 
 
 class UpdateUser(graphene.Mutation):

@@ -30,8 +30,12 @@ import { Emit } from "vue-property-decorator";
 import dropdown from "@/components/dropdown.vue";
 import { IState } from "../store";
 import { IMatchState } from "../store/match";
+import {ComponentName} from "@/constants/componentName";
 
-@Component({ components: { dropdown } })
+@Component({
+  name: ComponentName.Filter,
+  components: { dropdown }
+})
 export default class extends Vue {
   @Prop({ required: true })
   me!: Pick<Company, "id" | "postalCode" | "city">;

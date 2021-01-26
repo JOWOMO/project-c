@@ -5,7 +5,7 @@
         <slot v-if="number" name="number">{{number}}</slot>
         <slot name="number-left" />
       </div>
-      <div class="title">{{ title }}</div>
+      <div class="title" :class="{'-h2': h2}">{{ title }}</div>
       <div class="text">
         <div>
           <slot name="both" />
@@ -19,7 +19,7 @@
         <slot v-if="number" name="number">{{number}}</slot>
         <slot name="number-center" />
       </div>
-      <div class="title">{{ title }}</div>
+      <div class="title" :class="{'-h2': h2}">{{ title }}</div>
       <div class="text">
         <div>
           <slot name="both" />
@@ -32,7 +32,7 @@
         <slot v-if="number" name="number">{{number}}</slot>
         <slot name="number-right" />
       </div>
-      <div class="title">{{ titleRight || title }}</div>
+      <div class="title" :class="{'-h2': h2}">{{ titleRight || title }}</div>
       <div class="text">
         <div>
           <slot name="both" />
@@ -45,10 +45,15 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.AboutPe,
+})
+
 export default class extends Vue {
   @Prop({default: false}) center!: boolean;
+  @Prop({default: false}) h2!: boolean;
 
   @Prop() number!: number;
   @Prop() title!: string;
@@ -111,6 +116,10 @@ export default class extends Vue {
   color: $headercolor;
   font-weight: 500;
   font-size: $h3FontSize;
+
+  &.-h2 {
+    font-size: $h2FontSize;
+  }
 }
 
 .text {
@@ -122,8 +131,5 @@ export default class extends Vue {
     text-align: center;
     max-width: 230px;
   }
-}
-
-@media only screen and (min-width: $breakpoint_md) {
 }
 </style>

@@ -6,9 +6,11 @@
 
 <script lang="ts">
 import { Vue, Prop, Component } from "nuxt-property-decorator";
-import authenticated from "../../middleware/authenticated";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.LayoutRow,
+})
 export default class extends Vue {
   @Prop({ default: -1 }) height!: number;
   @Prop({ default: false }) scroll!: number;
@@ -23,7 +25,7 @@ export default class extends Vue {
           s.display = 'flex';
           s.flex = 1;
       } else {
-          s.height = this.height 
+          s.height = this.height
             + (typeof this.height === 'number' ? 'px' : '');
       }
 

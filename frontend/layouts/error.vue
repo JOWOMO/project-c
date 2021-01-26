@@ -17,12 +17,16 @@
 </template>
 
 <script lang="ts">
+import {ComponentName} from "@/constants/componentName";
+
 const DURATION = 10;
 import { Vue, Component, Prop, State } from "nuxt-property-decorator";
 import { GraphQLError } from "graphql";
 import { IState } from "../store";
 
-@Component
+@Component({
+  name: ComponentName.LayoutsError,
+})
 export default class extends Vue {
   @State((s: IState) => s.support.available)
   supportAvailable!: any;

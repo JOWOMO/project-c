@@ -44,7 +44,7 @@ import {
 import { Emit } from "vue-property-decorator";
 
 import { Validate } from "vuelidate-property-decorators";
-import { required, numeric, minValue } from "vuelidate/lib/validators";
+import {required, numeric, minValue, maxLength} from "vuelidate/lib/validators";
 
 import { CognitoUser } from "@aws-amplify/auth";
 
@@ -61,10 +61,15 @@ import userQuery from "@/apollo/queries/registration/company.gql";
 import formInput from "@/components/forms/input.vue";
 import formSelect from "@/components/forms/select.vue";
 import { Context } from "@nuxt/types";
-import { LoadingAnimation } from "~/components/loadinganimation";
+import { LoadingAnimation } from "@/components/loadinganimation";
+import {ComponentName} from "@/constants/componentName";
+import Validations from "@/components/forms/validations.vue";
+import {InputLengths} from "@/constants/inputLengths";
 
 @Component({
+  name: ComponentName.PagesRegisterFlowCompany,
   components: {
+    Validations,
     formInput,
     formSelect
   },
@@ -80,19 +85,33 @@ export default class extends Vue {
     return this.$v;
   }
 
-  @Validate({ required })
+  @Validate({
+    required,
+    maxLength: maxLength(InputLengths.SHORT_STRING)
+  })
   name?: string | null | undefined = "";
 
-  @Validate({ required })
+  @Validate({
+    required,
+    maxLength: maxLength(InputLengths.MIDDLE_STRING)
+  })
   address: string | null | undefined = "";
 
-  @Validate({ required, numeric })
+  @Validate({
+    required,
+    numeric
+  })
   postalcode?: string | null | undefined = "";
 
-  @Validate({ required })
+  @Validate({
+    required
+  })
   industry?: string | null | undefined = "";
 
-  @Validate({ required })
+  @Validate({
+    required,
+    maxLength: maxLength(InputLengths.SHORT_STRING)
+  })
   city?: string | null | undefined = "";
 
   async asyncData(context: Context) {

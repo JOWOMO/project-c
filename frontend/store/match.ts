@@ -1,5 +1,5 @@
 import { StateChanger } from "vue-infinite-loading";
-import { User, Demand, Supply, DasboardTeamsQuery, DasboardTeamsQueryVariables } from "~/apollo/schema";
+import { User, Demand, Supply, DasboardTeamsQuery, DasboardTeamsQueryVariables } from "@/apollo/schema";
 import { ActionContext } from 'vuex';
 import { IState } from ".";
 import getTeams from "@/apollo/queries/dashboard/teams.gql";
@@ -36,7 +36,7 @@ declare module "vuex" {
 }
 
 let resolveLoaded: () => void;
-const loadedState = new Promise((resolve) => resolveLoaded = resolve);
+const loadedState = new Promise((resolve) => resolveLoaded = resolve as () => void);
 
 export const state = () => ({
   loaded: loadedState,

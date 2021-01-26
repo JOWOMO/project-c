@@ -19,6 +19,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 h1 {
@@ -42,6 +43,26 @@ h4 {
   font-size: $textsize;
   color: $headercolor;
   font-weight: 500;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin: 0;
+  padding: 0 20px;
+  text-align: left;
+}
+
+li {
+  padding-bottom: $gridsize / 4;
+
+  ul {
+    padding-top: $gridsize / 4;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
 }
 
 p {

@@ -47,8 +47,10 @@ import { ConnectParams } from "@/pages/connect/request/_.vue";
 import { LoadingAnimation } from "../../../../components/loadinganimation";
 import { IMatchState, MatchFilter } from "../../../../store/match";
 import { IState } from "../../../../store";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesDashboardMatchFlowId,
   components: { companyCard }
 })
 export default class extends Vue {
@@ -108,7 +110,6 @@ export default class extends Vue {
       pictureUrl: party.pictureUrl
     };
 
-    // console.log("onConnect", params);
     this.$router.push(`/connect/request/${btoa(JSON.stringify(params))}`);
   }
 
@@ -120,7 +121,7 @@ export default class extends Vue {
   async reload(filter: MatchFilter) {
     this.$track("dashboard", "filter", "KM", filter.range.toString());
 
-    return new Promise((resolve, fail) =>
+    return new Promise<void>((resolve, fail) =>
       this.feed
         .query!.refetch({
           id: this.$route.params.id,

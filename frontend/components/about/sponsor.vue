@@ -16,8 +16,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "nuxt-property-decorator";
+import {ComponentName} from "@/constants/componentName";
 
-@Component
+@Component({
+  name: ComponentName.AboutSponsor,
+})
 export default class extends Vue {
   @Prop() logo!: string;
   @Prop({ default: false }) scalex!: boolean;
@@ -59,7 +62,7 @@ export default class extends Vue {
 
   .x {
     img {
-      width: 250px;
+      width: 150px;
     }
   }
 
@@ -78,7 +81,7 @@ export default class extends Vue {
   padding-top: $gridsize * 2.5;
 }
 
-@media only screen and (min-width: $breakpoint_md) {
+@media only screen and (min-width: $breakpoint_sm) {
   .sponsor {
     .y {
       img {
@@ -88,7 +91,7 @@ export default class extends Vue {
 
     .x {
       img {
-        width: 300px;
+        width: 200px;
       }
     }
 

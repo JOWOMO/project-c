@@ -36,8 +36,10 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 import sidebar from "@/components/sidebar/bar.vue";
 import item from "@/components/sidebar/item.vue";
 import sec from "@/components/sidebar/section.vue";
+import {ComponentName} from "@/constants/componentName";
 
 @Component({
+  name: ComponentName.PagesSidebarDashboard,
   components: { sidebar, item, sec }
 })
 export default class extends Vue {
