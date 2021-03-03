@@ -30,14 +30,14 @@ JOWOMO ist Deine Plattform für Personal&shy;partner&shy;schaften
 <block id="vision" icon="vision">
 
 ## Unsere Vision
-Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>​#GemeinsamArbeitSchützen</b>
+Eine intelligente Verteilung von Arbeitskräften, um auch in der Krise Entlassungen und Kurzarbeit auf ein Minimum zu begrenzen. <b>#GemeinsamArbeitSchützen</b>
 
 </block>
 
 <block id="mission" icon="mission">
 
 ## Unsere Mission
-Wir möchten die erste Anlaufstelle für Unternehmen mit temporären Kapazitätsänderungen sein. Durch  eine passgenaue Zusammenführung von Unternehmen und Unterstützung bei der rechtlichen Umsetzung sorgen wir für eine effiziente krisengerechte Kapazitätsverteilung. ​
+Wir möchten die erste Anlaufstelle für Unternehmen mit temporären Kapazitätsänderungen sein. Durch  eine passgenaue Zusammenführung von Unternehmen und Unterstützung bei der rechtlichen Umsetzung sorgen wir für eine effiziente krisengerechte Kapazitätsverteilung. 
 
 <button onclick="window.location.href='/register/supply';" class="cta">Jetzt mitmachen</button>
 
@@ -46,12 +46,12 @@ Wir möchten die erste Anlaufstelle für Unternehmen mit temporären Kapazitäts
 <block id="team" icon="team">
 
 ## Über uns
-Wir bringen Unternehmen für einen flexiblen temporären Austausch von Personal zusammen. ​
+Wir bringen Unternehmen für einen flexiblen temporären Austausch von Personal zusammen. 
 
-Unternehmen, die momentan Überkapazitäten an Arbeitnehmer:innen haben, können ganze Teams anbieten, damit diese temporär bei einem passenden Unternehmen mit Bedarf arbeiten können. ​
-Unternehmen, die kurzfristig einen Mehrbedarf an Arbeitnehmer:innen haben, finden über unsere Plattform schnell helfende Hände. ​
+Unternehmen, die momentan Überkapazitäten an Arbeitnehmer:innen haben, können ganze Teams anbieten, damit diese temporär bei einem passenden Unternehmen mit Bedarf arbeiten können.
+Unternehmen, die kurzfristig einen Mehrbedarf an Arbeitnehmer:innen haben, finden über unsere Plattform schnell helfende Hände.
 
-Darüber hinaus arbeiten wir gerade daran auch relevante Informationen zur rechtlichen Umsetzung zur Verfügung zu stellen (Musterverträge, Standardprozesse, Kontakte zu Partnerkanzleien bei Rückfragen). So reduzieren wir bürokratische Prozesse und unterstützen Unternehmen, die eine Personalpartnerschaft eingehen, bei einer effizienten Umsetzung.​
+Darüber hinaus arbeiten wir gerade daran auch relevante Informationen zur rechtlichen Umsetzung zur Verfügung zu stellen (Musterverträge, Standardprozesse, Kontakte zu Partnerkanzleien bei Rückfragen). So reduzieren wir bürokratische Prozesse und unterstützen Unternehmen, die eine Personalpartnerschaft eingehen, bei einer effizienten Umsetzung.
 
 
 ## Die Gesichter hinter der Initiative
@@ -79,7 +79,7 @@ Gemeinsam mehr erreichen: Unterstützung in der Startphase. Die Weserbergland AG
 
 <sponsor logo="buse.svg" person="buse_person.jpg" scalex="true">
 
-### Buse Rechtsanwälte Steuerberater PartG mbB - Jan Tibor Lelley
+### BUSE Rechtsanwälte Steuerberater Partnerschaftsgesellschaft mbB - Jan Tibor Lelley
 
 Buse ist Ihre Partnerin in allen Fragen des nationalen und internationalen Wirtschafts- und Steuerrechts.  
 „Die Idee von JOWOMO hat uns sofort mitgerissen! Mutig, pragmatisch und das Wichtige des Geschäftsalltags für Unternehmen und Arbeitnehmer:innen im Blick. Das passt hervorragend zu unserer Beratungsphilosophie bei Buse. Daher sind wir sehr stolz, hier mithelfen zu dürfen.“
